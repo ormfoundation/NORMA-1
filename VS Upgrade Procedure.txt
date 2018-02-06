@@ -27,12 +27,121 @@ Current Upgrade 2015 -> 2017
 	5) Update SetupEnvironment.bat
 		- Add section for 2017/v15.0
 			* .Net 4.6 is still the base framework for VS 2017 (could use 4.6.2)
-			
+	6) Setup NUBuild for 2017 (Tools\NUBuild)
+		- Open the NUBuild.VS2015.sln and save it as NUBUILD.VS2017.sln
+		- ** Do not build this project directly... instead use BuildDevToolsVS{Version}.bat
+	
+	SetupEnvironment.bat is messed up...
+	looks like the registry entries are no longer valid https://developercommunity.visualstudio.com/content/problem/2813/cant-find-registry-entries-for-visual-studio-2017.html
+	going to have to figure a work around for 2017+
+	
+	- info type? registry, vswhere
+		C:\Program Files (x86)\Microsoft Visual Studio\Installer
+	- get depending on that?
+	
+	2015 results from below:
+	VSEnvironmentPath=C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe (HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\Setup\VS)
+	VSEnvironmentDir=C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\ (HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\Setup\VS)
+	VSDir=C:\Program Files (x86)\Microsoft Visual Studio 14.0\ (HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\Setup\VS)
+	VSItemTemplatesDir=C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\ItemTemplates (HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\VSTemplate\Item)
+	VSIPDir=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VSSDK\ (HKLM\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\VSIP\14.0)
+	
+	2015 Install.bat:	
+	
+C:\Windows\system32>cd c:\Projects\NORMA-plus-master
+
+c:\Projects\NORMA-plus-master>VS2015.bat
+
+c:\Projects\NORMA-plus-master>.\tools\NUBuild\Install.bat
+"VSEnvironmentPath"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\Setup\VS"
+"EnvironmentPath"
+"f"
+"VSEnvironmentDir"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\Setup\VS"
+"EnvironmentDirectory"
+"f"
+"VSDir"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\Setup\VS"
+"ProductDir"
+"f"
+"VSItemTemplatesDir"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\VSTemplate\Item"
+"UserFolder"
+"f"
+"VSIPDir"
+"HKLM\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\VSIP\14.0"
+"InstallDir"
+"f"
+"VSIPDir"
+"HKLM\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\VSIP\9.0"
+"InstallDir"
+"f"
+0 File(s) copied
+0 File(s) copied
+The operation completed successfully.
+The operation completed successfully.
+Assembly successfully added to the cache
+Installing assembly Neumont.Build.Core, Version=14.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f
+All compilation targets are up to date.
+
+c:\Projects\NORMA-plus-master>
+
+	2017
+	
+c:\Projects\NORMA-plus>".\Tools\NUBuild\Install.bat"
+"VSEnvironmentPath"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\15.0Exp_Config\Setup\VS"
+"EnvironmentPath"
+"f"
+ERROR: The system was unable to find the specified registry key or value.
+"VSEnvironmentDir"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\15.0Exp_Config\Setup\VS"
+"EnvironmentDirectory"
+"f"
+ERROR: The system was unable to find the specified registry key or value.
+"VSDir"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\15.0Exp_Config\Setup\VS"
+"ProductDir"
+"f"
+ERROR: The system was unable to find the specified registry key or value.
+"VSItemTemplatesDir"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\15.0Exp_Config\VSTemplate\Item"
+"UserFolder"
+"f"
+ERROR: The system was unable to find the specified registry key or value.
+"VSIPDir"
+"HKLM\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\VSIP\15.0"
+"InstallDir"
+"f"
+ERROR: The system was unable to find the specified registry key or value.
+"VSIPDir"
+"HKLM\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\VSIP\9.0"
+"InstallDir"
+"f"
+ERROR: The system was unable to find the specified registry key or value.
+0 File(s) copied
+The operation completed successfully.
+The operation completed successfully.
+Failure adding assembly to the cache:   The system cannot find the file specified.
+
+Installing assembly Neumont.Build.Core, Version=15.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f
+Uninstalling assembly Neumont.Build.Core, Version=15.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f because of an error during compilation: The system cannot find the file specified. (Exception from HRESULT: 0x80070002).
+The system cannot find the file specified. (Exception from HRESULT: 0x80070002)
+	
+	
+	
+	7) Setup NUBuildVS for 2017 (NUBuild\NUBuildVS)
+	
+		- ** Do not build this project directly... instead use BuildDevToolsVS{Version}.bat
+	
+	) New File BuildDevToolsVS2017.bat (Copy from BuildDevToolsVS2015.bat)	
+		- Added section for degrading tools for v14.0 and defaulting to v15.0
+		
+		
 		*** There is currently a problem finding vsvars32.bat (line 90)
 		* Researching this... https://stackoverflow.com/questions/42805662/vsvars32-bat-in-visual-studio-2017
-			
-	6) Setup NUBuild for 2017 (NUBuild\NUBuild)
-		- Open the NUBuild.VS2015.sln and save it as NUBUILD.VS2017.sln
+		"%VS80COMNTOOLS%\vsvars32.bat"
 
 Remaining Files - removing files after they are evaluated (dir /s /b /o . files.txt)
 c:\Projects\NORMA-plus\BuildAllVS2008.bat
@@ -41,11 +150,6 @@ c:\Projects\NORMA-plus\BuildAllVS2012.bat
 c:\Projects\NORMA-plus\BuildAllVS2013.bat
 c:\Projects\NORMA-plus\BuildAllVS2015.bat
 c:\Projects\NORMA-plus\BuildDevTools.bat
-c:\Projects\NORMA-plus\BuildDevToolsVS2008.bat
-c:\Projects\NORMA-plus\BuildDevToolsVS2010.bat
-c:\Projects\NORMA-plus\BuildDevToolsVS2012.bat
-c:\Projects\NORMA-plus\BuildDevToolsVS2013.bat
-c:\Projects\NORMA-plus\BuildDevToolsVS2015.bat
 c:\Projects\NORMA-plus\BuildHelp.bat
 c:\Projects\NORMA-plus\BuildSetup.bat
 c:\Projects\NORMA-plus\BuildSetupVS2008.bat
@@ -2007,30 +2111,6 @@ c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\Properties\AssemblyIn
 c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\ORMFactGrammar.cgt
 c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\ORMFactGrammar.grm
 c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\README.txt
-c:\Projects\NORMA-plus\Tools\NUBuild\bin
-c:\Projects\NORMA-plus\Tools\NUBuild\obj
-c:\Projects\NORMA-plus\Tools\NUBuild\Properties
-c:\Projects\NORMA-plus\Tools\NUBuild\Tasks
-c:\Projects\NORMA-plus\Tools\NUBuild\Install.bat
-c:\Projects\NORMA-plus\Tools\NUBuild\Neumont.Build.targets
-c:\Projects\NORMA-plus\Tools\NUBuild\NUBuild.csproj
-c:\Projects\NORMA-plus\Tools\NUBuild\NUBuild.sln
-c:\Projects\NORMA-plus\Tools\NUBuild\NUBuild.VS2008.sln
-c:\Projects\NORMA-plus\Tools\NUBuild\NUBuild.VS2010.sln
-c:\Projects\NORMA-plus\Tools\NUBuild\NUBuild.VS2012.sln
-c:\Projects\NORMA-plus\Tools\NUBuild\NUBuild.VS2013.sln
-c:\Projects\NORMA-plus\Tools\NUBuild\NUBuild.VS2015.sln
-c:\Projects\NORMA-plus\Tools\NUBuild\XmlSchemaCatalog.cs
-c:\Projects\NORMA-plus\Tools\NUBuild\obj\NUBuild
-c:\Projects\NORMA-plus\Tools\NUBuild\obj\NUBuild\NUBuild.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\Tools\NUBuild\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\Tools\NUBuild\Tasks\CopyWithPreprocssing.cs
-c:\Projects\NORMA-plus\Tools\NUBuild\Tasks\Gacutil.cs
-c:\Projects\NORMA-plus\Tools\NUBuild\Tasks\Ngen.cs
-c:\Projects\NORMA-plus\Tools\NUBuild\Tasks\RegexCompilationInfo.xsd
-c:\Projects\NORMA-plus\Tools\NUBuild\Tasks\RegexCompiler.cs
-c:\Projects\NORMA-plus\Tools\NUBuild\Tasks\ResourceMerger.cs
-c:\Projects\NORMA-plus\Tools\NUBuild\Tasks\ResourceMergeTargetResolver.cs
 c:\Projects\NORMA-plus\Tools\NUBuildVS\Properties
 c:\Projects\NORMA-plus\Tools\NUBuildVS\Tasks
 c:\Projects\NORMA-plus\Tools\NUBuildVS\Install.bat
