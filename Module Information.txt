@@ -1,0 +1,17 @@
+This is all currently speculation... this document will be getting continuously revised as I go through the projects
+
+
+Module Information
+
+NUBuild
+	Location: Tools/NUBuild
+	Purpose:
+		Provides custom Build Tasks for building the NORMA projects
+			CopyWithProcessing - this looks like it's stripping spaces off of XML/XSD files
+				XSD - remove annotations
+			RegexCompiler - compiles regulatr expressions into a standalone assembly
+			ResourceMerger - merges one or more resources into a manifest resource 
+			ResourceMergeTargetResolver - this looks like it finds the correct .resources file for the merge target
+	Technologies:
+		1) C#
+		2) MSBuild Tasks
