@@ -15,3 +15,5 @@ NUBuild
 	Technologies:
 		1) C#
 		2) MSBuild Tasks
+	Notes:
+		- Do not build this project from the IDE instead use the Developer prompt and the associated bat files to setup and build the environment correctly
