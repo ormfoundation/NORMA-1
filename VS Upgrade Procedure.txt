@@ -14,11 +14,11 @@ Project Build Order
 	MSBuild.exe /nologo "%RootDir%\Main.proj" %*			
 	MSBuild.exe /nologo "%RootDir%\Setup.proj" %*
 	MSBuild.exe /nologo "%RootDir%\Tests.proj" %*
-	
+	.
 Current Upgrade 2015 -> 2017
 	1) New File VS2017.bat (Copy from VS2015.bat)
 		- Replaced environment variable for call out to VSVer.bat
-!!!! add back if doesn't compile			B) Removed the work around for the SDK tools for the VS2015 build to see if its still needed
+!!!! add back if doesn't compile			-) Removed the work around for the SDK tools for the VS2015 build to see if its still needed
 	2) Update VSVer.bat to account for new 2017 version
 		- Added a section for 2017/v15
 	3) New File FirstTimeBuildVS2017.bat (Copy from FirstTimeBuildVS2015.bat)
@@ -27,18 +27,24 @@ Current Upgrade 2015 -> 2017
 		- Add section for 2017/v15.0
 			* .Net 4.6 is still the base framework for VS 2017 (could use 4.6.2)
 		- Changed the information look up for VS2017 to use vswhere
-	5) Setup NUBuild for 2017 (Tools\NUBuild)
+	5) Edit Tools\NUBuildVS\Neumont.Build.VisualStudio.Multitargeting.targets
+		- Setup for version 15
+	6) Setup NUBuild for 2017 (Tools\NUBuild)
 		- Open the NUBuild.VS2015.sln and save it as NUBUILD.VS2017.sln
+		- AssemblyInfo - Add section for tools version 15
+		- Updated NGen.cs to include frameworks 4.5, 4.6, and 4.7
+!!!! this may not work...					- Updated Install.bat to use the file path to the Neumont.Build.Core assembly instead of the GAC since the Microsoft.Build.* assemblies for version 15.1.0.0 are not in the GAC, this is causing NGen on the GAC version of Neumont.Build.Core to fail
 		- ** Do not build this project directly... instead use BuildDevToolsVS{Version}.bat
 	
 	
-		Build and Build + suffix doesn't match.. need to check the install.bat file
+		
 	
 	
 	
 	
-	7) Setup NUBuildVS for 2017 (NUBuild\NUBuildVS)
-	
+	8) Setup NUBuildVS for 2017 (NUBuild\NUBuildVS)
+		***- Open the NUBuild.VS2015.sln and save it as NUBUILD.VS2017.sln
+		***- AssemblyInfo - Add section for tools version 15
 		- ** Do not build this project directly... instead use BuildDevToolsVS{Version}.bat
 	
 	) New File BuildDevToolsVS2017.bat (Copy from BuildDevToolsVS2015.bat)	
