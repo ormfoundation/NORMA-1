@@ -43,7 +43,9 @@ namespace Neumont.Build.Tasks
 		{
 			// Be careful with location ngen doesn't install everywhere
 			TargetDotNetFrameworkVersion useVersion;
-#if NET_4_0
+#if (NET_4_5 || NET_4_6 || NET_4_7)
+            useVersion = TargetDotNetFrameworkVersion.Version45;
+#elif NET_4_0
 			useVersion = TargetDotNetFrameworkVersion.Version40;
 #else
 			useVersion = TargetDotNetFrameworkVersion.Version20;

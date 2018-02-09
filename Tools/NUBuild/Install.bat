@@ -21,6 +21,7 @@ gacutil.exe /nologo /u Neumont.Build.VisualStudio,Version=1.0.0.0 1>NUL 2>&1
 ::Obviously, the utilities need to be on the path for this to work, which will happen automatically in
 ::a Visual Studio command prompt.
 gacutil.exe /nologo /f /i "%RootDir%\bin\Neumont.Build%ProjectToolsAssemblySuffix%.dll"
-ngen.exe install "Neumont.Build%ProjectToolsAssemblySuffix%, Version=%ProjectToolsAssemblyVersion%, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f" /NoDependencies /nologo /verbose
+REM ngen.exe install "Neumont.Build%ProjectToolsAssemblySuffix%, Version=%ProjectToolsAssemblyVersion%, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f" /NoDependencies /nologo /verbose
+ngen.exe install "%RootDir%\bin\Neumont.Build%ProjectToolsAssemblySuffix%.dll" /NoDependencies /nologo /verbose
 
 GOTO:EOF
