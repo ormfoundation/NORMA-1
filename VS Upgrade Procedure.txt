@@ -1,1 +1,2454 @@
+Approach - go through bat files to determine the order of building which should be the order of solutions/projects to upgrade
+	VS2015.bat
+	FirstTimeBuild.bat
+	FirstTimeBuildAll.bat
+
+Environment Variables
+	TargetVisualStudioVersion
+	UseToolsVersion
+
+Project Build Order
+	MSBuild.exe /nologo "%RootDir%\Tools\NUBuild\NUBuild.sln" %*
+	MSBuild.exe /nologo "%RootDir%\Tools\NUBuildVS\NUBuildVS.sln" %*
+	MSBuild.exe /nologo "%RootDir%\DevTools.proj" %*
+	MSBuild.exe /nologo "%RootDir%\Main.proj" %*			
+	MSBuild.exe /nologo "%RootDir%\Setup.proj" %*
+	MSBuild.exe /nologo "%RootDir%\Tests.proj" %*
+	
 Current Upgrade 2015 -> 2017
+	1) New File VS2017.bat (Copy from VS2015.bat)
+		- Replaced environment variable for call out to VSVer.bat
+!!!! add back if doesn't compile			B) Removed the work around for the SDK tools for the VS2015 build to see if its still needed
+	2) Update VSVer.bat to account for new 2017 version
+		- Added a section for 2017/v15
+	3) New File FirstTimeBuildVS2017.bat (Copy from FirstTimeBuildVS2015.bat)
+		- Added section for degrading tools for v14.0 and defaulting to v15.0
+	4) Run VS2017.bat under "Developer Command Prompt for VS 2017" with Admin Privileges
+	5) Update SetupEnvironment.bat
+		- Add section for 2017/v15.0
+			* .Net 4.6 is still the base framework for VS 2017 (could use 4.6.2)
+	6) Setup NUBuild for 2017 (Tools\NUBuild)
+		- Open the NUBuild.VS2015.sln and save it as NUBUILD.VS2017.sln
+		- ** Do not build this project directly... instead use BuildDevToolsVS{Version}.bat
+	
+	SetupEnvironment.bat is messed up...
+	looks like the registry entries are no longer valid https://developercommunity.visualstudio.com/content/problem/2813/cant-find-registry-entries-for-visual-studio-2017.html
+	going to have to figure a work around for 2017+
+	
+	- info type? registry, vswhere
+		C:\Program Files (x86)\Microsoft Visual Studio\Installer
+	- get depending on that?
+	
+	2015 results from below:
+	VSEnvironmentPath=C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe (HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\Setup\VS)
+	VSEnvironmentDir=C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\ (HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\Setup\VS)
+	VSDir=C:\Program Files (x86)\Microsoft Visual Studio 14.0\ (HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\Setup\VS)
+	VSItemTemplatesDir=C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\ItemTemplates (HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\VSTemplate\Item)
+	VSIPDir=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VSSDK\ (HKLM\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\VSIP\14.0)
+	
+	2015 Install.bat:	
+	
+C:\Windows\system32>cd c:\Projects\NORMA-plus-master
+
+c:\Projects\NORMA-plus-master>VS2015.bat
+
+c:\Projects\NORMA-plus-master>.\tools\NUBuild\Install.bat
+"VSEnvironmentPath"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\Setup\VS"
+"EnvironmentPath"
+"f"
+"VSEnvironmentDir"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\Setup\VS"
+"EnvironmentDirectory"
+"f"
+"VSDir"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\Setup\VS"
+"ProductDir"
+"f"
+"VSItemTemplatesDir"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\14.0Exp_Config\VSTemplate\Item"
+"UserFolder"
+"f"
+"VSIPDir"
+"HKLM\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\VSIP\14.0"
+"InstallDir"
+"f"
+"VSIPDir"
+"HKLM\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\VSIP\9.0"
+"InstallDir"
+"f"
+0 File(s) copied
+0 File(s) copied
+The operation completed successfully.
+The operation completed successfully.
+Assembly successfully added to the cache
+Installing assembly Neumont.Build.Core, Version=14.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f
+All compilation targets are up to date.
+
+c:\Projects\NORMA-plus-master>
+
+	2017
+	
+c:\Projects\NORMA-plus>".\Tools\NUBuild\Install.bat"
+"VSEnvironmentPath"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\15.0Exp_Config\Setup\VS"
+"EnvironmentPath"
+"f"
+ERROR: The system was unable to find the specified registry key or value.
+"VSEnvironmentDir"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\15.0Exp_Config\Setup\VS"
+"EnvironmentDirectory"
+"f"
+ERROR: The system was unable to find the specified registry key or value.
+"VSDir"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\15.0Exp_Config\Setup\VS"
+"ProductDir"
+"f"
+ERROR: The system was unable to find the specified registry key or value.
+"VSItemTemplatesDir"
+"HKCU\SOFTWARE\Microsoft\VisualStudio\15.0Exp_Config\VSTemplate\Item"
+"UserFolder"
+"f"
+ERROR: The system was unable to find the specified registry key or value.
+"VSIPDir"
+"HKLM\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\VSIP\15.0"
+"InstallDir"
+"f"
+ERROR: The system was unable to find the specified registry key or value.
+"VSIPDir"
+"HKLM\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\VSIP\9.0"
+"InstallDir"
+"f"
+ERROR: The system was unable to find the specified registry key or value.
+0 File(s) copied
+The operation completed successfully.
+The operation completed successfully.
+Failure adding assembly to the cache:   The system cannot find the file specified.
+
+Installing assembly Neumont.Build.Core, Version=15.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f
+Uninstalling assembly Neumont.Build.Core, Version=15.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f because of an error during compilation: The system cannot find the file specified. (Exception from HRESULT: 0x80070002).
+The system cannot find the file specified. (Exception from HRESULT: 0x80070002)
+	
+	
+	
+	7) Setup NUBuildVS for 2017 (NUBuild\NUBuildVS)
+	
+		- ** Do not build this project directly... instead use BuildDevToolsVS{Version}.bat
+	
+	) New File BuildDevToolsVS2017.bat (Copy from BuildDevToolsVS2015.bat)	
+		- Added section for degrading tools for v14.0 and defaulting to v15.0
+		
+		
+		*** There is currently a problem finding vsvars32.bat (line 90)
+		* Researching this... https://stackoverflow.com/questions/42805662/vsvars32-bat-in-visual-studio-2017
+		"%VS80COMNTOOLS%\vsvars32.bat"
+
+Remaining Files - removing files after they are evaluated (dir /s /b /o . files.txt)
+c:\Projects\NORMA-plus\BuildAllVS2008.bat
+c:\Projects\NORMA-plus\BuildAllVS2010.bat
+c:\Projects\NORMA-plus\BuildAllVS2012.bat
+c:\Projects\NORMA-plus\BuildAllVS2013.bat
+c:\Projects\NORMA-plus\BuildAllVS2015.bat
+c:\Projects\NORMA-plus\BuildDevTools.bat
+c:\Projects\NORMA-plus\BuildHelp.bat
+c:\Projects\NORMA-plus\BuildSetup.bat
+c:\Projects\NORMA-plus\BuildSetupVS2008.bat
+c:\Projects\NORMA-plus\BuildSetupVS2010.bat
+c:\Projects\NORMA-plus\BuildSetupVS2012.bat
+c:\Projects\NORMA-plus\BuildSetupVS2013.bat
+c:\Projects\NORMA-plus\BuildSetupVS2015.bat
+c:\Projects\NORMA-plus\BuildTests.bat
+c:\Projects\NORMA-plus\BuildTestsVS2008.bat
+c:\Projects\NORMA-plus\BuildVS2008.bat
+c:\Projects\NORMA-plus\BuildVS2010.bat
+c:\Projects\NORMA-plus\BuildVS2012.bat
+c:\Projects\NORMA-plus\BuildVS2013.bat
+c:\Projects\NORMA-plus\BuildVS2015.bat
+c:\Projects\NORMA-plus\catalog.xml
+c:\Projects\NORMA-plus\CommonAssemblyInfo.cs
+c:\Projects\NORMA-plus\CPL.txt
+c:\Projects\NORMA-plus\CustomDictionary.xml
+c:\Projects\NORMA-plus\Default.targets
+c:\Projects\NORMA-plus\DevTools.proj
+c:\Projects\NORMA-plus\files.txt
+c:\Projects\NORMA-plus\FirstTimeBuild.bat
+c:\Projects\NORMA-plus\FirstTimeBuildAll.bat
+c:\Projects\NORMA-plus\FirstTimeBuildAllVS2008.bat
+c:\Projects\NORMA-plus\install.bat
+c:\Projects\NORMA-plus\LICENSE.txt
+c:\Projects\NORMA-plus\Main.proj
+c:\Projects\NORMA-plus\ORM2.FxCop
+c:\Projects\NORMA-plus\ORMPackage.sln
+c:\Projects\NORMA-plus\ORMPackage.snk
+c:\Projects\NORMA-plus\ORMPackage.VS2008.sln
+c:\Projects\NORMA-plus\ORMPackage.VS2010.sln
+c:\Projects\NORMA-plus\ORMPackage.VS2012.sln
+c:\Projects\NORMA-plus\ORMPackage.VS2013.sln
+c:\Projects\NORMA-plus\ORMPackage.VS2015.sln
+c:\Projects\NORMA-plus\ORMTestPackage.sln
+c:\Projects\NORMA-plus\ORMTestPackage.VS2008.sln
+c:\Projects\NORMA-plus\README.txt
+c:\Projects\NORMA-plus\Setup.proj
+c:\Projects\NORMA-plus\Tests.proj
+c:\Projects\NORMA-plus\VersionGenerator.exe
+c:\Projects\NORMA-plus\VersionGenerator.exe.config
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView
+c:\Projects\NORMA-plus\AlternateViews\RelationalView
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\Properties
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\Resources
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\ShapeModel
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\BarkerERView.csproj
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\BarkerERView.sln
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\BarkerERView.VS2008.sln
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\BarkerERView.VS2010.sln
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\BarkerERView.VS2012.sln
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\BarkerERView.VS2013.sln
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\BarkerERView.VS2015.sln
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\BarkerERView.xsd
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\EntityRelationship.AttachRules.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\EntityRelationship.AttachRules.xml
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\EntityRelationship.Serialization.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\EntityRelationship.SerializationExtensions.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\EntityRelationship.SerializationExtensions.xml
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\EntityRelationshipShape.dsl
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\Install.bat
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\Plix.xml
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\Connectors.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\Connectors.tt
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\Connectors.VS2010.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\Connectors.VS2010.tt
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\Diagram.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\Diagram.tt
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\Diagram.VS2010.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\Diagram.VS2010.tt
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\Shapes.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\Shapes.tt
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\Shapes.VS2010.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\Shapes.VS2010.tt
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\ToolboxHelper.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\ToolboxHelper.tt
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\ToolboxHelper.VS2010.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\GeneratedCode\ToolboxHelper.VS2010.tt
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\Resources\BarkerERViewBrowserImage.png
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\Resources\BarkerERViewTabImage.png
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\ShapeModel\AssociationConnector.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\ShapeModel\AttributeElementListCompartment.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\ShapeModel\BarkerEntityShape.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\ShapeModel\BarkerERDiagram.cs
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\ShapeModel\BarkerERDiagram.resx
+c:\Projects\NORMA-plus\AlternateViews\BarkerERView\ShapeModel\BarkerERShape.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\Properties
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\Resources
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\ShapeModel
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\Install.bat
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\Plix.xml
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalShape.AttachRules.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalShape.AttachRules.xml
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalShape.dsl
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalShape.Serialization.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalShape.SerializationExtensions.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalShape.SerializationExtensions.xml
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalView.csproj
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalView.sln
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalView.VS2008.sln
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalView.VS2010.sln
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalView.VS2012.sln
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalView.VS2013.sln
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalView.VS2015.sln
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\RelationalView.xsd
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\Connectors.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\Connectors.tt
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\Connectors.VS2010.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\Connectors.VS2010.tt
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\Diagram.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\Diagram.tt
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\Diagram.VS2010.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\Diagram.VS2010.tt
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\Shapes.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\Shapes.tt
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\Shapes.VS2010.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\Shapes.VS2010.tt
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\ToolboxHelper.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\ToolboxHelper.tt
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\ToolboxHelper.VS2010.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\GeneratedCode\ToolboxHelper.VS2010.tt
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\Resources\RelationalViewBrowserImage.png
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\Resources\RelationalViewTabImage.png
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\ShapeModel\Design
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\ShapeModel\ColumnElementListCompartment.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\ShapeModel\ForeignKeyConnector.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\ShapeModel\RelationalDiagram.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\ShapeModel\RelationalDiagram.resx
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\ShapeModel\RelationalShape.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\ShapeModel\TableShape.cs
+c:\Projects\NORMA-plus\AlternateViews\RelationalView\ShapeModel\Design\RelationalDiagramTypeDescriptor.cs
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\bin
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\obj
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\Properties
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\DILSchemaProvider.cs
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\DILSchemaProvider.csproj
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\DILSchemaProvider.sln
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\Install.bat
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\bin\Debug
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\bin\Release
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\obj\Debug
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\obj\Release
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\obj\Debug\DILSchemaProvider.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\obj\Release\DILSchemaProvider.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\GeneratedEntityClasses.plix
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\GeneratedUserEntityClasses.plix
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\StaticGeneratedEntityClasses.plix
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\AssemblyInfo.cs
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\NetTiersTestModel.sln
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\bin
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\obj
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\Properties
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\Condensed.Entities.csproj
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\GeneratedEntityClasses.cs
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\GeneratedUserEntityClasses.cs
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\StaticGeneratedEntityClasses.cs
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\bin\Debug
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\bin\Release
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\obj\Debug
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\obj\Release
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\obj\Debug\Condensed.Entities.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\obj\Release\Condensed.Entities.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\bin
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\obj
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\Properties
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\DCILtoSchemaExplorer.xslt
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\Entities.xslt
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\EntityProvider.xslt
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\EntityScript.xslt
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\NetTiersPort.csproj
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\NetTiersPort.sln
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\NETTiersSettings.xml
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\NETTiersSettings.xslt
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\PLiX.xml
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\Program.cs
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\SampleDatabaseSchema.cs
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\SampleDatabaseSchema.xml
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\SchemaExplorer.xsd
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\SqlProvider.xslt
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\bin\Debug
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\bin\Release
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\obj\Debug
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\obj\Release
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\obj\Debug\NetTiersPort.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\obj\Release\NetTiersPort.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode
+c:\Projects\NORMA-plus\CustomProperties\Properties
+c:\Projects\NORMA-plus\CustomProperties\Resources
+c:\Projects\NORMA-plus\CustomProperties\VerbalizationSnippets
+c:\Projects\NORMA-plus\CustomProperties\CustomProperties.csproj
+c:\Projects\NORMA-plus\CustomProperties\CustomProperties.dsl
+c:\Projects\NORMA-plus\CustomProperties\CustomProperties.sln
+c:\Projects\NORMA-plus\CustomProperties\CustomProperties.VS2008.sln
+c:\Projects\NORMA-plus\CustomProperties\CustomProperties.VS2010.sln
+c:\Projects\NORMA-plus\CustomProperties\CustomProperties.VS2012.sln
+c:\Projects\NORMA-plus\CustomProperties\CustomProperties.VS2013.sln
+c:\Projects\NORMA-plus\CustomProperties\CustomProperties.VS2015.sln
+c:\Projects\NORMA-plus\CustomProperties\CustomProperties.xsd
+c:\Projects\NORMA-plus\CustomProperties\CustomPropertiesManager.cs
+c:\Projects\NORMA-plus\CustomProperties\CustomPropertiesManager.Designer.cs
+c:\Projects\NORMA-plus\CustomProperties\CustomPropertiesManager.resx
+c:\Projects\NORMA-plus\CustomProperties\CustomProperty.CopyMergeClosure.cs
+c:\Projects\NORMA-plus\CustomProperties\CustomProperty.CopyMergeClosure.xml
+c:\Projects\NORMA-plus\CustomProperties\CustomProperty.cs
+c:\Projects\NORMA-plus\CustomProperties\CustomProperty.DeserializationFixupListeners.cs
+c:\Projects\NORMA-plus\CustomProperties\CustomProperty.ElementEquivalence.cs
+c:\Projects\NORMA-plus\CustomProperties\CustomProperty.SerializationExtensions.cs
+c:\Projects\NORMA-plus\CustomProperties\CustomProperty.SerializationExtensions.xml
+c:\Projects\NORMA-plus\CustomProperties\CustomPropertyDescriptor.cs
+c:\Projects\NORMA-plus\CustomProperties\CustomPropertyProviders.cs
+c:\Projects\NORMA-plus\CustomProperties\CustomPropertyProvidersResources.resx
+c:\Projects\NORMA-plus\CustomProperties\CustomPropertyVerbalizationGenerator.cs
+c:\Projects\NORMA-plus\CustomProperties\CustomPropertyVerbalizationGenerator.xml
+c:\Projects\NORMA-plus\CustomProperties\CustomPropertyVerbalizationGenerator.xslt
+c:\Projects\NORMA-plus\CustomProperties\DefinitionEditor.cs
+c:\Projects\NORMA-plus\CustomProperties\DefinitionEditor.Designer.cs
+c:\Projects\NORMA-plus\CustomProperties\DefinitionEditor.resx
+c:\Projects\NORMA-plus\CustomProperties\EditCustomEnumOrDescription.cs
+c:\Projects\NORMA-plus\CustomProperties\EditCustomEnumOrDescription.Designer.cs
+c:\Projects\NORMA-plus\CustomProperties\EditCustomEnumOrDescription.resx
+c:\Projects\NORMA-plus\CustomProperties\GroupEditor.cs
+c:\Projects\NORMA-plus\CustomProperties\GroupEditor.Designer.cs
+c:\Projects\NORMA-plus\CustomProperties\GroupEditor.resx
+c:\Projects\NORMA-plus\CustomProperties\Install.bat
+c:\Projects\NORMA-plus\CustomProperties\NameChangedEventArgs.cs
+c:\Projects\NORMA-plus\CustomProperties\Plix.xml
+c:\Projects\NORMA-plus\CustomProperties\UpgradeCurrentNamespace.xslt
+c:\Projects\NORMA-plus\CustomProperties\VerbalizationUntypedSnippets.xsd
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainClasses.cs
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainClasses.tt
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainClasses.VS2010.cs
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainClasses.VS2010.tt
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainRelationships.cs
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainRelationships.tt
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainRelationships.VS2010.cs
+c:\Projects\NORMA-plus\CustomProperties\GeneratedCode\DomainRelationships.VS2010.tt
+c:\Projects\NORMA-plus\CustomProperties\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\CustomProperties\Resources\ResourceStrings.cs
+c:\Projects\NORMA-plus\CustomProperties\Resources\ResourceStringsGenerator.cs
+c:\Projects\NORMA-plus\CustomProperties\Resources\ResourceStringsGenerator.xml
+c:\Projects\NORMA-plus\CustomProperties\VerbalizationSnippets\CustomPropertyVerbalizationSnippets.xml
+c:\Projects\NORMA-plus\CustomProperties\VerbalizationSnippets\CustomPropertyVerbalizationSnippets.xsd
+c:\Projects\NORMA-plus\Documentation\Help Project
+c:\Projects\NORMA-plus\Documentation\NameGeneration
+c:\Projects\NORMA-plus\Documentation\Relational Designer
+c:\Projects\NORMA-plus\Documentation\Creating ORM Schemas.doc
+c:\Projects\NORMA-plus\Documentation\ORMCoreMetaModel.orm
+c:\Projects\NORMA-plus\Documentation\OrmMetaModel.orm
+c:\Projects\NORMA-plus\Documentation\SoftwareDesignSpec.doc
+c:\Projects\NORMA-plus\Documentation\SoftwareDesignSpec.docx
+c:\Projects\NORMA-plus\Documentation\Help Project\images
+c:\Projects\NORMA-plus\Documentation\Help Project\Script
+c:\Projects\NORMA-plus\Documentation\Help Project\Stylesheets
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages
+c:\Projects\NORMA-plus\Documentation\Help Project\Neumont.ORM.General.hsp
+c:\Projects\NORMA-plus\Documentation\Help Project\readme.txt
+c:\Projects\NORMA-plus\Documentation\Help Project\stopwordlist.txt
+c:\Projects\NORMA-plus\Documentation\Help Project\images\drpdown.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\drpdown_orange.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\hs-tip.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image001.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image001.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image002.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image002.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image003.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image003.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image004.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image004.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image005.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image005.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image006.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image006.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image007.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image007.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image008.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image008.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image009.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image009.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image010.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image010.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image011.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image011.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image012.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image012.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image013.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image013.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image014.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image014.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image015.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image015.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image016.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image016.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image017.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image017.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image018.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image018.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image019.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image019.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image020.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image020.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image021.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image021.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image022.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image022.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image023.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image023.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image024.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image024.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image025.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image025.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image026.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image026.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image027.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image027.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image028.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image028.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image029.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image029.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image030.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image030.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image031.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image031.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image032.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image032.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image033.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image033.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image034.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image034.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image035.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image035.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image036.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image036.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image037.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image037.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image038.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image038.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image039.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image039.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image040.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image040.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image041.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image041.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image042.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image042.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image043.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image043.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image044.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image044.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image045.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image045.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image046.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image046.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image047.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image047.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image048.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image048.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image049.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image049.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image050.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image050.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image051.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image051.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image052.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image052.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image053.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image053.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image054.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image054.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image055.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image055.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image056.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image056.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image057.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image057.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image058.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image058.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image059.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image059.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image060.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image060.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image061.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image061.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image062.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image062.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image063.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image063.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image064.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image064.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image065.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image065.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image066.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image066.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image067.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image067.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image068.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image068.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image069.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image069.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image070.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image070.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image071.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image071.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image072.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image072.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image073.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image073.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image074.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image074.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image075.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image075.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image076.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image076.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image077.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image077.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image078.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image078.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image079.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image079.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image080.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image080.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image081.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image081.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image082.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image082.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image083.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image083.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image084.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image084.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image085.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image085.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image086.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image086.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image087.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image087.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image088.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image088.jpg
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image089.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image090.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image091.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image092.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image093.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image094.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image095.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image096.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image097.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image098.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image099.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image100.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image101.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image102.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image103.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image104.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image105.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image106.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image107.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image108.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image109.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image110.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image111.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image112.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image113.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image114.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image115.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image116.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image117.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image118.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image119.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image120.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image121.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image122.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image123.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image124.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image125.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image126.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image127.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image128.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image129.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image130.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image131.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image132.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image133.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image134.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image135.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image136.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image137.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image138.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image139.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image140.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image141.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image142.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image143.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image144.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image145.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image146.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image147.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image148.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image149.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image150.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image151.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image152.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image153.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image154.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image155.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image156.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image157.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image158.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image159.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image160.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image161.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image162.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image163.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image164.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image165.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image166.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image167.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image168.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image169.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image170.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image171.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image172.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image173.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image174.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image175.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image176.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image177.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image178.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image179.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image180.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image181.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image182.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image183.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image184.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image185.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image186.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image187.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image188.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image189.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image190.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image191.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image192.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image193.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image194.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image195.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image196.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image197.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image198.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image199.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image200.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image201.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image202.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\Image203.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\languagefilter.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\images\seealso.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\Script\fts.js
+c:\Projects\NORMA-plus\Documentation\Help Project\Script\helpstudio.js
+c:\Projects\NORMA-plus\Documentation\Help Project\Script\languagefilter.js
+c:\Projects\NORMA-plus\Documentation\Help Project\Stylesheets\helpstudio.css
+c:\Projects\NORMA-plus\Documentation\Help Project\Stylesheets\languagefiltered.css
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\0.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\1.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\-1.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\10.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\11.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\12.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\13.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\14.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\15.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\16.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\17.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\18.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\19.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\2.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\20.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\21.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\22.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\23.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\24.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\25.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\26.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\27.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\28.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\29.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\3.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\30.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\31.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\32.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\33.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\34.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\35.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\36.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\37.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\38.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\39.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\4.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\40.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\41.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\42.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\43.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\44.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\45.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\46.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\5.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\6.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\7.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\8.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\9.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\bullet.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\minus.gif
+c:\Projects\NORMA-plus\Documentation\Help Project\WebImages\plus.gif
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo
+c:\Projects\NORMA-plus\Documentation\NameGeneration\demo model.bmp
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationSpec v1_0.doc
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo.sln
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\bin
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\obj
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\Properties
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\app.config
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\Generator.cs
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\NameGenerationDemo.csproj
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\NORMA Name Generation.cs
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\NORMA Name Generation.Designer.cs
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\NORMA Name Generation.resx
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\Program.cs
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\schemaForm.cs
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\schemaForm.Designer.cs
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\schemaForm.resx
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\bin\Debug
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\bin\Release
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\obj\Debug
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\obj\Release
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\obj\Debug\NameGenerationDemo.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\obj\Release\NameGenerationDemo.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\Properties\Resources.Designer.cs
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\Properties\Resources.resx
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\Properties\Settings.Designer.cs
+c:\Projects\NORMA-plus\Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\Properties\Settings.settings
+c:\Projects\NORMA-plus\Documentation\Relational Designer\FinalHighLevel.docx
+c:\Projects\NORMA-plus\Documentation\Relational Designer\RelationalDesignerVectorGraphics.svg
+c:\Projects\NORMA-plus\Documentation\Relational Designer\RelationalDiagrammingOverview.docx
+c:\Projects\NORMA-plus\Documentation\Relational Designer\RelationDesignerReqDoc1.docx
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge
+c:\Projects\NORMA-plus\EntityRelationship\EntityRelationship.sln
+c:\Projects\NORMA-plus\EntityRelationship\EntityRelationship.VS2008.sln
+c:\Projects\NORMA-plus\EntityRelationship\EntityRelationship.VS2010.sln
+c:\Projects\NORMA-plus\EntityRelationship\EntityRelationship.VS2012.sln
+c:\Projects\NORMA-plus\EntityRelationship\EntityRelationship.VS2013.sln
+c:\Projects\NORMA-plus\EntityRelationship\EntityRelationship.VS2015.sln
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\Design
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\Properties
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\Resources
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\SurveyImplementations
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\BarkerErModel.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\BarkerErModel.csproj
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\BarkerErModel.resx
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\BarkerERModel.xsd
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\BerModel.AttachRules.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\BerModel.AttachRules.xml
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\BerModel.dsl
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\BerModel.SerializationExtensions.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\BerModel.SerializationExtensions.xml
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\BerModel.SurveyQuestionProvider.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\BerModel.SurveyQuestionProvider.xml
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\Install.bat
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\Plix.xml
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\Design\BarkerModelElementTypeDescriptor.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainClasses.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainClasses.tt
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainClasses.VS2010.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainClasses.VS2010.tt
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainRelationships.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainRelationships.tt
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainRelationships.VS2010.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\GeneratedCode\DomainRelationships.VS2010.tt
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\Resources\ResourceStrings.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\Resources\ResourceStringsGenerator.cs
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\Resources\ResourceStringsGenerator.xml
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\Resources\SurveyTree.ImageStrip.png
+c:\Projects\NORMA-plus\EntityRelationship\BarkerErModel\SurveyImplementations\SurveyQuestions.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\Properties
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\Resources
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\Install.bat
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\ModificationTracker.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\OialBerBridge.AttachRules.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\OialBerBridge.AttachRules.xml
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\OialBerBridge.csproj
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\OialBerBridge.dsl
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\OialBerBridge.SerializationExtensions.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\OialBerBridge.SerializationExtensions.xml
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\OialDcilBridge.DeserializationFixupListeners.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\ORMAbstractionToBarkerERBridge.xsd
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\Plix.xml
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainClasses.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainClasses.tt
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainClasses.VS2010.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainClasses.VS2010.tt
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainRelationships.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainRelationships.tt
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainRelationships.VS2010.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\GeneratedCode\DomainRelationships.VS2010.tt
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\Resources\ResourceStrings.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\Resources\ResourceStringsGenerator.cs
+c:\Projects\NORMA-plus\EntityRelationship\OialBerBridge\Resources\ResourceStringsGenerator.xml
+c:\Projects\NORMA-plus\ExtensionExample\GeneratedCode
+c:\Projects\NORMA-plus\ExtensionExample\Properties
+c:\Projects\NORMA-plus\ExtensionExample\CustomExtensionElement.cs
+c:\Projects\NORMA-plus\ExtensionExample\CustomExtensionError.cs
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionDomainModel.AttachRules.cs
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionDomainModel.AttachRules.xml
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionDomainModel.DeserializationFixupListeners.cs
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionDomainModel.SerializationExtensions.cs
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionDomainModel.SerializationExtensions.xml
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionDomainModelTest.xsd
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionExample.csproj
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionExample.dsl
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionExample.sln
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionExample.VS2008.sln
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionExample.VS2010.sln
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionExample.VS2012.sln
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionExample.VS2013.sln
+c:\Projects\NORMA-plus\ExtensionExample\ExtensionExample.VS2015.sln
+c:\Projects\NORMA-plus\ExtensionExample\Install.bat
+c:\Projects\NORMA-plus\ExtensionExample\Plix.xml
+c:\Projects\NORMA-plus\ExtensionExample\GeneratedCode\DomainClasses.cs
+c:\Projects\NORMA-plus\ExtensionExample\GeneratedCode\DomainClasses.tt
+c:\Projects\NORMA-plus\ExtensionExample\GeneratedCode\DomainClasses.VS2010.cs
+c:\Projects\NORMA-plus\ExtensionExample\GeneratedCode\DomainClasses.VS2010.tt
+c:\Projects\NORMA-plus\ExtensionExample\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\ExtensionExample\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\ExtensionExample\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\ExtensionExample\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\ExtensionExample\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\ExtensionExample\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\ExtensionExample\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\ExtensionExample\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\ExtensionExample\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\Oial\OialModel
+c:\Projects\NORMA-plus\Oial\ORMOialBridge
+c:\Projects\NORMA-plus\Oial\Oial.sln
+c:\Projects\NORMA-plus\Oial\Oial.VS2008.sln
+c:\Projects\NORMA-plus\Oial\Oial.VS2010.sln
+c:\Projects\NORMA-plus\Oial\Oial.VS2012.sln
+c:\Projects\NORMA-plus\Oial\Oial.VS2013.sln
+c:\Projects\NORMA-plus\Oial\Oial.VS2015.sln
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode
+c:\Projects\NORMA-plus\Oial\OialModel\Properties
+c:\Projects\NORMA-plus\Oial\OialModel\Install.bat
+c:\Projects\NORMA-plus\Oial\OialModel\OIAL.orm
+c:\Projects\NORMA-plus\Oial\OialModel\OIAL.xml
+c:\Projects\NORMA-plus\Oial\OialModel\OIAL.xsd
+c:\Projects\NORMA-plus\Oial\OialModel\OIALDatatypes.xsd
+c:\Projects\NORMA-plus\Oial\OialModel\OialModel.AttachRules.cs
+c:\Projects\NORMA-plus\Oial\OialModel\OialModel.AttachRules.xml
+c:\Projects\NORMA-plus\Oial\OialModel\OialModel.csproj
+c:\Projects\NORMA-plus\Oial\OialModel\OialModel.csproj.user
+c:\Projects\NORMA-plus\Oial\OialModel\OialModel.dsl
+c:\Projects\NORMA-plus\Oial\OialModel\OialModel.SerializationExtensions.cs
+c:\Projects\NORMA-plus\Oial\OialModel\OialModel.SerializationExtensions.xml
+c:\Projects\NORMA-plus\Oial\OialModel\Plix.xml
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainClasses.cs
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainClasses.tt
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainClasses.VS2010.cs
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainClasses.VS2010.tt
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainRelationships.cs
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainRelationships.tt
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainRelationships.VS2010.cs
+c:\Projects\NORMA-plus\Oial\OialModel\GeneratedCode\DomainRelationships.VS2010.tt
+c:\Projects\NORMA-plus\Oial\OialModel\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\Properties
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\FactTypeMapsTowardsRole.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\Install.bat
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\ModificationTracker.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\OialModelIsForORMModel.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\OialModelIsForORMModel.DeserializationFixupListeners.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\ORMElementGateway.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\ORMOialBridge.AttachRules.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\ORMOialBridge.AttachRules.xml
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\ORMOialBridge.csproj
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\ORMOialBridge.csproj.user
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\ORMOialBridge.dsl
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\ORMOialBridge.SerializationExtensions.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\ORMOialBridge.SerializationExtensions.xml
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\ORMOialBridgePermuter.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\ORMOialBridgeStructures.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\ORMToORMAbstraction.xsd
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\Plix.xml
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainClasses.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainClasses.tt
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainClasses.VS2010.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainClasses.VS2010.tt
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainRelationships.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainRelationships.tt
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainRelationships.VS2010.cs
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\GeneratedCode\DomainRelationships.VS2010.tt
+c:\Projects\NORMA-plus\Oial\ORMOialBridge\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode
+c:\Projects\NORMA-plus\OIALModel\Properties
+c:\Projects\NORMA-plus\OIALModel\install.bat
+c:\Projects\NORMA-plus\OIALModel\OIALModel.AttachRules.cs
+c:\Projects\NORMA-plus\OIALModel\OIALModel.AttachRules.xml
+c:\Projects\NORMA-plus\OIALModel\OIALModel.cs
+c:\Projects\NORMA-plus\OIALModel\OIALModel.csproj
+c:\Projects\NORMA-plus\OIALModel\OIALModel.DeserializationFixupListeners.cs
+c:\Projects\NORMA-plus\OIALModel\OIALModel.dsl
+c:\Projects\NORMA-plus\OIALModel\OIALModel.SerializationExtensions.cs
+c:\Projects\NORMA-plus\OIALModel\OIALModel.SerializationExtensions.xml
+c:\Projects\NORMA-plus\OIALModel\OIALModel.sln
+c:\Projects\NORMA-plus\OIALModel\OIALModel.VS2008.sln
+c:\Projects\NORMA-plus\OIALModel\OIALModel.VS2010.sln
+c:\Projects\NORMA-plus\OIALModel\OIALModel.VS2012.sln
+c:\Projects\NORMA-plus\OIALModel\OIALModel.VS2013.sln
+c:\Projects\NORMA-plus\OIALModel\OIALModel.VS2015.sln
+c:\Projects\NORMA-plus\OIALModel\OIALModel.xsd
+c:\Projects\NORMA-plus\OIALModel\Plix.xml
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainClasses.cs
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainClasses.tt
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainClasses.VS2010.cs
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainClasses.VS2010.tt
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainRelationships.cs
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainRelationships.tt
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainRelationships.VS2010.cs
+c:\Projects\NORMA-plus\OIALModel\GeneratedCode\DomainRelationships.VS2010.tt
+c:\Projects\NORMA-plus\OIALModel\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\Properties
+c:\Projects\NORMA-plus\ORM2CommandLineTest\App.config
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ChangeMapping.xslt
+c:\Projects\NORMA-plus\ORM2CommandLineTest\FakePass.xslt
+c:\Projects\NORMA-plus\ORM2CommandLineTest\Glasses.ico
+c:\Projects\NORMA-plus\ORM2CommandLineTest\install.bat
+c:\Projects\NORMA-plus\ORM2CommandLineTest\MapIds.xslt
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ORM2CommandLineTest.sln
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ORM2CommandLineTest.VS2008.sln
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMDocServices.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMModel.orm
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMStore.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMTaskItem.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMTaskProvider.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMTestReport.xsd
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMTestSuite.xsd
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMTestSuiteReport.xsd
+c:\Projects\NORMA-plus\ORM2CommandLineTest\Program.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ReadOnlyStream.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\Report.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ReportViewer.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ReportViewer.csproj
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ReportViewer.csproj.user
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ReportViewer.resx
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ReportViewerProgram.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ResourceStrings.Designer.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\ResourceStrings.resx
+c:\Projects\NORMA-plus\ORM2CommandLineTest\Settings.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\Settings.Designer.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\Settings.settings
+c:\Projects\NORMA-plus\ORM2CommandLineTest\Suite.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\TestAttribute.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\TestDriverApp.csproj
+c:\Projects\NORMA-plus\ORM2CommandLineTest\TestDriverApp.csproj.user
+c:\Projects\NORMA-plus\ORM2CommandLineTest\TestDriverEngine.csproj
+c:\Projects\NORMA-plus\ORM2CommandLineTest\TestInterfaces.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\Properties\AppAssemblyInfo.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\ORM2CommandLineTest\Properties\ReportViewerAssemblyInfo.cs
+c:\Projects\NORMA-plus\ORMModel\Framework
+c:\Projects\NORMA-plus\ORMModel\Load
+c:\Projects\NORMA-plus\ORMModel\ObjectModel
+c:\Projects\NORMA-plus\ORMModel\Properties
+c:\Projects\NORMA-plus\ORMModel\Resources
+c:\Projects\NORMA-plus\ORMModel\ShapeModel
+c:\Projects\NORMA-plus\ORMModel\Shell
+c:\Projects\NORMA-plus\ORMModel\Transforms
+c:\Projects\NORMA-plus\ORMModel\ORMModel.csproj
+c:\Projects\NORMA-plus\ORMModel\ORMModel.csproj.user
+c:\Projects\NORMA-plus\ORMModel\Plix.xml
+c:\Projects\NORMA-plus\ORMModel\Framework\Design
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagrams
+c:\Projects\NORMA-plus\ORMModel\Framework\GeneratedCode
+c:\Projects\NORMA-plus\ORMModel\Framework\Resources
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell
+c:\Projects\NORMA-plus\ORMModel\Framework\Comparers.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\CopyMergeServices.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\CoreDesignSurfaceDummy.dsl
+c:\Projects\NORMA-plus\ORMModel\Framework\DeserializationManager.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Framework.AttachRules.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Framework.AttachRules.xml
+c:\Projects\NORMA-plus\ORMModel\Framework\Framework.dsl
+c:\Projects\NORMA-plus\ORMModel\Framework\FrameworkDomainModel.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\FrameworkServices.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\FrameworkServices.resx
+c:\Projects\NORMA-plus\ORMModel\Framework\HashSet.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\ModelingEventManager.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\NamedElementDictionary.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\SystemCore.dsl
+c:\Projects\NORMA-plus\ORMModel\Framework\Utility.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\Editors
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\DomainTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\ElementTypeDescriptionProvider.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\ElementTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\EnumConverter.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\ExpandableElementConverter.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\PropertyProvider.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\ResourceAccessor.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\RolePlayerElementPropertyDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\Editors\EditorUtility.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\Editors\ElementPicker.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\Editors\FlagsEnumEditor.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\Editors\FlagsEnumListBox.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\Editors\MultilineTextEditor.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\Editors\SizePreservingEditor.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Design\Editors\TreePicker.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\TraceUtility.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\TransactionLogViewer.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\TransactionLogViewer.Designer.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\TransactionLogViewer.resx
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\Blank.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\DomainClass.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\DomainModel.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\DomainProperty.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\DomainRelationship.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\ElementId.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\Filter.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\NewElementId.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\NewValue.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\OldElementId.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\OldValue.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\Partition.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\ReadMe.txt
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\SourceDomainRole.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagnostics\Resources\TargetDomainRole.bmp
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagrams\Design
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagrams\CustomFoldShapeGeometries.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagrams\LayoutEngine.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagrams\MultiShapeUtility.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagrams\ShapeExtension.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagrams\ToolboxUtility.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagrams\Design\DiagramTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagrams\Design\ModelingToolboxItemProvider.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagrams\Design\PresentationElementTypeDescriptionProvider.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Diagrams\Design\PresentationElementTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\GeneratedCode\DomainClasses.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\GeneratedCode\DomainClasses.tt
+c:\Projects\NORMA-plus\ORMModel\Framework\GeneratedCode\DomainClasses.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\ORMModel\Framework\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\ORMModel\Framework\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\ORMModel\Framework\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\ORMModel\Framework\GeneratedCode\DomainRelationships.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\GeneratedCode\DomainRelationships.tt
+c:\Projects\NORMA-plus\ORMModel\Framework\GeneratedCode\DomainRelationships.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Resources\Down.png
+c:\Projects\NORMA-plus\ORMModel\Framework\Resources\ResourceStrings.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Resources\ResourceStringsGenerator.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Resources\ResourceStringsGenerator.xml
+c:\Projects\NORMA-plus\ORMModel\Framework\Resources\Up.png
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DynamicSurveyTreeGrid
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramDisplay.AttachRules.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramDisplay.AttachRules.xml
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramDisplay.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramDisplay.DeserializationFixupListeners.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramDisplay.dsl
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramDisplay.SerializationExtensions.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramDisplay.SerializationExtensions.xml
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramDisplay.xsd
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramMenuDisplay.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramOrderDialog.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramOrderDialog.Designer.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramOrderDialog.resx
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramSurvey.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramSurvey.SurveyQuestionProvider.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramSurvey.SurveyQuestionProvider.xml
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DiagramTabPage.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\MultiDiagramDocView.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\MultiDiagramDocViewControl.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\OnScreenTypeEditorHost.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\SerializationEngine.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\ShellInterfaces.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\ShellUtility.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\StandardMultiColumnTree.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\StandardVirtualTreeControl.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\ToolWindowActivator.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\ToolWindowDiagramView.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DynamicSurveyTreeGrid\LinkOverlay.png
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DynamicSurveyTreeGrid\ListGrouper.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DynamicSurveyTreeGrid\MainList.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DynamicSurveyTreeGrid\SampleDataElementNode.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DynamicSurveyTreeGrid\SimpleListShifter.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DynamicSurveyTreeGrid\SurveyClasses.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DynamicSurveyTreeGrid\SurveyInterfaces.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\DynamicSurveyTreeGrid\SurveyTreeControl.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainClasses.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainClasses.tt
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainClasses.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainClasses.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainRelationships.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainRelationships.tt
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainRelationships.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\Framework\Shell\GeneratedCode\DomainRelationships.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\Load\ExtensionLoader.cs
+c:\Projects\NORMA-plus\ORMModel\Load\ExtensionStripper.xslt
+c:\Projects\NORMA-plus\ORMModel\Load\ModelLoader.cs
+c:\Projects\NORMA-plus\ORMModel\Load\ORM2Root.xsd
+c:\Projects\NORMA-plus\ORMModel\Load\ORMSerializationEngine.cs
+c:\Projects\NORMA-plus\ORMModel\Load\VerbalizationManager.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SurveyImplementations
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationCoreSnippets
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationReportSnippets
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\CardinalityConstraint.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Constraint.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\DataType.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\DataTypesGenerator.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\DataTypesGenerator.xml
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\DataTypesGenerator.xsd
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\DataTypesGenerator.xslt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\FactType.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GenerationState.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Grouping.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\HierarchyContext.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ModelError.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ModelErrorDisplayFilter.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\NameAlias.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\NameGenerator.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Note.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Objectification.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ObjectType.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORM2Core.xsd
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORM2CoreXsd.htm
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMCore.AttachRules.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMCore.AttachRules.xml
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMCore.CopyMergeClosure.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMCore.CopyMergeClosure.xml
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMCore.DeserializationFixupListeners.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMCore.dsl
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMCore.ElementEquivalence.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMCore.SerializationExtensions.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMCore.SerializationExtensions.xml
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMCore.SurveyQuestionProvider.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMCore.SurveyQuestionProvider.xml
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMCoreModel.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMElementInterfaces.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMElements.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMElementUtilities.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMModel.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMModel.resx
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ORMModelInterfaces.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Reading.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ReadingOrder.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ReferenceMode.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Role.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\RolePath.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SamplePopulation.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SubtypeFact.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\UnaryBinarization.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\ValueRange.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Verbalization.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationCoreSnippetsDocumentation.html
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationDocumentation.xml
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationDocumentation.xslt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationDocumentationHTML.xslt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationGenerator.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationGenerator.Sets.xslt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationGenerator.xml
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationGenerator.xsd
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationGenerator.xslt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationReport.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationReportGenerator.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationReportGenerator.xml
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationReportGenerator.xslt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationSnippetSetsManager.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationUntypedSnippets.xsd
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\BlockAutomatedElementsPropertyDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\DataTypeTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\ElementGroupingTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\ExclusionConstraintTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\FactTypeDerivationRuleTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\FactTypeTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\FrequencyConstraintBoundConverter.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\MandatoryConstraintTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\NameGeneratorTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\ObjectificationRolePlayerPropertyDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\ObjectTypeTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\ORMModelElementTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\ORMModelTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\ReadingTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\ReferenceModeConverter.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\ReferenceModeTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\RoleTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\SetComparisonConstraintTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\SetConstraintTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\SubtypeDerivationRuleTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\SubtypeFactTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\UniquenessConstraintTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\ValueConstraintTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\AliasManagerForm.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\AliasManagerForm.Designer.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\AliasManagerForm.resx
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\AvailableVerbalizationSnippetsPicker.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\DataTypePicker.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\DerivationNoteEditor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\FrequencyConstraintMaxPicker.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\ModelErrorDisplayFilterEditor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\ObjectificationPickers.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\ORMEditorUtility.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\ReadingTextEditor.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\ReferenceModePickers.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\RingConstraintTypePicker.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\Design\Editors\RolePlayerPicker.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainClasses.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainClasses.tt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainClasses.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainClasses.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainRelationships.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainRelationships.tt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainRelationships.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\GeneratedCode\DomainRelationships.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SurveyImplementations\CardinalityConstraintAnswers.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SurveyImplementations\CategorySurveyQuestion.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SurveyImplementations\ConstraintAnswers.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SurveyImplementations\FactTypeAnswers.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SurveyImplementations\GroupingAnswers.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SurveyImplementations\NameGeneratorAnswers.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SurveyImplementations\NoteAnswers.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SurveyImplementations\ObjectTypeAnswers.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SurveyImplementations\ORMNamedElement.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SurveyImplementations\RoleAnswers.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\SurveyImplementations\ValueConstraintAnswers.cs
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationCoreSnippets\VerbalizationCoreBrowserNoHyperlinksSnippets.xml
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationCoreSnippets\VerbalizationCoreReportSnippets.xml
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationCoreSnippets\VerbalizationCoreSnippets.xml
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationCoreSnippets\VerbalizationCoreSnippets.xsd
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationReportSnippets\VerbalizationReportSnippets.xml
+c:\Projects\NORMA-plus\ORMModel\ObjectModel\VerbalizationReportSnippets\VerbalizationReportSnippets.xsd
+c:\Projects\NORMA-plus\ORMModel\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\ORMModel\Resources\AboutBox.ico
+c:\Projects\NORMA-plus\ORMModel\Resources\Commands.ImageStrip.png
+c:\Projects\NORMA-plus\ORMModel\Resources\DiagramBrowserImage.png
+c:\Projects\NORMA-plus\ORMModel\Resources\DiagramTabImage.png
+c:\Projects\NORMA-plus\ORMModel\Resources\ORM.ico
+c:\Projects\NORMA-plus\ORMModel\Resources\ResourceStrings.cs
+c:\Projects\NORMA-plus\ORMModel\Resources\ResourceStringsGenerator.cs
+c:\Projects\NORMA-plus\ORMModel\Resources\ResourceStringsGenerator.xml
+c:\Projects\NORMA-plus\ORMModel\Resources\SamplePopulationEditor.ImageStrip.png
+c:\Projects\NORMA-plus\ORMModel\Resources\SurveyTree.ImageStrip.png
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.BinaryFactType.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.EntityType.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.EqualityConstraint.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.ExclusionConstraint.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.ExclusiveOrConstraint.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.ExternalConstraintConnector.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.ExternalUniquenessConstraint.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.FrequencyConstraint.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.InclusiveOrConstraint.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.InternalUniquenessConstraint.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.ModelNote.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.ModelNoteConnector.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.ObjectifiedFactType.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.PreferredExternalUniquenessConstraint.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.RingConstraint.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.RoleConnector.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.SubsetConstraint.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.SubtypeConnector.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.TernaryFactType.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.UnaryFactType.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.ValueComparisonConstraint.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\Toolbox.ValueType.Bitmap.Id.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\ToolWindowIcons.bmp
+c:\Projects\NORMA-plus\ORMModel\Resources\ToolWindowIcons.png
+c:\Projects\NORMA-plus\ORMModel\Resources\VerbalizationToolbarImages.png
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\Design
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\AutoSizeTextField.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\CardinalityConstraintShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\CompositeLinkDecorator.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ConnectExternalConstraintAllowed.cur
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ConnectExternalConstraintSearching.cur
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ConnectInternalConstraintAllowed.cur
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ConnectInternalConstraintSearching.cur
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ConnectModelNoteAllowed.cur
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ConnectModelNoteSearching.cur
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ConnectRoleAllowed.cur
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ConnectRoleReorderAllowed.cur
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ConnectRoleSearching.cur
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ConnectSubtypeAllowed.cur
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ConnectSubtypeSearching.cur
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\DynamicColorTextField.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ExternalConstraintConnectAction.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ExternalConstraintLink.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ExternalConstraintShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\FactTypeShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\FloatingTextShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\FrequencyConstraintShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\InternalConstraintConnectAction.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ModelNoteConnectAction.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ModelNoteLink.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ModelNoteShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ObjectTypeShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORM2Diagram.xsd
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMBaseBinaryLinkShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMBaseBinaryLinkShape.Extensions.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMBaseShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMBaseShape.SubFieldMouseExtensions.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMBaseShapeSubField.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMDiagram.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMDiagram.resx
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMShape.AttachRules.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMShape.AttachRules.xml
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMShape.DeserializationFixupListeners.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMShape.dsl
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMShape.EventSubscriber.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMShape.SerializationExtensions.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ORMShape.SerializationExtensions.xml
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ReadingShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\RingConstraintShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\RoleConnectorAction.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\RoleNameShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\RolePlayerLink.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\SubtypeConnectorAction.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\SubtypeLink.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ValueComparisonConstraintShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ValueRangeLink.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ValueRangeShape.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\ViewFixupRules.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\Design\Editors
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\Design\FactTypeShapeTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\Design\ObjectifiedFactTypeNameShapeTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\Design\ObjectTypeShapeTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\Design\ORMBaseBinaryLinkShapeTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\Design\ORMBaseShapeTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\Design\ORMDiagramTypeDescriptor.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\Design\ValueConstraintShapeDisplayBoundConverter.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\Design\Editors\ValueConstraintShapeDisplayBoundPicker.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\Connectors.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\Connectors.tt
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\Connectors.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\Connectors.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\Diagram.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\Diagram.tt
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\Diagram.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\Diagram.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\DomainRelationships.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\DomainRelationships.tt
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\DomainRelationships.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\DomainRelationships.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\Shapes.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\Shapes.tt
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\Shapes.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\Shapes.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\ToolboxHelper.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\ToolboxHelper.tt
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\ToolboxHelper.VS2010.cs
+c:\Projects\NORMA-plus\ORMModel\ShapeModel\GeneratedCode\ToolboxHelper.VS2010.tt
+c:\Projects\NORMA-plus\ORMModel\Shell\Converters
+c:\Projects\NORMA-plus\ORMModel\Shell\FactEditor
+c:\Projects\NORMA-plus\ORMModel\Shell\PackageResources
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems
+c:\Projects\NORMA-plus\ORMModel\Shell\catalog.xml
+c:\Projects\NORMA-plus\ORMModel\Shell\CustomReferenceModeEditor.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\CustomReferenceModesBranch.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ExtensionManager.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ExtensionManager.Designer.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ExtensionManager.resx
+c:\Projects\NORMA-plus\ORMModel\Shell\GenerateReportDialog.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\GenerateReportDialog.Designer.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\GenerateReportDialog.resx
+c:\Projects\NORMA-plus\ORMModel\Shell\ImportStepOptions.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ImportStepOptions.Designer.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ImportStepOptions.resx
+c:\Projects\NORMA-plus\ORMModel\Shell\IntrinsicReferenceModesBranch.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\IORMSelectionContainer.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\LayoutManager.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ModelErrorDisplayFilterForm.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ModelErrorDisplayFilterForm.Designer.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ModelErrorDisplayFilterForm.resx
+c:\Projects\NORMA-plus\ORMModel\Shell\OptionsPage.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMCommandSet.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMContextWindow.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMDesignerCommandManager.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMDesignerSettings.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMDesignerSettings.xml
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMDesignerSettings.xsd
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMDesignerSettingsXsd.htm
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMDiagramSpy.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMDocData.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMDocDataServices.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMDocView.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMEditorFactory.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMFontsAndColors.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMGeneralTemplateWizard.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMLayoutEngines.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMModelBrowser.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMModelBrowserCommandSet.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMNotesWindow.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMPackage.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMReadingEditor.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMReferenceModeEditorWindow.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMSamplePopulationToolWindow.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMToolboxHelper.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMToolWindow.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ORMVerbalizationToolWindow.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ReadingEditor.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ReadingEditor.Designer.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ReadingEditor.resx
+c:\Projects\NORMA-plus\ORMModel\Shell\ReadingRichTextBox.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ReferenceModeHeaderBranch.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\ReferenceModeKindsBranch.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\SamplePopulationEditor.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\SamplePopulationEditor.Designer.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\SamplePopulationEditor.resx
+c:\Projects\NORMA-plus\ORMModel\Shell\Converters\CoreModelImport.xslt
+c:\Projects\NORMA-plus\ORMModel\Shell\Converters\CoreUpgradeTo2006-01.xslt
+c:\Projects\NORMA-plus\ORMModel\Shell\Converters\CoreUpgradeTo2006-04.xslt
+c:\Projects\NORMA-plus\ORMModel\Shell\Converters\CustomPropertiesPreviewTo2007-11.xslt
+c:\Projects\NORMA-plus\ORMModel\Shell\Converters\DCILtoOIAL.xslt
+c:\Projects\NORMA-plus\ORMModel\Shell\Converters\OIALtoORM.xslt
+c:\Projects\NORMA-plus\ORMModel\Shell\Converters\RelationalViewUpgradeTo2007-11.xslt
+c:\Projects\NORMA-plus\ORMModel\Shell\Converters\RemoveOIAL2006-01.xslt
+c:\Projects\NORMA-plus\ORMModel\Shell\Converters\RootUpgradeTo2006-01.xslt
+c:\Projects\NORMA-plus\ORMModel\Shell\Converters\RootUpgradeTo2006-04.xslt
+c:\Projects\NORMA-plus\ORMModel\Shell\Converters\VisioToCoreModelImport.xslt
+c:\Projects\NORMA-plus\ORMModel\Shell\FactEditor\FactEditorAuthoringScope.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\FactEditor\FactEditorDeclarations.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\FactEditor\FactEditorFontsAndColors.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\FactEditor\FactEditorLanguageService.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\FactEditor\FactEditorParser.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\FactEditor\FactEditorSaver.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\FactEditor\FactEditorScanner.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\FactEditor\FactEditorTokenHelper.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\FactEditor\FactEditorTokenInfo.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\PackageResources\PackageResources.cs
+c:\Projects\NORMA-plus\ORMModel\Shell\PackageResources\PkgCmd.vsct
+c:\Projects\NORMA-plus\ORMModel\Shell\PackageResources\VSPackage.resx
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\NewFileItems
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\VS2005
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\VS2008
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\Web
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\CSharp.zip
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\JSharp.zip
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\Modeling.zip
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\VisualBasic.zip
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\VisualC.zip
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\NewFileItems\NewORMModel.vsdir
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\NewFileItems\ORMModel.orm
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\VS2005\General.zip
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\VS2008\General.zip
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\Web\CSharp.zip
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\Web\JSharp.zip
+c:\Projects\NORMA-plus\ORMModel\Shell\ProjectItems\Web\VisualBasic.zip
+c:\Projects\NORMA-plus\ORMModel\Transforms\AttachRulesGenerator.xsd
+c:\Projects\NORMA-plus\ORMModel\Transforms\AttachRulesGenerator.xslt
+c:\Projects\NORMA-plus\ORMModel\Transforms\catalog.xml
+c:\Projects\NORMA-plus\ORMModel\Transforms\CopyMergeClosureGenerator.xsd
+c:\Projects\NORMA-plus\ORMModel\Transforms\CopyMergeClosureGenerator.xslt
+c:\Projects\NORMA-plus\ORMModel\Transforms\RegisterSchemaFiles.bat
+c:\Projects\NORMA-plus\ORMModel\Transforms\RegisterSchemaFiles.VSCatalog.end.txt
+c:\Projects\NORMA-plus\ORMModel\Transforms\RegisterSchemaFiles.VSCatalog.start.txt
+c:\Projects\NORMA-plus\ORMModel\Transforms\RegisterSchemaFilesVS2008.bat
+c:\Projects\NORMA-plus\ORMModel\Transforms\ResourceStringsGenerator.xsd
+c:\Projects\NORMA-plus\ORMModel\Transforms\ResourceStringsGenerator.xslt
+c:\Projects\NORMA-plus\ORMModel\Transforms\SerializationExtensions.xsd
+c:\Projects\NORMA-plus\ORMModel\Transforms\SerializationExtensions.xslt
+c:\Projects\NORMA-plus\ORMModel\Transforms\SurveyQuestionProvider.xsd
+c:\Projects\NORMA-plus\ORMModel\Transforms\SurveyQuestionProvider.xslt
+c:\Projects\NORMA-plus\ORMModel\Transforms\XSDtoHTML.xslt
+c:\Projects\NORMA-plus\RelationalModel\DcilModel
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge
+c:\Projects\NORMA-plus\RelationalModel\Dil.sln
+c:\Projects\NORMA-plus\RelationalModel\Dil.VS2008.sln
+c:\Projects\NORMA-plus\RelationalModel\Dil.VS2010.sln
+c:\Projects\NORMA-plus\RelationalModel\Dil.VS2012.sln
+c:\Projects\NORMA-plus\RelationalModel\Dil.VS2013.sln
+c:\Projects\NORMA-plus\RelationalModel\Dil.VS2015.sln
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Design
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Properties
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Resources
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\SurveyImplementations
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Catalog.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Catalog.resx
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Column.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\ConceptualDatabase.xsd
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\DcilModel.AttachRules.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\DcilModel.AttachRules.xml
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\DcilModel.csproj
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\DcilModel.DeserializationFixupListeners.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\DcilModel.dsl
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\DcilModel.SerializationExtensions.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\DcilModel.SerializationExtensions.xml
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\DcilModel.SurveyQuestionProvider.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\DcilModel.SurveyQuestionProvider.xml
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Install.bat
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Plix.xml
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\ReferenceConstraint.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Resources.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Schema.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Table.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Verbalization.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Design\Editors
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Design\ColumnTypeDescriptor.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Design\ConceptualDatabaseModelElementTypeDescriptor.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Design\SchemaTypeDescriptor.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Design\TableTypeDescriptor.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Design\Editors\ColumnDataTypePicker.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainClasses.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainClasses.tt
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainClasses.VS2010.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainClasses.VS2010.tt
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainRelationships.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainRelationships.tt
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainRelationships.VS2010.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\GeneratedCode\DomainRelationships.VS2010.tt
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Resources\ResourceStrings.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Resources\ResourceStringsGenerator.cs
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Resources\ResourceStringsGenerator.xml
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\Resources\SurveyTree.ImageStrip.png
+c:\Projects\NORMA-plus\RelationalModel\DcilModel\SurveyImplementations\SurveyQuestions.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\Properties
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\Resources
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\AssimilationMapping.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\Install.bat
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\MappingCustomizationModel.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\MappingCustomizationModel.resx
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\ModificationTracker.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\NameGeneration.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\OialDcilBridge.AttachRules.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\OialDcilBridge.AttachRules.xml
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\OialDcilBridge.csproj
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\OialDcilBridge.DeserializationFixupListeners.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\OialDcilBridge.dsl
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\OialDcilBridge.SerializationExtensions.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\OialDcilBridge.SerializationExtensions.xml
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\ORMAbstractionToConceptualDatabase.xsd
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\Plix.xml
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\ReferenceModeNaming.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\SchemaCustomization.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\Verbalization.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainClasses.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainClasses.tt
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainClasses.VS2010.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainClasses.VS2010.tt
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainModel.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainModel.tt
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainModel.VS2010.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainModel.VS2010.tt
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainModelResx.resx
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainModelResx.tt
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainModelResx.VS2010.resx
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainModelResx.VS2010.tt
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainRelationships.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainRelationships.tt
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainRelationships.VS2010.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\GeneratedCode\DomainRelationships.VS2010.tt
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\Resources\ResourceStrings.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\Resources\ResourceStringsGenerator.cs
+c:\Projects\NORMA-plus\RelationalModel\OialDcilBridge\Resources\ResourceStringsGenerator.xml
+c:\Projects\NORMA-plus\Setup\Bitmaps
+c:\Projects\NORMA-plus\Setup\UI
+c:\Projects\NORMA-plus\Setup\ComponentGroups.wxs
+c:\Projects\NORMA-plus\Setup\Components.wxs
+c:\Projects\NORMA-plus\Setup\Config.wxi
+c:\Projects\NORMA-plus\Setup\DILSchemaCatalog.xml
+c:\Projects\NORMA-plus\Setup\Features.wxs
+c:\Projects\NORMA-plus\Setup\NORMAItemTemplates.wxi
+c:\Projects\NORMA-plus\Setup\NORMASchemaCatalog.VS2005.xml
+c:\Projects\NORMA-plus\Setup\NORMASchemaCatalog.VS2008.xml
+c:\Projects\NORMA-plus\Setup\NORMASchemaCatalog.VS2010.xml
+c:\Projects\NORMA-plus\Setup\NORMASchemaCatalog.VS2012.xml
+c:\Projects\NORMA-plus\Setup\NORMASchemaCatalog.VS2013.xml
+c:\Projects\NORMA-plus\Setup\NORMASchemaCatalog.VS2015.xml
+c:\Projects\NORMA-plus\Setup\NORMAVSPackageRegistry.wxi
+c:\Projects\NORMA-plus\Setup\ORMSchemaCatalog.xml
+c:\Projects\NORMA-plus\Setup\Product.wxs
+c:\Projects\NORMA-plus\Setup\Readme.htm
+c:\Projects\NORMA-plus\Setup\ReadMe.txt
+c:\Projects\NORMA-plus\Setup\Setup.sln
+c:\Projects\NORMA-plus\Setup\Setup.VS2005.bat
+c:\Projects\NORMA-plus\Setup\Setup.VS2008.bat
+c:\Projects\NORMA-plus\Setup\Setup.VS2008.sln
+c:\Projects\NORMA-plus\Setup\Setup.VS2010.bat
+c:\Projects\NORMA-plus\Setup\Setup.VS2010.sln
+c:\Projects\NORMA-plus\Setup\Setup.VS2012.sln
+c:\Projects\NORMA-plus\Setup\Setup.VS2013.sln
+c:\Projects\NORMA-plus\Setup\Setup.VS2015.sln
+c:\Projects\NORMA-plus\Setup\Setup.wixproj
+c:\Projects\NORMA-plus\Setup\Strings.wxl
+c:\Projects\NORMA-plus\Setup\UI.wxs
+c:\Projects\NORMA-plus\Setup\Bitmaps\bannrbmp.bmp
+c:\Projects\NORMA-plus\Setup\Bitmaps\dlgbmp.bmp
+c:\Projects\NORMA-plus\Setup\Bitmaps\info.ico
+c:\Projects\NORMA-plus\Setup\Bitmaps\warning.ico
+c:\Projects\NORMA-plus\Setup\UI\CancelDlg.wxs
+c:\Projects\NORMA-plus\Setup\UI\Common.wxs
+c:\Projects\NORMA-plus\Setup\UI\ErrorDlg.wxs
+c:\Projects\NORMA-plus\Setup\UI\ErrorProgressText.wxs
+c:\Projects\NORMA-plus\Setup\UI\ExitDialog.wxs
+c:\Projects\NORMA-plus\Setup\UI\FatalError.wxs
+c:\Projects\NORMA-plus\Setup\UI\FilesInUse.wxs
+c:\Projects\NORMA-plus\Setup\UI\MaintenanceTypeDlg.wxs
+c:\Projects\NORMA-plus\Setup\UI\MaintenanceWelcomeDlg.wxs
+c:\Projects\NORMA-plus\Setup\UI\MsiRMFilesInUse.wxs
+c:\Projects\NORMA-plus\Setup\UI\OutOfDiskDlg.wxs
+c:\Projects\NORMA-plus\Setup\UI\OutOfRbDiskDlg.wxs
+c:\Projects\NORMA-plus\Setup\UI\PrepareDlg.wxs
+c:\Projects\NORMA-plus\Setup\UI\ProgressDlg.wxs
+c:\Projects\NORMA-plus\Setup\UI\ResumeDlg.wxs
+c:\Projects\NORMA-plus\Setup\UI\UserExit.wxs
+c:\Projects\NORMA-plus\Setup\UI\VerifyReadyDlg.wxs
+c:\Projects\NORMA-plus\Setup\UI\WaitForCostingDlg.wxs
+c:\Projects\NORMA-plus\Setup\UI\WelcomeDlg.wxs
+c:\Projects\NORMA-plus\TestSuites\AutomationTestSample
+c:\Projects\NORMA-plus\TestSuites\RegressionTests
+c:\Projects\NORMA-plus\TestSuites\RelationalTests
+c:\Projects\NORMA-plus\TestSuites\TestSample
+c:\Projects\NORMA-plus\TestSuites\ErrorCases.txt
+c:\Projects\NORMA-plus\TestSuites\ORMTestDriver.bat
+c:\Projects\NORMA-plus\TestSuites\ORMTestReportViewer.bat
+c:\Projects\NORMA-plus\TestSuites\RelationalSuites.xml
+c:\Projects\NORMA-plus\TestSuites\SampleSuites.xml
+c:\Projects\NORMA-plus\TestSuites\TestSuites.sln
+c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\Properties
+c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\TestPlans
+c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\AutomationTestSample.csproj
+c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\CommonTestHooks.cs
+c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\EmptyModel.orm
+c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\ORMTestHooks.cs
+c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\RolePlayerRequiredErrorTests.cs
+c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\TestVisualStudio.cs
+c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\ToolboxTests.cs
+c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\TestPlans\CompatibleRolePlayer.txt
+c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\TestPlans\TestPlanTemplate.txt
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin.sln
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\RunTest.bat
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\RunTests.bat
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\TestConfiguration.bat
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\TestHost.bat
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\TestSuite.xml
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\VSEnvironmentSnapshot.bat
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\CommandBar.Designer.cs
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\CommandBar.resx
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\Connect.cs
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.AddIn
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.AddIn.end
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.AddIn.start
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.csproj
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.sln
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\Test.cs
+c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\Tests.cs
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\Properties
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\RelationalTests.csproj
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.cs
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test1.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test1.Load.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test1.Report.xml
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test2.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test2.Compare.WithIndependent.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test2.Load.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test2.Report.xml
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test3.Compare.AfterReorder.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test3.Compare.OriginalOrder.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test3.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test3.Load.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test3.Report.xml
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test4.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test4.Load.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test4.Report.xml
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test5.Compare.FullyAbsorbed.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test5.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test5.Compare.SeparateObjectification.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test5.Compare.SeparateRemoteSupertype.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test5.Load.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test5.Report.xml
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test6.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test6.Load.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test6.Report.xml
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test7.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test7.Load.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test7.Report.xml
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test8.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test8.Load.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test8.Report.xml
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test9.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test9.Load.orm
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test9.Report.xml
+c:\Projects\NORMA-plus\TestSuites\RelationalTests\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintOverlap
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests
+c:\Projects\NORMA-plus\TestSuites\TestSample\NotWellModeledTests
+c:\Projects\NORMA-plus\TestSuites\TestSample\Properties
+c:\Projects\NORMA-plus\TestSuites\TestSample\Sample
+c:\Projects\NORMA-plus\TestSuites\TestSample\SamplePopulationTests
+c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests
+c:\Projects\NORMA-plus\TestSuites\TestSample\ormtest.snippet
+c:\Projects\NORMA-plus\TestSuites\TestSample\ormtestclass.snippet
+c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FCLoadTest1.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FCLoadTest1.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FCLoadTest1.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FCLoadTest2.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FCLoadTest2.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FCLoadTest2.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FrequencyConstraintErrorTest.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FrequencyConstraintErrorTest.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FrequencyConstraintErrorTest.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\TestSample.csproj
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ConstContradictTests_1a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ConstContradictTests_1a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ConstContradictTests_1a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ConstContradictTests_1b.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ConstContradictTests_1b.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ConstContradictTests_1b.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.cs
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionMandatoryContra_1a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionMandatoryContra_1a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionMandatoryContra_1a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionMandatoryContra_1b.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionMandatoryContra_1b.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionMandatoryContra_1b.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionSubsetContra_1a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionSubsetContra_1a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionSubsetContra_1a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionSubsetContra_1b.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionSubsetContra_1b.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionSubsetContra_1b.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.cs
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.EqualityMandatoryImplied_1a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.EqualityMandatoryImplied_1a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.EqualityMandatoryImplied_1a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.EqualityMandatoryImplied_1b.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.EqualityMandatoryImplied_1b.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.EqualityMandatoryImplied_1b.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.MandatoryMandatory_1a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.MandatoryMandatory_1a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.MandatoryMandatory_1a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.MandatoryMandatory_1b.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.MandatoryMandatory_1b.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.MandatoryMandatory_1b.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.UniqueUniqueImplied_1a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.UniqueUniqueImplied_1a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.UniqueUniqueImplied_1a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintOverlap\ConstraintPatterns.xlsx
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintOverlap\DinosORM(Mar2008 Update).doc
+c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintOverlap\RingConstraintPatterns.xlsx
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.cs
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1b.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1b.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1b.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1c.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1c.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1c.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest2a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest2a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest2a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest2b.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest2b.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest2b.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.cs
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.ExactlyOneTest_1b.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.ExactlyOneTest_1b.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.ExactlyOneTest_1b.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.ExactlyOneTest1a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.ExactlyOneTest1a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.ExactlyOneTest1a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.cs
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1b.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1b.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1b.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1c.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1c.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1c.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest2a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest2a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest2a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest2b.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest2b.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest2b.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.cs
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1b.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1b.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1b.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1c.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1c.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1c.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test2a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test2a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test2a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test2b.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test2b.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test2b.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\NotWellModeledTests\NotWellModeledTests.cs
+c:\Projects\NORMA-plus\TestSuites\TestSample\NotWellModeledTests\NotWellModeledTests.SubsetMandatory_1a.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\NotWellModeledTests\NotWellModeledTests.SubsetMandatory_1a.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\NotWellModeledTests\NotWellModeledTests.SubsetMandatory_1a.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.cs
+c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.Test1.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.Test1.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.Test1.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.Test2.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.Test2.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.Test2.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\SamplePopulationTests\PopulationTests.PopulationSampleTest.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\SamplePopulationTests\PopulationTests.PopulationSampleTest.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\SamplePopulationTests\PopulationTests.PopulationSampleTest.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\SamplePopulationTests\SamplePopulationTests.cs
+c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.AddPreferredLoadTest1.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.AddPreferredLoadTest1.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.AddPreferredLoadTest1.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.ClearPreferredLoadTest1.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.ClearPreferredLoadTest1.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.ClearPreferredLoadTest1.Report.xml
+c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.cs
+c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.ResolvePreferredTest1.Compare.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.ResolvePreferredTest1.Load.orm
+c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.ResolvePreferredTest1.Report.xml
+c:\Projects\NORMA-plus\Tools\DatabaseImport
+c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor
+c:\Projects\NORMA-plus\Tools\GrammarParsingEngine
+c:\Projects\NORMA-plus\Tools\NUBuild
+c:\Projects\NORMA-plus\Tools\NUBuildVS
+c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool
+c:\Projects\NORMA-plus\Tools\ORMCustomTool
+c:\Projects\NORMA-plus\Tools\VersionGenerator
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems
+c:\Projects\NORMA-plus\Tools\DatabaseImport\Properties
+c:\Projects\NORMA-plus\Tools\DatabaseImport\DatabaseImport.csproj
+c:\Projects\NORMA-plus\Tools\DatabaseImport\DatabaseImport.sln
+c:\Projects\NORMA-plus\Tools\DatabaseImport\DatabaseImport.VS2008.sln
+c:\Projects\NORMA-plus\Tools\DatabaseImport\DatabaseImport.VS2010.sln
+c:\Projects\NORMA-plus\Tools\DatabaseImport\DatabaseImport.VS2012.sln
+c:\Projects\NORMA-plus\Tools\DatabaseImport\DatabaseImport.VS2013.sln
+c:\Projects\NORMA-plus\Tools\DatabaseImport\DatabaseImport.VS2015.sln
+c:\Projects\NORMA-plus\Tools\DatabaseImport\DcilObjectModel.cs
+c:\Projects\NORMA-plus\Tools\DatabaseImport\IDcilSchemaProvider.cs
+c:\Projects\NORMA-plus\Tools\DatabaseImport\Install.bat
+c:\Projects\NORMA-plus\Tools\DatabaseImport\MySqlDcilSchemaProvider.cs
+c:\Projects\NORMA-plus\Tools\DatabaseImport\OracleDcilSchemaProvider.cs
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ORMDatabaseImportWizard.cs
+c:\Projects\NORMA-plus\Tools\DatabaseImport\SchemaSelector.cs
+c:\Projects\NORMA-plus\Tools\DatabaseImport\SchemaSelector.Designer.cs
+c:\Projects\NORMA-plus\Tools\DatabaseImport\SchemaSelector.resx
+c:\Projects\NORMA-plus\Tools\DatabaseImport\SqlServer2005DcilSchemaProvider.cs
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2005
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2008
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2010
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2012
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2013
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2015
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2005\Web
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2005\CSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2005\General.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2005\JSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2005\VisualBasic.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2005\VisualC.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2005\Web\CSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2005\Web\JSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2005\Web\VisualBasic.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2008\Web
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2008\CSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2008\General.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2008\VisualBasic.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2008\VisualC.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2008\Web\CSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2008\Web\VisualBasic.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2010\Web
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2010\CSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2010\General.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2010\Modeling.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2010\VisualBasic.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2010\VisualC.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2010\Web\CSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2010\Web\VisualBasic.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2012\Web
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2012\CSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2012\General.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2012\Modeling.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2012\VisualBasic.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2012\VisualC.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2012\Web\CSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2012\Web\VisualBasic.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2013\Web
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2013\CSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2013\General.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2013\Modeling.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2013\VisualBasic.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2013\VisualC.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2013\Web\CSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2013\Web\VisualBasic.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2015\Web
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2015\CSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2015\General.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2015\Modeling.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2015\VisualBasic.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2015\VisualC.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2015\Web\CSharp.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\ProjectItems\VS2015\Web\VisualBasic.zip
+c:\Projects\NORMA-plus\Tools\DatabaseImport\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\bin
+c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\obj
+c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\Properties
+c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\DILSupportFunctionsDataGenerator.cs
+c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\DILSupportFunctionsDataGenerator.csproj
+c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\DILSupportFunctionsDataGenerator.sln
+c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\UnicodeData.cs
+c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\UnicodeDataLoader.cs
+c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\obj\DILSupportFunctionsDataGenerator
+c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\obj\DILSupportFunctionsDataGenerator\DILSupportFunctionsDataGenerator.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\Properties
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.cs
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.csproj
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.sln
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.VS2008.sln
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.VS2010.sln
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.VS2012.sln
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.VS2013.sln
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.VS2015.sln
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\Install.bat
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\ORMFactGrammar.cgt
+c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\ORMFactGrammar.grm
+c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\README.txt
+c:\Projects\NORMA-plus\Tools\NUBuildVS\Properties
+c:\Projects\NORMA-plus\Tools\NUBuildVS\Tasks
+c:\Projects\NORMA-plus\Tools\NUBuildVS\Install.bat
+c:\Projects\NORMA-plus\Tools\NUBuildVS\Neumont.Build.VisualStudio.Multitargeting.targets
+c:\Projects\NORMA-plus\Tools\NUBuildVS\Neumont.Build.VisualStudio.targets
+c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.csproj
+c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.sln
+c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.VS2008.sln
+c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.VS2010.sln
+c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.VS2012.sln
+c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.VS2013.sln
+c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.VS2015.sln
+c:\Projects\NORMA-plus\Tools\NUBuildVS\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\Tools\NUBuildVS\Tasks\VsSDKLocator.cs
+c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\Properties
+c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\HowToBuild.txt
+c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\Install.bat
+c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\LiveOIAL.xslt
+c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\OIALDiffCustomTool.cs
+c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\OIALDiffCustomTool.csproj
+c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\OIALDiffCustomTool.sln
+c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\UndeadOIAL.xslt
+c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\Properties
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\Extender.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ExtenderProvider.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\Install.bat
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\IORMGenerator.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\MakeWixStuff.bat
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.csproj
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.csproj.user
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.sln
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.VS2008.sln
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.VS2010.sln
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.VS2012.sln
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.VS2013.sln
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.VS2015.sln
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMExtensionManager.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMGenerators.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ReadOnlyDictionary.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\ReadOnlyStream.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\XslORMGenerator.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\BranchBase.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\BranchPartition.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\MainBranch.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\ORMCustomToolPropertyDescriptor.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\ORMCustomToolUITypeEditor.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\ORMGeneratorSelectionControl.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\ORMGeneratorSelectionControl.Designer.cs
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\ORMGeneratorSelectionControl.resx
+c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\OutputFormatBranch.cs
+c:\Projects\NORMA-plus\Tools\VersionGenerator\obj
+c:\Projects\NORMA-plus\Tools\VersionGenerator\Properties
+c:\Projects\NORMA-plus\Tools\VersionGenerator\Config.cs
+c:\Projects\NORMA-plus\Tools\VersionGenerator\Program.cs
+c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.csproj
+c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.sln
+c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.VS2008.sln
+c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.VS2010.sln
+c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.VS2012.sln
+c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.VS2013.sln
+c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.VS2015.sln
+c:\Projects\NORMA-plus\Tools\VersionGenerator\obj\VersionGenerator
+c:\Projects\NORMA-plus\Tools\VersionGenerator\obj\VersionGenerator\VersionGenerator.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\Tools\VersionGenerator\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\VSIXInstall\VS2010
+c:\Projects\NORMA-plus\VSIXInstall\VS2012
+c:\Projects\NORMA-plus\VSIXInstall\VS2013
+c:\Projects\NORMA-plus\VSIXInstall\VS2015
+c:\Projects\NORMA-plus\VSIXInstall\ORMDesignerIcon.png
+c:\Projects\NORMA-plus\VSIXInstall\ORMDesignerPreview.png
+c:\Projects\NORMA-plus\VSIXInstall\VS2010\extension.vsixmanifest
+c:\Projects\NORMA-plus\VSIXInstall\VS2010\ORMDesigner.pkgdef
+c:\Projects\NORMA-plus\VSIXInstall\VS2010\Readme.txt
+c:\Projects\NORMA-plus\VSIXInstall\VS2012\extension.vsixmanifest
+c:\Projects\NORMA-plus\VSIXInstall\VS2012\ORMDesigner.pkgdef
+c:\Projects\NORMA-plus\VSIXInstall\VS2012\Readme.txt
+c:\Projects\NORMA-plus\VSIXInstall\VS2013\extension.vsixmanifest
+c:\Projects\NORMA-plus\VSIXInstall\VS2013\ORMDesigner.pkgdef
+c:\Projects\NORMA-plus\VSIXInstall\VS2013\Readme.txt
+c:\Projects\NORMA-plus\VSIXInstall\VS2015\extension.vsixmanifest
+c:\Projects\NORMA-plus\VSIXInstall\VS2015\ORMDesigner.pkgdef
+c:\Projects\NORMA-plus\VSIXInstall\VS2015\Readme.txt
+c:\Projects\NORMA-plus\XML\ConceptualDBtoDCIL
+c:\Projects\NORMA-plus\XML\DCILtoHTML
+c:\Projects\NORMA-plus\XML\DCILtoLINQ
+c:\Projects\NORMA-plus\XML\DCILtoNHibernate
+c:\Projects\NORMA-plus\XML\DIL
+c:\Projects\NORMA-plus\XML\DILtoSQL
+c:\Projects\NORMA-plus\XML\GenerationSamples
+c:\Projects\NORMA-plus\XML\OIAL
+c:\Projects\NORMA-plus\XML\OIALtoDCIL
+c:\Projects\NORMA-plus\XML\OIALtoDSL
+c:\Projects\NORMA-plus\XML\OIALtoDTD
+c:\Projects\NORMA-plus\XML\OIALtoEDM
+c:\Projects\NORMA-plus\XML\OIALtoOWL
+c:\Projects\NORMA-plus\XML\OIALtoPLiX
+c:\Projects\NORMA-plus\XML\OIALtoWSDL
+c:\Projects\NORMA-plus\XML\OIALtoXForms
+c:\Projects\NORMA-plus\XML\OIALtoXSD
+c:\Projects\NORMA-plus\XML\ConceptualDBtoDCIL\ConceptualDBtoDCIL.csproj
+c:\Projects\NORMA-plus\XML\ConceptualDBtoDCIL\ConceptualDBtoDCIL.sln
+c:\Projects\NORMA-plus\XML\ConceptualDBtoDCIL\ConceptualDBtoDCIL.xslt
+c:\Projects\NORMA-plus\XML\DCILtoHTML\DCILtoTV.xslt
+c:\Projects\NORMA-plus\XML\DCILtoHTML\TableView.xsd
+c:\Projects\NORMA-plus\XML\DCILtoHTML\TVtoHTML.xslt
+c:\Projects\NORMA-plus\XML\DCILtoLINQ\DCILtoDBML.xslt
+c:\Projects\NORMA-plus\XML\DCILtoLINQ\DCILtoLinqAttributeMapping.xslt
+c:\Projects\NORMA-plus\XML\DCILtoLINQ\DCILtoLinqToSqlMapping.xslt
+c:\Projects\NORMA-plus\XML\DCILtoLINQ\DCILtoLinqXmlMapping.xslt
+c:\Projects\NORMA-plus\XML\DCILtoLINQ\LinqToSqlSettings.xml
+c:\Projects\NORMA-plus\XML\DCILtoLINQ\LinqToSqlSettings.xslt
+c:\Projects\NORMA-plus\XML\DCILtoNHibernate\DCILtoNHibernateConfiguration.xslt
+c:\Projects\NORMA-plus\XML\DCILtoNHibernate\DCILtoNHibernateMapping.xslt
+c:\Projects\NORMA-plus\XML\DCILtoNHibernate\NHibernateGeneratorSettings.xml
+c:\Projects\NORMA-plus\XML\DIL\catalog.xml
+c:\Projects\NORMA-plus\XML\DIL\DCIL.xsd
+c:\Projects\NORMA-plus\XML\DIL\DDIL.xsd
+c:\Projects\NORMA-plus\XML\DIL\DIL.csproj
+c:\Projects\NORMA-plus\XML\DIL\DIL.sln
+c:\Projects\NORMA-plus\XML\DIL\DIL.xsd
+c:\Projects\NORMA-plus\XML\DIL\DILDT.xsd
+c:\Projects\NORMA-plus\XML\DIL\DILEP.xsd
+c:\Projects\NORMA-plus\XML\DIL\DILMS.xsd
+c:\Projects\NORMA-plus\XML\DIL\DILSupportFunctions.xslt
+c:\Projects\NORMA-plus\XML\DIL\DMIL.xsd
+c:\Projects\NORMA-plus\XML\DIL\SqlNotes.txt
+c:\Projects\NORMA-plus\XML\DILtoSQL\DCILtoDDIL.xslt
+c:\Projects\NORMA-plus\XML\DILtoSQL\DDILSample.xml
+c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoDB2.xslt
+c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoMySQL.xslt
+c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoOracle.xslt
+c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoPostgreSQL.xslt
+c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoSQLServer.xslt
+c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoSQLServer_ANSITypes.xslt
+c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoSQLStandard.xslt
+c:\Projects\NORMA-plus\XML\DILtoSQL\DILtoSQL.csproj
+c:\Projects\NORMA-plus\XML\DILtoSQL\DILtoSQL.sln
+c:\Projects\NORMA-plus\XML\DILtoSQL\DomainInliner.xslt
+c:\Projects\NORMA-plus\XML\DILtoSQL\TinyIntRemover.xslt
+c:\Projects\NORMA-plus\XML\DILtoSQL\TruthValueTestRemover.xslt
+c:\Projects\NORMA-plus\XML\DILtoSQL\UniqueNullableOutliner.xslt
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo._ORMCustomToolReport.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Abstract.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Abstract.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.CLIProperties.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.CoRef._ORMCustomToolReport.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.CoRef.orm
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayer.php
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayer.php.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayerTestForm.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayerTestForm.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayerTestFormInputControl.Designer.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayerTestFormInputControl.Designer.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayerTestFormInputControl.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayerTestFormInputControl.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DB2.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DCIL.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DDIL.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Entities.php
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Entities.php.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Implementation.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Implementation.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.MySQL.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.OIAL.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Oracle.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.orm
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.owl
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.PostgreSQL.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Proxies.php
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Proxies.php.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Services.php
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Services.php.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.SQLServer.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.SQLStandard.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.xsd
+c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.csproj
+c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.sln
+c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.VS2008.sln
+c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.VS2010.sln
+c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.VS2012.sln
+c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.VS2013.sln
+c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.VS2015.sln
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo._ORMCustomToolReport.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Abstract.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Abstract.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.CLIProperties.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.CoRef.orm
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayer.php
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayer.php.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayerTestForm.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayerTestForm.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayerTestFormInputControl.Designer.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayerTestFormInputControl.Designer.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayerTestFormInputControl.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayerTestFormInputControl.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DB2.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DCIL.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DDIL.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Entities.php
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Entities.php.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Implementation.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Implementation.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.MySQL.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.OIAL.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Oracle.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.orm
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.owl
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.PostgreSQL.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Proxies.php
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Proxies.php.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Services.php
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Services.php.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.SQLServer.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.SQLStandard.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.xsd
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel._ORMCustomToolReport.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Abstract.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Abstract.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.CLIProperties.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.CoRef.orm
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayer.php
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayer.php.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayerTestForm.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayerTestForm.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayerTestFormInputControl.Designer.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayerTestFormInputControl.Designer.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayerTestFormInputControl.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayerTestFormInputControl.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DB2.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DCIL.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DDIL.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Entities.php
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Entities.php.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Implementation.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Implementation.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.MySQL.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.OIAL.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Oracle.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.orm
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.owl
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.PostgreSQL.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Proxies.php
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Proxies.php.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Services.php
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Services.php.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.SQLServer.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.SQLStandard.sql
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Support.PLiX.cs
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Support.PLiX.xml
+c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.xsd
+c:\Projects\NORMA-plus\XML\OIAL\CoRefORM.xslt
+c:\Projects\NORMA-plus\XML\OIAL\OIAL.csproj
+c:\Projects\NORMA-plus\XML\OIAL\OIAL.sln
+c:\Projects\NORMA-plus\XML\OIAL\OIAL.xsd
+c:\Projects\NORMA-plus\XML\OIAL\ORMDataTypes.xsd
+c:\Projects\NORMA-plus\XML\OIAL\ORMDataTypes-Temporal.xsd
+c:\Projects\NORMA-plus\XML\OIAL\ORMtoOIAL.xslt
+c:\Projects\NORMA-plus\XML\OIAL\SampleModelOutput.xml
+c:\Projects\NORMA-plus\XML\OIALtoDCIL\OIALtoDCIL.csproj
+c:\Projects\NORMA-plus\XML\OIALtoDCIL\OIALtoDCIL.sln
+c:\Projects\NORMA-plus\XML\OIALtoDCIL\OIALtoDCIL.xslt
+c:\Projects\NORMA-plus\XML\OIALtoDSL\bin
+c:\Projects\NORMA-plus\XML\OIALtoDSL\obj
+c:\Projects\NORMA-plus\XML\OIALtoDSL\Properties
+c:\Projects\NORMA-plus\XML\OIALtoDSL\OIALtoDSL.csproj
+c:\Projects\NORMA-plus\XML\OIALtoDSL\OIALtoDSL.sln
+c:\Projects\NORMA-plus\XML\OIALtoDSL\OIALtoDSL.xslt
+c:\Projects\NORMA-plus\XML\OIALtoDSL\bin\Debug
+c:\Projects\NORMA-plus\XML\OIALtoDSL\bin\Release
+c:\Projects\NORMA-plus\XML\OIALtoDSL\obj\Debug
+c:\Projects\NORMA-plus\XML\OIALtoDSL\obj\Release
+c:\Projects\NORMA-plus\XML\OIALtoDSL\obj\Debug\OIALtoDSL.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\XML\OIALtoDSL\obj\Release\OIALtoDSL.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\XML\OIALtoDSL\Properties\AssemblyInfo.cs
+c:\Projects\NORMA-plus\XML\OIALtoDTD\bin
+c:\Projects\NORMA-plus\XML\OIALtoDTD\obj
+c:\Projects\NORMA-plus\XML\OIALtoDTD\OIALtoDTD.csproj
+c:\Projects\NORMA-plus\XML\OIALtoDTD\OIALtoDTD.sln
+c:\Projects\NORMA-plus\XML\OIALtoDTD\OIALtoDTD.xslt
+c:\Projects\NORMA-plus\XML\OIALtoDTD\ReadMe.txt
+c:\Projects\NORMA-plus\XML\OIALtoDTD\bin\Debug
+c:\Projects\NORMA-plus\XML\OIALtoDTD\bin\Release
+c:\Projects\NORMA-plus\XML\OIALtoDTD\obj\Debug
+c:\Projects\NORMA-plus\XML\OIALtoDTD\obj\Release
+c:\Projects\NORMA-plus\XML\OIALtoDTD\obj\Debug\OIALtoDTD.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\XML\OIALtoDTD\obj\Release\OIALtoDTD.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\XML\OIALtoEDM\CodeGenerationSchema.xsd
+c:\Projects\NORMA-plus\XML\OIALtoEDM\CSDLSchema.xsd
+c:\Projects\NORMA-plus\XML\OIALtoEDM\CSDLSchemaTypes.xsd
+c:\Projects\NORMA-plus\XML\OIALtoEDM\csmsl.xsd
+c:\Projects\NORMA-plus\XML\OIALtoEDM\DMSchemaTypes.xsd
+c:\Projects\NORMA-plus\XML\OIALtoEDM\EDMSchemaTypes.xsd
+c:\Projects\NORMA-plus\XML\OIALtoEDM\OIALtoEDM.csproj
+c:\Projects\NORMA-plus\XML\OIALtoEDM\OIALtoEDM.sln
+c:\Projects\NORMA-plus\XML\OIALtoEDM\OIALtoEDM.xslt
+c:\Projects\NORMA-plus\XML\OIALtoEDM\Output.xml
+c:\Projects\NORMA-plus\XML\OIALtoEDM\SSDLSchema.xsd
+c:\Projects\NORMA-plus\XML\OIALtoEDM\SSDLSchemaTypes.xsd
+c:\Projects\NORMA-plus\XML\OIALtoOWL\OIALtoOWL.csproj
+c:\Projects\NORMA-plus\XML\OIALtoOWL\OIALtoOWL.sln
+c:\Projects\NORMA-plus\XML\OIALtoOWL\OIALtoOWL.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\DataLayerTestForm
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\PHP
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoCLIProperties.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX.csproj
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX.sln
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_Abstract.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_DataLayer_Implementation.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_DataLayer_SprocFree_Implementation.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_GenerateGlobalSupportClasses.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_GenerateTuple.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_GlobalSupportFunctions.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_GlobalSupportParameters.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_InMemory_Implementation.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_Properties.xsd
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\DataLayerTestForm\OIALtoApp_Config.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\DataLayerTestForm\OIALtoPLiX_DataLayerTestForm.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\DataLayerTestForm\OIALtoPLiX_InputControl.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\DataLayerTestForm\OIALtoPLiX_InputControl_Designer.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\PHP\PHPDataLayer.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\PHP\PHPEntities.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\PHP\PHPProxies.xslt
+c:\Projects\NORMA-plus\XML\OIALtoPLiX\PHP\PHPServices.xslt
+c:\Projects\NORMA-plus\XML\OIALtoWSDL\OIALtoWSDL.csproj
+c:\Projects\NORMA-plus\XML\OIALtoWSDL\OIALtoWSDL.sln
+c:\Projects\NORMA-plus\XML\OIALtoWSDL\OIALtoWSDL.xslt
+c:\Projects\NORMA-plus\XML\OIALtoWSDL\OIALtoXSD.xslt
+c:\Projects\NORMA-plus\XML\OIALtoWSDL\Output.wsdl
+c:\Projects\NORMA-plus\XML\OIALtoXForms\OIALtoXForms.csproj
+c:\Projects\NORMA-plus\XML\OIALtoXForms\OIALtoXForms.sln
+c:\Projects\NORMA-plus\XML\OIALtoXForms\OIALtoXForms.xslt
+c:\Projects\NORMA-plus\XML\OIALtoXForms\OIALtoXSD.xslt
+c:\Projects\NORMA-plus\XML\OIALtoXForms\Output.xml
+c:\Projects\NORMA-plus\XML\OIALtoXSD\OIALtoXSD.csproj
+c:\Projects\NORMA-plus\XML\OIALtoXSD\OIALtoXSD.sln
+c:\Projects\NORMA-plus\XML\OIALtoXSD\OIALtoXSD.xslt
+c:\Projects\NORMA-plus\XML\OIALtoXSD\Output.xsd
