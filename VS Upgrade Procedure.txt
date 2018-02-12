@@ -3,17 +3,13 @@ Approach - go through bat files to determine the order of building which should 
 	FirstTimeBuild.bat
 	FirstTimeBuildAll.bat
 
-Environment Variables
-	TargetVisualStudioVersion
-	UseToolsVersion
-
 Project Build Order
-	MSBuild.exe /nologo "%RootDir%\Tools\NUBuild\NUBuild.sln" %*
-	MSBuild.exe /nologo "%RootDir%\Tools\NUBuildVS\NUBuildVS.sln" %*
-	MSBuild.exe /nologo "%RootDir%\DevTools.proj" %*
-	MSBuild.exe /nologo "%RootDir%\Main.proj" %*			
-	MSBuild.exe /nologo "%RootDir%\Setup.proj" %*
-	MSBuild.exe /nologo "%RootDir%\Tests.proj" %*
+	Tools\NUBuild\NUBuild.sln
+	Tools\NUBuildVS\NUBuildVS.sln
+	DevTools.proj
+	Main.proj
+	Setup.proj
+	Tests.proj
 	.
 Current Upgrade 2015 -> 2017
 	1) New File VS2017.bat (Copy from VS2015.bat)
@@ -27,24 +23,20 @@ Current Upgrade 2015 -> 2017
 		- Add section for 2017/v15.0
 			* .Net 4.6 is still the base framework for VS 2017 (could use 4.6.2)
 		- Changed the information look up for VS2017 to use vswhere
+		- Added a new variable for MSBuildBinPath - this is needed to local MSBuild since later versions of the dll are no longer in the GAC
 	5) Edit Tools\NUBuildVS\Neumont.Build.VisualStudio.Multitargeting.targets
 		- Setup for version 15
-	6) Setup NUBuild for 2017 (Tools\NUBuild)
-		- Open the NUBuild.VS2015.sln and save it as NUBUILD.VS2017.sln
+	6) Edit Tools\NUBuildVS\Neumont.Build.VisualStudio.targets
+		- Setup for version 15
+	7) Setup NUBuild for 2017 (Tools\NUBuild)
+		- Open the NUBuild.VS2015.sln and save it as NUBuild.VS2017.sln
 		- AssemblyInfo - Add section for tools version 15
 		- Updated NGen.cs to include frameworks 4.5, 4.6, and 4.7
-!!!! this may not work...					- Updated Install.bat to use the file path to the Neumont.Build.Core assembly instead of the GAC since the Microsoft.Build.* assemblies for version 15.1.0.0 are not in the GAC, this is causing NGen on the GAC version of Neumont.Build.Core to fail
+		- Updated Install.bat - added a section to install the MSBuild dlls into the GAC if they are not there; this is needed for ngen.exe
 		- ** Do not build this project directly... instead use BuildDevToolsVS{Version}.bat
-	
-	
-		
-	
-	
-	
-	
-	8) Setup NUBuildVS for 2017 (NUBuild\NUBuildVS)
-		***- Open the NUBuild.VS2015.sln and save it as NUBUILD.VS2017.sln
-		***- AssemblyInfo - Add section for tools version 15
+	8) Setup NUBuildVS for 2017 (Tools\NUBuildVS)
+		- Open the NUBuildVS.VS2015.sln and save it as NUBuildVS.VS2017.sln
+		- AssemblyInfo - Add section for tools version 15
 		- ** Do not build this project directly... instead use BuildDevToolsVS{Version}.bat
 	
 	) New File BuildDevToolsVS2017.bat (Copy from BuildDevToolsVS2015.bat)	
@@ -2023,20 +2015,6 @@ c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\Properties\AssemblyIn
 c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\ORMFactGrammar.cgt
 c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\ORMFactGrammar.grm
 c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\README.txt
-c:\Projects\NORMA-plus\Tools\NUBuildVS\Properties
-c:\Projects\NORMA-plus\Tools\NUBuildVS\Tasks
-c:\Projects\NORMA-plus\Tools\NUBuildVS\Install.bat
-c:\Projects\NORMA-plus\Tools\NUBuildVS\Neumont.Build.VisualStudio.Multitargeting.targets
-c:\Projects\NORMA-plus\Tools\NUBuildVS\Neumont.Build.VisualStudio.targets
-c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.csproj
-c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.sln
-c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.VS2008.sln
-c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.VS2010.sln
-c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.VS2012.sln
-c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.VS2013.sln
-c:\Projects\NORMA-plus\Tools\NUBuildVS\NUBuildVS.VS2015.sln
-c:\Projects\NORMA-plus\Tools\NUBuildVS\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\Tools\NUBuildVS\Tasks\VsSDKLocator.cs
 c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\Properties
 c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\HowToBuild.txt
 c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\Install.bat
