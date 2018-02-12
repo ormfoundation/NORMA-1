@@ -3,8 +3,9 @@
     "",
     "\\Tools",
     "\\Tools\\NUBuild",
-    "\\Tools\\NUBuild\\Properties"
+    "\\Tools\\NUBuildVS",
+    "\\Tools\\NUBuild\\Properties",
+    "\\Tools\\NUBuild\\Tasks"
   ],
-  "SelectedNode": "\\Tools\\NUBuild\\Install.bat",
   "PreviewInSolutionExplorer": false
 }

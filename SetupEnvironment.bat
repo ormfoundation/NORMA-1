@@ -58,59 +58,7 @@ IF NOT DEFINED VSRegistryConfigRootBase (
 IF NOT DEFINED VSRegistryConfigRoot (SET VSRegistryConfigRoot=%VSRegistryConfigRootBase%\%VSRegistryRootVersion%%VSRegistryRootSuffix%%VSRegistryConfigDecorator%)
 
 :: Get VS Information, in 2017+ the registry can no longer be used, instead MS provides vswhere
-IF "%VSInformationSource%"=="Registry" (
-	CALL "%TrunkDir%\SetFromRegistry.bat" "VSEnvironmentPath" "%VSRegistryConfigHive%\%VSRegistryConfigRoot%\Setup\VS" "EnvironmentPath" "f"
-	CALL "%TrunkDir%\SetFromRegistry.bat" "VSEnvironmentDir" "%VSRegistryConfigHive%\%VSRegistryConfigRoot%\Setup\VS" "EnvironmentDirectory" "f"
-	CALL "%TrunkDir%\SetFromRegistry.bat" "VSDir" "%VSRegistryConfigHive%\%VSRegistryConfigRoot%\Setup\VS" "ProductDir" "f"
-	CALL "%TrunkDir%\SetFromRegistry.bat" "VSItemTemplatesDir" "%VSRegistryConfigHive%\%VSRegistryConfigRoot%\VSTemplate\Item" "UserFolder" "f"
-	IF NOT "%VSIXExtensionDir%"=="" (
-		IF "%VSRegistryRootSuffix%"=="" (
-			CALL:SETVAR "VSIXInstallDir" "%VSEnvironmentDir%\%VSIXExtensionDir%"
-		) ELSE (
-			CALL:SETVAR "VSIXInstallDir" "%LocalAppData%\Microsoft\VisualStudio\%VSRegistryRootVersion%%VSRegistryRootSuffix%\%VSIXExtensionDir%"
-		)
-	) ELSE (
-		SET VSIXInstallDir=
-	)
-
-	CALL "%TrunkDir%\SetFromRegistry.bat" "VSIPDir" "HKLM\%VSRegistryRootBase%\VSIP\%VSRegistryRootVersion%" "InstallDir" "f"
-	:: Fallback, enable building 8.0 without an 8.0 installation
-	CALL "%TrunkDir%\SetFromRegistry.bat" "VSIPDir" "HKLM\%VSRegistryRootBase%\VSIP\9.0" "InstallDir" "f"
-	IF NOT DEFINED RegPkg (SET RegPkg="%VSIPDir%\VisualStudioIntegration\Tools\Bin\regpkg.exe" /root:"%VSRegistryRoot%")
-) ELSE (
-	IF "%VSInformationSource%"=="VSWhere" (
-		setlocal EnableDelayedExpansion
-
-		:: Find the VS Install Directory
-		FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
-			SET VSInstallDir=%%i
-		)
-		:: Find the VS IDE Path
-		FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property productPath`) DO (
-			SET VSDevenvPath=%%i
-		)
-		:: Find the VS Instance ID
-		FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property instanceId`) DO (
-			SET VSInstanceId=%%i
-		)
-
-		IF NOT DEFINED VSEnvironmentPath SET VSEnvironmentPath=!VSDevenvPath!
-		IF NOT DEFINED VSEnvironmentDir SET VSEnvironmentDir=!VSInstallDir!\Common7\IDE
-		IF NOT DEFINED VSDir SET VSDir=!VSInstallDir!
-		IF NOT DEFINED VSItemTemplatesDir SET VSDir=%VSEnvironmentDir%\ItemTemplates
-		IF NOT DEFINED VSIPDir SET VSIPDir=!VSInstallDir!\VSSDK
-		IF NOT DEFINED RegPkg (SET RegPkg="%VSIPDir%\VisualStudioIntegration\Tools\Bin\regpkg.exe" /root:"%VSRegistryRoot%")
-	
-		IF NOT "%VSIXExtensionDir%"=="" (
-			CALL:SETVAR "VSIXInstallDir" "%LocalAppData%\Microsoft\VisualStudio\%?TargetVisualStudioMajorMinorVersion%_!VSInstanceId!%VSRegistryRootSuffix%\%VSIXExtensionDir%"
-		) ELSE (
-			SET VSIXInstallDir=
-		)
-	) ELSE (
-		ECHO "Bad VS Information Source: %VSInformationSource%."
-		EXIT 1
-	)
-)
+CALL:SetupFrom%VSInformationSource%
 
 IF "%VSIXInstallDir%"=="" (
 	CALL:SETVAR "ItemTemplatesInstallDir" "%VSItemTemplatesDir%"
@@ -257,6 +205,57 @@ IF NOT DEFINED ProjectToolsAssemblyVersion (SET ProjectToolsAssemblyVersion=15.1
 IF NOT DEFINED VSRegistryConfigDecorator (SET VSRegistryConfigDecorator=_Config)
 IF NOT DEFINED VSRegistryConfigHive (SET VSRegistryConfigHive=HKCU)
 IF NOT DEFINED VSIXExtensionDir (SET VSIXExtensionDir=Extensions\ORM Solutions\Natural ORM Architect\1.0)
+GOTO:EOF
+
+:SetupFromRegistry
+CALL "%TrunkDir%\SetFromRegistry.bat" "VSEnvironmentPath" "%VSRegistryConfigHive%\%VSRegistryConfigRoot%\Setup\VS" "EnvironmentPath" "f"
+CALL "%TrunkDir%\SetFromRegistry.bat" "VSEnvironmentDir" "%VSRegistryConfigHive%\%VSRegistryConfigRoot%\Setup\VS" "EnvironmentDirectory" "f"
+CALL "%TrunkDir%\SetFromRegistry.bat" "VSDir" "%VSRegistryConfigHive%\%VSRegistryConfigRoot%\Setup\VS" "ProductDir" "f"
+CALL "%TrunkDir%\SetFromRegistry.bat" "VSItemTemplatesDir" "%VSRegistryConfigHive%\%VSRegistryConfigRoot%\VSTemplate\Item" "UserFolder" "f"
+CALL "%TrunkDir%\SetFromRegistry.bat" "MSBuildBinPath" "HKLM\Software%WOWRegistryAdjust%\Microsoft\MSBuild\ToolsVersion\%ProjectToolsVersion%" "MSBuildToolsPath" "f"
+IF NOT "%VSIXExtensionDir%"=="" (
+	IF "%VSRegistryRootSuffix%"=="" (
+		CALL:SETVAR "VSIXInstallDir" "%VSEnvironmentDir%\%VSIXExtensionDir%"
+	) ELSE (
+		CALL:SETVAR "VSIXInstallDir" "%LocalAppData%\Microsoft\VisualStudio\%VSRegistryRootVersion%%VSRegistryRootSuffix%\%VSIXExtensionDir%"
+	)
+) ELSE (
+	SET VSIXInstallDir=
+)
+
+CALL "%TrunkDir%\SetFromRegistry.bat" "VSIPDir" "HKLM\%VSRegistryRootBase%\VSIP\%VSRegistryRootVersion%" "InstallDir" "f"
+:: Fallback, enable building 8.0 without an 8.0 installation
+CALL "%TrunkDir%\SetFromRegistry.bat" "VSIPDir" "HKLM\%VSRegistryRootBase%\VSIP\9.0" "InstallDir" "f"
+IF NOT DEFINED RegPkg (SET RegPkg="%VSIPDir%\VisualStudioIntegration\Tools\Bin\regpkg.exe" /root:"%VSRegistryRoot%")
+GOTO:EOF
+
+:SetupFromVSWhere
+:: Find the VS Install Directory
+FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
+	SET VSInstallDir=%%i
+)
+:: Find the VS IDE Path
+FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property productPath`) DO (
+	SET VSDevenvPath=%%i
+)
+:: Find the VS Instance ID
+FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property instanceId`) DO (
+	SET VSInstanceId=%%i
+)
+
+IF NOT DEFINED VSEnvironmentPath SET VSEnvironmentPath=%VSDevenvPath%
+IF NOT DEFINED VSEnvironmentDir SET VSEnvironmentDir=%VSInstallDir%\Common7\IDE
+IF NOT DEFINED VSDir SET VSDir=%VSInstallDir%
+IF NOT DEFINED VSItemTemplatesDir SET VSDir=%VSEnvironmentDir%\ItemTemplates
+IF NOT DEFINED VSIPDir SET VSIPDir=%VSInstallDir%\VSSDK
+IF NOT DEFINED RegPkg (SET RegPkg="%VSIPDir%\VisualStudioIntegration\Tools\Bin\regpkg.exe" /root:"%VSRegistryRoot%")
+IF NOT DEFINED MSBuildBinPath SET MSBuildBinPath=%VSInstallDir%\MSBuild\%ProjectToolsVersion%\Bin\
+	
+IF NOT "%VSIXExtensionDir%"=="" (
+	CALL:SETVAR "VSIXInstallDir" "%LocalAppData%\Microsoft\VisualStudio\%?TargetVisualStudioMajorMinorVersion%_%VSInstanceId%%VSRegistryRootSuffix%\%VSIXExtensionDir%"
+) ELSE (
+	SET VSIXInstallDir=
+)
 GOTO:EOF
 
 :SET6432
