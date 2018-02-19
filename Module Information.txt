@@ -3,6 +3,12 @@ This is all currently speculation... this document will be getting continuously 
 
 Module Information
 
+DisableRuleDirectiveProcessor
+	Location: Tools/DisableRuleDirectiveProcessor
+	Purpose:
+		??? - Allows certain rules to be ignored for text processing?
+	Technologies:
+		1) C#
 NUBuild
 	Location: Tools/NUBuild
 	Purpose:
