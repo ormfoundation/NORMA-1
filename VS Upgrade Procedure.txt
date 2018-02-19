@@ -7,10 +7,26 @@ Project Build Order
 	Tools\NUBuild\NUBuild.sln
 	Tools\NUBuildVS\NUBuildVS.sln
 	DevTools.proj
+		Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.sln
+	
 	Main.proj
+		ORMPackage.sln
+		ExtensionExample\ExtensionExample.sln
+		OIALModel\OIALModel.sln
+		Oial\Oial.sln
+		RelationalModel\Dil.sln
+		AlternateViews\RelationalView\RelationalView.sln
+		CustomProperties\CustomProperties.sln
+		EntityRelationship\EntityRelationship.sln
+		AlternateViews\BarkerERView\BarkerERView.sln
+		Tools\ORMCustomTool\ORMCustomTool.sln
+		Tools\DatabaseImport\DatabaseImport.sln
 	Setup.proj
+		Setup\Setup.sln
 	Tests.proj
-	.
+		ORMTestPackage.sln
+		TestSuites\TestSuites.sln
+	
 Current Upgrade 2015 -> 2017
 	1) New File VS2017.bat (Copy from VS2015.bat)
 		- Replaced environment variable for call out to VSVer.bat
@@ -38,14 +54,22 @@ Current Upgrade 2015 -> 2017
 		- Open the NUBuildVS.VS2015.sln and save it as NUBuildVS.VS2017.sln
 		- AssemblyInfo - Add section for tools version 15
 		- ** Do not build this project directly... instead use BuildDevToolsVS{Version}.bat
-	
-	) New File BuildDevToolsVS2017.bat (Copy from BuildDevToolsVS2015.bat)	
+	9) Added a place to download nuget files... can't use the normal nuget install due to the way the project files are setup...
+		- .\Nuget
+		- You'll need nuget.exe to download and unpack the packages (https://www.nuget.org/downloads)
+	10) Setup DisableRuleDirectiveProcessor for 2017 (Tools\DisableRuleDirectiveProcessor)
+		- Open the DisableRuleDirectiveProcessor.VS2015.sln and save it as DisableRuleDirectiveProcessor.VS2017.sln
+		- Update DisableRuleDirectiveProcessor.csproj to include tools version 15.0
+		- Download https://www.nuget.org/packages/Microsoft.VisualStudio.TextTemplating.15.0/ and put in Nuget folder
+			nuget install Microsoft.VisualStudio.TextTemplating.15.0 -Version 15.6.27413 -OutputDirectory "{PathToProject}\NORMA-plus\Nuget\"
+		- Add new nuget packages to GAC including dependencies
+			gacutil -i "{PathToProject}\NORMA-plus\Nuget\Microsoft.VisualStudio.TextTemplating.Interfaces.10.0.10.0.30320\lib\net40\Microsoft.VisualStudio.TextTemplating.Interfaces.10.0.dll"
+			gacutil -i "{PathToProject}\NORMA-plus\Nuget\Microsoft.VisualStudio.TextTemplating.Interfaces.11.0.11.0.50728\lib\net45\Microsoft.VisualStudio.TextTemplating.Interfaces.11.0.dll"
+			gacutil -i "{PathToProject}\NORMA-plus\Nuget\Microsoft.VisualStudio.TextTemplating.15.0.15.6.27413\lib\net45\Microsoft.VisualStudio.TextTemplating.15.0.dll"
+	11) New File BuildDevToolsVS2017.bat (Copy from BuildDevToolsVS2015.bat)	
 		- Added section for degrading tools for v14.0 and defaulting to v15.0
 		
 		
-		*** There is currently a problem finding vsvars32.bat (line 90)
-		* Researching this... https://stackoverflow.com/questions/42805662/vsvars32-bat-in-visual-studio-2017
-		"%VS80COMNTOOLS%\vsvars32.bat"
 
 Remaining Files - removing files after they are evaluated (dir /s /b /o . files.txt)
 c:\Projects\NORMA-plus\BuildAllVS2008.bat
@@ -72,8 +96,6 @@ c:\Projects\NORMA-plus\catalog.xml
 c:\Projects\NORMA-plus\CommonAssemblyInfo.cs
 c:\Projects\NORMA-plus\CPL.txt
 c:\Projects\NORMA-plus\CustomDictionary.xml
-c:\Projects\NORMA-plus\Default.targets
-c:\Projects\NORMA-plus\DevTools.proj
 c:\Projects\NORMA-plus\files.txt
 c:\Projects\NORMA-plus\FirstTimeBuild.bat
 c:\Projects\NORMA-plus\FirstTimeBuildAll.bat
