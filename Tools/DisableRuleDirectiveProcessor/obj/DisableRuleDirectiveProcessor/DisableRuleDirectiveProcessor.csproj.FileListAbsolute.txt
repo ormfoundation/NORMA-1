@@ -1,0 +1,10 @@
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\bin\Neumont.Tools.Modeling.DisableRuleDirectiveProcessor.dll
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\bin\Neumont.Tools.Modeling.DisableRuleDirectiveProcessor.pdb
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\bin\Microsoft.VisualStudio.TextTemplating.15.0.dll
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\bin\Microsoft.VisualStudio.TextTemplating.Interfaces.11.0.dll
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\bin\Microsoft.VisualStudio.TextTemplating.Interfaces.10.0.dll
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\bin\System.Collections.Immutable.dll
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\obj\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.csprojResolveAssemblyReference.cache
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\obj\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.csproj.CoreCompileInputs.cache
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\obj\DisableRuleDirectiveProcessor\Neumont.Tools.Modeling.DisableRuleDirectiveProcessor.dll
+c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\obj\DisableRuleDirectiveProcessor\Neumont.Tools.Modeling.DisableRuleDirectiveProcessor.pdb

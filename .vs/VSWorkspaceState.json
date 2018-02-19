@@ -2,10 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\Tools",
-    "\\Tools\\NUBuild",
-    "\\Tools\\NUBuildVS",
-    "\\Tools\\NUBuild\\Properties",
-    "\\Tools\\NUBuild\\Tasks"
+    "\\Tools\\DisableRuleDirectiveProcessor"
   ],
+  "SelectedNode": "\\Tools\\DisableRuleDirectiveProcessor\\DisableRuleDirectiveProcessor.sln",
   "PreviewInSolutionExplorer": false
 }
