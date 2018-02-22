@@ -1,9 +1,14 @@
 {
   "ExpandedNodes": [
     "",
+    "\\ORMModel",
+    "\\ORMModel\\Shell",
+    "\\ORMModel\\Shell\\PackageResources",
     "\\Tools",
-    "\\Tools\\DisableRuleDirectiveProcessor"
+    "\\Tools\\NUBuild",
+    "\\Tools\\NUBuildVS",
+    "\\Tools\\NUBuildVS\\Tasks"
   ],
-  "SelectedNode": "\\Tools\\DisableRuleDirectiveProcessor\\DisableRuleDirectiveProcessor.sln",
+  "SelectedNode": "\\ORMModel\\ORMModel.csproj",
   "PreviewInSolutionExplorer": false
 }
