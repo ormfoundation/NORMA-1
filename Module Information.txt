@@ -7,6 +7,7 @@ DisableRuleDirectiveProcessor
 	Location: Tools/DisableRuleDirectiveProcessor
 	Purpose:
 		??? - Allows certain rules to be ignored for text processing?
+	How to Build: BuildDevToolsVS{Version}.bat
 	Technologies:
 		1) C#
 NUBuild
@@ -18,19 +19,25 @@ NUBuild
 			RegexCompiler - compiles regulatr expressions into a standalone assembly
 			ResourceMerger - merges one or more resources into a manifest resource 
 			ResourceMergeTargetResolver - this looks like it finds the correct .resources file for the merge target
+	How to Build: BuildDevToolsVS{Version}.bat
 	Technologies:
 		1) C#
 		2) MSBuild Tasks
-	Notes:
-		- Do not build this project from the IDE instead use the Developer prompt and the associated bat files to setup and build the environment correctly
 
 NUBuildVS
 	Location: Tools/NUBuildVS
 	Purpose:
 		Provides custom Build Tasks for building the NORMA projects
 			VsSdkLocator - gets the location of the installed VS SDK
+	How to Build: BuildDevToolsVS{Version}.bat
 	Technologies:
 		1) C#
 		2) MSBuild Tasks
-	Notes:
-		- Do not build this project from the IDE instead use the Developer prompt and the associated bat files to setup and build the environment correctly
+ORMPackage
+	Location: Root
+		This is really ORMModel (ORMModel\ORMModel.csproj)
+	Purpose:
+		Main aplication
+	How to Build: BuildVS{Version}.bat
+	Technologies:
+		1) C#
