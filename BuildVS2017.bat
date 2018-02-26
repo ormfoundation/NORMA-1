@@ -22,6 +22,4 @@ IF "%TargetVisualStudioVersion%"=="v8.0" (
 FOR /f "usebackq tokens=*" %%i IN (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
 	SET VSInstallDir=%%i
 )
-REM ECHO "%VSInstallDir%\Common7\IDE\PrivateAssemblies"
-
 CALL "%~dp0Build.bat" %* /p:"ReferencePath=%VSInstallDir%\Common7\IDE\PrivateAssemblies" /consoleloggerparameters:DisableMPLogging %DegradeToolsVersion%

@@ -2,9 +2,10 @@
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<ItemGroup>
 		<ProjectReference Include="ORMPackage.sln"/>
+    <ProjectReference Include="ExtensionExample\ExtensionExample.sln"/>
     
 <!--    
-		<ProjectReference Include="ExtensionExample\ExtensionExample.sln"/>
+		
 		<ProjectReference Include="OIALModel\OIALModel.sln"/>
 		<ProjectReference Include="Oial\Oial.sln"/>
 		<ProjectReference Include="RelationalModel\Dil.sln"/>

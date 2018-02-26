@@ -4,11 +4,8 @@
     "\\ORMModel",
     "\\ORMModel\\Shell",
     "\\ORMModel\\Shell\\PackageResources",
-    "\\Tools",
-    "\\Tools\\NUBuild",
-    "\\Tools\\NUBuildVS",
-    "\\Tools\\NUBuildVS\\Tasks"
+    "\\Tools\\NUBuild"
   ],
-  "SelectedNode": "\\ORMModel\\ORMModel.csproj",
+  "SelectedNode": "\\Main.proj",
   "PreviewInSolutionExplorer": false
 }

@@ -4,8 +4,8 @@
 	<?define MajorMinorVersion="1.0"?>
 	<?define MajorVersionHexits="01"?>
 	<?define BuildVersion="1509"?>
-	<?define RevisionVersion="8955"?>
-	<?define ProductVersion="1.0.1509.8955"?>
-	<?define VersionGuidSuffix="$(var.Debug)$(var.ExperimentalHive)$(var.Architecture)-$(var.MajorVersionHexits)0015098955"?>
+	<?define RevisionVersion="8959"?>
+	<?define ProductVersion="1.0.1509.8959"?>
+	<?define VersionGuidSuffix="$(var.Debug)$(var.ExperimentalHive)$(var.Architecture)-$(var.MajorVersionHexits)0015098959"?>
 	<?define ReleaseDescription="2015-09 CTP"?>
 </Include>

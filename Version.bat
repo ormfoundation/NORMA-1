@@ -2,4 +2,4 @@
 @SET ProductMajorVersion=1
 @SET ProductMinorVersion=0
 @SET ProductBuildVersion=1509
-@SET ProductRevisionVersion=8955
+@SET ProductRevisionVersion=8959
