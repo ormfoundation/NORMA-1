@@ -3,10 +3,11 @@
 	<ItemGroup>
 		<ProjectReference Include="ORMPackage.sln"/>
     <ProjectReference Include="ExtensionExample\ExtensionExample.sln"/>
+    <ProjectReference Include="OIALModel\OIALModel.sln"/>
     
 <!--    
 		
-		<ProjectReference Include="OIALModel\OIALModel.sln"/>
+		
 		<ProjectReference Include="Oial\Oial.sln"/>
 		<ProjectReference Include="RelationalModel\Dil.sln"/>
 		<ProjectReference Include="AlternateViews\RelationalView\RelationalView.sln"/>
