@@ -22,12 +22,11 @@ Project Build Order
 		Tools\ORMCustomTool\ORMCustomTool.sln
 		Tools\DatabaseImport\DatabaseImport.sln
 
-	Setup.proj
+	Setup.proj (BuildSetup calls BuildHelp)
 		Setup\Setup.sln
 	Tests.proj
 		ORMTestPackage.sln
 		TestSuites\TestSuites.sln
-	Help Files?
 	
 Current Upgrade 2015 -> 2017
 	1) New File VS2017.bat (Copy from VS2015.bat)
@@ -101,16 +100,14 @@ Current Upgrade 2015 -> 2017
 		- Open the DatabaseImport.VS2015.sln and save it as DatabaseImport.VS2017.sln
 		- Update DatabaseImport.csproj for version 15.0
 		- Create new templates under ProjectItems VS2015 -> VS2017
-	
-	
-		* need to verify ROOT\install.bat
-		
-		
-	) New File BuildVS2017.bat (Copy from BuildVS2015.bat)
+	23) New File BuildVS2017.bat (Copy from BuildVS2015.bat)
 		- Added section for degrading tools for v14.0 and defaulting to v15.0
 		- Added ReferencePath for MSBuild to the VS Private Assemblies folder (%VSInstallDir%\Common7\IDE\PrivateAssemblies); this is needed for the virtual tree grid
 		- Running this .bat will build Main.proj
-		
+	23) Setup Setup for 2017
+		- Open the Setup.VS2015.sln and save it as Setup.VS2017.sln
+		- Create new NORMASchemaCatalog.VS2017.xml (from the VS2015 version)
+	24) New File BuildSetupVS2017.bat (Copy from BuildSetupVS2015.bat)
 		
 
 Remaining Files - removing files after they are evaluated (dir /s /b /o . files.txt)
