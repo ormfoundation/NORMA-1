@@ -1,9 +1,0 @@
-c:\Projects\NORMA-plus\ExtensionExample\bin\Debug\ORMSolutions.ORMArchitect.ExtensionExample.VS2017.dll
-c:\Projects\NORMA-plus\ExtensionExample\bin\Debug\ORMSolutions.ORMArchitect.ExtensionExample.VS2017.pdb
-c:\Projects\NORMA-plus\ExtensionExample\bin\Debug\Microsoft.VisualStudio.Modeling.Sdk.15.0.dll
-c:\Projects\NORMA-plus\ExtensionExample\obj\Debug\ExtensionExample.csprojResolveAssemblyReference.cache
-c:\Projects\NORMA-plus\ExtensionExample\obj\Debug\ORMSolutions.ORMArchitect.ExtensionExample.GeneratedCode.DomainModelResx.VS2010.resources
-c:\Projects\NORMA-plus\ExtensionExample\obj\Debug\ExtensionExample.csproj.GenerateResource.Cache
-c:\Projects\NORMA-plus\ExtensionExample\obj\Debug\ExtensionExample.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\ExtensionExample\obj\Debug\ORMSolutions.ORMArchitect.ExtensionExample.VS2017.dll
-c:\Projects\NORMA-plus\ExtensionExample\obj\Debug\ORMSolutions.ORMArchitect.ExtensionExample.VS2017.pdb
