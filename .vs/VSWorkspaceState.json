@@ -1,11 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\ORMModel",
-    "\\ORMModel\\Shell",
-    "\\ORMModel\\Shell\\PackageResources",
-    "\\Tools\\NUBuild"
+    "\\Documentation",
+    "\\Documentation\\Help Project",
+    "\\Documentation\\NameGeneration",
+    "\\Documentation\\Relational Designer",
+    "\\Setup"
   ],
-  "SelectedNode": "\\Main.proj",
+  "SelectedNode": "\\.gitignore",
   "PreviewInSolutionExplorer": false
 }
