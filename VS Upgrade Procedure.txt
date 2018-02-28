@@ -100,14 +100,23 @@ Current Upgrade 2015 -> 2017
 		- Open the DatabaseImport.VS2015.sln and save it as DatabaseImport.VS2017.sln
 		- Update DatabaseImport.csproj for version 15.0
 		- Create new templates under ProjectItems VS2015 -> VS2017
-	23) New File BuildVS2017.bat (Copy from BuildVS2015.bat)
+	23) Create VSIXInstall VS2017 files (Copy from VSIXInstall\VS2015)
+		- extension.vsixmanifest updated to version 3
+	24) Update .\install.bat to copy over the LICENSE.txt file so that it can be included in the VSIX package
+	25) New File BuildVS2017.bat (Copy from BuildVS2015.bat)
 		- Added section for degrading tools for v14.0 and defaulting to v15.0
 		- Added ReferencePath for MSBuild to the VS Private Assemblies folder (%VSInstallDir%\Common7\IDE\PrivateAssemblies); this is needed for the virtual tree grid
 		- Running this .bat will build Main.proj
-	23) Setup Setup for 2017
+	26) Setup Setup for 2017
 		- Open the Setup.VS2015.sln and save it as Setup.VS2017.sln
 		- Create new NORMASchemaCatalog.VS2017.xml (from the VS2015 version)
-	24) New File BuildSetupVS2017.bat (Copy from BuildSetupVS2015.bat)
+		- Added the LICENSE.txt to the Components.wxs file so that the VSIX manifest can find it
+	27) New File BuildSetupVS2017.bat (Copy from BuildSetupVS2015.bat)
+	
+	
+	
+	For VSIXInstall - https://docs.microsoft.com/en-us/visualstudio/extensibility/how-to-migrate-extensibility-projects-to-visual-studio-2017
+	Might need to include license file in the setup...
 		
 
 Remaining Files - removing files after they are evaluated (dir /s /b /o . files.txt)
