@@ -252,10 +252,11 @@ IF NOT DEFINED RegPkg (SET RegPkg="%VSIPDir%\VisualStudioIntegration\Tools\Bin\r
 IF NOT DEFINED MSBuildBinPath SET MSBuildBinPath=%VSInstallDir%\MSBuild\%ProjectToolsVersion%\Bin\
 	
 IF NOT "%VSIXExtensionDir%"=="" (
-	CALL:SETVAR "VSIXInstallDir" "%LocalAppData%\Microsoft\VisualStudio\%?TargetVisualStudioMajorMinorVersion%_%VSInstanceId%%VSRegistryRootSuffix%\%VSIXExtensionDir%"
+	CALL:SETVAR "VSIXInstallDir" "%LocalAppData%\Microsoft\VisualStudio\%TargetVisualStudioMajorMinorVersion%_%VSInstanceId%%VSRegistryRootSuffix%\%VSIXExtensionDir%"
 ) ELSE (
 	SET VSIXInstallDir=
 )
+
 GOTO:EOF
 
 :SET6432
