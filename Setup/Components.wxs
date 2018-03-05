@@ -344,8 +344,9 @@
 
 						</Directory>
 
-						<Directory Id="Help" Name="Help">
-							<!-- Help files go here -->
+						<!--<Directory Id="Help" Name="Help">
+							--><!-- Help files go here -->
+                <!--
 							<Component Id="NORMAVSHelpComponent" Guid="31ED0AEA-D66C-4AD0-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
 								<File Id="Creating_ORM_Schemas.doc" ShortName="CrORMSch.doc" Name="Creating ORM Schemas.doc" Source="..\Documentation\Creating ORM Schemas.doc"
 									DefaultLanguage="$(var.DefaultLCID)" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
@@ -378,12 +379,12 @@
 							</Component>
 
 							<?ifdef MergeMSHelpRegistration?>
-								<Merge Id="MSHelpRegistration" Language="$(var.DefaultLCID)" DiskId="1" SourceFile="$(var.VsSDKRedistributablesDir)\HTML_Help_Registration__RTL_X86_---.msm"/>
+								<Merge Id="MSHelpRegistration" Language="$(var.DefaultLCID)" DiskId="1" SourceFile="$(var.VsSDKRedistributablesDir)\HTML_Help_Registration__RTL_X86_-|-|-.msm"/> -when uncommented remove the "|"
 							<?endif?>
 							<?ifdef HxMergeVSHelpCollection?>
-								<Merge Id="VSHelpCollection" Language="$(var.DefaultLCID)" DiskId="1" SourceFile="$(var.VsSDKRedistributablesDir)\VSIPCC_Collection_Files_RTL_---_---.msm"/>
+								<Merge Id="VSHelpCollection" Language="$(var.DefaultLCID)" DiskId="1" SourceFile="$(var.VsSDKRedistributablesDir)\VSIPCC_Collection_Files_RTL_-|-|-_-|-|-.msm"/> -when uncommented remove the "|"
 							<?endif?>
-						</Directory>
+						</Directory>-->
 
 						<Directory Id="Xml" Name="Xml">
 							<Directory Id="Schemas" Name="Schemas">
