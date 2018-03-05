@@ -1164,6 +1164,8 @@
 										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
 									<File Id="NORMAVSIXIcon" ShortName="DsgnrIco.png" Name="ORMDesignerIcon.png" Source="..\VSIXInstall\ORMDesignerIcon.png"
 										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                  <File Id="NORMAVSIXLicense" ShortName="LICENSE.txt" Name="LICENSE.txt" Source="..\LICENSE.txt"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
 									<File Id="NORMAVSIXPreview" ShortName="DsgnrPre.png" Name="ORMDesignerPreview.png" Source="..\VSIXInstall\ORMDesignerPreview.png"
 										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
 								</Component>

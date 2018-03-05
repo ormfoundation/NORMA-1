@@ -91,7 +91,45 @@ namespace Neumont.Build.Tasks
 						}
 					}
 				}
-			}
+                
+                if (string.IsNullOrEmpty(installDir))
+                {
+                    // if the install has not been found try vswhere
+                    // according to https://github.com/Microsoft/vswhere/wiki the install path will be maintained
+                    string vsWherePath = Environment.ExpandEnvironmentVariables(@"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe");
+
+                    if (!File.Exists(vsWherePath))
+                    {
+                        vsWherePath = Environment.ExpandEnvironmentVariables(@"%ProgramFiles%\Microsoft Visual Studio\Installer\vswhere.exe");
+                        if (!File.Exists(vsWherePath))
+                        {
+                            vsWherePath = null;
+                        }
+                    }
+
+                    if (string.IsNullOrEmpty(vsWherePath))
+                    {
+                        log.LogError("Unable to find vswhere.");
+                    }
+                    else
+                    {
+                        System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo(vsWherePath, "-property installationPath");
+                        startInfo.RedirectStandardOutput = true;
+                        startInfo.UseShellExecute = false;
+                        startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                        using (System.Diagnostics.Process p = System.Diagnostics.Process.Start(startInfo))
+                        {
+                            string paths = p.StandardOutput.ReadToEnd();
+                            p.WaitForExit();
+                            string[] pathArray = paths.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                            if (pathArray.Length > 0)
+                            {
+                                installDir = Path.Combine(pathArray[pathArray.Length - 1], "VSSDK");
+                            }
+                        }
+                    }
+                }
+            }
 
 			if (string.IsNullOrEmpty(installDir))
 			{
