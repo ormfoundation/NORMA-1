@@ -20,7 +20,7 @@
 			Level="1" Display="expand" TypicalDefault="install" InstallDefault="local" Absent="disallow" AllowAdvertise="no">
 			<ComponentGroupRef Id="MainFeatureComponents"/>
 
-			<Feature Id="HelpFeature" Title="!(loc.HelpFeatureTitle)" Description="!(loc.HelpFeatureDescription)"
+			<!--Feature Id="HelpFeature" Title="!(loc.HelpFeatureTitle)" Description="!(loc.HelpFeatureDescription)"
 				Level="1" TypicalDefault="install" InstallDefault="followParent" AllowAdvertise="no">
 				<ComponentGroupRef Id="HelpFeatureComponents"/>
 				<?ifdef MergeMSHelpRegistration?>
@@ -29,7 +29,7 @@
 				<?ifdef HxMergeVSHelpCollection?>
 					<MergeRef Id="VSHelpCollection"/>
 				<?endif?>
-			</Feature>
+			</Feature>-->
 
 			<Feature Id="DatabaseImportFeature" Title="!(loc.DatabaseImportFeatureTitle)" Description="!(loc.DatabaseImportFeatureDescription)"
 				Level="1" TypicalDefault="install" InstallDefault="followParent" AllowAdvertise="no">

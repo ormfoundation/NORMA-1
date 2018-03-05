@@ -102,9 +102,9 @@
 			<ComponentRef Id="NORMADBImportProjectItemsModelingComponent"/>
 			<?endif?>
 		</ComponentGroup>
-		<ComponentGroup Id="HelpFeatureComponents">
+		<!--<ComponentGroup Id="HelpFeatureComponents">
 			<ComponentRef Id="NORMAVSHelpComponent"/>
-		</ComponentGroup>
+		</ComponentGroup>-->
 		<ComponentGroup Id="GenerationFeatureComponents">
 			<!-- Base generation stuff (OIAL transforms and schemas, ORMCustomTool, etc.) go here -->
 			<ComponentRef Id="OIALSchemasComponent"/>
