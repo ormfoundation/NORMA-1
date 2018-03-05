@@ -3,15 +3,113 @@ This is all currently speculation... this document will be getting continuously 
 
 Module Information
 
+BarkerERView
+	Location: AlternateViews\BarkerERView
+	Purpose:
+		??? - View as Barker ER Diagram
+	How to Build: BuildVS{Version}.bat
+	Technologies:
+		1) C#
+CustomProperties
+	Location: CustomProperties
+	Purpose:
+		??? - Provides custom properties
+	How to Build: BuildVS{Version}.bat
+	Technologies:
+		1) C#
+DatabaseImport
+	Location: Tools/DatabaseImport
+	Purpose:
+		??? Adds database import
+	How to Build: BuildVS{Version}.bat
+	Technologies:
+		1) C#
+DisableRuleDirectiveProcessor
+	Location: Tools/DisableRuleDirectiveProcessor
+	Purpose:
+		??? - Allows certain rules to be ignored for text processing?
+	How to Build: BuildDevToolsVS{Version}.bat
+	Technologies:
+		1) C#
+Dil
+	Location: RelationalModel/Dil.sln
+	Purpose:
+		??? - Oial to Dcil (Database Script generation?)
+	How to Build: BuildVS{Version}.bat
+	Technologies:
+		1) C#
+	Notes - contains two projects: DcilModel and OialDcilBridge
+EntityRelationship
+	Location: EntityRelationship
+	Purpose:
+		??? - ORM to Barker
+	How to Build: BuildVS{Version}.bat
+	Technologies:
+		1) C#
+	Notes - contains two projects: BarkerErModel and OialBerBridge
+ExtensionExample
+	Location: ExtensionExample
+	Purpose:
+		??? - Used in the drop downs to allow new values to be added
+	How to Build: BuildVS{Version}.bat
+	Technologies:
+		1) C#
 NUBuild
 	Location: Tools/NUBuild
 	Purpose:
 		Provides custom Build Tasks for building the NORMA projects
 			CopyWithProcessing - this looks like it's stripping spaces off of XML/XSD files
 				XSD - remove annotations
-			RegexCompiler - compiles regulatr expressions into a standalone assembly
+			RegexCompiler - compiles regular expressions into a standalone assembly
 			ResourceMerger - merges one or more resources into a manifest resource 
 			ResourceMergeTargetResolver - this looks like it finds the correct .resources file for the merge target
+	How to Build: BuildDevToolsVS{Version}.bat
 	Technologies:
 		1) C#
 		2) MSBuild Tasks
+NUBuildVS
+	Location: Tools/NUBuildVS
+	Purpose:
+		Provides custom Build Tasks for building the NORMA projects
+			VsSdkLocator - gets the location of the installed VS SDK
+	How to Build: BuildDevToolsVS{Version}.bat
+	Technologies:
+		1) C#
+		2) MSBuild Tasks
+Oial
+	Location: Oial
+	Purpose:
+		??? - Converts the ORM to OIAL
+	How to Build: BuildVS{Version}.bat
+	Technologies:
+		1) C#
+	Notes - contains two projects: OialModel and ORMOialBridge
+OIALModel
+	Location: OIALModel
+	Purpose:
+		??? - Converts the ORM to OIAL
+	How to Build: BuildVS{Version}.bat
+	Technologies:
+		1) C#
+ORMCustomTool
+	Location: Tools/ORMCustomTool
+	Purpose:
+		??? Helps with generators
+	How to Build: BuildVS{Version}.bat
+	Technologies:
+		1) C#
+ORMPackage
+	Location: Root
+		This is really ORMModel (ORMModel\ORMModel.csproj)
+	Purpose:
+		Main aplication
+	How to Build: BuildVS{Version}.bat
+	Technologies:
+		1) C#
+RelationalView
+	Location: AlternateViews\RelationalView
+	Purpose:
+		??? - View as relational diagram
+	How to Build: BuildVS{Version}.bat
+	Technologies:
+		1) C#
