@@ -6,6 +6,18 @@
 *Version.cs
 *Version.wxi
 
+# NORMA Test files
+TestSuites/RelationalTests/Microsoft.*
+TestSuites/RelationalTests/nunit.*
+TestSuites/RelationalTests/ORMSolutions.*
+TestSuites/RelationalTests/RelationalTests.*.dll
+TestSuites/RelationalTests/RelationalTests.*.pdb
+TestSuites/TestSample/Microsoft.*
+TestSuites/TestSample/nunit.*
+TestSuites/TestSample/ORMSolutions.*
+TestSuites/TestSample/TestSample.*.dll
+TestSuites/TestSample/TestSample.*.pdb
+
 # User-specific files
 *.suo
 *.user

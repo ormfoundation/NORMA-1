@@ -36,31 +36,62 @@
     <Reference Include="EnvDTE80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk, Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams, Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Shell, Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk$(TargetDslToolsVersionSuffix), Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams$(TargetDslToolsVersionSuffix), Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Shell$(TargetDslToolsVersionSuffix), Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <!-- As of Visual Studio 2008 Beta 2, Microsoft.VisualStudio.Shell.9.0 is still versioned as 2.0.0.0. -->
-    <Reference Include="Microsoft.VisualStudio.Shell$(TargetVisualStudioFrameworkAssemblySuffix), Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+
+    <!-- As of Visual Studio 2008, Microsoft.VisualStudio.Shell.9.0 is still versioned as 2.0.0.0. -->
+    <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell$(TargetVisualStudioFrameworkAssemblySuffix), Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Condition=" '$(TargetVisualStudioVersion)' != 'v15.0' " Include="Microsoft.VisualStudio.Shell$(TargetVisualStudioFrameworkAssemblySuffix), Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
     <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v9.0' Or '$(TargetVisualStudioVersion)' == 'v10.0' Or '$(TargetVisualStudioVersion)' == 'v11.0' Or '$(TargetVisualStudioVersion)' == 'v12.0' Or '$(TargetVisualStudioVersion)' == 'v14.0' Or '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v10.0' Or '$(TargetVisualStudioVersion)' == 'v11.0' Or '$(TargetVisualStudioVersion)' == 'v12.0' Or '$(TargetVisualStudioVersion)' == 'v14.0' Or '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell.Interop.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v11.0' Or '$(TargetVisualStudioVersion)' == 'v12.0' Or '$(TargetVisualStudioVersion)' == 'v14.0' Or '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell.Interop.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v12.0' Or '$(TargetVisualStudioVersion)' == 'v14.0' Or '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell.Interop.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <!-- Added the design time reference for https://developercommunity.visualstudio.com/content/problem/75434/cannot-find-the-interop-type-that-matches-the-embe.html, not sure if this will be a problem-->
+    <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell.Interop.15.3.DesignTime, Version=15.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextManager.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    
     <Reference Include="Microsoft.VisualStudio.VirtualTreeGrid, Version=$(TargetVisualStudioAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="ORMSolutions.ORMArchitect.Core.$(TargetVisualStudioShortProductName), Version=1.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramFiles)\ORM Solutions\ORM Architect for $(TargetVisualStudioLongProductName)\bin\ORMSolutions.ORMArchitect.Code.$(TargetVisualStudioShortProductName).dll</HintPath>
+      <HintPath Condition="Exists('$(ProgramFiles)\ORM Solutions')">$(ProgramFiles)\ORM Solutions\ORM Architect for $(TargetVisualStudioLongProductName)\bin\ORMSolutions.ORMArchitect.Core.$(TargetVisualStudioShortProductName).dll</HintPath>
+      <HintPath Condition="Exists('$(MSBuildProgramFiles32)\ORM Solutions')">$(MSBuildProgramFiles32)\ORM Solutions\ORM Architect for $(TargetVisualStudioLongProductName)\bin\ORMSolutions.ORMArchitect.Core.$(TargetVisualStudioShortProductName).dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ORMSolutions.ORMArchitectSDK.TestEngine.$(TargetVisualStudioShortProductName), Version=1.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramFiles)\ORM Solutions\ORM Architect for $(TargetVisualStudioLongProductName)\bin\ORMSolutions.ORMArchitectSDK.TestEngine.$(TargetVisualStudioShortProductName).dll</HintPath>
+      <HintPath Condition="Exists('$(ProgramFiles)\ORM Solutions')">$(ProgramFiles)\ORM Solutions\ORM Architect for $(TargetVisualStudioLongProductName)\bin\ORMSolutions.ORMArchitectSDK.TestEngine.$(TargetVisualStudioShortProductName).dll"</HintPath>
+      <HintPath Condition="Exists('$(MSBuildProgramFiles32)\ORM Solutions')">$(MSBuildProgramFiles32)\ORM Solutions\ORM Architect for $(TargetVisualStudioLongProductName)\bin\ORMSolutions.ORMArchitectSDK.TestEngine.$(TargetVisualStudioShortProductName).dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.4.7.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

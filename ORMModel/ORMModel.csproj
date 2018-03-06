@@ -60,7 +60,7 @@
     </Reference>
     
 <!-- This is part of the Microsoft.VisualStudio.Modeling.Sdk.Diagrams dll
-	<Reference Condition=" '$(TargetVisualStudioVersion)' == 'v15.0' "  Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams.GraphObject$(TargetDslToolsVersionSuffix), Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+	  <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v15.0' "  Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams.GraphObject$(TargetDslToolsVersionSuffix), Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
 -->
@@ -114,15 +114,18 @@
     <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell.Interop.15.3.DesignTime, Version=15.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    
     <Reference Include="Microsoft.VisualStudio.TemplateWizardInterface, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    
     <Reference Include="Microsoft.VisualStudio.VirtualTreeGrid, Version=$(TargetVisualStudioAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
 	  <Reference Include="System" />
     <Reference Include="System.Data" />

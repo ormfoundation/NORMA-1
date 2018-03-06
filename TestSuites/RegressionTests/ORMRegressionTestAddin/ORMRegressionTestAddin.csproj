@@ -43,7 +43,8 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="ORMSolutions.ORMArchitect.Core.$(TargetVisualStudioShortProductName), Version=1.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f, processorArchitecture=MSIL">
-      <HintPath>$(ProgramFiles)\ORM Solutions\ORM Architect for $(TargetVisualStudioLongProductName)\bin\ORMSolutions.ORMArchitect.Core.$(TargetVisualStudioShortProductName).dll</HintPath>
+      <HintPath Condition="Exists('$(ProgramFiles)\ORM Solutions')">$(ProgramFiles)\ORM Solutions\ORM Architect for $(TargetVisualStudioLongProductName)\bin\ORMSolutions.ORMArchitect.Core.$(TargetVisualStudioShortProductName).dll</HintPath>
+      <HintPath Condition="Exists('$(MSBuildProgramFiles32)\ORM Solutions')">$(MSBuildProgramFiles32)\ORM Solutions\ORM Architect for $(TargetVisualStudioLongProductName)\bin\ORMSolutions.ORMArchitect.Core.$(TargetVisualStudioShortProductName).dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
