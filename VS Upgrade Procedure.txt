@@ -111,8 +111,19 @@ Current Upgrade 2015 -> 2017
 		- Open the Setup.VS2015.sln and save it as Setup.VS2017.sln
 		- Create new NORMASchemaCatalog.VS2017.xml (from the VS2015 version)
 		- Added the LICENSE.txt to the Components.wxs file so that the VSIX manifest can find it
-	27) New File BuildSetupVS2017.bat (Copy from BuildSetupVS2015.bat)
-	
+	27) Update BuildSetup.bat
+		- Changed to not call BuildHelp if VS2017 (HelpStudio Lite is no longer installed with VS SDK)
+		- Updated to if we used VSWhere to find info then we also need to pass in the private assembly location
+	28) Update Setup Project
+		- ComponentGroups.wxs - comment out help section
+		- Components.wxs - comment out help section
+		- Config.wxi - setup for VS2017
+		- Features.wxs - comment out help section
+		- Strings.wxl - setup for VS2017
+	29) New File BuildSetupVS2017.bat (Copy from BuildSetupVS2015.bat)
+		- Added section for degrading tools for v14.0 and defaulting to v15.0
+		- Added ReferencePath for MSBuild to the VS Private Assemblies folder (%VSInstallDir%\Common7\IDE\PrivateAssemblies); this is needed for the virtual tree grid
+		- Running this .bat will build Main.proj and Setup.prog
 	
 	
 	For VSIXInstall - https://docs.microsoft.com/en-us/visualstudio/extensibility/how-to-migrate-extensibility-projects-to-visual-studio-2017
@@ -250,60 +261,6 @@ c:\Projects\NORMA-plus\ORM2CommandLineTest\TestInterfaces.cs
 c:\Projects\NORMA-plus\ORM2CommandLineTest\Properties\AppAssemblyInfo.cs
 c:\Projects\NORMA-plus\ORM2CommandLineTest\Properties\AssemblyInfo.cs
 c:\Projects\NORMA-plus\ORM2CommandLineTest\Properties\ReportViewerAssemblyInfo.cs
-c:\Projects\NORMA-plus\Setup\Bitmaps
-c:\Projects\NORMA-plus\Setup\UI
-c:\Projects\NORMA-plus\Setup\ComponentGroups.wxs
-c:\Projects\NORMA-plus\Setup\Components.wxs
-c:\Projects\NORMA-plus\Setup\Config.wxi
-c:\Projects\NORMA-plus\Setup\DILSchemaCatalog.xml
-c:\Projects\NORMA-plus\Setup\Features.wxs
-c:\Projects\NORMA-plus\Setup\NORMAItemTemplates.wxi
-c:\Projects\NORMA-plus\Setup\NORMASchemaCatalog.VS2005.xml
-c:\Projects\NORMA-plus\Setup\NORMASchemaCatalog.VS2008.xml
-c:\Projects\NORMA-plus\Setup\NORMASchemaCatalog.VS2010.xml
-c:\Projects\NORMA-plus\Setup\NORMASchemaCatalog.VS2012.xml
-c:\Projects\NORMA-plus\Setup\NORMASchemaCatalog.VS2013.xml
-c:\Projects\NORMA-plus\Setup\NORMASchemaCatalog.VS2015.xml
-c:\Projects\NORMA-plus\Setup\NORMAVSPackageRegistry.wxi
-c:\Projects\NORMA-plus\Setup\ORMSchemaCatalog.xml
-c:\Projects\NORMA-plus\Setup\Product.wxs
-c:\Projects\NORMA-plus\Setup\Readme.htm
-c:\Projects\NORMA-plus\Setup\ReadMe.txt
-c:\Projects\NORMA-plus\Setup\Setup.sln
-c:\Projects\NORMA-plus\Setup\Setup.VS2005.bat
-c:\Projects\NORMA-plus\Setup\Setup.VS2008.bat
-c:\Projects\NORMA-plus\Setup\Setup.VS2008.sln
-c:\Projects\NORMA-plus\Setup\Setup.VS2010.bat
-c:\Projects\NORMA-plus\Setup\Setup.VS2010.sln
-c:\Projects\NORMA-plus\Setup\Setup.VS2012.sln
-c:\Projects\NORMA-plus\Setup\Setup.VS2013.sln
-c:\Projects\NORMA-plus\Setup\Setup.VS2015.sln
-c:\Projects\NORMA-plus\Setup\Setup.wixproj
-c:\Projects\NORMA-plus\Setup\Strings.wxl
-c:\Projects\NORMA-plus\Setup\UI.wxs
-c:\Projects\NORMA-plus\Setup\Bitmaps\bannrbmp.bmp
-c:\Projects\NORMA-plus\Setup\Bitmaps\dlgbmp.bmp
-c:\Projects\NORMA-plus\Setup\Bitmaps\info.ico
-c:\Projects\NORMA-plus\Setup\Bitmaps\warning.ico
-c:\Projects\NORMA-plus\Setup\UI\CancelDlg.wxs
-c:\Projects\NORMA-plus\Setup\UI\Common.wxs
-c:\Projects\NORMA-plus\Setup\UI\ErrorDlg.wxs
-c:\Projects\NORMA-plus\Setup\UI\ErrorProgressText.wxs
-c:\Projects\NORMA-plus\Setup\UI\ExitDialog.wxs
-c:\Projects\NORMA-plus\Setup\UI\FatalError.wxs
-c:\Projects\NORMA-plus\Setup\UI\FilesInUse.wxs
-c:\Projects\NORMA-plus\Setup\UI\MaintenanceTypeDlg.wxs
-c:\Projects\NORMA-plus\Setup\UI\MaintenanceWelcomeDlg.wxs
-c:\Projects\NORMA-plus\Setup\UI\MsiRMFilesInUse.wxs
-c:\Projects\NORMA-plus\Setup\UI\OutOfDiskDlg.wxs
-c:\Projects\NORMA-plus\Setup\UI\OutOfRbDiskDlg.wxs
-c:\Projects\NORMA-plus\Setup\UI\PrepareDlg.wxs
-c:\Projects\NORMA-plus\Setup\UI\ProgressDlg.wxs
-c:\Projects\NORMA-plus\Setup\UI\ResumeDlg.wxs
-c:\Projects\NORMA-plus\Setup\UI\UserExit.wxs
-c:\Projects\NORMA-plus\Setup\UI\VerifyReadyDlg.wxs
-c:\Projects\NORMA-plus\Setup\UI\WaitForCostingDlg.wxs
-c:\Projects\NORMA-plus\Setup\UI\WelcomeDlg.wxs
 c:\Projects\NORMA-plus\TestSuites\AutomationTestSample
 c:\Projects\NORMA-plus\TestSuites\RegressionTests
 c:\Projects\NORMA-plus\TestSuites\RelationalTests
