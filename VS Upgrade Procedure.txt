@@ -11,6 +11,7 @@ Project Build Order
 		Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.sln
 	Main.proj
 		ORMPackage.sln
+			ORMModel\ORMModel.csproj
 		ExtensionExample\ExtensionExample.sln
 		OIALModel\OIALModel.sln
 		Oial\Oial.sln
@@ -21,12 +22,22 @@ Project Build Order
 		AlternateViews\BarkerERView\BarkerERView.sln
 		Tools\ORMCustomTool\ORMCustomTool.sln
 		Tools\DatabaseImport\DatabaseImport.sln
-
 	Setup.proj (BuildSetup calls BuildHelp)
 		Setup\Setup.sln
+
 	Tests.proj
 		ORMTestPackage.sln
+			ORM2CommandLineTest\TestDriverEngine.csproj
+			ORM2CommandLineTest\ReportViewer.csproj
+			ORM2CommandLineTest\TestDriverApp.csproj
+			TestSuites\TestSample\TestSample.csproj
+			TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.csproj
+			TestSuites\AutomationTestSample\AutomationTestSample.csproj
+			TestSuites\RelationalTests\RelationalTests.csproj
 		TestSuites\TestSuites.sln
+			TestSample\TestSample.csproj
+			AutomationTestSample\AutomationTestSample.csproj
+			RelationalTests\RelationalTests.csproj
 	
 Current Upgrade 2015 -> 2017
 	1) New File VS2017.bat (Copy from VS2015.bat)
@@ -124,6 +135,27 @@ Current Upgrade 2015 -> 2017
 		- Added section for degrading tools for v14.0 and defaulting to v15.0
 		- Added ReferencePath for MSBuild to the VS Private Assemblies folder (%VSInstallDir%\Common7\IDE\PrivateAssemblies); this is needed for the virtual tree grid
 		- Running this .bat will build Main.proj and Setup.prog
+	30) Update "ORM2CommandLineTest\TestDriverEngine.csproj"
+		- Updated the references for VS2017 and xmldiffpatch
+	31) Update "ORM2CommandLineTest\ReportViewer.csproj"
+		- Updated the references for VS2017 and xmldiffpatch
+	32) Update "ORM2CommandLineTest\TestDriverApp.csproj"
+		- Updated the references for VS2017 and xmldiffpatch
+	33) Update "TestSuites\TestSample\TestSample.csproj"
+		- Updated the references for VS2017
+	34) Update TestSuites\AutomationTestSample\AutomationTestSample.csproj
+		- Updated the references for VS2017
+	35) Update "TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.csproj"
+		- Updated the references for VS2017
+	36) Update "TestSuites\RelationalTests\RelationalTests.csproj"
+		- Updated the references for VS2017
+	37) New File BuildTestsVS2017.bat (Copy from BuildTestVS2008.bat)
+		- Added section for degrading tools for v14.0 and defaulting to v15.0
+		
+		
+		
+	) New File BuildAllVS2017.bat (Copy from BuildAllVS2015.bat)
+		- Added section for degrading tools for v14.0 and defaulting to v15.0
 	
 	
 	For VSIXInstall - https://docs.microsoft.com/en-us/visualstudio/extensibility/how-to-migrate-extensibility-projects-to-visual-studio-2017
@@ -137,13 +169,6 @@ Current Upgrade 2015 -> 2017
 		https://marketplace.visualstudio.com/items?itemName=sergeb.GhostDoc
 
 Remaining Files - removing files after they are evaluated (dir /s /b /o . files.txt)
-c:\Projects\NORMA-plus\BuildAllVS2008.bat
-c:\Projects\NORMA-plus\BuildAllVS2010.bat
-c:\Projects\NORMA-plus\BuildAllVS2012.bat
-c:\Projects\NORMA-plus\BuildAllVS2013.bat
-c:\Projects\NORMA-plus\BuildAllVS2015.bat
-c:\Projects\NORMA-plus\BuildTests.bat
-c:\Projects\NORMA-plus\BuildTestsVS2008.bat
 c:\Projects\NORMA-plus\catalog.xml
 c:\Projects\NORMA-plus\CommonAssemblyInfo.cs
 c:\Projects\NORMA-plus\CPL.txt
@@ -222,273 +247,9 @@ c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\obj\Release
 c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\obj\Debug\NetTiersPort.csproj.CoreCompileInputs.cache
 c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\obj\Release\NetTiersPort.csproj.CoreCompileInputs.cache
 c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\Properties
-c:\Projects\NORMA-plus\ORM2CommandLineTest\App.config
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ChangeMapping.xslt
-c:\Projects\NORMA-plus\ORM2CommandLineTest\FakePass.xslt
-c:\Projects\NORMA-plus\ORM2CommandLineTest\Glasses.ico
-c:\Projects\NORMA-plus\ORM2CommandLineTest\install.bat
-c:\Projects\NORMA-plus\ORM2CommandLineTest\MapIds.xslt
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ORM2CommandLineTest.sln
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ORM2CommandLineTest.VS2008.sln
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMDocServices.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMModel.orm
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMStore.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMTaskItem.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMTaskProvider.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMTestReport.xsd
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMTestSuite.xsd
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ORMTestSuiteReport.xsd
-c:\Projects\NORMA-plus\ORM2CommandLineTest\Program.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ReadOnlyStream.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\Report.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ReportViewer.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ReportViewer.csproj
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ReportViewer.csproj.user
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ReportViewer.resx
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ReportViewerProgram.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ResourceStrings.Designer.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\ResourceStrings.resx
-c:\Projects\NORMA-plus\ORM2CommandLineTest\Settings.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\Settings.Designer.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\Settings.settings
-c:\Projects\NORMA-plus\ORM2CommandLineTest\Suite.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\TestAttribute.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\TestDriverApp.csproj
-c:\Projects\NORMA-plus\ORM2CommandLineTest\TestDriverApp.csproj.user
-c:\Projects\NORMA-plus\ORM2CommandLineTest\TestDriverEngine.csproj
-c:\Projects\NORMA-plus\ORM2CommandLineTest\TestInterfaces.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\Properties\AppAssemblyInfo.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\ORM2CommandLineTest\Properties\ReportViewerAssemblyInfo.cs
-c:\Projects\NORMA-plus\TestSuites\AutomationTestSample
-c:\Projects\NORMA-plus\TestSuites\RegressionTests
-c:\Projects\NORMA-plus\TestSuites\RelationalTests
-c:\Projects\NORMA-plus\TestSuites\TestSample
-c:\Projects\NORMA-plus\TestSuites\ErrorCases.txt
-c:\Projects\NORMA-plus\TestSuites\ORMTestDriver.bat
-c:\Projects\NORMA-plus\TestSuites\ORMTestReportViewer.bat
-c:\Projects\NORMA-plus\TestSuites\RelationalSuites.xml
-c:\Projects\NORMA-plus\TestSuites\SampleSuites.xml
-c:\Projects\NORMA-plus\TestSuites\TestSuites.sln
-c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\Properties
-c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\TestPlans
-c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\AutomationTestSample.csproj
-c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\CommonTestHooks.cs
-c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\EmptyModel.orm
-c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\ORMTestHooks.cs
-c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\RolePlayerRequiredErrorTests.cs
-c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\TestVisualStudio.cs
-c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\ToolboxTests.cs
-c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\TestPlans\CompatibleRolePlayer.txt
-c:\Projects\NORMA-plus\TestSuites\AutomationTestSample\TestPlans\TestPlanTemplate.txt
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin.sln
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\RunTest.bat
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\RunTests.bat
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\TestConfiguration.bat
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\TestHost.bat
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\TestSuite.xml
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\VSEnvironmentSnapshot.bat
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\CommandBar.Designer.cs
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\CommandBar.resx
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\Connect.cs
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.AddIn
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.AddIn.end
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.AddIn.start
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.csproj
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.sln
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\Test.cs
-c:\Projects\NORMA-plus\TestSuites\RegressionTests\ORMRegressionTestAddin\Tests.cs
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\Properties
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\RelationalTests.csproj
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.cs
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test1.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test1.Load.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test1.Report.xml
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test2.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test2.Compare.WithIndependent.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test2.Load.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test2.Report.xml
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test3.Compare.AfterReorder.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test3.Compare.OriginalOrder.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test3.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test3.Load.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test3.Report.xml
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test4.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test4.Load.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test4.Report.xml
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test5.Compare.FullyAbsorbed.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test5.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test5.Compare.SeparateObjectification.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test5.Compare.SeparateRemoteSupertype.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test5.Load.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test5.Report.xml
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test6.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test6.Load.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test6.Report.xml
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test7.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test7.Load.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test7.Report.xml
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test8.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test8.Load.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test8.Report.xml
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test9.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test9.Load.orm
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\FullRegeneration\Tests.Test9.Report.xml
-c:\Projects\NORMA-plus\TestSuites\RelationalTests\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintOverlap
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests
-c:\Projects\NORMA-plus\TestSuites\TestSample\NotWellModeledTests
-c:\Projects\NORMA-plus\TestSuites\TestSample\Properties
-c:\Projects\NORMA-plus\TestSuites\TestSample\Sample
-c:\Projects\NORMA-plus\TestSuites\TestSample\SamplePopulationTests
-c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests
-c:\Projects\NORMA-plus\TestSuites\TestSample\ormtest.snippet
-c:\Projects\NORMA-plus\TestSuites\TestSample\ormtestclass.snippet
-c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FCLoadTest1.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FCLoadTest1.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FCLoadTest1.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FCLoadTest2.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FCLoadTest2.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FCLoadTest2.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FrequencyConstraintErrorTest.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FrequencyConstraintErrorTest.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\Tests.FrequencyConstraintErrorTest.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\TestSample.csproj
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ConstContradictTests_1a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ConstContradictTests_1a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ConstContradictTests_1a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ConstContradictTests_1b.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ConstContradictTests_1b.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ConstContradictTests_1b.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.cs
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionMandatoryContra_1a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionMandatoryContra_1a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionMandatoryContra_1a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionMandatoryContra_1b.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionMandatoryContra_1b.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionMandatoryContra_1b.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionSubsetContra_1a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionSubsetContra_1a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionSubsetContra_1a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionSubsetContra_1b.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionSubsetContra_1b.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintContradictionTests\ConstraintContradictionTests.ExclusionSubsetContra_1b.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.cs
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.EqualityMandatoryImplied_1a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.EqualityMandatoryImplied_1a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.EqualityMandatoryImplied_1a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.EqualityMandatoryImplied_1b.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.EqualityMandatoryImplied_1b.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.EqualityMandatoryImplied_1b.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.MandatoryMandatory_1a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.MandatoryMandatory_1a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.MandatoryMandatory_1a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.MandatoryMandatory_1b.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.MandatoryMandatory_1b.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.MandatoryMandatory_1b.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.UniqueUniqueImplied_1a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.UniqueUniqueImplied_1a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintImplicationTests\ImplicationErrorTests.UniqueUniqueImplied_1a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintOverlap\ConstraintPatterns.xlsx
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintOverlap\DinosORM(Mar2008 Update).doc
-c:\Projects\NORMA-plus\TestSuites\TestSample\ConstraintOverlap\RingConstraintPatterns.xlsx
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.cs
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1b.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1b.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1b.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1c.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1c.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest1c.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest2a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest2a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest2a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest2b.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest2b.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\DTBlankTests\DTBlankTests.DTBlankTest2b.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.cs
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.ExactlyOneTest_1b.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.ExactlyOneTest_1b.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.ExactlyOneTest_1b.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.ExactlyOneTest1a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.ExactlyOneTest1a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCExactlyOneTests.ExactlyOneTest1a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.cs
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1b.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1b.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1b.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1c.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1c.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest1c.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest2a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest2a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest2a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest2b.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest2b.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\FCMinMaxTests\FCMinMaxTests.FCMinMaxTest2b.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.cs
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1b.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1b.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1b.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1c.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1c.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test1c.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test2a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test2a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test2a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test2b.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test2b.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\NMinus1Tests\NMinus1Tests.NMinus1Test2b.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\NotWellModeledTests\NotWellModeledTests.cs
-c:\Projects\NORMA-plus\TestSuites\TestSample\NotWellModeledTests\NotWellModeledTests.SubsetMandatory_1a.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\NotWellModeledTests\NotWellModeledTests.SubsetMandatory_1a.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\NotWellModeledTests\NotWellModeledTests.SubsetMandatory_1a.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.cs
-c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.Test1.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.Test1.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.Test1.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.Test2.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.Test2.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\Sample\Tests.Test2.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\SamplePopulationTests\PopulationTests.PopulationSampleTest.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\SamplePopulationTests\PopulationTests.PopulationSampleTest.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\SamplePopulationTests\PopulationTests.PopulationSampleTest.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\SamplePopulationTests\SamplePopulationTests.cs
-c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.AddPreferredLoadTest1.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.AddPreferredLoadTest1.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.AddPreferredLoadTest1.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.ClearPreferredLoadTest1.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.ClearPreferredLoadTest1.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.ClearPreferredLoadTest1.Report.xml
-c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.cs
-c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.ResolvePreferredTest1.Compare.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.ResolvePreferredTest1.Load.orm
-c:\Projects\NORMA-plus\TestSuites\TestSample\SubtypeTests\PreferredPathTests.ResolvePreferredTest1.Report.xml
-c:\Projects\NORMA-plus\Tools\DatabaseImport
 c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator
-c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor
 c:\Projects\NORMA-plus\Tools\GrammarParsingEngine
-c:\Projects\NORMA-plus\Tools\NUBuild
-c:\Projects\NORMA-plus\Tools\NUBuildVS
 c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool
-c:\Projects\NORMA-plus\Tools\ORMCustomTool
 c:\Projects\NORMA-plus\Tools\VersionGenerator
 c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\bin
 c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\obj
@@ -501,17 +262,6 @@ c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\UnicodeDataLoader.
 c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\obj\DILSupportFunctionsDataGenerator
 c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\obj\DILSupportFunctionsDataGenerator\DILSupportFunctionsDataGenerator.csproj.CoreCompileInputs.cache
 c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\Properties
-c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.cs
-c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.csproj
-c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.sln
-c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.VS2008.sln
-c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.VS2010.sln
-c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.VS2012.sln
-c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.VS2013.sln
-c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\DisableRuleDirectiveProcessor.VS2015.sln
-c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\Install.bat
-c:\Projects\NORMA-plus\Tools\DisableRuleDirectiveProcessor\Properties\AssemblyInfo.cs
 c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\ORMFactGrammar.cgt
 c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\ORMFactGrammar.grm
 c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\README.txt
@@ -524,37 +274,6 @@ c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\OIALDiffCustomTool.csproj
 c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\OIALDiffCustomTool.sln
 c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\UndeadOIAL.xslt
 c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\Properties
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\Extender.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ExtenderProvider.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\Install.bat
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\IORMGenerator.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\MakeWixStuff.bat
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.csproj
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.csproj.user
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.sln
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.VS2008.sln
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.VS2010.sln
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.VS2012.sln
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.VS2013.sln
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMCustomTool.VS2015.sln
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMExtensionManager.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ORMGenerators.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ReadOnlyDictionary.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\ReadOnlyStream.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\XslORMGenerator.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\BranchBase.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\BranchPartition.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\MainBranch.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\ORMCustomToolPropertyDescriptor.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\ORMCustomToolUITypeEditor.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\ORMGeneratorSelectionControl.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\ORMGeneratorSelectionControl.Designer.cs
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\ORMGeneratorSelectionControl.resx
-c:\Projects\NORMA-plus\Tools\ORMCustomTool\UI\OutputFormatBranch.cs
 c:\Projects\NORMA-plus\Tools\VersionGenerator\obj
 c:\Projects\NORMA-plus\Tools\VersionGenerator\Properties
 c:\Projects\NORMA-plus\Tools\VersionGenerator\Config.cs
