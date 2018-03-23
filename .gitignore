@@ -18,6 +18,10 @@ TestSuites/TestSample/ORMSolutions.*
 TestSuites/TestSample/TestSample.*.dll
 TestSuites/TestSample/TestSample.*.pdb
 
+#NORMA Documentation Examples
+Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\[Bb]in
+Documentation\NameGeneration\NameGenerationDemo\NameGenerationDemo\[Oo]bj
+
 # User-specific files
 *.suo
 *.user
