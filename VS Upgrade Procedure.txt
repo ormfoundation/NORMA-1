@@ -24,7 +24,6 @@ Project Build Order
 		Tools\DatabaseImport\DatabaseImport.sln
 	Setup.proj (BuildSetup calls BuildHelp)
 		Setup\Setup.sln
-
 	Tests.proj
 		ORMTestPackage.sln
 			ORM2CommandLineTest\TestDriverEngine.csproj
@@ -126,37 +125,148 @@ Current Upgrade 2015 -> 2017
 		- Changed to not call BuildHelp if VS2017 (HelpStudio Lite is no longer installed with VS SDK)
 		- Updated to if we used VSWhere to find info then we also need to pass in the private assembly location
 	28) Update Setup Project
-		- ComponentGroups.wxs - comment out help section
-		- Components.wxs - comment out help section
+		- ComponentGroups.wxs - separated into two separate files since the 2017 install is very different
+			ComponentGroupsPreV15.wxi
+			ComponentGroupsV15+.wxi
+		- Components.wxs - separated into two separate files since the 2017 install is very different
+			ComponentsPreV15.wxi
+			ComponentsV15+.wxi
+		- NORMAItemTemplates.wxi - separated into two separate files since the 2017 install is very different
+			NORMAItemTemplatesPreV15.wxi
+			NORMAItemTemplatesV15+.wxi
 		- Config.wxi - setup for VS2017
 		- Features.wxs - comment out help section
 		- Strings.wxl - setup for VS2017
-	29) New File BuildSetupVS2017.bat (Copy from BuildSetupVS2015.bat)
+		- UI.wxs - setup for VS2017 (added custom actions to UI Sequence)
+		- Product.wxs
+			- Changed how to find the information about VS for 2017
+			- Ignore Visual Studio registry calls since none of this is in the registry anymore
+				VCSHARPPACKAGEGUID
+				VBASICPACKAGEGUID
+				VJSHARPPACKAGEGUID
+				VCPLUSPLUSPACKAGEGUID
+				VWEBDEVPACKAGEGUID				
+				VSRegRoot
+						*hopefully this will work... NORMAVSPackageRegistry - no changes
+				VSClsidRoot
+	29) Added a new project Setup.CustomActions
+		- This project is used to determine the install locations of VS
+	30) Updated the Setup.proj file to include the Setup.CustomActions project if VS Version 15.0
+				
+				
+				Install Testing - msiexec /i "Natural ORM Architect for Visual Studio 2017.msi" /l*v C:\Test\Log.txt
+				
+				VB - 
+					{574FC912-F74F-4B4E-92C3-F695C208A2BB}
+					{574fc912-f74f-4b4e-92c3-f695c208a2bb}
+				C++ -
+					{3A3E1789-3E35-47B0-8567-D2FB407CC63D}
+			
+		https://blogs.msdn.microsoft.com/jschaffe/2012/10/23/creating-wix-custom-actions-in-c-and-passing-parameters/
+			
+		- **** This will currently only support one installation of VS 2017, if there are multiple installations this will not work...
+			Community - "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -products Microsoft.VisualStudio.Product.Community -property installationPath
+			Professional - "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -products Microsoft.VisualStudio.Product.Professional -property installationPath
+			Enterprise - "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -products Microsoft.VisualStudio.Product.Enterprise -property installationPath
+			
+			      <SetProperty Id="VSENVIRONMENTDIR_Community" After="GetCommunityVsInstall" Sequence="execute" Value="[VSPRODUCTDIR_Community]\Common7\IDE\">VSPRODUCTDIR_Community</SetProperty>
+				  <SetProperty Id="VSENVIRONMENTDIR_Professional" After="GetProfessionalVsInstall" Sequence="execute" Value="[VSPRODUCTDIR_Community]\Common7\IDE\">VSPRODUCTDIR_Professional</SetProperty>
+				  <SetProperty Id="VSENVIRONMENTDIR_Enterprise" After="GetEnterpriseVsInstall" Sequence="execute" Value="[VSPRODUCTDIR_Community]\Common7\IDE\">VSPRODUCTDIR_Enterprise</SetProperty>
+				  <!-- By default the action corresponding to the SetProperty is Set + the Id of the SetProperty-->
+				  <SetProperty Id="VSTEMPLATEITEMDIR_Community" After="SetVSENVIRONMENTDIR_Community" Sequence="execute" Value="[VSENVIRONMENTDIR_Community]ItemTemplates\">VSENVIRONMENTDIR_Community</SetProperty>
+				  <SetProperty Id="VSTEMPLATEITEMDIR_Professional" After="SetVSENVIRONMENTDIR_Professional" Sequence="execute" Value="[VSENVIRONMENTDIR_Professional]ItemTemplates\">VSENVIRONMENTDIR_Professional</SetProperty>
+				  <SetProperty Id="VSTEMPLATEITEMDIR_Enterprise" After="SetVSENVIRONMENTDIR_Enterprise" Sequence="execute" Value="[VSENVIRONMENTDIR_Enterprise]ItemTemplates\">VSENVIRONMENTDIR_Enterprise</SetProperty>
+				  <SetProperty Id="VSENVIRONMENTPATH_Community" After="SetVSENVIRONMENTDIR_Community" Sequence="execute" Value="[VSENVIRONMENTDIR_Community]devenv.exe">VSENVIRONMENTDIR_Community</SetProperty>
+				  <SetProperty Id="VSENVIRONMENTPATH_Professional" After="SetVSENVIRONMENTDIR_Professional" Sequence="execute" Value="[VSENVIRONMENTDIR_Professional]devenv.exe">VSENVIRONMENTDIR_Professional</SetProperty>
+				  <SetProperty Id="VSENVIRONMENTPATH_Enterprise" After="SetVSENVIRONMENTDIR_Enterprise" Sequence="execute" Value="[VSENVIRONMENTDIR_Enterprise]devenv.exe">VSENVIRONMENTDIR_Enterprise</SetProperty>
+			
+			
+			Registry
+				VSPRODUCTDIR
+					C:\Program Files (x86)\Microsoft Visual Studio 14.0\
+					SOFTWARE\Microsoft\VisualStudio\15.0\Setup\VS - ProductDir
+					
+					VSPRODUCTDIR_Community
+					VSPRODUCTDIR_Professional
+					VSPRODUCTDIR_Enterprise
+				VSENVIRONMENTDIR
+					C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\
+					SOFTWARE\Microsoft\VisualStudio\15.0\Setup\VS - EnvironmentDirectory
+					
+					VSENVIRONMENTDIR_Community
+					VSENVIRONMENTDIR_Professional
+					VSENVIRONMENTDIR_Enterprise
+				VSTEMPLATEITEMDIR
+					C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\ItemTemplates
+					SOFTWARE\Microsoft\VisualStudio\15.0\VSTemplate\Item - UserFolder
+					
+					VSTEMPLATEITEMDIR_Community
+					VSTEMPLATEITEMDIR_Professional
+					VSTEMPLATEITEMDIR_Enterprise
+				VSENVIRONMENTPATH
+					C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe
+					SOFTWARE\Microsoft\VisualStudio\15.0\Setup\VS - EnvironmentPath
+					
+					VSENVIRONMENTPATH_Community
+					VSENVIRONMENTPATH_Professional
+					VSENVIRONMENTPATH_Enterprise
+				
+				
+				-- Might need to hack the vsix manifest file for these...
+					https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/registering-single-file-generators
+					https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/implementing-single-file-generators
+					https://docs.microsoft.com/en-us/visualstudio/extensibility/breaking-changes-2017
+					https://stackoverflow.com/questions/42661912/single-file-generator-changes-in-visual-studio-2017
+					https://stackoverflow.com/questions/42842406/add-vsix-features-to-c-sharp-class-library
+				VCSHARPPACKAGEGUID - uses fixed
+					SOFTWARE\Microsoft\VisualStudio\15.0\InstalledProducts\Microsoft Visual C# - Package
+				VBASICPACKAGEGUID
+					{164B10B9-B200-11D0-8C61-00A0C91E29D5}
+					SOFTWARE\Microsoft\VisualStudio\15.0\InstalledProducts\Microsoft Visual Basic - Package
+				VCPLUSPLUSPACKAGEGUID
+					{3A3E1789-3E35-47B0-8567-D2FB407CC63D}
+					SOFTWARE\Microsoft\VisualStudio\15.0\InstalledProducts\Microsoft Visual C++ - Package
+				VWEBDEVPACKAGEGUID
+					SOFTWARE\Microsoft\VisualStudio\15.0\InstalledProducts\Visual Web Developer - Package
+					
+					
+				??? couldn't find with 2015
+					PLIXSCHEMAVERSION
+						SOFTWARE\Neumont\PLiX for Visual Studio - SchemaVersion
+					VJSHARPPACKAGEGUID
+						??? - did they mean F#??? - {91a04a73-4f2c-4e7c-ad38-c1a68e7da05c}					
+						SOFTWARE\Microsoft\VisualStudio\15.0\InstalledProducts\Microsoft Visual J# - Package
+				*NOT INSTALLED WITH 2017*
+					DSLTOOLSREDISTINSTALL - not redistributed
+						SOFTWARE\Microsoft\VisualStudio\DSLTools\2.0 - RedistInstall
+					
+	31) New File BuildSetupVS2017.bat (Copy from BuildSetupVS2015.bat)
 		- Added section for degrading tools for v14.0 and defaulting to v15.0
 		- Added ReferencePath for MSBuild to the VS Private Assemblies folder (%VSInstallDir%\Common7\IDE\PrivateAssemblies); this is needed for the virtual tree grid
 		- Running this .bat will build Main.proj and Setup.prog
-	30) Update "ORM2CommandLineTest\TestDriverEngine.csproj"
+	32) Update "ORM2CommandLineTest\TestDriverEngine.csproj"
 		- Updated the references for VS2017 and xmldiffpatch
-	31) Update "ORM2CommandLineTest\ReportViewer.csproj"
+	33) Update "ORM2CommandLineTest\ReportViewer.csproj"
 		- Updated the references for VS2017 and xmldiffpatch
-	32) Update "ORM2CommandLineTest\TestDriverApp.csproj"
+	34) Update "ORM2CommandLineTest\TestDriverApp.csproj"
 		- Updated the references for VS2017 and xmldiffpatch
-	33) Update "TestSuites\TestSample\TestSample.csproj"
+	35) Update "TestSuites\TestSample\TestSample.csproj"
 		- Updated the references for VS2017
-	34) Update TestSuites\AutomationTestSample\AutomationTestSample.csproj
+	36) Update TestSuites\AutomationTestSample\AutomationTestSample.csproj
 		- Updated the references for VS2017
-	35) Update "TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.csproj"
+	37) Update "TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.csproj"
 		- Updated the references for VS2017
-	36) Update "TestSuites\RelationalTests\RelationalTests.csproj"
+	38) Update "TestSuites\RelationalTests\RelationalTests.csproj"
 		- Updated the references for VS2017
-	37) New File BuildTestsVS2017.bat (Copy from BuildTestVS2008.bat)
+	39) New File BuildTestsVS2017.bat (Copy from BuildTestVS2008.bat)
 		- Added section for degrading tools for v14.0 and defaulting to v15.0
-		
-		
-		
-	) New File BuildAllVS2017.bat (Copy from BuildAllVS2015.bat)
+	40) New File BuildAllVS2017.bat (Copy from BuildAllVS2015.bat)
 		- Added section for degrading tools for v14.0 and defaulting to v15.0
 	
+	----------------------------------------------------------------------------------
+	-- I'm not sure if these changes are necessary, they are all files/projects that were not part of a build bat file
+	----------------------------------------------------------------------------------
+	* New File VersionGenerator.VS2017.sln copied from VersionGenerator.VS2015.sln
 	
 	For VSIXInstall - https://docs.microsoft.com/en-us/visualstudio/extensibility/how-to-migrate-extensibility-projects-to-visual-studio-2017
 	MS Help Content Manager - 
@@ -165,381 +275,7 @@ Current Upgrade 2015 -> 2017
 		https://docs.microsoft.com/en-us/visualstudio/ide/command-line-arguments-for-the-help-content-manager
 		https://social.msdn.microsoft.com/Forums/vstudio/en-US/6382b738-c22a-4936-ae5e-cad3fe06c3b8/deploy-help-viewer-1x-content-with-vsix-package?forum=vsx
 		http://thirdblogfromthesun.com/2011/05/create-a-basic-help-file-for-the-microsoft-help-viewer/
-		
 		https://marketplace.visualstudio.com/items?itemName=sergeb.GhostDoc
 
 Remaining Files - removing files after they are evaluated (dir /s /b /o . files.txt)
-c:\Projects\NORMA-plus\catalog.xml
-c:\Projects\NORMA-plus\CommonAssemblyInfo.cs
-c:\Projects\NORMA-plus\CPL.txt
-c:\Projects\NORMA-plus\CustomDictionary.xml
-c:\Projects\NORMA-plus\files.txt
-c:\Projects\NORMA-plus\FirstTimeBuild.bat
-c:\Projects\NORMA-plus\FirstTimeBuildAll.bat
-c:\Projects\NORMA-plus\FirstTimeBuildAllVS2008.bat
-c:\Projects\NORMA-plus\ORM2.FxCop
-c:\Projects\NORMA-plus\ORMTestPackage.sln
-c:\Projects\NORMA-plus\ORMTestPackage.VS2008.sln
 c:\Projects\NORMA-plus\README.txt
-c:\Projects\NORMA-plus\Setup.proj
-c:\Projects\NORMA-plus\Tests.proj
-c:\Projects\NORMA-plus\VersionGenerator.exe
-c:\Projects\NORMA-plus\VersionGenerator.exe.config
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\bin
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\obj
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\Properties
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\DILSchemaProvider.cs
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\DILSchemaProvider.csproj
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\DILSchemaProvider.sln
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\Install.bat
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\bin\Debug
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\bin\Release
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\obj\Debug
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\obj\Release
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\obj\Debug\DILSchemaProvider.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\obj\Release\DILSchemaProvider.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\CodeSmith\DILSchemaProvider\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\GeneratedEntityClasses.plix
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\GeneratedUserEntityClasses.plix
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\StaticGeneratedEntityClasses.plix
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\AssemblyInfo.cs
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\NetTiersTestModel.sln
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\bin
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\obj
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\Properties
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\Condensed.Entities.csproj
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\GeneratedEntityClasses.cs
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\GeneratedUserEntityClasses.cs
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\StaticGeneratedEntityClasses.cs
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\bin\Debug
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\bin\Release
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\obj\Debug
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\obj\Release
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\obj\Debug\Condensed.Entities.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\obj\Release\Condensed.Entities.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPlixConversion\NetTiersTestModel\Condensed.Entities\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\bin
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\obj
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\Properties
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\DCILtoSchemaExplorer.xslt
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\Entities.xslt
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\EntityProvider.xslt
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\EntityScript.xslt
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\NetTiersPort.csproj
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\NetTiersPort.sln
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\NETTiersSettings.xml
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\NETTiersSettings.xslt
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\PLiX.xml
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\Program.cs
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\SampleDatabaseSchema.cs
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\SampleDatabaseSchema.xml
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\SchemaExplorer.xsd
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\SqlProvider.xslt
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\bin\Debug
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\bin\Release
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\obj\Debug
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\obj\Release
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\obj\Debug\NetTiersPort.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\obj\Release\NetTiersPort.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\CodeSmith\NetTiersPort\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator
-c:\Projects\NORMA-plus\Tools\GrammarParsingEngine
-c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool
-c:\Projects\NORMA-plus\Tools\VersionGenerator
-c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\bin
-c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\obj
-c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\Properties
-c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\DILSupportFunctionsDataGenerator.cs
-c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\DILSupportFunctionsDataGenerator.csproj
-c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\DILSupportFunctionsDataGenerator.sln
-c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\UnicodeData.cs
-c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\UnicodeDataLoader.cs
-c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\obj\DILSupportFunctionsDataGenerator
-c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\obj\DILSupportFunctionsDataGenerator\DILSupportFunctionsDataGenerator.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\Tools\DILSupportFunctionsDataGenerator\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\ORMFactGrammar.cgt
-c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\ORMFactGrammar.grm
-c:\Projects\NORMA-plus\Tools\GrammarParsingEngine\README.txt
-c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\Properties
-c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\HowToBuild.txt
-c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\Install.bat
-c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\LiveOIAL.xslt
-c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\OIALDiffCustomTool.cs
-c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\OIALDiffCustomTool.csproj
-c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\OIALDiffCustomTool.sln
-c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\UndeadOIAL.xslt
-c:\Projects\NORMA-plus\Tools\OIALDiffCustomTool\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\Tools\VersionGenerator\obj
-c:\Projects\NORMA-plus\Tools\VersionGenerator\Properties
-c:\Projects\NORMA-plus\Tools\VersionGenerator\Config.cs
-c:\Projects\NORMA-plus\Tools\VersionGenerator\Program.cs
-c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.csproj
-c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.sln
-c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.VS2008.sln
-c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.VS2010.sln
-c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.VS2012.sln
-c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.VS2013.sln
-c:\Projects\NORMA-plus\Tools\VersionGenerator\VersionGenerator.VS2015.sln
-c:\Projects\NORMA-plus\Tools\VersionGenerator\obj\VersionGenerator
-c:\Projects\NORMA-plus\Tools\VersionGenerator\obj\VersionGenerator\VersionGenerator.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\Tools\VersionGenerator\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\XML\ConceptualDBtoDCIL
-c:\Projects\NORMA-plus\XML\DCILtoHTML
-c:\Projects\NORMA-plus\XML\DCILtoLINQ
-c:\Projects\NORMA-plus\XML\DCILtoNHibernate
-c:\Projects\NORMA-plus\XML\DIL
-c:\Projects\NORMA-plus\XML\DILtoSQL
-c:\Projects\NORMA-plus\XML\GenerationSamples
-c:\Projects\NORMA-plus\XML\OIAL
-c:\Projects\NORMA-plus\XML\OIALtoDCIL
-c:\Projects\NORMA-plus\XML\OIALtoDSL
-c:\Projects\NORMA-plus\XML\OIALtoDTD
-c:\Projects\NORMA-plus\XML\OIALtoEDM
-c:\Projects\NORMA-plus\XML\OIALtoOWL
-c:\Projects\NORMA-plus\XML\OIALtoPLiX
-c:\Projects\NORMA-plus\XML\OIALtoWSDL
-c:\Projects\NORMA-plus\XML\OIALtoXForms
-c:\Projects\NORMA-plus\XML\OIALtoXSD
-c:\Projects\NORMA-plus\XML\ConceptualDBtoDCIL\ConceptualDBtoDCIL.csproj
-c:\Projects\NORMA-plus\XML\ConceptualDBtoDCIL\ConceptualDBtoDCIL.sln
-c:\Projects\NORMA-plus\XML\ConceptualDBtoDCIL\ConceptualDBtoDCIL.xslt
-c:\Projects\NORMA-plus\XML\DCILtoHTML\DCILtoTV.xslt
-c:\Projects\NORMA-plus\XML\DCILtoHTML\TableView.xsd
-c:\Projects\NORMA-plus\XML\DCILtoHTML\TVtoHTML.xslt
-c:\Projects\NORMA-plus\XML\DCILtoLINQ\DCILtoDBML.xslt
-c:\Projects\NORMA-plus\XML\DCILtoLINQ\DCILtoLinqAttributeMapping.xslt
-c:\Projects\NORMA-plus\XML\DCILtoLINQ\DCILtoLinqToSqlMapping.xslt
-c:\Projects\NORMA-plus\XML\DCILtoLINQ\DCILtoLinqXmlMapping.xslt
-c:\Projects\NORMA-plus\XML\DCILtoLINQ\LinqToSqlSettings.xml
-c:\Projects\NORMA-plus\XML\DCILtoLINQ\LinqToSqlSettings.xslt
-c:\Projects\NORMA-plus\XML\DCILtoNHibernate\DCILtoNHibernateConfiguration.xslt
-c:\Projects\NORMA-plus\XML\DCILtoNHibernate\DCILtoNHibernateMapping.xslt
-c:\Projects\NORMA-plus\XML\DCILtoNHibernate\NHibernateGeneratorSettings.xml
-c:\Projects\NORMA-plus\XML\DIL\catalog.xml
-c:\Projects\NORMA-plus\XML\DIL\DCIL.xsd
-c:\Projects\NORMA-plus\XML\DIL\DDIL.xsd
-c:\Projects\NORMA-plus\XML\DIL\DIL.csproj
-c:\Projects\NORMA-plus\XML\DIL\DIL.sln
-c:\Projects\NORMA-plus\XML\DIL\DIL.xsd
-c:\Projects\NORMA-plus\XML\DIL\DILDT.xsd
-c:\Projects\NORMA-plus\XML\DIL\DILEP.xsd
-c:\Projects\NORMA-plus\XML\DIL\DILMS.xsd
-c:\Projects\NORMA-plus\XML\DIL\DILSupportFunctions.xslt
-c:\Projects\NORMA-plus\XML\DIL\DMIL.xsd
-c:\Projects\NORMA-plus\XML\DIL\SqlNotes.txt
-c:\Projects\NORMA-plus\XML\DILtoSQL\DCILtoDDIL.xslt
-c:\Projects\NORMA-plus\XML\DILtoSQL\DDILSample.xml
-c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoDB2.xslt
-c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoMySQL.xslt
-c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoOracle.xslt
-c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoPostgreSQL.xslt
-c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoSQLServer.xslt
-c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoSQLServer_ANSITypes.xslt
-c:\Projects\NORMA-plus\XML\DILtoSQL\DDILtoSQLStandard.xslt
-c:\Projects\NORMA-plus\XML\DILtoSQL\DILtoSQL.csproj
-c:\Projects\NORMA-plus\XML\DILtoSQL\DILtoSQL.sln
-c:\Projects\NORMA-plus\XML\DILtoSQL\DomainInliner.xslt
-c:\Projects\NORMA-plus\XML\DILtoSQL\TinyIntRemover.xslt
-c:\Projects\NORMA-plus\XML\DILtoSQL\TruthValueTestRemover.xslt
-c:\Projects\NORMA-plus\XML\DILtoSQL\UniqueNullableOutliner.xslt
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo._ORMCustomToolReport.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Abstract.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Abstract.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.CLIProperties.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.CoRef._ORMCustomToolReport.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.CoRef.orm
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayer.php
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayer.php.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayerTestForm.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayerTestForm.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayerTestFormInputControl.Designer.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayerTestFormInputControl.Designer.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayerTestFormInputControl.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DataLayerTestFormInputControl.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DB2.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DCIL.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.DDIL.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Entities.php
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Entities.php.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Implementation.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Implementation.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.MySQL.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.OIAL.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Oracle.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.orm
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.owl
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.PostgreSQL.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Proxies.php
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Proxies.php.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Services.php
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.Services.php.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.SQLServer.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.SQLStandard.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\BlogDemo.xsd
-c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.csproj
-c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.sln
-c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.VS2008.sln
-c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.VS2010.sln
-c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.VS2012.sln
-c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.VS2013.sln
-c:\Projects\NORMA-plus\XML\GenerationSamples\GenerationSamples.VS2015.sln
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo._ORMCustomToolReport.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Abstract.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Abstract.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.CLIProperties.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.CoRef.orm
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayer.php
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayer.php.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayerTestForm.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayerTestForm.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayerTestFormInputControl.Designer.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayerTestFormInputControl.Designer.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayerTestFormInputControl.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DataLayerTestFormInputControl.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DB2.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DCIL.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.DDIL.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Entities.php
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Entities.php.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Implementation.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Implementation.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.MySQL.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.OIAL.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Oracle.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.orm
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.owl
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.PostgreSQL.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Proxies.php
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Proxies.php.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Services.php
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.Services.php.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.SQLServer.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.SQLStandard.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\PersonCountryDemo.xsd
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel._ORMCustomToolReport.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Abstract.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Abstract.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.CLIProperties.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.CoRef.orm
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayer.php
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayer.php.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayerTestForm.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayerTestForm.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayerTestFormInputControl.Designer.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayerTestFormInputControl.Designer.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayerTestFormInputControl.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DataLayerTestFormInputControl.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DB2.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DCIL.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.DDIL.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Entities.php
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Entities.php.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Implementation.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Implementation.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.MySQL.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.OIAL.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Oracle.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.orm
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.owl
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.PostgreSQL.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Proxies.php
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Proxies.php.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Services.php
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Services.php.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.SQLServer.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.SQLStandard.sql
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Support.PLiX.cs
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.Support.PLiX.xml
-c:\Projects\NORMA-plus\XML\GenerationSamples\SampleModel.xsd
-c:\Projects\NORMA-plus\XML\OIAL\CoRefORM.xslt
-c:\Projects\NORMA-plus\XML\OIAL\OIAL.csproj
-c:\Projects\NORMA-plus\XML\OIAL\OIAL.sln
-c:\Projects\NORMA-plus\XML\OIAL\OIAL.xsd
-c:\Projects\NORMA-plus\XML\OIAL\ORMDataTypes.xsd
-c:\Projects\NORMA-plus\XML\OIAL\ORMDataTypes-Temporal.xsd
-c:\Projects\NORMA-plus\XML\OIAL\ORMtoOIAL.xslt
-c:\Projects\NORMA-plus\XML\OIAL\SampleModelOutput.xml
-c:\Projects\NORMA-plus\XML\OIALtoDCIL\OIALtoDCIL.csproj
-c:\Projects\NORMA-plus\XML\OIALtoDCIL\OIALtoDCIL.sln
-c:\Projects\NORMA-plus\XML\OIALtoDCIL\OIALtoDCIL.xslt
-c:\Projects\NORMA-plus\XML\OIALtoDSL\bin
-c:\Projects\NORMA-plus\XML\OIALtoDSL\obj
-c:\Projects\NORMA-plus\XML\OIALtoDSL\Properties
-c:\Projects\NORMA-plus\XML\OIALtoDSL\OIALtoDSL.csproj
-c:\Projects\NORMA-plus\XML\OIALtoDSL\OIALtoDSL.sln
-c:\Projects\NORMA-plus\XML\OIALtoDSL\OIALtoDSL.xslt
-c:\Projects\NORMA-plus\XML\OIALtoDSL\bin\Debug
-c:\Projects\NORMA-plus\XML\OIALtoDSL\bin\Release
-c:\Projects\NORMA-plus\XML\OIALtoDSL\obj\Debug
-c:\Projects\NORMA-plus\XML\OIALtoDSL\obj\Release
-c:\Projects\NORMA-plus\XML\OIALtoDSL\obj\Debug\OIALtoDSL.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\XML\OIALtoDSL\obj\Release\OIALtoDSL.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\XML\OIALtoDSL\Properties\AssemblyInfo.cs
-c:\Projects\NORMA-plus\XML\OIALtoDTD\bin
-c:\Projects\NORMA-plus\XML\OIALtoDTD\obj
-c:\Projects\NORMA-plus\XML\OIALtoDTD\OIALtoDTD.csproj
-c:\Projects\NORMA-plus\XML\OIALtoDTD\OIALtoDTD.sln
-c:\Projects\NORMA-plus\XML\OIALtoDTD\OIALtoDTD.xslt
-c:\Projects\NORMA-plus\XML\OIALtoDTD\ReadMe.txt
-c:\Projects\NORMA-plus\XML\OIALtoDTD\bin\Debug
-c:\Projects\NORMA-plus\XML\OIALtoDTD\bin\Release
-c:\Projects\NORMA-plus\XML\OIALtoDTD\obj\Debug
-c:\Projects\NORMA-plus\XML\OIALtoDTD\obj\Release
-c:\Projects\NORMA-plus\XML\OIALtoDTD\obj\Debug\OIALtoDTD.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\XML\OIALtoDTD\obj\Release\OIALtoDTD.csproj.CoreCompileInputs.cache
-c:\Projects\NORMA-plus\XML\OIALtoEDM\CodeGenerationSchema.xsd
-c:\Projects\NORMA-plus\XML\OIALtoEDM\CSDLSchema.xsd
-c:\Projects\NORMA-plus\XML\OIALtoEDM\CSDLSchemaTypes.xsd
-c:\Projects\NORMA-plus\XML\OIALtoEDM\csmsl.xsd
-c:\Projects\NORMA-plus\XML\OIALtoEDM\DMSchemaTypes.xsd
-c:\Projects\NORMA-plus\XML\OIALtoEDM\EDMSchemaTypes.xsd
-c:\Projects\NORMA-plus\XML\OIALtoEDM\OIALtoEDM.csproj
-c:\Projects\NORMA-plus\XML\OIALtoEDM\OIALtoEDM.sln
-c:\Projects\NORMA-plus\XML\OIALtoEDM\OIALtoEDM.xslt
-c:\Projects\NORMA-plus\XML\OIALtoEDM\Output.xml
-c:\Projects\NORMA-plus\XML\OIALtoEDM\SSDLSchema.xsd
-c:\Projects\NORMA-plus\XML\OIALtoEDM\SSDLSchemaTypes.xsd
-c:\Projects\NORMA-plus\XML\OIALtoOWL\OIALtoOWL.csproj
-c:\Projects\NORMA-plus\XML\OIALtoOWL\OIALtoOWL.sln
-c:\Projects\NORMA-plus\XML\OIALtoOWL\OIALtoOWL.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\DataLayerTestForm
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\PHP
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoCLIProperties.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX.csproj
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX.sln
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_Abstract.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_DataLayer_Implementation.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_DataLayer_SprocFree_Implementation.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_GenerateGlobalSupportClasses.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_GenerateTuple.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_GlobalSupportFunctions.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_GlobalSupportParameters.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_InMemory_Implementation.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\OIALtoPLiX_Properties.xsd
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\DataLayerTestForm\OIALtoApp_Config.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\DataLayerTestForm\OIALtoPLiX_DataLayerTestForm.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\DataLayerTestForm\OIALtoPLiX_InputControl.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\DataLayerTestForm\OIALtoPLiX_InputControl_Designer.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\PHP\PHPDataLayer.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\PHP\PHPEntities.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\PHP\PHPProxies.xslt
-c:\Projects\NORMA-plus\XML\OIALtoPLiX\PHP\PHPServices.xslt
-c:\Projects\NORMA-plus\XML\OIALtoWSDL\OIALtoWSDL.csproj
-c:\Projects\NORMA-plus\XML\OIALtoWSDL\OIALtoWSDL.sln
-c:\Projects\NORMA-plus\XML\OIALtoWSDL\OIALtoWSDL.xslt
-c:\Projects\NORMA-plus\XML\OIALtoWSDL\OIALtoXSD.xslt
-c:\Projects\NORMA-plus\XML\OIALtoWSDL\Output.wsdl
-c:\Projects\NORMA-plus\XML\OIALtoXForms\OIALtoXForms.csproj
-c:\Projects\NORMA-plus\XML\OIALtoXForms\OIALtoXForms.sln
-c:\Projects\NORMA-plus\XML\OIALtoXForms\OIALtoXForms.xslt
-c:\Projects\NORMA-plus\XML\OIALtoXForms\OIALtoXSD.xslt
-c:\Projects\NORMA-plus\XML\OIALtoXForms\Output.xml
-c:\Projects\NORMA-plus\XML\OIALtoXSD\OIALtoXSD.csproj
-c:\Projects\NORMA-plus\XML\OIALtoXSD\OIALtoXSD.sln
-c:\Projects\NORMA-plus\XML\OIALtoXSD\OIALtoXSD.xslt
-c:\Projects\NORMA-plus\XML\OIALtoXSD\Output.xsd
