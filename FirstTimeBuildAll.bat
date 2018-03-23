@@ -1,3 +1,5 @@
+:: Do not call directly for VS2017+ as the paths for the private assembly references will not be configured correctly
+
 @ECHO OFF
 SETLOCAL
 SET RootDir=%~dp0.
