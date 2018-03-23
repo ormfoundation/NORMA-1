@@ -1,0 +1,1379 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+	Natural Object-Role Modeling Architect for Visual Studio
+
+	Copyright © Neumont University. All rights reserved.
+	Copyright © ORM Solutions, LLC. All rights reserved.
+
+	The use and distribution terms for this software are covered by the
+	Common Public License 1.0 (http://opensource.org/licenses/cpl) which
+	can be found in the file CPL.txt at the root of this distribution.
+	By using this software in any fashion, you are agreeing to be bound by
+	the terms of this license.
+
+	You must not remove this notice, or any other, from this software.
+-->
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Directory Id="TARGETDIR" Name="SourceDir">
+
+		<Directory Id="GAC">
+			<!-- Assemblies to be installed in the Global Assembly Cache go here -->
+			<Component Id="NORMAVSPackageGACComponent" Guid="C1621945-A277-4590-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+				<File Id="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll_GAC" ShortName="ORM.dll" Name="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll" Source="..\ORMModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"
+					DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Vital="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll_GAC" ProcessorArchitecture="msil"/>
+			</Component>
+			<Component Id="NORMAVSCustomPropertiesGACComponent" Guid="0772D284-812E-4ECC-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+				<File Id="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll_GAC" ShortName="ORMCstPr.dll" Name="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll" Source="..\CustomProperties\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll"
+					DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll_GAC" ProcessorArchitecture="msil"/>
+			</Component>
+			<Component Id="NORMAVSORMAbstractionGACComponent" Guid="287179E2-73E9-4685-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+				<File Id="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll_GAC" ShortName="ORMAbstr.dll" Name="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll" Source="..\Oial\OialModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll"
+					DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll_GAC" ProcessorArchitecture="msil"/>
+			</Component>
+			<Component Id="NORMAVSORMToORMAbstractionGACComponent" Guid="83ACCC60-19F4-4BBE-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+				<File Id="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).dll_GAC" ShortName="ORMAbsBr.dll" Name="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).dll" Source="..\Oial\ORMOialBridge\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).dll"
+					DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).dll_GAC" ProcessorArchitecture="msil"/>
+			</Component>
+			<Component Id="NORMAVSRelationalModelsGACComponent" Guid="8877E891-60A3-454C-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+				<File Id="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll_GAC" ShortName="RelMods.dll" Name="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll" Source="..\RelationalModel\DcilModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll"
+					DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll_GAC" ProcessorArchitecture="msil"/>
+			</Component>
+			<Component Id="NORMAVSORMAbstractionToConceptualDatabaseGACComponent" Guid="B14BF95A-EC48-49EE-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+				<File Id="ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).dll_GAC" ShortName="CDBBr.dll" Name="ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).dll" Source="..\RelationalModel\OialDcilBridge\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).dll"
+					DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).dll_GAC" ProcessorArchitecture="msil"/>
+			</Component>
+			<Component Id="NORMAVSEntityRelationshipModelsGACComponent" Guid="ED234F0B-2461-4DC2-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+				<File Id="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).dll_GAC" ShortName="ErMods.dll" Name="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).dll" Source="..\EntityRelationship\BarkerErModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).dll"
+					DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).dll_GAC" ProcessorArchitecture="msil"/>
+			</Component>
+			<Component Id="NORMAVSORMAbstractionToBarkerERGACComponent" Guid="724CB346-8686-4964-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+				<File Id="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).dll_GAC" ShortName="BarkerBr.dll" Name="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).dll" Source="..\EntityRelationship\OialBerBridge\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).dll"
+					DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).dll_GAC" ProcessorArchitecture="msil"/>
+			</Component>
+			<Component Id="NORMADBImportGACComponent" Guid="029817D9-6779-4801-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+				<File Id="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll_GAC" ShortName="DBImport.dll" Name="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll" Source="..\Tools\DatabaseImport\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"
+					DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll_GAC" ProcessorArchitecture="msil"/>
+			</Component>
+		</Directory>
+
+		<Directory Id="$(var.ProgramFilesFolder)">
+			<Directory Id="$(var.DefaultShortCompanyDir)" ShortName="$(var.DefaultShortCompanyDir)" Name="$(var.DefaultCompanyDir)">
+				<Directory Id="$(var.DefaultShortProductDir)" ShortName="$(var.DefaultShortProductDir)" Name="$(var.DefaultProductDir)">
+
+					<Component Id="LicenseFilesComponent" Guid="8D623CBC-D6BC-40DA-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+						<File Id="CPL.txt" Name="CPL.txt" Source="..\CPL.txt"
+							DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+					</Component>
+
+					<Directory Id="DOCUMENTATION" ShortName="Docs" Name="Documentation">
+						<Component Id="DocumentationComponent" Guid="818AC083-01BC-4DBC-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+							<File Id="Readme.htm" Name="Readme.htm" Source="Readme.htm"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<File Id="ORM2CoreXsd.htm" Name="ORM2CoreXsd.htm" ShortName="ORM2Xsd.htm" Source="..\ORMModel\ObjectModel\ORM2CoreXsd.htm"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<File Id="ORMDesignerSettingsXsd.htm" Name="ORMDesignerSettingsXsd.htm" ShortName="DsgnrXsd.htm" Source="..\ORMModel\Shell\ORMDesignerSettingsXsd.htm"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+						</Component>
+					</Directory>
+
+					<Directory Id="BINDIR" Name="bin">
+
+						<!-- Executables and PDBs go here -->
+						<Component Id="NORMAVSPackageComponent" Guid="568F224E-9C2F-4A85-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+							<File Id="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll" ShortName="ORM.dll" Name="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll" Source="..\ORMModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"
+								DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Vital="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll" ProcessorArchitecture="msil" AssemblyApplication="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<File Id="ORMSolutions.ORMArchitect.Core$(var.VSExt).pdb" ShortName="ORM.pdb" Name="ORMSolutions.ORMArchitect.Core$(var.VSExt).pdb" Source="..\ORMModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.Core$(var.VSExt).pdb"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<File Id="ORMSolutions.ORMArchitect.Core$(var.VSExt).xml" ShortName="ORM.xml" Name="ORMSolutions.ORMArchitect.Core$(var.VSExt).xml" Source="..\ORMModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.Core$(var.VSExt).xml"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<?ifndef VSIXInstall?>
+							  <?include NORMAVSPackageRegistry.wxi?>
+							<?endif?>
+							<RegistryKey ForceCreateOnInstall="yes" Root="HKLM" Key="$(var.NORMAExtensionsRegRoot)"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMAExtensionsRegRoot)\http://schemas.neumont.edu/ORM/2008-11/DiagramDisplay">
+								<RegistryValue Type="string" Name="Class" Value="ORMSolutions.ORMArchitect.Framework.Shell.DiagramDisplayDomainModel"/>
+							</RegistryKey>
+							<ProgId Id="ormfile" Description="!(loc.ORMFileDescription)" Icon="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll" IconIndex="0">
+								<Extension Id="orm" ContentType="application/orm+xml">
+									<MIME ContentType="application/orm+xml" Default="yes"/>
+									<Verb Id="Open" Command="!(loc.ORMFileOpenCommand)" TargetProperty="[VSENVIRONMENTPATH]" Argument="$(var.RootSuffixCmd)/dde"/>
+								</Extension>
+							</ProgId>
+							<RegistryKey Root="HKCR" Key="ormfile\shell\open\ddeexec">
+								<RegistryValue Type="string" Value="Open(&quot;%1&quot;)"/>
+								<RegistryValue Key="application" Type="string" Value="VisualStudio.8.0"/>
+								<RegistryValue Key="topic" Type="string" Value="system"/>
+							</RegistryKey>
+							<RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\NORMAVS">
+								<RegistryValue Type="string" Value="[BINDIR]"/>
+							</RegistryKey>
+							<RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\NORMAVSExtensions">
+								<RegistryValue Type="string" Value="[EXTENSIONSDIR]"/>
+							</RegistryKey>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)">
+								<RegistryValue Type="string" Name="InstallDir" Value="[$(var.DefaultShortProductDir)]"/>
+								<RegistryValue Type="string" Name="ProductVersion" Value="$(var.ProductVersion)"/>
+							</RegistryKey>
+
+							<RemoveRegistryKey Action="removeOnInstall" Root="HKCU" Key="$(var.VSRegRoot)\FontAndColors\{663DE24F-5A08-4490-80E7-EA332DFFE7F0}"/>
+							<RemoveRegistryKey Action="removeOnInstall" Root="HKCU" Key="$(var.VSRegRoot)\FontAndColors\{663DE24F-8E3A-4C0F-A307-53053ED6C59B}"/>
+							<RemoveRegistryKey Action="removeOnInstall" Root="HKCU" Key="$(var.VSRegRoot)\FontAndColors\Cache\{663DE24F-5A08-4490-80E7-EA332DFFE7F0}"/>
+							<RemoveRegistryKey Action="removeOnInstall" Root="HKCU" Key="$(var.VSRegRoot)\FontAndColors\Cache\{663DE24F-8E3A-4C0F-A307-53053ED6C59B}"/>
+						</Component>
+
+						<Component Id="ORMCustomToolComponent" Guid="9B2F677A-1D14-4E9E-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+							<File Id="ORMSolutions.ORMArchitect.ORMCustomTool$(var.VSExt).dll" ShortName="ORMCstTl.dll" Name="ORMSolutions.ORMArchitect.ORMCustomTool$(var.VSExt).dll" Source="..\Tools\ORMCustomTool\bin\ORMSolutions.ORMArchitect.ORMCustomTool$(var.VSExt).dll"
+								DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.ORMCustomTool$(var.VSExt).dll" AssemblyApplication="ORMSolutions.ORMArchitect.ORMCustomTool$(var.VSExt).dll" ProcessorArchitecture="msil"/>
+							<File Id="ORMSolutions.ORMArchitect.ORMCustomTool$(var.VSExt).pdb" ShortName="ORMCstTl.pdb" Name="ORMSolutions.ORMArchitect.ORMCustomTool$(var.VSExt).pdb" Source="..\Tools\ORMCustomTool\bin\ORMSolutions.ORMArchitect.ORMCustomTool$(var.VSExt).pdb"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.ORMCustomTool$(var.VSExt).dll"/>
+							<File Id="ORMSolutions.ORMArchitect.ORMCustomTool$(var.VSExt).xml" ShortName="ORMCstTl.xml" Name="ORMSolutions.ORMArchitect.ORMCustomTool$(var.VSExt).xml" Source="..\Tools\ORMCustomTool\bin\ORMSolutions.ORMArchitect.ORMCustomTool$(var.VSExt).xml"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.ORMCustomTool$(var.VSExt).dll"/>
+              <!-- Registry Info moved to vsix pkgdef-->
+						</Component>
+						<Component Id="NORMADBImportComponent" Guid="0B49C0D1-EB3A-4E6E-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+							<File Id="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll" ShortName="DBImport.dll" Name="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll" Source="..\Tools\DatabaseImport\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"
+								DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll" ProcessorArchitecture="msil" AssemblyApplication="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+							<File Id="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).pdb" ShortName="DBImport.pdb" Name="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).pdb" Source="..\Tools\DatabaseImport\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).pdb"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+						</Component>
+            <!-- VS Package Registry Info moved to vsix pkgdef-->
+						
+						<Directory Id="EXTENSIONSDIR" ShortName="Ext" Name="Extensions">
+							<Component Id="NORMAVSRelationalViewExtensionComponent" Guid="EB966776-D5B5-4FFE-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+								<File Id="ORMSolutions.ORMArchitect.Views.RelationalView$(var.VSExt).dll" ShortName="ReltnlVw.dll" Name="ORMSolutions.ORMArchitect.Views.RelationalView$(var.VSExt).dll" Source="..\AlternateViews\RelationalView\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.Views.RelationalView$(var.VSExt).dll"
+									DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.Views.RelationalView$(var.VSExt).dll" AssemblyApplication="ORMSolutions.ORMArchitect.Views.RelationalView$(var.VSExt).dll" ProcessorArchitecture="msil"/>
+								<File Id="ORMSolutions.ORMArchitect.Views.RelationalView$(var.VSExt).pdb" ShortName="ReltnlVw.pdb" Name="ORMSolutions.ORMArchitect.Views.RelationalView$(var.VSExt).pdb" Source="..\AlternateViews\RelationalView\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.Views.RelationalView$(var.VSExt).pdb"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Views.RelationalView$(var.VSExt).dll"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMAExtensionsRegRoot)\http://schemas.neumont.edu/ORM/2007-11/RelationalView">
+									<RegistryValue Type="string" Name="Class" Value="ORMSolutions.ORMArchitect.Views.RelationalView.RelationalShapeDomainModel"/>
+									<RegistryValue Type="string" Name="Assembly" Value="ORMSolutions.ORMArchitect.Views.RelationalView$(var.VSExt), $(var.BaseAssemblyName)"/>
+									<RegistryValue Type="string" Name="CodeBase" Value="[#ORMSolutions.ORMArchitect.Views.RelationalView$(var.VSExt).dll]"/>
+								</RegistryKey>
+							</Component>
+
+							<Component Id="NORMAVSCustomPropertiesExtensionComponent" Guid="DE8C8B31-B391-44C3-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+								<File Id="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll" ShortName="ORMCstPr.dll" Name="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll" Source="..\CustomProperties\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll"
+									DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll" AssemblyApplication="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll" ProcessorArchitecture="msil"/>
+								<File Id="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).pdb" ShortName="ORMCstPr.pdb" Name="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).pdb" Source="..\CustomProperties\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).pdb"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMAExtensionsRegRoot)\http://schemas.neumont.edu/ORM/2007-11/CustomProperties">
+									<RegistryValue Type="string" Name="Class" Value="ORMSolutions.ORMArchitect.CustomProperties.CustomPropertiesDomainModel"/>
+									<RegistryValue Type="string" Name="Assembly" Value="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt), $(var.BaseAssemblyName)"/>
+									<RegistryValue Type="string" Name="CodeBase" Value="[#ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll]"/>
+								</RegistryKey>
+							</Component>
+
+							<Component Id="NORMAVSORMAbstractionExtensionComponent" Guid="2AF4858D-43CC-4107-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+								<File Id="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll" ShortName="ORMAbstr.dll" Name="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll" Source="..\Oial\OialModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll"
+									DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll" AssemblyApplication="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll" ProcessorArchitecture="msil"/>
+								<File Id="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).pdb" ShortName="ORMAbstr.pdb" Name="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).pdb" Source="..\Oial\OialModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).pdb"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll"/>
+								<File Id="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).xml" ShortName="ORMAbstr.xml" Name="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).xml" Source="..\Oial\OialModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).xml"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMAExtensionsRegRoot)\http://schemas.neumont.edu/ORM/Abstraction/2007-06/Core">
+									<RegistryValue Type="string" Name="Class" Value="ORMSolutions.ORMArchitect.ORMAbstraction.AbstractionDomainModel"/>
+									<RegistryValue Type="string" Name="Assembly" Value="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt), $(var.BaseAssemblyName)"/>
+									<RegistryValue Type="string" Name="CodeBase" Value="[#ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll]"/>
+									<RegistryValue Type="integer" Name="SecondaryNamespace" Value="1"/>
+								</RegistryKey>
+							</Component>
+
+							<Component Id="NORMAVSORMToORMAbstractionExtensionComponent" Guid="C6CED0EA-97CA-40AA-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+								<File Id="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).dll" ShortName="ORMAbsBr.dll" Name="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).dll" Source="..\Oial\ORMOialBridge\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).dll"
+									DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).dll" AssemblyApplication="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).dll" ProcessorArchitecture="msil"/>
+								<File Id="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).pdb" ShortName="ORMAbsBr.pdb" Name="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).pdb" Source="..\Oial\ORMOialBridge\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).pdb"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).dll"/>
+								<File Id="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge.xml" ShortName="ORMAbsBr.xml" Name="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).xml" Source="..\Oial\ORMOialBridge\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).xml"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).dll"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMAExtensionsRegRoot)\http://schemas.neumont.edu/ORM/Bridge/2007-06/ORMToORMAbstraction">
+									<RegistryValue Type="string" Name="Class" Value="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge.ORMToORMAbstractionBridgeDomainModel"/>
+									<RegistryValue Type="string" Name="Assembly" Value="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt), $(var.BaseAssemblyName)"/>
+									<RegistryValue Type="string" Name="CodeBase" Value="[#ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).dll]"/>
+								</RegistryKey>
+							</Component>
+
+							<Component Id="NORMAVSRelationalModelsExtensionComponent" Guid="8CA7B2DB-1669-427B-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+								<File Id="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll" ShortName="RelMods.dll" Name="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll" Source="..\RelationalModel\DcilModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll"
+									DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll" AssemblyApplication="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll" ProcessorArchitecture="msil"/>
+								<File Id="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).pdb" ShortName="RelMods.pdb" Name="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).pdb" Source="..\RelationalModel\DcilModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).pdb"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll"/>
+								<File Id="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).xml" ShortName="RelMods.xml" Name="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).xml" Source="..\RelationalModel\DcilModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).xml"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMAExtensionsRegRoot)\http://schemas.neumont.edu/ORM/Relational/2007-06/ConceptualDatabase">
+									<RegistryValue Type="string" Name="Class" Value="ORMSolutions.ORMArchitect.RelationalModels.ConceptualDatabase.ConceptualDatabaseDomainModel"/>
+									<RegistryValue Type="string" Name="Assembly" Value="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt), $(var.BaseAssemblyName)"/>
+									<RegistryValue Type="string" Name="CodeBase" Value="[#ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll]"/>
+									<RegistryValue Type="integer" Name="SecondaryNamespace" Value="1"/>
+								</RegistryKey>
+							</Component>
+
+							<Component Id="NORMAVSORMAbstractionToConceptualDatabaseExtensionComponent" Guid="2D11803B-91D7-446E-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+								<File Id="ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).dll" ShortName="CDBBr.dll" Name="ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).dll" Source="..\RelationalModel\OialDcilBridge\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).dll"
+									DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).dll" AssemblyApplication="ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).dll" ProcessorArchitecture="msil"/>
+								<File Id="ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).pdb" ShortName="CDBBr.pdb" Name="ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).pdb" Source="..\RelationalModel\OialDcilBridge\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).pdb"
+									DefaultLanguage="0" CompanionFile="ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).dll"/>
+								<File Id="ORMArchitect.ORMAbstractionToConceptualDatabaseBridge.xml" ShortName="CDBBr.xml" Name="ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).xml" Source="..\RelationalModel\OialDcilBridge\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).xml"
+									DefaultLanguage="0" CompanionFile="ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).dll"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMAExtensionsRegRoot)\http://schemas.neumont.edu/ORM/Bridge/2007-06/ORMAbstractionToConceptualDatabase">
+									<RegistryValue Type="string" Name="Class" Value="ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge.ORMAbstractionToConceptualDatabaseBridgeDomainModel"/>
+									<RegistryValue Type="string" Name="Assembly" Value="ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt), $(var.BaseAssemblyName)"/>
+									<RegistryValue Type="string" Name="CodeBase" Value="[#ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).dll]"/>
+								</RegistryKey>
+							</Component>
+
+							<Component Id="NORMAVSEntityRelationshipModelsExtensionComponent" Guid="EE32F7FA-A6FB-4CEF-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+								<File Id="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).dll" ShortName="ErMods.dll" Name="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).dll" Source="..\EntityRelationship\BarkerErModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).dll"
+									DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll" AssemblyApplication="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).dll" ProcessorArchitecture="msil"/>
+								<File Id="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).pdb" ShortName="ErMods.pdb" Name="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).pdb" Source="..\EntityRelationship\BarkerErModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).pdb"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).dll"/>
+								<File Id="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).xml" ShortName="ErMods.xml" Name="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).xml" Source="..\EntityRelationship\BarkerErModel\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).xml"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).dll"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMAExtensionsRegRoot)\http://schemas.neumont.edu/ORM/EntityRelationship/2008-05/Barker">
+									<RegistryValue Type="string" Name="Class" Value="ORMSolutions.ORMArchitect.EntityRelationshipModels.Barker.BarkerDomainModel"/>
+									<RegistryValue Type="string" Name="Assembly" Value="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt), $(var.BaseAssemblyName)"/>
+									<RegistryValue Type="string" Name="CodeBase" Value="[#ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).dll]"/>
+									<RegistryValue Type="integer" Name="SecondaryNamespace" Value="1"/>
+								</RegistryKey>
+							</Component>
+
+							<Component Id="NORMAVSORMAbstractionToBarkerERSchemaExtensionComponent" Guid="2A0DA5D1-5E8B-4F95-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+								<File Id="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).dll" ShortName="BarkerBr.dll" Name="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).dll" Source="..\EntityRelationship\OialBerBridge\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).dll"
+									DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).dll" AssemblyApplication="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).dll" ProcessorArchitecture="msil"/>
+								<File Id="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).pdb" ShortName="BarkerBr.pdb" Name="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).pdb" Source="..\EntityRelationship\OialBerBridge\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).pdb"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).dll"/>
+								<File Id="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge.xml" ShortName="BarkerBr.xml" Name="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).xml" Source="..\EntityRelationship\OialBerBridge\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).xml"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).dll"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMAExtensionsRegRoot)\http://schemas.neumont.edu/ORM/Bridge/2008-05/ORMAbstractionToBarkerER">
+									<RegistryValue Type="string" Name="Class" Value="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge.ORMAbstractionToBarkerERBridgeDomainModel"/>
+									<RegistryValue Type="string" Name="Assembly" Value="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt), $(var.BaseAssemblyName)"/>
+									<RegistryValue Type="string" Name="CodeBase" Value="[#ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).dll]"/>
+								</RegistryKey>
+							</Component>
+
+							<Component Id="NORMAVSBarkerERViewExtensionComponent" Guid="6549D6E9-3256-40DC-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+								<File Id="ORMSolutions.ORMArchitect.Views.BarkerERView$(var.VSExt).dll" ShortName="BarkerVw.dll" Name="ORMSolutions.ORMArchitect.Views.BarkerERView$(var.VSExt).dll" Source="..\AlternateViews\BarkerERView\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.Views.BarkerERView$(var.VSExt).dll"
+									DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Assembly=".net" AssemblyManifest="ORMSolutions.ORMArchitect.Views.RelationalView$(var.VSExt).dll" AssemblyApplication="ORMSolutions.ORMArchitect.Views.BarkerERView$(var.VSExt).dll" ProcessorArchitecture="msil"/>
+								<File Id="ORMSolutions.ORMArchitect.Views.BarkerERView$(var.VSExt).pdb" ShortName="BarkerVw.pdb" Name="ORMSolutions.ORMArchitect.Views.BarkerERView$(var.VSExt).pdb" Source="..\AlternateViews\BarkerERView\bin\$(var.BuildConfiguration)\ORMSolutions.ORMArchitect.Views.BarkerERView$(var.VSExt).pdb"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Views.BarkerERView$(var.VSExt).dll"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMAExtensionsRegRoot)\http://schemas.neumont.edu/ORM/2008-05/BarkerERView">
+									<RegistryValue Type="string" Name="Class" Value="ORMSolutions.ORMArchitect.Views.BarkerERView.BarkerERShapeDomainModel"/>
+									<RegistryValue Type="string" Name="Assembly" Value="ORMSolutions.ORMArchitect.Views.BarkerERView$(var.VSExt), $(var.BaseAssemblyName)"/>
+									<RegistryValue Type="string" Name="CodeBase" Value="[#ORMSolutions.ORMArchitect.Views.BarkerERView$(var.VSExt).dll]"/>
+								</RegistryKey>
+							</Component>
+						</Directory>
+
+					</Directory>
+
+					<Directory Id="Xml" Name="Xml">
+						<Directory Id="Schemas" Name="Schemas">
+							<!-- XSDs specific to NORMA for VS go here. Anything potentially applicable to other programs should go under ORMCOMMONSCHEMASDIR or DILCOMMONSCHEMASDIR. -->
+							<Component Id="NORMAVSSchemasLocalCatalogComponent" Guid="BCC47EB8-CEFC-421F-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" > <!-- KeyPath="yes" -->
+								<!--<File Id="NORMAcatalog.xml" Name="catalog.xml" Source="..\ORMModel\Shell\catalog.xml"
+									DefaultLanguage="0" CompanionFile="NORMASchemaCatalog.xml"/>-->
+                <File Id="NORMAcatalog.xml" Name="catalog.xml" Source="..\ORMModel\Shell\catalog.xml"
+									KeyPath="yes"/>
+							</Component>
+							<Component Id="NORMAVSSettingsSchemaComponent" Guid="B2DEF872-436C-4BED-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+								<File Id="ORMDesignerSettings.xsd" ShortName="DsgnrStg.xsd" Name="ORMDesignerSettings.xsd" Source="..\ORMModel\Shell\ORMDesignerSettings.xsd"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							</Component>
+							<Component Id="NORMAVSCustomPropertiesSchemaComponent" Guid="27EB4413-1888-4038-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+								<File Id="CustomProperties.xsd" ShortName="ORMCstPr.xsd" Name="CustomProperties.xsd" Source="..\CustomProperties\CustomProperties.xsd"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll"/>
+							</Component>
+							<Component Id="NORMAVSORMAbstractionSchemaComponent" Guid="1AFB3357-16AC-4A2B-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+								<File Id="ORMAbstraction.xsd" ShortName="ORMAbstr.xsd" Name="ORMAbstraction.xsd" Source="..\Oial\OialModel\OIAL.xsd"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll"/>
+								<File Id="ORMAbstractionDataTypes.xsd" ShortName="ORMAbsDT.xsd" Name="ORMAbstractionDataTypes.xsd" Source="..\Oial\OialModel\OIALDatatypes.xsd"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.ORMAbstraction$(var.VSExt).dll"/>
+							</Component>
+							<Component Id="NORMAVSORMToORMAbstractionSchemaComponent" Guid="D79F2881-1707-4499-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+								<File Id="ORMToORMAbstraction.xsd" ShortName="ORMAbsBr.xsd" Name="ORMToORMAbstraction.xsd" Source="..\Oial\ORMOialBridge\ORMToORMAbstraction.xsd"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge$(var.VSExt).dll"/>
+							</Component>
+							<Component Id="NORMAVSRelationalModelsSchemaComponent" Guid="5D8B0055-6336-4226-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+								<File Id="ConceptualDatabase.xsd" ShortName="CDB.xsd" Name="ConceptualDatabase.xsd" Source="..\RelationalModel\DcilModel\ConceptualDatabase.xsd"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.RelationalModels$(var.VSExt).dll"/>
+							</Component>
+							<Component Id="NORMAVSORMAbstractionToConceptualDatabaseSchemaComponent" Guid="F3ECE70B-A746-4FDA-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+								<File Id="ORMAbstractionToConceptualDatabase.xsd" ShortName="CDBBr.xsd" Name="ORMAbstractionToConceptualDatabase.xsd" Source="..\RelationalModel\OialDcilBridge\ORMAbstractionToConceptualDatabase.xsd"
+									DefaultLanguage="0" CompanionFile="ORMArchitect.ORMAbstractionToConceptualDatabaseBridge$(var.VSExt).dll"/>
+							</Component>
+							<Component Id="NORMAVSRelationalViewSchemaComponent" Guid="18A6CF00-ECD7-4FDA-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+								<File Id="RelationalView.xsd" ShortName="ReltnlVw.xsd" Name="RelationalView.xsd" Source="..\AlternateViews\RelationalView\RelationalView.xsd"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Views.RelationalView$(var.VSExt).dll"/>
+							</Component>
+							<Component Id="NORMAVSBarkerERModelSchemaComponent" Guid="C6C5DD6E-4546-48A3-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+								<File Id="BarkerERModel.xsd" ShortName="Barker.xsd" Name="BarkerERModel.xsd" Source="..\EntityRelationship\BarkerErModel\BarkerERModel.xsd"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.EntityRelationshipModels$(var.VSExt).dll"/>
+							</Component>
+							<Component Id="NORMAVSORMAbstractionToBarkerERSchemaComponent" Guid="34752977-F3E7-4BA8-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+								<File Id="ORMAbstractionToBarkerERBridge.xsd" ShortName="BarkerBr.xsd" Name="ORMAbstractionToBarkerERBridge.xsd" Source="..\EntityRelationship\OialBerBridge\ORMAbstractionToBarkerERBridge.xsd"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.ORMAbstractionToBarkerERBridge$(var.VSExt).dll"/>
+							</Component>
+							<Component Id="NORMAVSBarkerERViewSchemaComponent" Guid="BF7FCA1E-0DDD-4118-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+								<File Id="BarkerERView.xsd" ShortName="BarkerVw.xsd" Name="BarkerERView.xsd" Source="..\AlternateViews\BarkerERView\BarkerERView.xsd"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Views.BarkerERView$(var.VSExt).dll"/>
+							</Component>
+							<Component Id="NORMAVSDiagramDisplaySchemaComponent" Guid="1EFF5DE0-713C-439A-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+								<File Id="DiagramDisplay.xsd" Name="DiagramDisplay.xsd" Source="..\ORMModel\Framework\Shell\DiagramDisplay.xsd"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							</Component>
+						</Directory>
+						<Directory Id="Transforms" ShortName="Trnsfrms" Name="Transforms">
+							<!-- XSLTs specific to NORMA for VS go here. Anything potentially applicable to other programs should go under ORMCOMMONTRANSFORMSDIR or DILCOMMONTRANSFORMSDIR. -->
+							<Directory Id="Converters" ShortName="Cnvrtrs" Name="Converters">
+								<Component Id="NORMAVSConvertersComponent" Guid="588FBA11-2175-4084-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+									<File Id="CoreModelImport.xslt" ShortName="CrMdlImp.xsl" Name="CoreModelImport.xslt" Source="..\ORMModel\Shell\Converters\CoreModelImport.xslt"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="CoreUpgradeTo2006_01.xslt" ShortName="CUTo0601.xsl" Name="CoreUpgradeTo2006-01.xslt" Source="..\ORMModel\Shell\Converters\CoreUpgradeTo2006-01.xslt"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="RootUpgradeTo2006_01.xslt" ShortName="RUTo0601.xsl" Name="RootUpgradeTo2006-01.xslt" Source="..\ORMModel\Shell\Converters\RootUpgradeTo2006-01.xslt"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="CoreUpgradeTo2006_04.xslt" ShortName="CUTo0604.xsl" Name="CoreUpgradeTo2006-04.xslt" Source="..\ORMModel\Shell\Converters\CoreUpgradeTo2006-04.xslt"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="RootUpgradeTo2006_04.xslt" ShortName="RUTo0604.xsl" Name="RootUpgradeTo2006-04.xslt" Source="..\ORMModel\Shell\Converters\RootUpgradeTo2006-04.xslt"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="VisioToCoreModelImport.xslt" ShortName="VsCrMdl.xsl" Name="VisioToCoreModelImport.xslt" Source="..\ORMModel\Shell\Converters\VisioToCoreModelImport.xslt"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="DCILtoOIAL.xslt" ShortName="DclToOil.xsl" Name="DCILtoOIAL.xslt" Source="..\ORMModel\Shell\Converters\DCILtoOIAL.xslt"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="OIALtoORM.xslt" ShortName="OilToOrm.xsl" Name="OIALtoORM.xslt" Source="..\ORMModel\Shell\Converters\OIALtoORM.xslt"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="CustomPropertiesPreviewTo2007_11.xslt" ShortName="CPTo0711.xsl" Name="CustomPropertiesPreviewTo2007-11.xslt" Source="..\ORMModel\Shell\Converters\CustomPropertiesPreviewTo2007-11.xslt"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="RelationalViewUpgradeTo2007_11.xslt" ShortName="RVTo0711.xsl" Name="RelationalViewUpgradeTo2007-11.xslt" Source="..\ORMModel\Shell\Converters\RelationalViewUpgradeTo2007-11.xslt"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="RemoveOIAL2006_01.xslt" ShortName="ROil0601.xsl" Name="RemoveOIAL2006-01.xslt" Source="..\ORMModel\Shell\Converters\RemoveOIAL2006-01.xslt"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<RegistryValue Root="HKLM" Key="$(var.NORMADesignerRegRoot)\DesignerSettings\Core" Type="string" Name="ConvertersDir" Value="[Converters]"/>
+								</Component>
+							</Directory>
+						</Directory>
+						<Directory Id="Verbalization" ShortName="Verbaliz" Name="Verbalization">
+							<Component Id="NORMAVSVerbalizationComponent"  Guid="C39EDC6D-03BA-4519-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+								<File Id="VerbalizationUntypedSnippets.xsd" ShortName="VrbUnSnp.xsd" Name="VerbalizationUntypedSnippets.xsd" Source="..\ORMModel\ObjectModel\VerbalizationUntypedSnippets.xsd"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+								<RegistryValue Root="HKLM" Key="$(var.NORMADesignerRegRoot)" Type="string" Name="VerbalizationDir" Value="[Verbalization]"/>
+							</Component>
+							<Directory Id="CoreVerbalization" Name="Core">
+								<Component Id="NORMAVSVerbalizationCoreComponent" Guid="45D2041A-3025-41E6-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+									<File Id="VrbCrDef.xml" Name="_default.xml" Source="..\ORMModel\ObjectModel\VerbalizationCoreSnippets\VerbalizationCoreSnippets.xml"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="VrbCrRep.xml" ShortName="VrbCrRep.xml" Name="DefaultReportSnippets.xml"  Source="..\ORMModel\ObjectModel\VerbalizationCoreSnippets\VerbalizationCoreReportSnippets.xml"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="VrbCrNoH.xml" Name="BrowserNoHyperlinksSnippets.xml" Source="..\ORMModel\ObjectModel\VerbalizationCoreSnippets\VerbalizationCoreBrowserNoHyperlinksSnippets.xml"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="VerbalizationCoreSnippets.xsd" ShortName="VrbCrSnp.xsd" Name="VerbalizationCoreSnippets.xsd" Source="..\ORMModel\ObjectModel\VerbalizationCoreSnippets\VerbalizationCoreSnippets.xsd"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="VerbalizationCoreSnippetsDocumentation.html" ShortName="VrbCrSnD.htm" Name="VerbalizationCoreSnippetsDocumentation.html"  Source="..\ORMModel\ObjectModel\VerbalizationCoreSnippetsDocumentation.html"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+								</Component>
+							</Directory>
+							<Directory Id="ReportVerbalization" ShortName="HtmlRprt" Name="HtmlReport">
+								<Component Id="NORMAVSVerbalizationReportComponent" Guid="6F50F477-F95B-45AE-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+									<File Id="VrbReDef.xml" Name="_default.xml" Source="..\ORMModel\ObjectModel\VerbalizationReportSnippets\VerbalizationReportSnippets.xml"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+									<File Id="VerbalizationReportSnippets.xsd" ShortName="VrbReSnp.xsd" Name="VerbalizationReportSnippets.xsd" Source="..\ORMModel\ObjectModel\VerbalizationReportSnippets\VerbalizationReportSnippets.xsd"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+								</Component>
+							</Directory>
+							<Directory Id="CustomPropertiesVerbalization" ShortName="CustProp" Name="CustomProperties">
+								<Component Id="NORMAVSCustomPropertiesVerbalizationComponent" Guid="513D5A05-8FAC-4614-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+									<File Id="CpVrbDef.xml" Name="_default.xml" Source="..\CustomProperties\VerbalizationSnippets\CustomPropertyVerbalizationSnippets.xml"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll"/>
+									<File Id="CustomPropertyVerbalizationSnippets.xsd" ShortName="CpVrbSnp.xsd" Name="CustomPropertyVerbalizationSnippets.xsd" Source="..\CustomProperties\VerbalizationSnippets\CustomPropertyVerbalizationSnippets.xsd"
+										DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.CustomProperties$(var.VSExt).dll"/>
+								</Component>
+							</Directory>
+						</Directory>
+						<Component Id="NORMAVSSettingsComponent" Guid="956063F7-13D9-4083-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+							<File Id="ORMDesignerSettings.xml" ShortName="DsgnrStg.xml" Name="ORMDesignerSettings.xml" Source="..\ORMModel\Shell\ORMDesignerSettings.xml"
+								KeyPath="yes"/>
+							<RegistryValue Root="HKLM" Key="$(var.NORMADesignerRegRoot)\DesignerSettings\Core" Type="string" Name="SettingsFile" Value="[#ORMDesignerSettings.xml]"/>
+						</Component>
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
+
+		<Directory Id="$(var.CommonFilesFolder)">
+			<Directory Id="NEUMONTCOMMONFILESDIR" Name="Neumont">
+				<Directory Id="ORMCOMMONFILESDIR" Name="ORM">
+					<Directory Id="ORMCOMMONSCHEMASDIR" Name="Schemas">
+						<Component Id="ORMSchemasLocalCatalogComponent" Guid="CA6158D1-A87F-413B-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" > <!-- KeyPath="yes" -->
+							<!--File Id="ORMcatalog.xml" Name="catalog.xml" Source="..\catalog.xml"
+								DefaultLanguage="0" CompanionFile="ORMSchemaCatalog.xml"/>-->
+              <File Id="ORMcatalog.xml" Name="catalog.xml" Source="..\catalog.xml"
+								KeyPath="yes"/>
+						</Component>
+						<Component Id="ORMSchemasComponent" Guid="55B51F55-EB34-4AC4-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+							<File Id="ORM2Core.xsd" Name="ORM2Core.xsd" Source="..\ORMModel\ObjectModel\ORM2Core.xsd"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<File Id="ORM2Diagram.xsd" ShortName="ORM2Diag.xsd" Name="ORM2Diagram.xsd" Source="..\ORMModel\ShapeModel\ORM2Diagram.xsd"
+								DefaultLanguage="0" CompanionFile="ORM2Core.xsd"/>
+							<File Id="ORM2Root.xsd" Name="ORM2Root.xsd" Source="..\ORMModel\Load\ORM2Root.xsd"
+								DefaultLanguage="0" CompanionFile="ORM2Core.xsd"/>
+						</Component>
+						<Component Id="OIALSchemasComponent" Guid="D5543428-F53D-42D3-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+							<File Id="OIAL.xsd" Name="OIAL.xsd" Source="..\XML\OIAL\OIAL.xsd"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<File Id="ORMDataTypes.xsd" ShortName="ORMDT.xsd" Name="ORMDataTypes.xsd" Source="..\XML\OIAL\ORMDataTypes.xsd"
+								DefaultLanguage="0" CompanionFile="OIAL.xsd"/>
+							<File Id="ORMDataTypes_Temporal.xsd" ShortName="ORMDT-T.xsd" Name="ORMDataTypes-Temporal.xsd" Source="..\XML\OIAL\ORMDataTypes-Temporal.xsd"
+								DefaultLanguage="0" CompanionFile="OIAL.xsd"/>
+						</Component>
+						<Component Id="ORMClassModelSchemasComponent" Guid="9C7D3F0F-0EC5-4933-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+							<File Id="OIALtoPLiX_Properties.xsd" ShortName="O2P_Prop.xsd" Name="OIALtoPLiX_Properties.xsd" Source="..\XML\OIALtoPLiX\OIALtoPLiX_Properties.xsd"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+						</Component>
+					</Directory>
+					<Directory Id="ORMCOMMONTRANSFORMSDIR" ShortName="Trnsfrms" Name="Transforms">
+
+						<Component Id="ORMTransformsComponent" Guid="92A82A59-CC06-4850-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+							<File Id="CoRefORM.xslt" ShortName="CoRefORM.xsl" Name="CoRefORM.xslt" Source="..\XML\OIAL\CoRefORM.xslt"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\CoRefORM">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="CoRefORM"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="ORM Co-Referencer"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Co-references (binarizes) an ORM file."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".CoRef.orm"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="ORM"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="CoRefORM"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#CoRefORM.xslt]"/>
+								<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+							</RegistryKey>
+						</Component>
+
+						<Component Id="OIALTransformsComponent" Guid="165ED455-31BE-4E30-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+							<File Id="ORMtoOIAL.xslt" ShortName="ORM2OIAL.xsl" Name="ORMtoOIAL.xslt" Source="..\XML\OIAL\ORMtoOIAL.xslt"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\ORMtoOIAL">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="ORMtoOIAL"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="ORM to OIAL"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms a coreferenced ORM file to OIAL."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".OIAL.xml"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="CoRefORM"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="OIAL"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#ORMtoOIAL.xslt]"/>
+								<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+							</RegistryKey>
+						</Component>
+
+						<Component Id="ORMClassModelTransformsComponent" Guid="82A94F1B-CC68-4924-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+							<File Id="OIALtoCLIProperties.xslt" ShortName="OIL2CLIP.xsl" Name="OIALtoCLIProperties.xslt" Source="..\XML\OIALtoPLiX\OIALtoCLIProperties.xslt"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\OIALtoCLIProperties">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="OIALtoCLIProperties"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="OIAL to CLI Properties"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms an OIAL file to CLI (Common Language Infrastructure) Properties"/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".CLIProperties.xml"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="ORM http://schemas.neumont.edu/ORM/Abstraction/2007-06/Core http://schemas.neumont.edu/ORM/Bridge/2007-06/ORMToORMAbstraction"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="CLIProperties"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#OIALtoCLIProperties.xslt]"/>
+								<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+							</RegistryKey>
+
+							<File Id="OIALtoPLiX_GenerateTuple.xslt" ShortName="O2P_GTup.xsl" Name="OIALtoPLiX_GenerateTuple.xslt" Source="..\XML\OIALtoPLiX\OIALtoPLiX_GenerateTuple.xslt"
+								DefaultLanguage="0" CompanionFile="OIALtoCLIProperties.xslt"/>
+							<File Id="OIALtoPLiX_GlobalSupportFunctions.xslt" ShortName="O2P_GSF.xsl" Name="OIALtoPLiX_GlobalSupportFunctions.xslt" Source="..\XML\OIALtoPLiX\OIALtoPLiX_GlobalSupportFunctions.xslt"
+								DefaultLanguage="0" CompanionFile="OIALtoCLIProperties.xslt"/>
+							<File Id="OIALtoPLiX_GlobalSupportParameters.xslt" ShortName="O2P_GSP.xsl" Name="OIALtoPLiX_GlobalSupportParameters.xslt" Source="..\XML\OIALtoPLiX\OIALtoPLiX_GlobalSupportParameters.xslt"
+								DefaultLanguage="0" CompanionFile="OIALtoCLIProperties.xslt"/>
+
+							<File Id="OIALtoPLiX_GenerateGlobalSupportClasses.xslt" ShortName="O2P_GGSC.xsl" Name="OIALtoPLiX_GenerateGlobalSupportClasses.xslt" Source="..\XML\OIALtoPLiX\OIALtoPLiX_GenerateGlobalSupportClasses.xslt"
+								DefaultLanguage="0" CompanionFile="OIALtoCLIProperties.xslt"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\PLiXSupport">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="PLiXSupport"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="PLiX Support"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms nothing to SupportClasses PLiX."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".Support.PLiX.xml"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="ORM"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="PLiX_Support"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#OIALtoPLiX_GenerateGlobalSupportClasses.xslt]"/>
+								<RegistryValue Type="string" Name="CustomTool" Value="NUPlixLoader"/>
+							</RegistryKey>
+
+							<File Id="OIALtoPLiX_Abstract.xslt" ShortName="O2P_Abst.xsl" Name="OIALtoPLiX_Abstract.xslt" Source="..\XML\OIALtoPLiX\OIALtoPLiX_Abstract.xslt"
+								DefaultLanguage="0" CompanionFile="OIALtoCLIProperties.xslt"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\CLIPropertiesToPLiXAbstract">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="CLIPropertiesToPLiXAbstract"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="CLIProperties to PLiX Abstract"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms a CLI Properties file to Abstract PLiX"/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".Abstract.PLiX.xml"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="CLIProperties"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="PLiX_Abstract"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#OIALtoPLiX_Abstract.xslt]"/>
+								<RegistryValue Type="string" Name="CustomTool" Value="NUPlixLoader"/>
+								<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+								<RegistryValue Type="multiString" Name="ReferenceInputFormats">
+									<MultiStringValue>ORM</MultiStringValue>
+								</RegistryValue>
+							</RegistryKey>
+
+							<File Id="OIALtoPLiX_InMemory_Implementation.xslt" ShortName="O2P_IM.xsl" Name="OIALtoPLiX_InMemory_Implementation.xslt" Source="..\XML\OIALtoPLiX\OIALtoPLiX_InMemory_Implementation.xslt"
+								DefaultLanguage="0" CompanionFile="OIALtoCLIProperties.xslt"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\CLIPropertiesToPLiXInMemory">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="CLIPropertiesToPLiXInMemory"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="CLIProperties to PLiX In Memory"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms a CLI Properties file to InMemory PLiX"/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".Implementation.PLiX.xml"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="CLIProperties"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="PLiX_Implementation"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#OIALtoPLiX_InMemory_Implementation.xslt]"/>
+								<RegistryValue Type="string" Name="CustomTool" Value="NUPlixLoader"/>
+								<RegistryValue Type="multiString" Name="ReferenceInputFormats">
+									<MultiStringValue>ORM</MultiStringValue>
+								</RegistryValue>
+								<RegistryValue Type="multiString" Name="CompanionOutputFormats">
+									<MultiStringValue>PLiX_Abstract</MultiStringValue>
+								</RegistryValue>
+							</RegistryKey>
+
+						</Component>
+
+						<Directory Id="ORMCOMMONTRANSFORMSPHPDIR" Name="PHP">
+							<Component Id="ORMClassModelPHPTransformsComponent" Guid="63811A03-EFFD-4991-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+
+								<File Id="PHP_PHPEntities.xslt" ShortName="PHPEnt.xsl" Name="PHPEntities.xslt" Source="..\XML\OIALtoPLiX\PHP\PHPEntities.xslt"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\OIALtoPHPEntitiesPLiX">
+									<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+									<RegistryValue Type="string" Name="OfficialName" Value="OIALtoPHPEntitiesPLiX"/>
+									<RegistryValue Type="string" Name="DisplayName" Value="OIAL to PHP Entities PLiX"/>
+									<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms OIAL to PHP Entities PLiX."/>
+									<RegistryValue Type="string" Name="FileExtension" Value=".Entities.php.xml"/>
+									<RegistryValue Type="string" Name="SourceInputFormat" Value="OIAL"/>
+									<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="PHPEntitiesPLiX"/>
+									<RegistryValue Type="string" Name="TransformUri" Value="[#PHP_PHPEntities.xslt]"/>
+									<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+									<RegistryValue Type="multiString" Name="CompanionOutputFormats">
+										<MultiStringValue>PHPProxiesPLiX</MultiStringValue>
+										<MultiStringValue>PHPServicesPLiX</MultiStringValue>
+										<MultiStringValue>PHPDataLayerPLiX</MultiStringValue>
+									</RegistryValue>
+								</RegistryKey>
+								<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\PHPEntitiesPLiXtoPHP">
+									<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+									<RegistryValue Type="string" Name="OfficialName" Value="PHPEntitiesPLiXtoPHP"/>
+									<RegistryValue Type="string" Name="DisplayName" Value="PHP Entities PLiX to PHP"/>
+									<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms PLiX Entities TO PHP."/>
+									<RegistryValue Type="string" Name="FileExtension" Value=".Entities.php"/>
+									<RegistryValue Type="string" Name="SourceInputFormat" Value="PHPEntitiesPLiX"/>
+									<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="PHPEntitiesImplementation"/>
+									<RegistryValue Type="string" Name="TransformUri" Value="[NEUMONTCOMMONFILESDIR]\PLiX\Formatters\PLiXPHP.xslt"/>
+									<RegistryValue Type="multiString" Name="CompanionOutputFormats">
+										<MultiStringValue>PHPProxiesImplementation</MultiStringValue>
+										<MultiStringValue>PHPServicesImplementation</MultiStringValue>
+										<MultiStringValue>PHPDataLayerImplementation</MultiStringValue>
+									</RegistryValue>
+								</RegistryKey>
+
+								<File Id="PHP_PHPProxies.xslt" ShortName="PHPProx.xsl" Name="PHPProxies.xslt" Source="..\XML\OIALtoPLiX\PHP\PHPProxies.xslt"
+									DefaultLanguage="0" CompanionFile="PHP_PHPEntities.xslt"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\OIALtoPHPProxiesPLiX">
+									<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+									<RegistryValue Type="string" Name="OfficialName" Value="OIALtoPHPProxiesPLiX"/>
+									<RegistryValue Type="string" Name="DisplayName" Value="OIAL to PHP Proxies PLiX"/>
+									<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms OIAL to PHP Proxies PLiX."/>
+									<RegistryValue Type="string" Name="FileExtension" Value=".Proxies.php.xml"/>
+									<RegistryValue Type="string" Name="SourceInputFormat" Value="OIAL"/>
+									<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="PHPProxiesPLiX"/>
+									<RegistryValue Type="string" Name="TransformUri" Value="[#PHP_PHPProxies.xslt]"/>
+									<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+								</RegistryKey>
+								<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\PHPProxiesPLiXtoPHP">
+									<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+									<RegistryValue Type="string" Name="OfficialName" Value="PHPProxiesPLiXtoPHP"/>
+									<RegistryValue Type="string" Name="DisplayName" Value="PHP Proxies PLiX to PHP"/>
+									<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms PLiX Proxies TO PHP."/>
+									<RegistryValue Type="string" Name="FileExtension" Value=".Proxies.php"/>
+									<RegistryValue Type="string" Name="SourceInputFormat" Value="PHPProxiesPLiX"/>
+									<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="PHPProxiesImplementation"/>
+									<RegistryValue Type="string" Name="TransformUri" Value="[NEUMONTCOMMONFILESDIR]\PLiX\Formatters\PLiXPHP.xslt"/>
+									<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+								</RegistryKey>
+
+								<File Id="PHP_PHPServices.xslt" ShortName="PHPServ.xsl" Name="PHPServices.xslt" Source="..\XML\OIALtoPLiX\PHP\PHPServices.xslt"
+									DefaultLanguage="0" CompanionFile="PHP_PHPEntities.xslt"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\OIALtoPHPServicesPLiX">
+									<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+									<RegistryValue Type="string" Name="OfficialName" Value="OIALtoPHPServicesPLiX"/>
+									<RegistryValue Type="string" Name="DisplayName" Value="OIAL to PHP Services PLiX"/>
+									<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms OIAL to PHP Services PLiX."/>
+									<RegistryValue Type="string" Name="FileExtension" Value=".Services.php.xml"/>
+									<RegistryValue Type="string" Name="SourceInputFormat" Value="OIAL"/>
+									<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="PHPServicesPLiX"/>
+									<RegistryValue Type="string" Name="TransformUri" Value="[#PHP_PHPServices.xslt]"/>
+									<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+								</RegistryKey>
+								<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\PHPServicesPLiXtoPHP">
+									<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+									<RegistryValue Type="string" Name="OfficialName" Value="PHPServicesPLiXtoPHP"/>
+									<RegistryValue Type="string" Name="DisplayName" Value="PHP Services PLiX to PHP"/>
+									<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms PLiX Services TO PHP."/>
+									<RegistryValue Type="string" Name="FileExtension" Value=".Services.php"/>
+									<RegistryValue Type="string" Name="SourceInputFormat" Value="PHPServicesPLiX"/>
+									<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="PHPServicesImplementation"/>
+									<RegistryValue Type="string" Name="TransformUri" Value="[NEUMONTCOMMONFILESDIR]\PLiX\Formatters\PLiXPHP.xslt"/>
+									<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+								</RegistryKey>
+
+								<File Id="PHP_PHPDataLayer.xslt" ShortName="PHPDL.xsl" Name="PHPDataLayer.xslt" Source="..\XML\OIALtoPLiX\PHP\PHPDataLayer.xslt"
+									DefaultLanguage="0" CompanionFile="PHP_PHPEntities.xslt"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\OIALtoPHPDataLayerPLiX">
+									<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+									<RegistryValue Type="string" Name="OfficialName" Value="OIALtoPHPDataLayerPLiX"/>
+									<RegistryValue Type="string" Name="DisplayName" Value="OIAL to PHP Data Layer PLiX"/>
+									<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms OIAL to PHP Data Layer PLiX."/>
+									<RegistryValue Type="string" Name="FileExtension" Value=".DataLayer.php.xml"/>
+									<RegistryValue Type="string" Name="SourceInputFormat" Value="OIAL"/>
+									<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="PHPDataLayerPLiX"/>
+									<RegistryValue Type="string" Name="TransformUri" Value="[#PHP_PHPDataLayer.xslt]"/>
+									<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+								</RegistryKey>
+								<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\PHPDataLayerPLiXtoPHP">
+									<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+									<RegistryValue Type="string" Name="OfficialName" Value="PHPDataLayerPLiXtoPHP"/>
+									<RegistryValue Type="string" Name="DisplayName" Value="PHP DataLayer PLiX to PHP"/>
+									<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms PLiX Data Layer TO PHP."/>
+									<RegistryValue Type="string" Name="FileExtension" Value=".DataLayer.php"/>
+									<RegistryValue Type="string" Name="SourceInputFormat" Value="PHPDataLayerPLiX"/>
+									<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="PHPDataLayerImplementation"/>
+									<RegistryValue Type="string" Name="TransformUri" Value="[NEUMONTCOMMONFILESDIR]\PLiX\Formatters\PLiXPHP.xslt"/>
+									<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+								</RegistryKey>
+
+							</Component>
+						</Directory>
+						<?ifdef LinqSupport?>
+						  <Directory Id="ORMCOMMONTRANSFORMSLINQTOSQLDIR" Name="LinqToSql">
+							<Component Id="ORMClassModelLinqToSqlTransformsComponent" Guid="3A361C38-3267-4481-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+								<File Id="LinqToSqlSettings.xslt" ShortName="LqSqlSet.xsl" Name="LinqToSqlSettings.xslt" Source="..\XML\DCILtoLinq\LinqToSqlSettings.xslt"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\LinqToSqlSettings">
+									<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+									<RegistryValue Type="string" Name="OfficialName" Value="LinqToSqlSettings"/>
+									<RegistryValue Type="string" Name="DisplayName" Value="LinqToSql Settings"/>
+									<RegistryValue Type="string" Name="DisplayDescription" Value="Default settings file for LinqToSql generators"/>
+									<RegistryValue Type="string" Name="FileExtension" Value=".LinqToSqlSettings.xml"/>
+									<RegistryValue Type="string" Name="SourceInputFormat" Value="ORM"/>
+									<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="LinqToSqlSettings"/>
+									<RegistryValue Type="string" Name="TransformUri" Value="[#LinqToSqlSettings.xslt]"/>
+									<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+									<RegistryValue Type="integer" Name="GeneratesOnce" Value="1"/>
+								</RegistryKey>
+
+								<File Id="DCILtoLinqAttributeMapping.xslt" ShortName="DclLqAM.xsl" Name="DCILtoLinqAttributeMapping.xslt" Source="..\XML\DCILtoLinq\DCILtoLinqAttributeMapping.xslt"
+									DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+								<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\DCILtoLinqAttributeMapping">
+									<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+									<RegistryValue Type="string" Name="OfficialName" Value="DCILtoLinqAttributeMapping"/>
+									<RegistryValue Type="string" Name="DisplayName" Value="DCIL to LinqToSql"/>
+									<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms DCIL to a LinqToSql-targeted object model"/>
+									<RegistryValue Type="string" Name="FileExtension" Value=".LinqToSqlAttributeMapping.PLiX.xml"/>
+									<RegistryValue Type="string" Name="SourceInputFormat" Value="DCIL"/>
+									<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="LinqToSqlAttributeMapping"/>
+									<RegistryValue Type="string" Name="TransformUri" Value="[#DCILtoLinqAttributeMapping.xslt]"/>
+									<RegistryValue Type="string" Name="CustomTool" Value="NUPlixLoader"/>
+									<RegistryValue Type="multiString" Name="ReferenceInputFormats">
+										<MultiStringValue>LinqToSqlSettings</MultiStringValue>
+									</RegistryValue>
+								</RegistryKey>
+							</Component>
+						</Directory>
+						<?endif?>
+
+						<Component Id="ORMXmlSchemaTransformsComponent" Guid="E9166531-A29B-49B6-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+							<File Id="OIALtoXSD.xslt" ShortName="OIAL2XSD.xsl" Name="OIALtoXSD.xslt" Source="..\XML\OIALtoXSD\OIALtoXSD.xslt"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\OIALtoXSD">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="OIALtoXSD"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="OIAL to XSD"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms an OIAL file to XML Schema."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".xsd"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="OIAL"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="XSD"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#OIALtoXSD.xslt]"/>
+							</RegistryKey>
+						</Component>
+
+						<Component Id="ORMRelationalSchemaTransformsComponent" Guid="2A455908-5BB2-48A3-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+							<File Id="ConceptualDBtoDCIL.xslt" ShortName="CDB2DCIL.xsl" Name="ConceptualDBtoDCIL.xslt" Source="..\XML\ConceptualDBtoDCIL\ConceptualDBtoDCIL.xslt"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\ConceptualDBtoDCL">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="ConceptualDBtoDCL"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="ConceptualDB to DCIL"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms an ORM file with the ConceptualDB extension to DCIL."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".DCIL.xml"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="ORM http://schemas.neumont.edu/ORM/Relational/2007-06/ConceptualDatabase http://schemas.neumont.edu/ORM/Bridge/2007-06/ORMAbstractionToConceptualDatabase http://schemas.neumont.edu/ORM/Abstraction/2007-06/Core http://schemas.neumont.edu/ORM/Bridge/2007-06/ORMToORMAbstraction"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="DCIL"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#ConceptualDBtoDCIL.xslt]"/>
+								<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+							</RegistryKey>
+							<File Id="OIALtoDCIL.xslt" ShortName="OIL2DCIL.xsl" Name="OIALtoDCIL.xslt" Source="..\XML\OIALtoDCIL\OIALtoDCIL.xslt"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\OIALtoDCIL">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="OIALtoDCIL"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="OIAL to DCIL"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms an OIAL file to DCIL."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".DCIL.xml"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="OIAL"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="DCIL"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#OIALtoDCIL.xslt]"/>
+								<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+							</RegistryKey>
+						</Component>
+
+					</Directory>
+				</Directory>
+
+				<Directory Id="DILCOMMONFILESDIR" Name="DIL">
+					<Directory Id="DILCOMMONSCHEMASDIR" Name="Schemas">
+						<Component Id="DILSchemasComponent" Guid="BC36206D-B106-42E0-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" > <!-- KeyPath="yes" -->
+							<!--<File Id="DILcatalog.xml" Name="catalog.xml" Source="..\XML\DIL\catalog.xml"
+								DefaultLanguage="0" CompanionFile="DILSchemaCatalog.xml"/>-->
+              <File Id="DILcatalog.xml" Name="catalog.xml" Source="..\XML\DIL\catalog.xml"
+								KeyPath="yes"/>
+							<File Id="DIL.xsd" Name="DIL.xsd" Source="..\XML\DIL\DIL.xsd"
+								DefaultLanguage="0" CompanionFile="DILcatalog.xml"/>
+							<File Id="DCIL.xsd" Name="DCIL.xsd" Source="..\XML\DIL\DCIL.xsd"
+								DefaultLanguage="0" CompanionFile="DIL.xsd"/>
+							<File Id="DDIL.xsd" Name="DDIL.xsd" Source="..\XML\DIL\DDIL.xsd"
+								DefaultLanguage="0" CompanionFile="DIL.xsd"/>
+							<File Id="DMIL.xsd" Name="DMIL.xsd" Source="..\XML\DIL\DMIL.xsd"
+								DefaultLanguage="0" CompanionFile="DIL.xsd"/>
+							<File Id="DILDT.xsd" Name="DILDT.xsd" Source="..\XML\DIL\DILDT.xsd"
+								DefaultLanguage="0" CompanionFile="DIL.xsd"/>
+							<File Id="DILEP.xsd" Name="DILEP.xsd" Source="..\XML\DIL\DILEP.xsd"
+								DefaultLanguage="0" CompanionFile="DIL.xsd"/>
+							<File Id="DILMS.xsd" Name="DILMS.xsd" Source="..\XML\DIL\DILMS.xsd"
+								DefaultLanguage="0" CompanionFile="DIL.xsd"/>
+						</Component>
+					</Directory>
+					<Directory Id="DILCOMMONTRANSFORMSDIR" ShortName="Trnsfrms" Name="Transforms">
+						<Component Id="DILTransformsComponent" Guid="E0653834-4F4F-426B-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+							<File Id="DILSupportFunctions.xslt" ShortName="DILSF.xsl" Name="DILSupportFunctions.xslt" Source="..\XML\DIL\DILSupportFunctions.xslt"
+								DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+							<File Id="DDILtoSQLStandard.xslt" ShortName="DIL2Stnd.xsl" Name="DDILtoSQLStandard.xslt" Source="..\XML\DILtoSQL\DDILtoSQLStandard.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\DDILtoSQLStandard">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="DDILtoSQLStandard"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="DDIL to SQL Standard"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms DDIL to Standard-dialect SQL."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".SQLStandard.sql"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="DDIL"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="SQL_SQLStandard"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#DDILtoSQLStandard.xslt]"/>
+							</RegistryKey>
+							<File Id="DDILtoDB2.xslt" ShortName="DIL2DB2.xsl" Name="DDILtoDB2.xslt" Source="..\XML\DILtoSQL\DDILtoDB2.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\DDILtoDB2">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="DDILtoDB2"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="DDIL to DB2"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms DDIL to DB2-dialect SQL."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".DB2.sql"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="DDIL"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="SQL_DB2"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#DDILtoDB2.xslt]"/>
+							</RegistryKey>
+							<File Id="DDILtoPostgreSQL.xslt" ShortName="DIL2Post.xsl" Name="DDILtoPostgreSQL.xslt" Source="..\XML\DILtoSQL\DDILtoPostgreSQL.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\DDILtoPostgreSQL">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="DDILtoPostgreSQL"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="DDIL to PostgreSQL"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms DDIL to PostgreSQL-dialect SQL."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".PostgreSQL.sql"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="DDIL"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="SQL_PostgreSQL"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#DDILtoPostgreSQL.xslt]"/>
+							</RegistryKey>
+							<File Id="DDILtoSQLServer.xslt" ShortName="DIL2MS.xsl" Name="DDILtoSQLServer.xslt" Source="..\XML\DILtoSQL\DDILtoSQLServer.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\DDILtoSQLServer">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="DDILtoSQLServer"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="DDIL to SQL Server"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms DDIL to SQL Server-dialect SQL."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".SQLServer.sql"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="DDIL"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="SQL_SQLServer"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#DDILtoSQLServer.xslt]"/>
+							</RegistryKey>
+							<File Id="DDILtoSQLServer_ANSITypes.xslt" ShortName="DIL2MSA.xsl" Name="DDILtoSQLServer_ANSITypes.xslt" Source="..\XML\DILtoSQL\DDILtoSQLServer_ANSITypes.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\DDILtoSQLServerANSI">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="DDILtoSQLServerANSI"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="DDIL to SQL Server (ANSI Types)"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms DDIL to SQL Server-dialect SQL with ANSI data types."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".SQLServer.sql"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="DDIL"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="SQL_SQLServer"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#DDILtoSQLServer_ANSITypes.xslt]"/>
+							</RegistryKey>
+							<File Id="DDILtoOracle.xslt" ShortName="DIL2Orac.xsl" Name="DDILtoOracle.xslt" Source="..\XML\DILtoSQL\DDILtoOracle.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\DDILtoOracle">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="DDILtoOracle"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="DDIL to Oracle"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms DDIL to Oracle-dialect SQL."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".Oracle.sql"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="DDIL"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="SQL_Oracle"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#DDILtoOracle.xslt]"/>
+							</RegistryKey>
+							<File Id="DDILtoMySQL.xslt" ShortName="DIL2MySQ.xsl" Name="DDILtoMySQL.xslt" Source="..\XML\DILtoSQL\DDILtoMySQL.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\DDILtoMySQL">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="DDILtoMySQL"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="DDIL to MySQL"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms DDIL to MySQL-dialect SQL."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".MySQL.sql"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="DDIL"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="SQL_MySQL"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#DDILtoMySQL.xslt]"/>
+							</RegistryKey>
+
+							<File Id="DomainInliner.xslt" ShortName="DmnInlnr.xsl" Name="DomainInliner.xslt" Source="..\XML\DILtoSQL\DomainInliner.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+							<File Id="TruthValueTestRemover.xslt" ShortName="TVTRmvr.xsl" Name="TruthValueTestRemover.xslt" Source="..\XML\DILtoSQL\TruthValueTestRemover.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+							<File Id="UniqueNullableOutliner.xslt" ShortName="UNOutlnr.xsl" Name="UniqueNullableOutliner.xslt" Source="..\XML\DILtoSQL\UniqueNullableOutliner.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+							<File Id="TinyIntRemover.xslt" ShortName="TIRmvr.xsl" Name="TinyIntRemover.xslt" Source="..\XML\DILtoSQL\TinyIntRemover.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+
+							<File Id="DCILtoDDIL.xslt" ShortName="DCIL2DDL.xsl" Name="DCILtoDDIL.xslt" Source="..\XML\DILtoSQL\DCILtoDDIL.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\DCILtoDDIL">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="DCILtoDDIL"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="DCIL to DDIL"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms DCIL to DDIL."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".DDIL.xml"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="DCIL"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="DDIL"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#DCILtoDDIL.xslt]"/>
+								<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+							</RegistryKey>
+
+							<File Id="DCILtoTV.xslt" ShortName="DCIL2TV.xsl" Name="DCILtoTV.xslt" Source="..\XML\DCILtoHTML\DCILtoTV.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\DCILtoTV">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="DCILtoTV"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="DCIL to TableView"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms DCIL to TableView."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".TableView.xml"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="DCIL"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="TV"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#DCILtoTV.xslt]"/>
+								<RegistryValue Type="integer" Name="GeneratesSupportFile" Value="1"/>
+							</RegistryKey>
+							<File Id="TVtoHTML.xslt" ShortName="TV2HTML.xsl" Name="TVtoHTML.xslt" Source="..\XML\DCILtoHTML\TVtoHTML.xslt"
+								DefaultLanguage="0" CompanionFile="DILSupportFunctions.xslt"/>
+							<RegistryKey Root="HKLM" Key="$(var.NORMARegRoot)\Generators\TVtoHTML">
+								<RegistryValue Type="string" Name="Type" Value="XSLT"/>
+								<RegistryValue Type="string" Name="OfficialName" Value="TVtoHTML"/>
+								<RegistryValue Type="string" Name="DisplayName" Value="TableView to HTML"/>
+								<RegistryValue Type="string" Name="DisplayDescription" Value="Transforms TableView to HTML."/>
+								<RegistryValue Type="string" Name="FileExtension" Value=".TableView.html"/>
+								<RegistryValue Type="string" Name="SourceInputFormat" Value="TV"/>
+								<RegistryValue Type="string" Name="ProvidesOutputFormat" Value="TableViewHTML"/>
+								<RegistryValue Type="string" Name="TransformUri" Value="[#TVtoHTML.xslt]"/>
+							</RegistryKey>
+						</Component>
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
+
+		<Directory Id="VSPRODUCTDIR_Community">
+			<Directory Id="VSXMLDIR_Community" Name="Xml">
+				<Directory Id="VSXMLSCHEMASDIR_Community" Name="Schemas">
+					<!-- Point Visual Studio to additional XML Schema Catalog directories. -->
+					<Component Id="NORMAVSSchemaCatalogComponent_Community" Guid="5E3279C3-FEC1-48C7-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+            <Condition>VSPRODUCTDIR_Community</Condition>
+						<File Id="NORMASchemaCatalog.xml_Community" ShortName="NORMACat.xml" Name="NORMASchemaCatalog.xml" Source="NORMASchemaCatalog.$(var.VSShortName).xml"
+							KeyPath="yes"/>
+					</Component>
+					<Component Id="ORMSchemaCatalogComponent_Community" Guid="3571DCC0-D86B-4705-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+            <Condition>VSPRODUCTDIR_Community</Condition>
+						<File Id="ORMSchemaCatalog.xml_Community" ShortName="ORMCat.xml" Name="ORMSchemaCatalog.xml" Source="ORMSchemaCatalog.xml"
+							KeyPath="yes"/>
+					</Component>
+					<Component Id="DILSchemaCatalogComponent_Community" Guid="67E1A72B-7FEE-483C-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+            <Condition>VSPRODUCTDIR_Community</Condition>
+						<File Id="DILSchemaCatalog.xml_Community" ShortName="DILCat.xml" Name="DILSchemaCatalog.xml" Source="DILSchemaCatalog.xml"
+							KeyPath="yes"/>
+					</Component>
+				</Directory>
+			</Directory>
+      <Directory Id="VSCOMMON7_Community" Name="Common7">
+        <Directory Id="VSIDE_Community" Name="IDE">
+          <?ifdef NewORMFileViaNewFileItems?>
+            <Directory Id="VSNEWFILEITEMSDIR_Community" Name="NewFileItems">
+              <Component Id="NORMAVSNewFileItemsComponent_Community" Guid="1190936B-AD65-4F05-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+                <Condition>VSPRODUCTDIR_Community</Condition>
+                <File Id="NewFileItemORMFile_Community" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\NewFileItems\ORMModel.orm"
+						      DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                <File Id="NewFileItemVSDIRFile_Community" ShortName="ORMModel.vdr" Name="NewORMModel.vsdir" Source="..\ORMModel\Shell\ProjectItems\NewFileItems\NewORMModel.vsdir"
+						      DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+              </Component>
+            </Directory>
+          <?endif?>
+          <?ifdef VSIXInstall?>
+            <Directory Id="VSEXTENSIONSDIR_Community" Name="Extensions">
+              <Directory Id="ORMSOLUTIONSEXTENSIONSDIR_Community" Name="ORM Solutions">
+                <Directory Id="NORMAEXTENSIONSDIR_Community" Name="Natural ORM Architect">
+                  <Directory Id="NORMAVERSIONEDEXTENSIONSDIR_Community" Name="$(var.MajorMinorVersion)">
+                    <Component Id="VSIXExtensionComponent_Community" Guid="B59C5018-CB4C-401E-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+                      <Condition>VSPRODUCTDIR_Community</Condition>
+                      <File Id="VSIXManifest_Community" ShortName="extend.fst" Name="extension.vsixmanifest" Source="..\VSIXInstall\$(var.VSShortName)\extension.vsixmanifest"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      <File Id="NORMAPackageDef_Community" ShortName="Designer.def" Name="ORMDesigner.pkgdef" Source="..\VSIXInstall\$(var.VSShortName)\ORMDesigner.pkgdef"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      <File Id="NORMAVSIXIcon_Community" ShortName="DsgnrIco.png" Name="ORMDesignerIcon.png" Source="..\VSIXInstall\ORMDesignerIcon.png"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      <File Id="NORMAVSIXLicense_Community" ShortName="LICENSE.txt" Name="LICENSE.txt" Source="..\LICENSE.txt"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      <File Id="NORMAVSIXPreview_Community" ShortName="DsgnrPre.png" Name="ORMDesignerPreview.png" Source="..\VSIXInstall\ORMDesignerPreview.png"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                    </Component>
+                    <Directory Id="NORMAVSIXDirTemplates_Community" Name="ItemTemplates">
+                      <Directory Id="NORMAVSIXDirTemplates_General_Community" Name="General">
+                        <?ifdef NewORMFileViaGeneralZip?>
+                          <Component Id="NORMAVSProjectItemsGeneralComponent_Community" Guid="26D96FE1-69F2-46ED-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Community</Condition>
+                            <File Id="General.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\General.zip"
+				                      DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          </Component>
+                        <?endif?>
+                        <Component Id="NORMADBImportProjectItemsGeneralComponent_Community" Guid="1890A3E6-8C17-478C-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Community</Condition>
+                          <File Id="DBImportGeneral.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpGen.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                        </Component>
+                      </Directory>
+                      <Directory Id="NORMAVSIXDirTemplates_VisualBasic_Community" ShortName="VBasic" Name="VisualBasic">
+                        <Component Id="NORMAVSProjectItemsVBasicComponent_Community" Guid="5D140A94-9C4A-4B60-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Community</Condition>
+                          <File Id="VisualBasic.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\VisualBasic.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                        </Component>
+                        <Component Id="NORMADBImportProjectItemsVBasicComponent_Community" Guid="8C45B394-60D1-433C-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Community</Condition>
+                          <File Id="DBImportVisualBasic.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpVB.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                        </Component>
+                      </Directory>
+                      <Directory Id="NORMAVSIXDirTemplates_CSharp_Community" Name="CSharp">
+                        <Component Id="NORMAVSProjectItemsVCSharpComponent_Community" Guid="C1AAAF79-FA94-45C0-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Community</Condition>
+                          <File Id="CSharp.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\CSharp.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                        </Component>
+                        <Component Id="NORMADBImportProjectItemsVCSharpComponent_Community" Guid="08F0D621-59B8-46D1-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Community</Condition>
+                          <File Id="DBImportCSharp.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpCS.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                        </Component>
+                      </Directory>
+                      <?ifdef ModelingProjectSupport?>
+                        <Directory Id="NORMAVSIXDirTemplates_Modeling_Community" Name="Modeling">
+                          <Component Id="NORMAVSProjectItemsModelingComponent_Community" Guid="D74F0161-7C3D-4981-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Community</Condition>
+                            <File Id="Modeling.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Modeling.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          </Component>
+                          <Component Id="NORMADBImportProjectItemsModelingComponent_Community" Guid="960D82F8-25D0-4F2B-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Community</Condition>
+                            <File Id="DBImportModeling.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpMod.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          </Component>
+                        </Directory>
+                      <?endif?>
+                      <Directory Id="NORMAVSIXDirTemplates_VisualC_Community" Name="VisualC">
+                        <Component Id="NORMAVSProjectItemsVCPlusPlusComponent_Community" Guid="16B28893-FE72-4BBF-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Community</Condition>
+                          <File Id="VisualC.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\VisualC.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                        </Component>
+                        <Component Id="NORMADBImportProjectItemsVCPlusPlusComponent_Community" Guid="5BC18298-68CE-46F2-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Community</Condition>
+                          <File Id="DBImportVisualC.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpVC.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                        </Component>
+                      </Directory>
+                      <Directory Id="NORMAVSIXDirTemplates_Web_Community" Name="Web">
+                        <Directory Id="NORMAVSIXDirTemplates_WebVisualBasic_Community" ShortName="VBasic" Name="VisualBasic">
+                          <Component Id="NORMAVSProjectItemsVWebDevVBasicComponent_Community" Guid="4EC6EE56-3F04-4F0F-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Community</Condition>
+                            <File Id="WebVisualBasic.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Web\VisualBasic.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          </Component>
+                          <Component Id="NORMADBImportProjectItemsVWebDevVBasicComponent_Community" Guid="34C69005-11CA-4F9E-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Community</Condition>
+                            <File Id="DBImportWebVisualBasic.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpWVB.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          </Component>
+                        </Directory>
+                        <Directory Id="NORMAVSIXDirTemplates_WebCSharp_Community" Name="CSharp">
+                          <Component Id="NORMAVSProjectItemsVWebDevCSharpComponent_Community" Guid="7E4BA3AB-3831-4520-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Community</Condition>
+                            <File Id="WebCSharp.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Web\CSharp.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          </Component>
+                          <Component Id="NORMADBImportProjectItemsVWebDevCSharpComponent_Community" Guid="46832808-DF7F-43B1-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Community</Condition>
+                            <File Id="DBImportWebCSharp.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpWCS.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          </Component>
+                        </Directory>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+          <?endif?>
+        </Directory>
+      </Directory>
+      <!--<?ifndef VSIXInstall?>
+        <Directory Id="VSTEMPLATEITEMDIR_Community" Name="ItemTemplates">
+          <?include NORMAItemTemplatesV15+.wxi?>
+        </Directory>
+		  <?endif?>-->
+		</Directory>
+    <Directory Id="VSPRODUCTDIR_Professional">
+      <Directory Id="VSXMLDIR_Professional" Name="Xml">
+        <Directory Id="VSXMLSCHEMASDIR_Professional" Name="Schemas">
+          <!-- Point Visual Studio to additional XML Schema Catalog directories. -->
+          <Component Id="NORMAVSSchemaCatalogComponent_Professional" Guid="D08DD1F2-629E-42DA-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+            <Condition>VSPRODUCTDIR_Professional</Condition>
+            <File Id="NORMASchemaCatalog.xml_Professional" ShortName="NORMACat.xml" Name="NORMASchemaCatalog.xml" Source="NORMASchemaCatalog.$(var.VSShortName).xml"
+							KeyPath="yes"/>
+          </Component>
+          <Component Id="ORMSchemaCatalogComponent_Professional" Guid="7529EAF8-1C08-464A-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+            <Condition>VSPRODUCTDIR_Professional</Condition>
+            <File Id="ORMSchemaCatalog.xml_Professional" ShortName="ORMCat.xml" Name="ORMSchemaCatalog.xml" Source="ORMSchemaCatalog.xml"
+							KeyPath="yes"/>
+          </Component>
+          <Component Id="DILSchemaCatalogComponent_Professional" Guid="863F935F-AD4B-480E-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+            <Condition>VSPRODUCTDIR_Professional</Condition>
+            <File Id="DILSchemaCatalog.xml_Professional" ShortName="DILCat.xml" Name="DILSchemaCatalog.xml" Source="DILSchemaCatalog.xml"
+							KeyPath="yes"/>
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="VSCOMMON7_Professional" Name="Common7">
+        <Directory Id="VSIDE_Professional" Name="IDE">
+          <?ifdef NewORMFileViaNewFileItems?>
+            <Directory Id="VSNEWFILEITEMSDIR_Professional" Name="NewFileItems">
+              <Component Id="NORMAVSNewFileItemsComponent_Professional" Guid="C8252141-F087-4B3A-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+                <Condition>VSPRODUCTDIR_Professional</Condition>
+                <File Id="NewFileItemORMFile_Professional" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\NewFileItems\ORMModel.orm"
+                  DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                <File Id="NewFileItemVSDIRFile_Professional" ShortName="ORMModel.vdr" Name="NewORMModel.vsdir" Source="..\ORMModel\Shell\ProjectItems\NewFileItems\NewORMModel.vsdir"
+                  DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+              </Component>
+            </Directory>
+          <?endif?>
+          <?ifdef VSIXInstall?>
+            <Directory Id="VSEXTENSIONSDIR_Professional" Name="Extensions">
+              <Directory Id="ORMSOLUTIONSEXTENSIONSDIR_Professional" Name="ORM Solutions">
+                <Directory Id="NORMAEXTENSIONSDIR_Professional" Name="Natural ORM Architect">
+                  <Directory Id="NORMAVERSIONEDEXTENSIONSDIR_Professional" Name="$(var.MajorMinorVersion)">
+                    <Component Id="VSIXExtensionComponent_Professional" Guid="14E6180C-6BD7-45DC-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+                      <Condition>VSPRODUCTDIR_Professional</Condition>
+                      <File Id="VSIXManifest_Professional" ShortName="extend.fst" Name="extension.vsixmanifest" Source="..\VSIXInstall\$(var.VSShortName)\extension.vsixmanifest"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      <File Id="NORMAPackageDef_Professional" ShortName="Designer.def" Name="ORMDesigner.pkgdef" Source="..\VSIXInstall\$(var.VSShortName)\ORMDesigner.pkgdef"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      <File Id="NORMAVSIXIcon_Professional" ShortName="DsgnrIco.png" Name="ORMDesignerIcon.png" Source="..\VSIXInstall\ORMDesignerIcon.png"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      <File Id="NORMAVSIXLicense_Professional" ShortName="LICENSE.txt" Name="LICENSE.txt" Source="..\LICENSE.txt"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      <File Id="NORMAVSIXPreview_Professional" ShortName="DsgnrPre.png" Name="ORMDesignerPreview.png" Source="..\VSIXInstall\ORMDesignerPreview.png"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                    </Component>
+                    <Directory Id="NORMAVSIXDirTemplates_Professional" Name="ItemTemplates">
+                      <Directory Id="NORMAVSIXDirTemplates_General_Professional" Name="General">
+                        <?ifdef NewORMFileViaGeneralZip?>
+                          <Component Id="NORMAVSProjectItemsGeneralComponent_Professional" Guid="6AFDCAB5-0342-4BB5-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Professional</Condition>
+                            <File Id="General.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\General.zip"
+				                      DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          </Component>
+                        <?endif?>
+                        <Component Id="NORMADBImportProjectItemsGeneralComponent_Professional" Guid="99C22D6A-A0F2-4F1C-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Professional</Condition>
+                          <File Id="DBImportGeneral.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpGen.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                        </Component>
+                      </Directory>
+                      <Directory Id="NORMAVSIXDirTemplates_VisualBasic_Professional" ShortName="VBasic" Name="VisualBasic">
+                        <Component Id="NORMAVSProjectItemsVBasicComponent_Professional" Guid="08EBE571-2078-41D0-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Professional</Condition>
+                          <File Id="VisualBasic.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\VisualBasic.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                        </Component>
+                        <Component Id="NORMADBImportProjectItemsVBasicComponent_Professional" Guid="AE8BEC17-32C5-4FF8-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Professional</Condition>
+                          <File Id="DBImportVisualBasic.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpVB.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                        </Component>
+                      </Directory>
+                      <Directory Id="NORMAVSIXDirTemplates_CSharp_Professional" Name="CSharp">
+                        <Component Id="NORMAVSProjectItemsVCSharpComponent_Professional" Guid="A1DCB0EC-7E5D-47B3-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Professional</Condition>
+                          <File Id="CSharp.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\CSharp.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                        </Component>
+                        <Component Id="NORMADBImportProjectItemsVCSharpComponent_Professional" Guid="70B9D1A6-D94A-4C31-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Professional</Condition>
+                          <File Id="DBImportCSharp.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpCS.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                        </Component>
+                      </Directory>
+                      <?ifdef ModelingProjectSupport?>
+                        <Directory Id="NORMAVSIXDirTemplates_Modeling_Professional" Name="Modeling">
+                          <Component Id="NORMAVSProjectItemsModelingComponent_Professional" Guid="31E52665-0489-4458-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Professional</Condition>
+                            <File Id="Modeling.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Modeling.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          </Component>
+                          <Component Id="NORMADBImportProjectItemsModelingComponent_Professional" Guid="7F3E1190-57AF-4F42-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Professional</Condition>
+                            <File Id="DBImportModeling.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpMod.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          </Component>
+                        </Directory>
+                      <?endif?>
+                      <Directory Id="NORMAVSIXDirTemplates_VisualC_Professional" Name="VisualC">
+                        <Component Id="NORMAVSProjectItemsVCPlusPlusComponent_Professional" Guid="5EC60A3B-3A6D-4917-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Professional</Condition>
+                          <File Id="VisualC.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\VisualC.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                        </Component>
+                        <Component Id="NORMADBImportProjectItemsVCPlusPlusComponent_Professional" Guid="70648EBE-BB0F-4663-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Professional</Condition>
+                          <File Id="DBImportVisualC.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpVC.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                        </Component>
+                      </Directory>
+                      <Directory Id="NORMAVSIXDirTemplates_Web_Professional" Name="Web">
+                        <Directory Id="NORMAVSIXDirTemplates_WebVisualBasic_Professional" ShortName="VBasic" Name="VisualBasic">
+                          <Component Id="NORMAVSProjectItemsVWebDevVBasicComponent_Professional" Guid="DF1C7979-29EE-4F5F-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Professional</Condition>
+                            <File Id="WebVisualBasic.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Web\VisualBasic.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          </Component>
+                          <Component Id="NORMADBImportProjectItemsVWebDevVBasicComponent_Professional" Guid="2EB5E369-DD71-4AE2-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Professional</Condition>
+                            <File Id="DBImportWebVisualBasic.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpWVB.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          </Component>
+                        </Directory>
+                        <Directory Id="NORMAVSIXDirTemplates_WebCSharp_Professional" Name="CSharp">
+                          <Component Id="NORMAVSProjectItemsVWebDevCSharpComponent_Professional" Guid="C5B22CE9-B0A2-43C6-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Professional</Condition>
+                            <File Id="WebCSharp.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Web\CSharp.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          </Component>
+                          <Component Id="NORMADBImportProjectItemsVWebDevCSharpComponent_Professional" Guid="B0490B13-8EB5-4D45-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Professional</Condition>
+                            <File Id="DBImportWebCSharp.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpWCS.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          </Component>
+                        </Directory>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+          <?endif?>
+        </Directory>
+      </Directory>
+      <!--<?ifndef VSIXInstall?>
+        <Directory Id="VSTEMPLATEITEMDIR_Professional" Name="ItemTemplates">
+          <?include NORMAItemTemplatesV15+.wxi?>
+        </Directory>
+		  <?endif?>-->
+    </Directory>
+    <Directory Id="VSPRODUCTDIR_Enterprise">
+      <Directory Id="VSXMLDIR_Enterprise" Name="Xml">
+        <Directory Id="VSXMLSCHEMASDIR_Enterprise" Name="Schemas">
+          <!-- Point Visual Studio to additional XML Schema Catalog directories. -->
+          <Component Id="NORMAVSSchemaCatalogComponent_Enterprise" Guid="8B9A952D-5D2B-4348-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+            <Condition>VSPRODUCTDIR_Enterprise</Condition>
+            <File Id="NORMASchemaCatalog.xml_Enterprise" ShortName="NORMACat.xml" Name="NORMASchemaCatalog.xml" Source="NORMASchemaCatalog.$(var.VSShortName).xml"
+							KeyPath="yes"/>
+          </Component>
+          <Component Id="ORMSchemaCatalogComponent_Enterprise" Guid="4EE1BE04-7F8B-471A-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+            <Condition>VSPRODUCTDIR_Enterprise</Condition>
+            <File Id="ORMSchemaCatalog.xml_Enterprise" ShortName="ORMCat.xml" Name="ORMSchemaCatalog.xml" Source="ORMSchemaCatalog.xml"
+							KeyPath="yes"/>
+          </Component>
+          <Component Id="DILSchemaCatalogComponent_Enterprise" Guid="AB724A67-557D-43CF-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+            <Condition>VSPRODUCTDIR_Enterprise</Condition>
+            <File Id="DILSchemaCatalog.xml_Enterprise" ShortName="DILCat.xml" Name="DILSchemaCatalog.xml" Source="DILSchemaCatalog.xml"
+							KeyPath="yes"/>
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="VSCOMMON7_Enterprise" Name="Common7">
+        <Directory Id="VSIDE_Enterprise" Name="IDE">
+          <?ifdef NewORMFileViaNewFileItems?>
+            <Directory Id="VSNEWFILEITEMSDIR_Enterprise" Name="NewFileItems">
+              <Component Id="NORMAVSNewFileItemsComponent_Enterprise" Guid="1F6115B3-9478-4556-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+                <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                <File Id="NewFileItemORMFile_Enterprise" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\NewFileItems\ORMModel.orm"
+                  DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                <File Id="NewFileItemVSDIRFile_Enterprise" ShortName="ORMModel.vdr" Name="NewORMModel.vsdir" Source="..\ORMModel\Shell\ProjectItems\NewFileItems\NewORMModel.vsdir"
+                  DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+              </Component>
+            </Directory>
+          <?endif?>
+          <?ifdef VSIXInstall?>
+            <Directory Id="VSEXTENSIONSDIR_Enterprise" Name="Extensions">
+              <Directory Id="ORMSOLUTIONSEXTENSIONSDIR_Enterprise" Name="ORM Solutions">
+                <Directory Id="NORMAEXTENSIONSDIR_Enterprise" Name="Natural ORM Architect">
+                  <Directory Id="NORMAVERSIONEDEXTENSIONSDIR_Enterprise" Name="$(var.MajorMinorVersion)">
+                    <Component Id="VSIXExtensionComponent_Enterprise" Guid="54A4FDE1-188B-44DB-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+                      <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                      <File Id="VSIXManifest_Enterprise" ShortName="extend.fst" Name="extension.vsixmanifest" Source="..\VSIXInstall\$(var.VSShortName)\extension.vsixmanifest"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      <File Id="NORMAPackageDef_Enterprise" ShortName="Designer.def" Name="ORMDesigner.pkgdef" Source="..\VSIXInstall\$(var.VSShortName)\ORMDesigner.pkgdef"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      <File Id="NORMAVSIXIcon_Enterprise" ShortName="DsgnrIco.png" Name="ORMDesignerIcon.png" Source="..\VSIXInstall\ORMDesignerIcon.png"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      <File Id="NORMAVSIXLicense_Enterprise" ShortName="LICENSE.txt" Name="LICENSE.txt" Source="..\LICENSE.txt"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      <File Id="NORMAVSIXPreview_Enterprise" ShortName="DsgnrPre.png" Name="ORMDesignerPreview.png" Source="..\VSIXInstall\ORMDesignerPreview.png"
+                        DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                    </Component>
+                    <Directory Id="NORMAVSIXDirTemplates_Enterprise" Name="ItemTemplates">
+                      <Directory Id="NORMAVSIXDirTemplates_General_Enterprise" Name="General">
+                        <?ifdef NewORMFileViaGeneralZip?>
+                          <Component Id="NORMAVSProjectItemsGeneralComponent_Enterprise" Guid="4064ED86-6940-435F-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                            <File Id="General.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\General.zip"
+				                      DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          </Component>
+                        <?endif?>
+                        <Component Id="NORMADBImportProjectItemsGeneralComponent_Enterprise" Guid="FC4A7683-48F0-4B08-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                          <File Id="DBImportGeneral.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpGen.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                        </Component>
+                      </Directory>
+                      <Directory Id="NORMAVSIXDirTemplates_VisualBasic_Enterprise" ShortName="VBasic" Name="VisualBasic">
+                        <Component Id="NORMAVSProjectItemsVBasicComponent_Enterprise" Guid="52C1D247-0110-4871-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                          <File Id="VisualBasic.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\VisualBasic.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                        </Component>
+                        <Component Id="NORMADBImportProjectItemsVBasicComponent_Enterprise" Guid="59B9118E-7A93-4869-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                          <File Id="DBImportVisualBasic.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpVB.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                        </Component>
+                      </Directory>
+                      <Directory Id="NORMAVSIXDirTemplates_CSharp_Enterprise" Name="CSharp">
+                        <Component Id="NORMAVSProjectItemsVCSharpComponent_Enterprise" Guid="D4BF73C9-45E4-4B00-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                          <File Id="CSharp.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\CSharp.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                        </Component>
+                        <Component Id="NORMADBImportProjectItemsVCSharpComponent_Enterprise" Guid="5851D074-3FFB-49CF-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                          <File Id="DBImportCSharp.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpCS.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                        </Component>
+                      </Directory>
+                      <?ifdef ModelingProjectSupport?>
+                        <Directory Id="NORMAVSIXDirTemplates_Modeling_Enterprise" Name="Modeling">
+                          <Component Id="NORMAVSProjectItemsModelingComponent_Enterprise" Guid="B3512C5D-27E3-47AE-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                            <File Id="Modeling.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Modeling.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          </Component>
+                          <Component Id="NORMADBImportProjectItemsModelingComponent_Enterprise" Guid="A33D4764-71EB-4A8F-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                            <File Id="DBImportModeling.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpMod.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          </Component>
+                        </Directory>
+                      <?endif?>
+                      <Directory Id="NORMAVSIXDirTemplates_VisualC_Enterprise" Name="VisualC">
+                        <Component Id="NORMAVSProjectItemsVCPlusPlusComponent_Enterprise" Guid="B0FBA40E-DD69-4014-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                          <File Id="VisualC.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\VisualC.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                        </Component>
+                        <Component Id="NORMADBImportProjectItemsVCPlusPlusComponent_Enterprise" Guid="2B4653D5-D8C9-4273-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                          <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                          <File Id="DBImportVisualC.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpVC.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC.zip"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                        </Component>
+                      </Directory>
+                      <Directory Id="NORMAVSIXDirTemplates_Web_Enterprise" Name="Web">
+                        <Directory Id="NORMAVSIXDirTemplates_WebVisualBasic_Enterprise" ShortName="VBasic" Name="VisualBasic">
+                          <Component Id="NORMAVSProjectItemsVWebDevVBasicComponent_Enterprise" Guid="EC7FDCA3-92A9-4481-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                            <File Id="WebVisualBasic.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Web\VisualBasic.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          </Component>
+                          <Component Id="NORMADBImportProjectItemsVWebDevVBasicComponent_Enterprise" Guid="E888054A-53AC-48B8-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                            <File Id="DBImportWebVisualBasic.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpWVB.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          </Component>
+                        </Directory>
+                        <Directory Id="NORMAVSIXDirTemplates_WebCSharp_Enterprise" Name="CSharp">
+                          <Component Id="NORMAVSProjectItemsVWebDevCSharpComponent_Enterprise" Guid="6DA8549F-B790-4E6C-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                            <File Id="WebCSharp.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Web\CSharp.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          </Component>
+                          <Component Id="NORMADBImportProjectItemsVWebDevCSharpComponent_Enterprise" Guid="AC34E602-FA8A-4508-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                            <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                            <File Id="DBImportWebCSharp.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpWCS.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp.zip"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          </Component>
+                        </Directory>
+                      </Directory>
+                    </Directory>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+          <?endif?>
+        </Directory>
+      </Directory>
+    </Directory>
+    <!--<?ifndef VSIXInstall?>
+      <Directory Id="VSTEMPLATEITEMDIR_Enterprise" Name="ItemTemplates">
+        <?include NORMAItemTemplatesV15+.wxi?>
+      </Directory>
+		<?endif?>-->
+	</Directory>
+</Include>

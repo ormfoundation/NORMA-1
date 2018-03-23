@@ -44,33 +44,43 @@
 
 		<Condition Message="!(loc.Windows2000OrHigherRequired)">VersionNT >= 500</Condition>
 
-		<Property Id="VSPRODUCTDIR">
-			<RegistrySearch Id="VSProductDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="ProductDir" Type="directory" Win64="$(var.Win64)"/>
-		</Property>
-		<?ifdef VSIXInstall?>
-			<Property Id="VSENVIRONMENTDIR">
-				<RegistrySearch Id="VSTemplateItemDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="EnvironmentDirectory" Type="directory" Win64="$(var.Win64)"/>
-			</Property>
-		<?else?>
-			<?ifdef NewORMFileViaNewFileItems?>
-				<Property Id="VSENVIRONMENTDIR">
-					<RegistrySearch Id="VSEnvironmentDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="EnvironmentDirectory" Type="directory" Win64="$(var.Win64)"/>
-				</Property>
-			<?endif?>
-			<Property Id="VSTEMPLATEITEMDIR">
-				<RegistrySearch Id="VSTemplateItemDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\VSTemplate\Item" Name="UserFolder" Type="directory" Win64="$(var.Win64)"/>
-			</Property>
-		<?endif?>
-		<Property Id="VSENVIRONMENTPATH">
-			<RegistrySearch Id="VSEnvironmentPathRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="EnvironmentPath" Type="raw" Win64="$(var.Win64)"/>
-		</Property>
+    <?if $(var.VSVer) = v15.0?>
+      <!-- We need to use custom actions to get this now since it's no longer in the registry-->
+      <Binary Id="Setup.CustomActions.dll" SourceFile="Setup.CustomActions\bin\$(var.BuildConfiguration)\Setup.CustomActions.CA.dll" />
+      <CustomAction Id="DetermineVsInstallPaths" Execute="firstSequence" Return="ignore" BinaryKey="Setup.CustomActions.dll" DllEntry="DetermineVisualStudioInstalls" />
+    <?else?>
+      <Property Id="VSPRODUCTDIR">
+        <RegistrySearch Id="VSProductDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="ProductDir" Type="directory" Win64="$(var.Win64)"/>
+      </Property>
+      <?ifdef VSIXInstall?>
+        <Property Id="VSENVIRONMENTDIR">
+          <RegistrySearch Id="VSTemplateItemDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="EnvironmentDirectory" Type="directory" Win64="$(var.Win64)"/>
+        </Property>
+      <?else?>
+      <?ifdef NewORMFileViaNewFileItems?>
+        <Property Id="VSENVIRONMENTDIR">
+          <RegistrySearch Id="VSEnvironmentDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="EnvironmentDirectory" Type="directory" Win64="$(var.Win64)"/>
+        </Property>
+      <?endif?>
+      <Property Id="VSTEMPLATEITEMDIR">
+        <RegistrySearch Id="VSTemplateItemDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\VSTemplate\Item" Name="UserFolder" Type="directory" Win64="$(var.Win64)"/>
+      </Property>
+      <?endif?>
+      <Property Id="VSENVIRONMENTPATH">
+        <RegistrySearch Id="VSEnvironmentPathRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="EnvironmentPath" Type="raw" Win64="$(var.Win64)"/>
+      </Property>
+    <?endif?>
 		<!-- Make sure Visual Studio 2005 is installed. Since VS requires .NET, we don't need to check for it separately. -->
 		<!-- Technically, since DSL Tools requires VS, we don't even need to do this check, but since we have to get the properties anyway, we might as well. It gives the user a more appropriate error message, anyway. -->
-		<?ifdef VSIXInstall?>
-			<Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">(VSPRODUCTDIR AND VSENVIRONMENTPATH) OR Installed</Condition>
-		<?else?>
-			<Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">(VSPRODUCTDIR AND VSTEMPLATEITEMDIR AND VSENVIRONMENTPATH) OR Installed</Condition>
-		<?endif?>
+    <?if $(var.VSVer) = v15.0?>
+      <Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">VSPRODUCTDIR_Community OR VSPRODUCTDIR_Professional OR VSPRODUCTDIR_Enterprise OR Installed</Condition>
+    <?else?>
+		  <?ifdef VSIXInstall?>
+			  <Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">(VSPRODUCTDIR AND VSENVIRONMENTPATH) OR Installed</Condition>
+		  <?else?>
+			  <Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">(VSPRODUCTDIR AND VSTEMPLATEITEMDIR AND VSENVIRONMENTPATH) OR Installed</Condition>
+		  <?endif?>
+    <?endif?>
 
 		<?ifdef RequireDSLRedist?>
 			<Property Id="DSLTOOLSREDISTINSTALL">
@@ -86,27 +96,30 @@
 		<Condition Message="!(loc.PLiXRequired)">(PLIXSCHEMAVERSION >= $(var.PLiXMinimumSchemaVersion)) OR Installed</Condition>
 		
 		<!-- Get the package GUIDs for the various VS packages. -->
-		<?ifdef FixedCSharpPackageGuid?>
-			<Property Id="VCSHARPPACKAGEGUID" Value="$(var.FixedCSharpPackageGuid)"/>
-		<?else?>
-			<Property Id="VCSHARPPACKAGEGUID">
-				<RegistrySearch Id="VCSharpPackageGUIDRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\InstalledProducts\Microsoft Visual C#" Name="Package" Type="raw" Win64="$(var.Win64)"/>
-			</Property>
-		<?endif?>
-		<Property Id="VBASICPACKAGEGUID">
-			<RegistrySearch Id="VBasicPackageGUIDRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\InstalledProducts\Microsoft Visual Basic" Name="Package" Type="raw" Win64="$(var.Win64)"/>
-		</Property>
-		<?ifdef JSharpSupport?>
-		<Property Id="VJSHARPPACKAGEGUID">
-			<RegistrySearch Id="VJSharpPackageGUIDRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\InstalledProducts\Microsoft Visual J#" Name="Package" Type="raw" Win64="$(var.Win64)"/>
-		</Property>
-		<?endif?>
-		<Property Id="VCPLUSPLUSPACKAGEGUID">
-			<RegistrySearch Id="VCPlusPlusPackageGUIDRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\InstalledProducts\Microsoft Visual C++" Name="Package" Type="raw" Win64="$(var.Win64)"/>
-		</Property>
-		<Property Id="VWEBDEVPACKAGEGUID">
-			<RegistrySearch Id="VWebDevPackageGUIDRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\InstalledProducts\Visual Web Developer" Name="Package" Type="raw" Win64="$(var.Win64)"/>
-		</Property>
+    <?if $(var.VSVer) != v15.0?>
+      <!-- Moved to the vsix package def for 2017+ -->
+		  <?ifdef FixedCSharpPackageGuid?>
+			  <Property Id="VCSHARPPACKAGEGUID" Value="$(var.FixedCSharpPackageGuid)"/>
+		  <?else?>
+			  <Property Id="VCSHARPPACKAGEGUID">
+				  <RegistrySearch Id="VCSharpPackageGUIDRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\InstalledProducts\Microsoft Visual C#" Name="Package" Type="raw" Win64="$(var.Win64)"/>
+			  </Property>
+		  <?endif?>
+		  <Property Id="VBASICPACKAGEGUID">
+			  <RegistrySearch Id="VBasicPackageGUIDRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\InstalledProducts\Microsoft Visual Basic" Name="Package" Type="raw" Win64="$(var.Win64)"/>
+		  </Property>
+		  <?ifdef JSharpSupport?>
+		  <Property Id="VJSHARPPACKAGEGUID">
+			  <RegistrySearch Id="VJSharpPackageGUIDRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\InstalledProducts\Microsoft Visual J#" Name="Package" Type="raw" Win64="$(var.Win64)"/>
+		  </Property>
+		  <?endif?>
+		  <Property Id="VCPLUSPLUSPACKAGEGUID">
+			  <RegistrySearch Id="VCPlusPlusPackageGUIDRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\InstalledProducts\Microsoft Visual C++" Name="Package" Type="raw" Win64="$(var.Win64)"/>
+		  </Property>
+		  <Property Id="VWEBDEVPACKAGEGUID">
+			  <RegistrySearch Id="VWebDevPackageGUIDRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\InstalledProducts\Visual Web Developer" Name="Package" Type="raw" Win64="$(var.Win64)"/>
+		  </Property>
+    <?endif?>
 
 		<!-- Only support per-machine installation. -->
 		<Property Id="ALLUSERS">1</Property>
@@ -134,22 +147,25 @@
 			<Custom Before="CostInitialize" Action="AdminOrAdvertisedCustomAction"/>
 		</AdvertiseExecuteSequence>
 
-		<CustomAction Id="ArpInstallLocationCustomAction" Property="ARPINSTALLLOCATION" Value="[$(var.DefaultShortProductDir)]"/>
+    <CustomAction Id="ArpInstallLocationCustomAction" Property="ARPINSTALLLOCATION" Value="[$(var.DefaultShortProductDir)]"/>
 		<?ifdef VSIXInstall?>
-		<CustomAction Id="DevEnvSetupCustomAction" Property="VSENVIRONMENTPATH" ExeCommand="$(var.RootSuffixCmd)/updateconfiguration" Return="ignore" Impersonate="no" Execute="commit"/>
+		  <CustomAction Id="DevEnvSetupCustomAction" Property="VSENVIRONMENTPATH" ExeCommand="$(var.RootSuffixCmd)/updateconfiguration" Return="ignore" Impersonate="no" Execute="commit"/>
 		<?else?>
-		<CustomAction Id="DevEnvSetupCustomAction" Property="VSENVIRONMENTPATH" ExeCommand="$(var.RootSuffixCmd)/Setup" Return="ignore" Impersonate="no" Execute="commit"/>
+		  <CustomAction Id="DevEnvSetupCustomAction" Property="VSENVIRONMENTPATH" ExeCommand="$(var.RootSuffixCmd)/Setup" Return="ignore" Impersonate="no" Execute="commit"/>
 		<?endif?>
 		<InstallExecuteSequence>
+      <?if $(var.VSVer) = v15.0?>
+			  <Custom Before="LaunchConditions" Action="DetermineVsInstallPaths"/>
+			<?endif?>
 			<RemoveExistingProducts Before="ArpInstallLocationCustomAction"/>
 			<Custom Before="InstallInitialize" Action="ArpInstallLocationCustomAction"/>
 			<?ifdef DoDevenvSetup?>
-			<Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction"/>
+			  <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction"/>
 			<?endif?>
 			<!-- We need to move InstallFinalize back from its normal point in the sequence, since the MSHelp2 merge modules expect it to occur later. -->
 			<InstallFinalize Sequence="8000"/>
 		</InstallExecuteSequence>
-
+    
 		<UIRef Id="NORMAUI"/>
 	</Product>
 </Wix>

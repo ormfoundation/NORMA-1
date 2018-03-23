@@ -17,6 +17,9 @@
 
 		<CustomAction Id="WixUIInstallModeCustomAction" Property="WixUI_InstallMode" Value="InstallTypical" />
 		<InstallUISequence>
+      <?if $(var.VSVer) = v15.0?>
+        <Custom Before="LaunchConditions" Action="DetermineVsInstallPaths"/>
+      <?endif?>
 			<Custom Before="WelcomeDlg" Action="WixUIInstallModeCustomAction">NOT Installed</Custom>
 		</InstallUISequence>
 		

@@ -1,10 +1,13 @@
 The registry settings in the pkgdef file are mostly generated using the regpkg utility, with a call (after the source is built) from this directory similar to:
 
-"C:\Program Files\Microsoft Visual Studio 14.0\VSSDK\VisualStudioIntegration\tools\bin\regpkg" /pkgdeffile:temp.pkgdef ..\..\ORMModel\bin\Debug\ORMSolutions.ORMArchitect.Core.VS2015.dll
+"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VSSDK\VisualStudioIntegration\Tools\Bin\CreatePkgDef.exe" /out=C:\Projects\temp.pkgdef /i="C:\Projects\NORMA-plus\ORMModel\bin\Debug\Microsoft.VisualStudio.VirtualTreeGrid.dll";"C:\Projects\NORMA-plus\ORMModel\bin\Debug\Microsoft.VisualStudio.Shell.Framework.dll";"C:\Projects\NORMA-plus\ORMModel\bin\Debug\Microsoft.VisualStudio.Modeling.Sdk.15.0.dll";"C:\Projects\NORMA-plus\ORMModel\bin\Debug\Microsoft.VisualStudio.Modeling.Sdk.Shell.15.0.dll";"C:\Projects\NORMA-plus\ORMModel\bin\Debug\Microsoft.VisualStudio.Modeling.Sdk.Diagrams.15.0.dll";"C:\Projects\NORMA-plus\ORMModel\bin\Debug\EnvDTE.dll";"C:\Projects\NORMA-plus\ORMModel\bin\Debug\Microsoft.VisualStudio.Shell.Interop.dll";"C:\Projects\NORMA-plus\ORMModel\bin\Debug\Microsoft.VisualStudio.Package.LanguageService.15.0.dll";"C:\Projects\NORMA-plus\ORMModel\bin\Debug\Microsoft.VisualStudio.TextManager.Interop.dll";"C:\Projects\NORMA-plus\ORMModel\bin\Debug\Microsoft.VisualStudio.Shell.15.0.dll";"C:\Projects\NORMA-plus\ORMModel\bin\Debug\Microsoft.VisualStudio.OLE.Interop.dll";"C:\Projects\NORMA-plus\ORMModel\bin\Debug\Microsoft.VisualStudio.Shell.Interop.8.0.dll" "C:\Projects\NORMA-plus\ORMModel\bin\Debug\ORMSolutions.ORMArchitect.Core.VS2017.dll"
 
 The InstalledProducts and FontAndColors keys at the end of ORMDesigner.pkgdeg are not generated and must be maintained with a hand merge of the generated file. The package name (the default value for the primary package key) is also hand generated and should be maintained (this is shown when the package is first installed).
 
 The registry file needs to be regenerated when any of the registration attributes on the ORMDesignerPackage class are modified.
+
+Adding the registory entries from the Setup package that goes into VS since the values are no longer in the actual registry but a private registry bin file
+	https://docs.microsoft.com/en-us/visualstudio/extensibility/breaking-changes-2017
 
 If menu or other packages changes are made and VS2017 does not recognize them, then the .vsixmanifest file can be modified in place as follows:
 1) Shut down VS2017 Experimental Hive

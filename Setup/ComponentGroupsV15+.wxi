@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+	Natural Object-Role Modeling Architect for Visual Studio
+
+	Copyright © Neumont University. All rights reserved.
+
+	The use and distribution terms for this software are covered by the
+	Common Public License 1.0 (http://opensource.org/licenses/cpl) which
+	can be found in the file CPL.txt at the root of this distribution.
+	By using this software in any fashion, you are agreeing to be bound by
+	the terms of this license.
+
+	You must not remove this notice, or any other, from this software.
+-->
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<ComponentGroup Id="MainFeatureComponents">
+		<ComponentRef Id="LicenseFilesComponent"/>
+		<ComponentRef Id="DocumentationComponent"/>
+		<?ifdef VSIXInstall?>
+		  <ComponentRef Id="VSIXExtensionComponent_Community"/>
+      <ComponentRef Id="VSIXExtensionComponent_Professional"/>
+      <ComponentRef Id="VSIXExtensionComponent_Enterprise"/>
+		<?endif?>
+		<?ifdef NewORMFileViaNewFileItems?>
+		  <ComponentRef Id="NORMAVSNewFileItemsComponent_Community"/>
+      <ComponentRef Id="NORMAVSNewFileItemsComponent_Professional"/>
+      <ComponentRef Id="NORMAVSNewFileItemsComponent_Enterprise"/>
+		<?endif?>
+		<ComponentRef Id="NORMAVSPackageComponent"/>
+		<ComponentRef Id="NORMAVSPackageGACComponent"/>
+		<ComponentRef Id="NORMAVSSchemaCatalogComponent_Community"/>
+    <ComponentRef Id="NORMAVSSchemaCatalogComponent_Professional"/>
+    <ComponentRef Id="NORMAVSSchemaCatalogComponent_Enterprise"/>
+		<ComponentRef Id="NORMAVSSchemasLocalCatalogComponent"/>
+		<ComponentRef Id="NORMAVSSettingsSchemaComponent"/>
+		<ComponentRef Id="NORMAVSSettingsComponent"/>
+		<ComponentRef Id="NORMAVSConvertersComponent"/>
+		<ComponentRef Id="NORMAVSDiagramDisplaySchemaComponent"/>
+		<?ifdef NewORMFileViaGeneralZip?>
+		  <ComponentRef Id="NORMAVSProjectItemsGeneralComponent_Community"/>
+      <ComponentRef Id="NORMAVSProjectItemsGeneralComponent_Professional"/>
+      <ComponentRef Id="NORMAVSProjectItemsGeneralComponent_Enterprise"/>
+		<?endif?>
+		<ComponentRef Id="NORMAVSProjectItemsVBasicComponent_Community"/>
+    <ComponentRef Id="NORMAVSProjectItemsVBasicComponent_Professional"/>
+    <ComponentRef Id="NORMAVSProjectItemsVBasicComponent_Enterprise"/>
+		<ComponentRef Id="NORMAVSProjectItemsVCSharpComponent_Community"/>
+    <ComponentRef Id="NORMAVSProjectItemsVCSharpComponent_Professional"/>
+    <ComponentRef Id="NORMAVSProjectItemsVCSharpComponent_Enterprise"/>
+		<ComponentRef Id="NORMAVSProjectItemsVCPlusPlusComponent_Community"/>
+    <ComponentRef Id="NORMAVSProjectItemsVCPlusPlusComponent_Professional"/>
+    <ComponentRef Id="NORMAVSProjectItemsVCPlusPlusComponent_Enterprise"/>
+		<ComponentRef Id="NORMAVSProjectItemsVWebDevVBasicComponent_Community"/>
+    <ComponentRef Id="NORMAVSProjectItemsVWebDevVBasicComponent_Professional"/>
+    <ComponentRef Id="NORMAVSProjectItemsVWebDevVBasicComponent_Enterprise"/>
+		<ComponentRef Id="NORMAVSProjectItemsVWebDevCSharpComponent_Community"/>
+    <ComponentRef Id="NORMAVSProjectItemsVWebDevCSharpComponent_Professional"/>
+    <ComponentRef Id="NORMAVSProjectItemsVWebDevCSharpComponent_Enterprise"/>
+		<?ifdef ModelingProjectSupport?>
+		  <ComponentRef Id="NORMAVSProjectItemsModelingComponent_Community"/>
+      <ComponentRef Id="NORMAVSProjectItemsModelingComponent_Professional"/>
+      <ComponentRef Id="NORMAVSProjectItemsModelingComponent_Enterprise"/>
+		<?endif?>
+		<ComponentRef Id="NORMAVSVerbalizationComponent"/>
+		<ComponentRef Id="NORMAVSVerbalizationCoreComponent"/>
+		<ComponentRef Id="NORMAVSVerbalizationReportComponent"/>
+		<ComponentRef Id="NORMAVSRelationalViewExtensionComponent"/>
+		<ComponentRef Id="NORMAVSRelationalViewSchemaComponent"/>
+		<ComponentRef Id="NORMAVSBarkerERViewExtensionComponent"/>
+		<ComponentRef Id="NORMAVSBarkerERViewSchemaComponent"/>
+		<ComponentRef Id="NORMAVSCustomPropertiesExtensionComponent"/>
+		<ComponentRef Id="NORMAVSCustomPropertiesGACComponent"/>
+		<ComponentRef Id="NORMAVSCustomPropertiesSchemaComponent"/>
+		<ComponentRef Id="NORMAVSCustomPropertiesVerbalizationComponent"/>
+		<ComponentRef Id="NORMAVSORMAbstractionExtensionComponent"/>
+		<ComponentRef Id="NORMAVSORMAbstractionGACComponent"/>
+		<ComponentRef Id="NORMAVSORMAbstractionSchemaComponent"/>
+		<ComponentRef Id="NORMAVSORMToORMAbstractionExtensionComponent"/>
+		<ComponentRef Id="NORMAVSORMToORMAbstractionGACComponent"/>
+		<ComponentRef Id="NORMAVSORMToORMAbstractionSchemaComponent"/>
+		<ComponentRef Id="NORMAVSRelationalModelsExtensionComponent"/>
+		<ComponentRef Id="NORMAVSRelationalModelsGACComponent"/>
+		<ComponentRef Id="NORMAVSRelationalModelsSchemaComponent"/>
+		<ComponentRef Id="NORMAVSEntityRelationshipModelsExtensionComponent"/>
+		<ComponentRef Id="NORMAVSEntityRelationshipModelsGACComponent"/>
+		<ComponentRef Id="NORMAVSBarkerERModelSchemaComponent"/>
+		<ComponentRef Id="NORMAVSORMAbstractionToConceptualDatabaseExtensionComponent"/>
+		<ComponentRef Id="NORMAVSORMAbstractionToConceptualDatabaseGACComponent"/>
+		<ComponentRef Id="NORMAVSORMAbstractionToConceptualDatabaseSchemaComponent"/>
+		<ComponentRef Id="NORMAVSORMAbstractionToBarkerERSchemaExtensionComponent"/>
+		<ComponentRef Id="NORMAVSORMAbstractionToBarkerERGACComponent"/>
+		<ComponentRef Id="NORMAVSORMAbstractionToBarkerERSchemaComponent"/>
+		<ComponentRef Id="ORMSchemaCatalogComponent_Community"/>
+    <ComponentRef Id="ORMSchemaCatalogComponent_Professional"/>
+    <ComponentRef Id="ORMSchemaCatalogComponent_Enterprise"/>
+		<ComponentRef Id="ORMSchemasComponent"/>
+		<ComponentRef Id="ORMSchemasLocalCatalogComponent"/>
+		<ComponentRef Id="ORMTransformsComponent"/>
+	</ComponentGroup>
+	<ComponentGroup Id="DatabaseImportFeatureComponents">
+		<ComponentRef Id="NORMADBImportComponent"/>
+		<ComponentRef Id="NORMADBImportGACComponent"/>
+		<ComponentRef Id="NORMADBImportProjectItemsGeneralComponent_Community"/>
+    <ComponentRef Id="NORMADBImportProjectItemsGeneralComponent_Professional"/>
+    <ComponentRef Id="NORMADBImportProjectItemsGeneralComponent_Enterprise"/>
+		<ComponentRef Id="NORMADBImportProjectItemsVBasicComponent_Community"/>
+    <ComponentRef Id="NORMADBImportProjectItemsVBasicComponent_Professional"/>
+    <ComponentRef Id="NORMADBImportProjectItemsVBasicComponent_Enterprise"/>
+		<ComponentRef Id="NORMADBImportProjectItemsVCSharpComponent_Community"/>
+    <ComponentRef Id="NORMADBImportProjectItemsVCSharpComponent_Professional"/>
+    <ComponentRef Id="NORMADBImportProjectItemsVCSharpComponent_Enterprise"/>
+		<ComponentRef Id="NORMADBImportProjectItemsVCPlusPlusComponent_Community"/>
+    <ComponentRef Id="NORMADBImportProjectItemsVCPlusPlusComponent_Professional"/>
+    <ComponentRef Id="NORMADBImportProjectItemsVCPlusPlusComponent_Enterprise"/>
+		<ComponentRef Id="NORMADBImportProjectItemsVWebDevVBasicComponent_Community"/>
+    <ComponentRef Id="NORMADBImportProjectItemsVWebDevVBasicComponent_Professional"/>
+    <ComponentRef Id="NORMADBImportProjectItemsVWebDevVBasicComponent_Enterprise"/>
+		<ComponentRef Id="NORMADBImportProjectItemsVWebDevCSharpComponent_Community"/>
+    <ComponentRef Id="NORMADBImportProjectItemsVWebDevCSharpComponent_Professional"/>
+    <ComponentRef Id="NORMADBImportProjectItemsVWebDevCSharpComponent_Enterprise"/>
+		<?ifdef ModelingProjectSupport?>
+		  <ComponentRef Id="NORMADBImportProjectItemsModelingComponent_Community"/>
+      <ComponentRef Id="NORMADBImportProjectItemsModelingComponent_Professional"/>
+      <ComponentRef Id="NORMADBImportProjectItemsModelingComponent_Enterprise"/>
+		<?endif?>
+	</ComponentGroup>
+	<ComponentGroup Id="GenerationFeatureComponents">
+		<!-- Base generation stuff (OIAL transforms and schemas, ORMCustomTool, etc.) go here -->
+		<ComponentRef Id="OIALSchemasComponent"/>
+		<ComponentRef Id="OIALTransformsComponent"/>
+		<ComponentRef Id="ORMCustomToolComponent"/>
+	</ComponentGroup>
+	<ComponentGroup Id="ClassModelGenerationFeatureComponents">
+		<!-- OIAL-to-PLiX transforms go here. -->
+		<ComponentRef Id="ORMClassModelSchemasComponent"/>
+		<ComponentRef Id="ORMClassModelTransformsComponent"/>
+		<ComponentRef Id="ORMClassModelPHPTransformsComponent"/>
+		<?ifdef LinqSupport?>
+		<ComponentRef Id="ORMClassModelLinqToSqlTransformsComponent"/>
+		<?endif?>
+		<!--<ComponentRef Id="ORMClassModelTransformsTestFormComponent"/>-->
+	</ComponentGroup>
+	<ComponentGroup Id="XmlSchemaGenerationFeatureComponents">
+		<!-- OIAL-to-XSD transforms go here. -->
+		<ComponentRef Id="ORMXmlSchemaTransformsComponent"/>
+	</ComponentGroup>
+	<ComponentGroup Id="RelationalSchemaGenerationFeatureComponents">
+		<!-- OIAL-to-SQL transforms go here. -->
+		<ComponentRef Id="ORMRelationalSchemaTransformsComponent"/>
+		<ComponentRef Id="DILSchemaCatalogComponent_Community"/>
+    <ComponentRef Id="DILSchemaCatalogComponent_Professional"/>
+    <ComponentRef Id="DILSchemaCatalogComponent_Enterprise"/>
+		<ComponentRef Id="DILSchemasComponent"/>
+		<ComponentRef Id="DILTransformsComponent"/>
+	</ComponentGroup>
+</Include>
