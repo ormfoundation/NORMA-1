@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="efddc549-1646-4451-8a51-e5a5e94d647c" Version="1.0.0" Language="en-US" Publisher="ORM Solutions, LLC" />
+    <Identity Id="efddc549-1646-4451-8a51-e5a5e94d647c" Version="1.0.0" Language="en-US" Publisher="The ORM Foundation" />
     <DisplayName>Natural ORM Architect</DisplayName>
     <Description>Object-Role Modeling Designer</Description>
-    <MoreInfo>http://www.ORMSolutions.com</MoreInfo>
+    <MoreInfo>http://www.ormfoundation.org</MoreInfo>
     <License>LICENSE.txt</License>
     <Icon>ORMDesignerIcon.png</Icon>
     <PreviewImage>ORMDesignerPreview.png</PreviewImage>
