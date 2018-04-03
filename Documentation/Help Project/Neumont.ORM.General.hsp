@@ -8,7 +8,7 @@
     <cat Name="Microsoft Help 2.x Error Pages" Key="C5" AutoIndex="True"/>
     <cat Name="Dev Docs" Key="{69564419-AA92-4F5A-AEC7-E3054C4CA000}" AutoIndex="True"/>
     <cat Name="ORM TECH RPT 2" Key="{7B6F520C-C1B9-4D50-A678-EE1D9BB17AF7}" AutoIndex="True"/>
-    <VariableValue Name="CopyrightNotice">Copyright © Neumont University. All rights reserved.</VariableValue>
+    <VariableValue Name="CopyrightNotice">Copyright © Neumont University and The ORM Foundation. All rights reserved.</VariableValue>
     <VariableValue Name="FeedbackLink"/>
     <file FileName="stopwordlist.txt" CaptureInfo="" IncludeInOutput="True"/>
     <file FileName="images\Image001.gif" CaptureInfo="" IncludeInOutput="True"/>
@@ -721,7 +721,7 @@ URL: <span id="urlSpan"></span></p>
 <P class=MsoNoSpacing align=center><A href="http://orm.sourceforge.net">http://orm.sourceforge.net</A></P>
 <P class=MsoNoSpacing align=center>&nbsp;</P>
 <P class=MsoNoSpacing align=center>&nbsp;</P>
-<P class=MsoNoSpacing align=center>Copyright © Neumont University. All rights reserved.</P>
+<P class=MsoNoSpacing align=center>Copyright © Neumont University and The ORM Foundation. All rights reserved.</P>
 <P class=MsoNoSpacing>&nbsp;</P>
 <P class=MsoNoSpacing>&nbsp;</P>
 <P class=MsoNormal>&nbsp;</P></DIV>]]></s>
@@ -3321,7 +3321,7 @@ public const string ToolboxFrequencyConstraintItemId = "Toolbox.FrequencyConstra
     <Tasks/>
     <BuildProfiles>
         <BuildProfile ID="{ED61CAAF-B217-429E-92BD-C78484CA18E6}" Name="Default" OutputDirectory="Build\Default\" CompileHelpFile="True" HTMLHelpVersion="2" H2Namespace="Neumont.ORM.General" H2FileID="Neumont.ORM.General" H2PlugIn="MS.VSIPCC.v80" HelpFileName="Build\Neumont.ORM.General.hxs" UseBuildFlags="False" ProjectTitle="Neumont ORM Architect" RemoveOutputFiles="True" BuildFlags="" IncludeInBuild="True" DefaultTopicID="" LocaleID="0">
-            <TemplateProperty Name="CopyrightNotice">Copyright © Neumont University. All rights reserved.</TemplateProperty>
+            <TemplateProperty Name="CopyrightNotice">Copyright © Neumont University and The ORM Foundation. All rights reserved.</TemplateProperty>
         </BuildProfile>
     </BuildProfiles>
     <ProjectProperties/>

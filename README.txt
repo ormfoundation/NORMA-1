@@ -1,5 +1,5 @@
 Neumont Object-Role Modeling Architect
-Copyright © Neumont University. All rights reserved.
+Copyright © Neumont University and The ORM Foundation. All rights reserved.
 Copyright © ORM Solutions, LLC. All rights reserved.
 Homepage: http://orm.sourceforge.net
 

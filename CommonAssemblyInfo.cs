@@ -14,7 +14,7 @@ using System.Runtime.CompilerServices;
 #endif //!NO_SECURITYPERMISSIONATTRIBUTE
 
 #if !NO_ASSEMBLYCOPYRIGHTATTRIBUTE
-[assembly: AssemblyCopyright("Copyright © ORM Solutions, LLC. Portions copyright © Neumont University. All rights reserved.")]
+[assembly: AssemblyCopyright("Copyright © ORM Solutions, LLC. Portions Copyright © Neumont University and The ORM Foundation. All rights reserved.")]
 #endif //!NO_ASSEMBLYCOPYRIGHTATTRIBUTE
 
 [assembly: Debuggable(DebuggableAttribute.DebuggingModes.Default | DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints
