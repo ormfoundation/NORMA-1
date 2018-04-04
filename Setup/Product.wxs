@@ -52,6 +52,10 @@
       <SetProperty Id="VSPRODUCTDIREXISTS_Community" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Community]"></SetProperty>
       <SetProperty Id="VSPRODUCTDIREXISTS_Professional" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Professional]"></SetProperty>
       <SetProperty Id="VSPRODUCTDIREXISTS_Enterprise" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Enterprise]"></SetProperty>
+      <!-- Create devenv path for calling /setup at the end -->
+      <SetProperty Id="VSDEVENVPATH_Community" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Community]\Common7\IDE\devenv.exe">VSPRODUCTDIR_Community</SetProperty>
+      <SetProperty Id="VSDEVENVPATH_Professional" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Professional]\Common7\IDE\devenv.exe">VSPRODUCTDIR_Professional</SetProperty>
+      <SetProperty Id="VSDEVENVPATH_Enterprise" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Enterprise]\Common7\IDE\devenv.exe">VSPRODUCTDIR_Enterprise</SetProperty>
     <?else?>
       <Property Id="VSPRODUCTDIR">
         <RegistrySearch Id="VSProductDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="ProductDir" Type="directory" Win64="$(var.Win64)"/>
@@ -153,7 +157,13 @@
 
     <CustomAction Id="ArpInstallLocationCustomAction" Property="ARPINSTALLLOCATION" Value="[$(var.DefaultShortProductDir)]"/>
 		<?ifdef VSIXInstall?>
-		  <CustomAction Id="DevEnvSetupCustomAction" Property="VSENVIRONMENTPATH" ExeCommand="$(var.RootSuffixCmd)/updateconfiguration" Return="ignore" Impersonate="no" Execute="commit"/>
+      <?if $(var.VSVer) = v15.0?>
+        <CustomAction Id="DevEnvSetupCustomAction_Community" Property="VSDEVENVPATH_Community" ExeCommand="/setup" Return="ignore" Impersonate="no" Execute="commit"/>
+        <CustomAction Id="DevEnvSetupCustomAction_Professional" Property="VSDEVENVPATH_Professional" ExeCommand="/setup" Return="ignore" Impersonate="no" Execute="commit"/>
+        <CustomAction Id="DevEnvSetupCustomAction_Enterprise" Property="VSDEVENVPATH_Enterprise" ExeCommand="/setup" Return="ignore" Impersonate="no" Execute="commit"/>
+      <?else?>
+        <CustomAction Id="DevEnvSetupCustomAction" Property="VSENVIRONMENTPATH" ExeCommand="$(var.RootSuffixCmd)/updateconfiguration" Return="ignore" Impersonate="no" Execute="commit"/>
+      <?endif?>
 		<?else?>
 		  <CustomAction Id="DevEnvSetupCustomAction" Property="VSENVIRONMENTPATH" ExeCommand="$(var.RootSuffixCmd)/Setup" Return="ignore" Impersonate="no" Execute="commit"/>
 		<?endif?>
@@ -164,7 +174,13 @@
 			<RemoveExistingProducts Before="ArpInstallLocationCustomAction"/>
 			<Custom Before="InstallInitialize" Action="ArpInstallLocationCustomAction"/>
 			<?ifdef DoDevenvSetup?>
-			  <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction"/>
+        <?if $(var.VSVer) = v15.0?>
+          <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction_Community"/>
+          <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction_Professional"/>
+          <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction_Enterprise"/>
+        <?else?>
+          <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction"/>
+        <?endif?>
 			<?endif?>
 			<!-- We need to move InstallFinalize back from its normal point in the sequence, since the MSHelp2 merge modules expect it to occur later. -->
 			<InstallFinalize Sequence="8000"/>
