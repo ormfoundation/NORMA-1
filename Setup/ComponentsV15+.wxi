@@ -96,12 +96,12 @@
 							<ProgId Id="ormfile" Description="!(loc.ORMFileDescription)" Icon="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll" IconIndex="0">
 								<Extension Id="orm" ContentType="application/orm+xml">
 									<MIME ContentType="application/orm+xml" Default="yes"/>
-									<Verb Id="Open" Command="!(loc.ORMFileOpenCommand)" TargetProperty="[VSENVIRONMENTPATH]" Argument="$(var.RootSuffixCmd)/dde"/>
+									<Verb Id="Open" Command="!(loc.ORMFileOpenCommand)" TargetProperty="[VSVERSIONSELECTORPATH]" Argument="$(var.RootSuffixCmd)/dde"/>
 								</Extension>
 							</ProgId>
 							<RegistryKey Root="HKCR" Key="ormfile\shell\open\ddeexec">
 								<RegistryValue Type="string" Value="Open(&quot;%1&quot;)"/>
-								<RegistryValue Key="application" Type="string" Value="VisualStudio.8.0"/>
+								<RegistryValue Key="application" Type="string" Value="VisualStudio.15.0"/>
 								<RegistryValue Key="topic" Type="string" Value="system"/>
 							</RegistryKey>
 							<RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\NORMAVS">

@@ -1,13 +1,8 @@
-Windows Registry Editor Version 5.00
-
 [$RootKey$\Packages\{efddc549-1646-4451-8a51-e5a5e94d647c}]
 @="ORM Solutions Natural Object-Role Modeling Architect Package"
-"InprocServer32"="%windir%\system32\mscoree.dll"
+"InprocServer32"="%windir%\\system32\\mscoree.dll"
 "Class"="ORMSolutions.ORMArchitect.Core.Shell.ORMDesignerPackage"
 "Assembly"="ORMSolutions.ORMArchitect.Core.VS2017, Version=1.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f"
-"CodeBase"="$ProgramFiles$\ORM Solutions\ORM Architect for Visual Studio 2017\bin\ORMSolutions.ORMArchitect.Core.VS2017.dll"
-"ProductName"="Natural Object-Role Modeling Architect for Visual Studio"
-"CompanyName"="ORM Solutions, LLC"
 [$RootKey$\Editors\{eda9e282-8fc6-4ae4-af2c-c224fd3ae49b}]
 "Package"="{efddc549-1646-4451-8a51-e5a5e94d647c}"
 [$RootKey$\Editors\{eda9e282-8fc6-4ae4-af2c-c224fd3ae49b}\Extensions]
@@ -215,7 +210,7 @@ Windows Registry Editor Version 5.00
 // Register C# Generator
 [$RootKey$\Generators\{574FC912-F74F-4B4E-92C3-F695C208A2BB}\ORMCustomTool]
 @="ORM Custom Tool"
-"CLSID" Value="{977BD01E-F2B4-4341-9C47-459420624A20}"
+"CLSID"="{977BD01E-F2B4-4341-9C47-459420624A20}"
 "GeneratesDesignTimeSource"=dword:00000001
 [$RootKey$\Generators\{574FC912-F74F-4B4E-92C3-F695C208A2BB}\.orm]
 @="ORMCustomTool"					
@@ -225,7 +220,7 @@ Windows Registry Editor Version 5.00
 // Register VB Generator
 [$RootKey$\Generators\{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}\ORMCustomTool]
 @="ORM Custom Tool"
-"CLSID" Value="{977BD01E-F2B4-4341-9C47-459420624A20}"
+"CLSID"="{977BD01E-F2B4-4341-9C47-459420624A20}"
 "GeneratesDesignTimeSource"=dword:00000001
 [$RootKey$\Generators\{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}\.orm]
 @="ORMCustomTool"
