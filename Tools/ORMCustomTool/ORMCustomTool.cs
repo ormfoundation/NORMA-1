@@ -2,7 +2,7 @@
 /**************************************************************************\
 * Natural Object-Role Modeling Architect for Visual Studio                 *
 *                                                                          *
-* Copyright © Neumont University. All rights reserved.                     *
+* Copyright © Neumont University and The ORM Foundation. All rights reserved.                     *
 * Copyright © ORM Solutions, LLC. All rights reserved.                     *
 *                                                                          *
 * The use and distribution terms for this software are covered by the      *
@@ -59,7 +59,9 @@ namespace ORMSolutions.ORMArchitect.ORMCustomTool
 		private const string DEFAULT_EXTENSION_DECORATOR = "._ORMCustomToolReport."; // Add the _ here to put it above other generators
 		private const string EXTENSION_ORM = ".orm";
 		private const string EXTENSION_XML = ".xml";
-#if VISUALSTUDIO_14_0
+#if VISUALSTUDIO_15_0
+		private const string GENERATORS_REGISTRYROOT = @"Software\ORM Solutions\Natural ORM Architect for Visual Studio 2017\Generators";
+#elif VISUALSTUDIO_14_0
 		private const string GENERATORS_REGISTRYROOT = @"Software\ORM Solutions\Natural ORM Architect for Visual Studio 2015\Generators";
 #elif VISUALSTUDIO_12_0
 		private const string GENERATORS_REGISTRYROOT = @"Software\ORM Solutions\Natural ORM Architect for Visual Studio 2013\Generators";

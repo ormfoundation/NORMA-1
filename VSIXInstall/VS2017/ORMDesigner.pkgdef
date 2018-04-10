@@ -1,5 +1,3 @@
-Windows Registry Editor Version 5.00
-
 [$RootKey$\Packages\{efddc549-1646-4451-8a51-e5a5e94d647c}]
 @="ORM Solutions Natural Object-Role Modeling Architect Package"
 "InprocServer32"="%windir%\\system32\\mscoree.dll"
@@ -160,42 +158,6 @@ Windows Registry Editor Version 5.00
 "Formats"="Microsoft.VisualStudio.Modeling.ElementGroupPrototype"
 "NeedsCallbackAfterReset"=dword:00000001
 
-// Register the ORM Custom Tool
-[$RootKey$\CLSID\{977BD01E-F2B4-4341-9C47-459420624A20}]
-@="ORMSolutions.ORMArchitect.ORMCustomTool.ORMCustomTool"
-"InprocServer32"="$WinDir$\SYSTEM32\mscoree.dll"
-"ThreadingModel"="Both"
-"Class"="ORMSolutions.ORMArchitect.ORMCustomTool.ORMCustomTool"
-"Assembly"="ORMSolutions.ORMArchitect.ORMCustomTool.VS2017, Version=1.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f"
-"CodeBase"="$ProgramFiles$\ORM Solutions\ORM Architect for Visual Studio 2017\bin\ORMSolutions.ORMArchitect.ORMCustomTool.VS2017.dll"
-[$RootKey$\CLSID\{6FDCC073-20C2-4435-9B2E-9E70451C81D8}]
-@="ORMSolutions.ORMArchitect.ORMCustomTool.ExtenderProvider"
-"InprocServer32"="$WinDir$\SYSTEM32\mscoree.dll"
-"ThreadingModel"="Both"
-"Class"="ORMSolutions.ORMArchitect.ORMCustomTool.ExtenderProvider"
-"Assembly"="ORMSolutions.ORMArchitect.ORMCustomTool.VS2017, Version=1.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f"
-"CodeBase"="$ProgramFiles$\ORM Solutions\ORM Architect for Visual Studio 2017\bin\ORMSolutions.ORMArchitect.ORMCustomTool.VS2017.dll"
-
-// Register C# Generator
-[$RootKey$\Generators\{574FC912-F74F-4B4E-92C3-F695C208A2BB}\ORMCustomTool]
-@="ORM Custom Tool"
-"CLSID" Value="{977BD01E-F2B4-4341-9C47-459420624A20}"
-"GeneratesDesignTimeSource"=dword:00000001
-[$RootKey$\Generators\{574FC912-F74F-4B4E-92C3-F695C208A2BB}\.orm]
-@="ORMCustomTool"					
-[$RootKey$\Extenders\{EA5BD05D-3C72-40A5-95A0-28A2773311CA}\ORMCustomTool]
-@="{6FDCC073-20C2-4435-9B2E-9E70451C81D8}"
-
-// Register VB Generator
-[$RootKey$\Generators\{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}\ORMCustomTool]
-@="ORM Custom Tool"
-"CLSID" Value="{977BD01E-F2B4-4341-9C47-459420624A20}"
-"GeneratesDesignTimeSource"=dword:00000001
-[$RootKey$\Generators\{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}\.orm]
-@="ORMCustomTool"
-[$RootKey$\Extenders\{8D58E6AF-ED4E-48B0-8C7B-C74EF0735451}\ORMCustomTool]
-@="6FDCC073-20C2-4435-9B2E-9E70451C81D8"
-
 [$RootKey$\InstalledProducts\Natural ORM Architect]
 "Package"="{efddc549-1646-4451-8a51-e5a5e94d647c}"
 "UseRegNameAsSplashName"=dword:00000001
@@ -228,3 +190,39 @@ Windows Registry Editor Version 5.00
 "Namespace"="http://schemas.neumont.edu/ORM/2006-04/ORMRoot"
 [$RootKey$\ShellFileAssociations\.orm]
 @="ormfile"
+
+// Register the ORM Custom Tool
+[$RootKey$\CLSID\{977BD01E-F2B4-4341-9C47-459420624A20}]
+@="ORMSolutions.ORMArchitect.ORMCustomTool.ORMCustomTool"
+"InprocServer32"="$WinDir$\SYSTEM32\mscoree.dll"
+"ThreadingModel"="Both"
+"Class"="ORMSolutions.ORMArchitect.ORMCustomTool.ORMCustomTool"
+"Assembly"="ORMSolutions.ORMArchitect.ORMCustomTool.VS2017, Version=1.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f"
+"CodeBase"="$ProgramFiles$\ORM Solutions\ORM Architect for Visual Studio 2017\bin\ORMSolutions.ORMArchitect.ORMCustomTool.VS2017.dll"
+[$RootKey$\CLSID\{6FDCC073-20C2-4435-9B2E-9E70451C81D8}]
+@="ORMSolutions.ORMArchitect.ORMCustomTool.ExtenderProvider"
+"InprocServer32"="$WinDir$\SYSTEM32\mscoree.dll"
+"ThreadingModel"="Both"
+"Class"="ORMSolutions.ORMArchitect.ORMCustomTool.ExtenderProvider"
+"Assembly"="ORMSolutions.ORMArchitect.ORMCustomTool.VS2017, Version=1.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f"
+"CodeBase"="$ProgramFiles$\ORM Solutions\ORM Architect for Visual Studio 2017\bin\ORMSolutions.ORMArchitect.ORMCustomTool.VS2017.dll"
+
+// Register C# Generator
+[$RootKey$\Generators\{574FC912-F74F-4B4E-92C3-F695C208A2BB}\ORMCustomTool]
+@="ORM Custom Tool"
+"CLSID"="{977BD01E-F2B4-4341-9C47-459420624A20}"
+"GeneratesDesignTimeSource"=dword:00000001
+[$RootKey$\Generators\{574FC912-F74F-4B4E-92C3-F695C208A2BB}\.orm]
+@="ORMCustomTool"					
+[$RootKey$\Extenders\{EA5BD05D-3C72-40A5-95A0-28A2773311CA}\ORMCustomTool]
+@="{6FDCC073-20C2-4435-9B2E-9E70451C81D8}"
+
+// Register VB Generator
+[$RootKey$\Generators\{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}\ORMCustomTool]
+@="ORM Custom Tool"
+"CLSID"="{977BD01E-F2B4-4341-9C47-459420624A20}"
+"GeneratesDesignTimeSource"=dword:00000001
+[$RootKey$\Generators\{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}\.orm]
+@="ORMCustomTool"
+[$RootKey$\Extenders\{8D58E6AF-ED4E-48B0-8C7B-C74EF0735451}\ORMCustomTool]
+@="6FDCC073-20C2-4435-9B2E-9E70451C81D8"

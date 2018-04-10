@@ -2,7 +2,7 @@
 /**************************************************************************\
 * Natural Object-Role Modeling Architect for Visual Studio                 *
 *                                                                          *
-* Copyright © Neumont University. All rights reserved.                     *
+* Copyright © Neumont University and The ORM Foundation. All rights reserved.                     *
 *                                                                          *
 * The use and distribution terms for this software are covered by the      *
 * Common Public License 1.0 (http://opensource.org/licenses/cpl) which     *
@@ -66,7 +66,9 @@ namespace ORMSolutions.ORMArchitect.ORMCustomTool
 							IMoniker moniker;
 							ErrorHandler.ThrowOnFailure(CreateItemMoniker(
 								"!",
-#if VISUALSTUDIO_14_0
+#if VISUALSTUDIO_15_0
+								"VisualStudio.DTE.15.0:" +
+#elif VISUALSTUDIO_14_0
 								"VisualStudio.DTE.14.0:" +
 #elif VISUALSTUDIO_12_0
 								"VisualStudio.DTE.12.0:" +

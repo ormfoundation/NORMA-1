@@ -2,7 +2,7 @@
 /**************************************************************************\
 * Database Intermediate Language                                           *
 *                                                                          *
-* Copyright © Neumont University. All rights reserved.                     *
+* Copyright © Neumont University and The ORM Foundation. All rights reserved.                     *
 *                                                                          *
 * This software is provided 'as-is', without any express or implied        *
 * warranty. In no event will the authors be held liable for any damages    *

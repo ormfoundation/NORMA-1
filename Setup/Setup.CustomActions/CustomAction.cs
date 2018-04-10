@@ -1,7 +1,7 @@
 /*
 	Natural Object-Role Modeling Architect for Visual Studio
 
-	Copyright © Neumont University. All rights reserved.
+	Copyright © Neumont University and The ORM Foundation. All rights reserved.
 	Copyright © ORM Solutions, LLC. All rights reserved.
 
 	The use and distribution terms for this software are covered by the
@@ -28,7 +28,7 @@ namespace Setup.CustomActions
             {
                 string installPath = null;
 
-                installPath = CustomActions.GetInstallPath("Microsoft.VisualStudio.Product.Community", session);
+                installPath = CustomActions.GetVisualStudioInstallProperty("Microsoft.VisualStudio.Product.Community", "installationPath", session);
                 if (string.IsNullOrWhiteSpace(installPath))
                 {
                     session.Log("Visual Studio Community not found.");
@@ -40,7 +40,7 @@ namespace Setup.CustomActions
                     session["VSPRODUCTDIR_Community"] = installPath;
                 }
 
-                installPath = CustomActions.GetInstallPath("Microsoft.VisualStudio.Product.Professional", session);
+                installPath = CustomActions.GetVisualStudioInstallProperty("Microsoft.VisualStudio.Product.Professional", "installationPath", session);
                 if (string.IsNullOrWhiteSpace(installPath))
                 {
                     session.Log("Visual Studio Professional not found.");
@@ -52,7 +52,7 @@ namespace Setup.CustomActions
                     session["VSPRODUCTDIR_Professional"] = installPath;
                 }
 
-                installPath = CustomActions.GetInstallPath("Microsoft.VisualStudio.Product.Enterprise", session);
+                installPath = CustomActions.GetVisualStudioInstallProperty("Microsoft.VisualStudio.Product.Enterprise", "installationPath", session);
                 if (string.IsNullOrWhiteSpace(installPath))
                 {
                     session.Log("Visual Studio Enterprise not found.");
@@ -78,9 +78,9 @@ namespace Setup.CustomActions
         /// </summary>
         /// <param name="product">Product to get the install path for.  See https://docs.microsoft.com/en-us/visualstudio/install/workload-and-component-ids</param>
         /// <returns></returns>
-        private static string GetInstallPath(string product, Session session)
+        private static string GetVisualStudioInstallProperty(string product, string property, Session session)
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo(Environment.ExpandEnvironmentVariables(@"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"), $"-products {product} -property installationPath")
+            ProcessStartInfo startInfo = new ProcessStartInfo(Environment.ExpandEnvironmentVariables(@"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"), $"-products {product} -property {property}")
             {
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,

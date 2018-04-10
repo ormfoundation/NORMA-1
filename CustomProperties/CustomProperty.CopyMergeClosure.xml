@@ -4,7 +4,8 @@
 		<cmc:CopyrightLine>/**************************************************************************\</cmc:CopyrightLine>
 		<cmc:CopyrightLine>* Natural Object-Role Modeling Architect for Visual Studio                 *</cmc:CopyrightLine>
 		<cmc:CopyrightLine>*                                                                          *</cmc:CopyrightLine>
-		<cmc:CopyrightLine>* Copyright © ORM Solutions, LLC. All rights reserved.                     *</cmc:CopyrightLine>
+    <cmc:CopyrightLine>* Copyright © Neumont University and The ORM Foundation. All rights reserved.                     *</cmc:CopyrightLine>
+    <cmc:CopyrightLine>* Copyright © ORM Solutions, LLC. All rights reserved.                     *</cmc:CopyrightLine>
 		<cmc:CopyrightLine>*                                                                          *</cmc:CopyrightLine>
 		<cmc:CopyrightLine>* The use and distribution terms for this software are covered by the      *</cmc:CopyrightLine>
 		<cmc:CopyrightLine>* Common Public License 1.0 (http://opensource.org/licenses/cpl) which     *</cmc:CopyrightLine>

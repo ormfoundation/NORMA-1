@@ -2,7 +2,7 @@
 <!--
 	Natural Object-Role Modeling Architect for Visual Studio
 
-	Copyright © Neumont University. All rights reserved.
+	Copyright © Neumont University and The ORM Foundation. All rights reserved.
 	Copyright © ORM Solutions, LLC. All rights reserved.
 
 	The use and distribution terms for this software are covered by the

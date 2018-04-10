@@ -2,7 +2,7 @@
 <!--
 	Natural Object-Role Modeling Architect for Visual Studio
 
-	Copyright © Neumont University. All rights reserved.
+	Copyright © Neumont University and The ORM Foundation. All rights reserved.
 	Copyright © ORM Solutions, LLC. All rights reserved.
 
 	The use and distribution terms for this software are covered by the
@@ -47,7 +47,21 @@
     <?if $(var.VSVer) = v15.0?>
       <!-- We need to use custom actions to get this now since it's no longer in the registry-->
       <Binary Id="Setup.CustomActions.dll" SourceFile="Setup.CustomActions\bin\$(var.BuildConfiguration)\Setup.CustomActions.CA.dll" />
-      <CustomAction Id="DetermineVsInstallPaths" Execute="firstSequence" Return="ignore" BinaryKey="Setup.CustomActions.dll" DllEntry="DetermineVisualStudioInstalls" />
+      <CustomAction Id="DetermineVsInstallPaths" Execute="immediate" Return="ignore" BinaryKey="Setup.CustomActions.dll" DllEntry="DetermineVisualStudioInstalls" />      
+      <!-- We need to set the exists proeprties since the property used in a directory assumes the parent directories' value if empty -->
+      <SetProperty Id="VSPRODUCTDIREXISTS_Community" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Community]"></SetProperty>
+      <SetProperty Id="VSPRODUCTDIREXISTS_Professional" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Professional]"></SetProperty>
+      <SetProperty Id="VSPRODUCTDIREXISTS_Enterprise" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Enterprise]"></SetProperty>
+      <!-- Create devenv path for calling /setup at the end -->
+      <SetProperty Id="VSDEVENVPATH_Community" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Community]\Common7\IDE\devenv.exe">VSPRODUCTDIR_Community</SetProperty>
+      <SetProperty Id="VSDEVENVPATH_Professional" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Professional]\Common7\IDE\devenv.exe">VSPRODUCTDIR_Professional</SetProperty>
+      <SetProperty Id="VSDEVENVPATH_Enterprise" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Enterprise]\Common7\IDE\devenv.exe">VSPRODUCTDIR_Enterprise</SetProperty>
+      <!-- Get the location of the vslauncher C:\Program Files (x86)\Common Files\Microsoft Shared\MSEnv\VSLauncher.exe -->
+      <Property Id="VSVERSIONSELECTORPATH">
+        <DirectorySearch Id="VSVersionSelectorPathDirectorySearch" Path="$(var.ProgramFilesFolder)\Common Files\Microsoft Shared\MSEnv">
+          <FileSearch Id="VSVersionSelectorPathFileSearch" Name="VSLauncher.exe"></FileSearch>
+        </DirectorySearch>
+      </Property>
     <?else?>
       <Property Id="VSPRODUCTDIR">
         <RegistrySearch Id="VSProductDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="ProductDir" Type="directory" Win64="$(var.Win64)"/>
@@ -73,7 +87,7 @@
 		<!-- Make sure Visual Studio 2005 is installed. Since VS requires .NET, we don't need to check for it separately. -->
 		<!-- Technically, since DSL Tools requires VS, we don't even need to do this check, but since we have to get the properties anyway, we might as well. It gives the user a more appropriate error message, anyway. -->
     <?if $(var.VSVer) = v15.0?>
-      <Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">VSPRODUCTDIR_Community OR VSPRODUCTDIR_Professional OR VSPRODUCTDIR_Enterprise OR Installed</Condition>
+      <Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">((VSPRODUCTDIREXISTS_Community OR VSPRODUCTDIREXISTS_Professional OR VSPRODUCTDIREXISTS_Enterprise) AND DefaultIdeLocation) OR Installed</Condition>
     <?else?>
 		  <?ifdef VSIXInstall?>
 			  <Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">(VSPRODUCTDIR AND VSENVIRONMENTPATH) OR Installed</Condition>
@@ -149,7 +163,13 @@
 
     <CustomAction Id="ArpInstallLocationCustomAction" Property="ARPINSTALLLOCATION" Value="[$(var.DefaultShortProductDir)]"/>
 		<?ifdef VSIXInstall?>
-		  <CustomAction Id="DevEnvSetupCustomAction" Property="VSENVIRONMENTPATH" ExeCommand="$(var.RootSuffixCmd)/updateconfiguration" Return="ignore" Impersonate="no" Execute="commit"/>
+      <?if $(var.VSVer) = v15.0?>
+        <CustomAction Id="DevEnvSetupCustomAction_Community" Property="VSDEVENVPATH_Community" ExeCommand="/setup" Return="ignore" Impersonate="no" Execute="commit"/>
+        <CustomAction Id="DevEnvSetupCustomAction_Professional" Property="VSDEVENVPATH_Professional" ExeCommand="/setup" Return="ignore" Impersonate="no" Execute="commit"/>
+        <CustomAction Id="DevEnvSetupCustomAction_Enterprise" Property="VSDEVENVPATH_Enterprise" ExeCommand="/setup" Return="ignore" Impersonate="no" Execute="commit"/>
+      <?else?>
+        <CustomAction Id="DevEnvSetupCustomAction" Property="VSENVIRONMENTPATH" ExeCommand="$(var.RootSuffixCmd)/updateconfiguration" Return="ignore" Impersonate="no" Execute="commit"/>
+      <?endif?>
 		<?else?>
 		  <CustomAction Id="DevEnvSetupCustomAction" Property="VSENVIRONMENTPATH" ExeCommand="$(var.RootSuffixCmd)/Setup" Return="ignore" Impersonate="no" Execute="commit"/>
 		<?endif?>
@@ -160,7 +180,13 @@
 			<RemoveExistingProducts Before="ArpInstallLocationCustomAction"/>
 			<Custom Before="InstallInitialize" Action="ArpInstallLocationCustomAction"/>
 			<?ifdef DoDevenvSetup?>
-			  <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction"/>
+        <?if $(var.VSVer) = v15.0?>
+          <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction_Community"/>
+          <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction_Professional"/>
+          <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction_Enterprise"/>
+        <?else?>
+          <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction"/>
+        <?endif?>
 			<?endif?>
 			<!-- We need to move InstallFinalize back from its normal point in the sequence, since the MSHelp2 merge modules expect it to occur later. -->
 			<InstallFinalize Sequence="8000"/>
