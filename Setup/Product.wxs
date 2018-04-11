@@ -87,7 +87,7 @@
 		<!-- Make sure Visual Studio 2005 is installed. Since VS requires .NET, we don't need to check for it separately. -->
 		<!-- Technically, since DSL Tools requires VS, we don't even need to do this check, but since we have to get the properties anyway, we might as well. It gives the user a more appropriate error message, anyway. -->
     <?if $(var.VSVer) = v15.0?>
-      <Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">((VSPRODUCTDIREXISTS_Community OR VSPRODUCTDIREXISTS_Professional OR VSPRODUCTDIREXISTS_Enterprise) AND DefaultIdeLocation) OR Installed</Condition>
+      <Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">VSPRODUCTDIREXISTS_Community OR VSPRODUCTDIREXISTS_Professional OR VSPRODUCTDIREXISTS_Enterprise OR Installed</Condition>
     <?else?>
 		  <?ifdef VSIXInstall?>
 			  <Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">(VSPRODUCTDIR AND VSENVIRONMENTPATH) OR Installed</Condition>
