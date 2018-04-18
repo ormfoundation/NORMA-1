@@ -36,11 +36,9 @@
 		<ComponentRef Id="NORMAVSSettingsComponent"/>
 		<ComponentRef Id="NORMAVSConvertersComponent"/>
 		<ComponentRef Id="NORMAVSDiagramDisplaySchemaComponent"/>
-		<?ifdef NewORMFileViaGeneralZip?>
-		  <ComponentRef Id="NORMAVSProjectItemsGeneralComponent_Community"/>
-      <ComponentRef Id="NORMAVSProjectItemsGeneralComponent_Professional"/>
-      <ComponentRef Id="NORMAVSProjectItemsGeneralComponent_Enterprise"/>
-		<?endif?>
+    <ComponentRef Id="NORMAVSItemTemplateManifest_Community"/>
+    <ComponentRef Id="NORMAVSItemTemplateManifest_Professional"/>
+    <ComponentRef Id="NORMAVSItemTemplateManifest_Enterprise"/>
 		<ComponentRef Id="NORMAVSProjectItemsVBasicComponent_Community"/>
     <ComponentRef Id="NORMAVSProjectItemsVBasicComponent_Professional"/>
     <ComponentRef Id="NORMAVSProjectItemsVBasicComponent_Enterprise"/>

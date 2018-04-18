@@ -58,7 +58,7 @@
       <SetProperty Id="VSDEVENVPATH_Enterprise" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Enterprise]\Common7\IDE\devenv.exe">VSPRODUCTDIR_Enterprise</SetProperty>
       <!-- Get the location of the vslauncher C:\Program Files (x86)\Common Files\Microsoft Shared\MSEnv\VSLauncher.exe -->
       <Property Id="VSVERSIONSELECTORPATH">
-        <DirectorySearch Id="VSVersionSelectorPathDirectorySearch" Path="$(var.ProgramFilesFolder)\Common Files\Microsoft Shared\MSEnv">
+        <DirectorySearch Id="VSVersionSelectorPathDirectorySearch" Path="[ProgramFilesFolder]\Common Files\Microsoft Shared\MSEnv">
           <FileSearch Id="VSVersionSelectorPathFileSearch" Name="VSLauncher.exe"></FileSearch>
         </DirectorySearch>
       </Property>

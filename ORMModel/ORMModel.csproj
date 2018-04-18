@@ -55,34 +55,29 @@
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Modeling.Sdk$(TargetDslToolsVersionSuffix), Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams$(TargetDslToolsVersionSuffix), Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-	  <Reference Condition=" '$(TargetVisualStudioVersion)' != 'v15.0' "  Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams.GraphObject$(TargetDslToolsVersionSuffix), Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
+    <Reference Condition=" '$(TargetVisualStudioVersion)' != 'v15.0' " Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams.GraphObject$(TargetDslToolsVersionSuffix), Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
-    
-<!-- This is part of the Microsoft.VisualStudio.Modeling.Sdk.Diagrams dll
+    <!-- This is part of the Microsoft.VisualStudio.Modeling.Sdk.Diagrams dll
 	  <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v15.0' "  Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams.GraphObject$(TargetDslToolsVersionSuffix), Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
 -->
     <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Shell$(TargetDslToolsVersionSuffix), Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    
     <!-- Exclude Immutable 10.0 in v15+ since it has conflicting types with Microsoft.VisualStudio.Shell.Framework -->
     <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v10.0' Or '$(TargetVisualStudioVersion)' == 'v11.0' Or '$(TargetVisualStudioVersion)' == 'v12.0' Or '$(TargetVisualStudioVersion)' == 'v14.0' " Include="Microsoft.VisualStudio.Shell.Immutable.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v11.0' Or '$(TargetVisualStudioVersion)' == 'v12.0' Or '$(TargetVisualStudioVersion)' == 'v14.0' Or '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell.Immutable.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v12.0' Or '$(TargetVisualStudioVersion)' == 'v14.0' Or '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell.Immutable.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v14.0' Or '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell.Immutable.14.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-
-<!-- v15.0 is still in pre-release - https://www.nuget.org/packages/Microsoft.VisualStudio.Shell.Immutable.15.0
+    <!-- v15.0 is still in pre-release - https://www.nuget.org/packages/Microsoft.VisualStudio.Shell.Immutable.15.0
 	<Reference Condition=" '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell.Immutable.15.0, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
 -->
-
     <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Package.LanguageService$(TargetVisualStudioFrameworkAssemblySuffix), Version=$(TargetVisualStudioFrameworkAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    
     <!-- As of Visual Studio 2008, Microsoft.VisualStudio.Shell.9.0 is still versioned as 2.0.0.0. -->
     <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell$(TargetVisualStudioFrameworkAssemblySuffix), Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -91,7 +86,6 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell.Framework, Version=$(TargetDslToolsAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    
     <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -114,20 +108,17 @@
     <Reference Condition=" '$(TargetVisualStudioVersion)' == 'v15.0' " Include="Microsoft.VisualStudio.Shell.Interop.15.3.DesignTime, Version=15.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    
     <Reference Include="Microsoft.VisualStudio.TemplateWizardInterface, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    
     <Reference Include="Microsoft.VisualStudio.VirtualTreeGrid, Version=$(TargetVisualStudioAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-	  <Reference Include="System" />
+    <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
@@ -391,6 +382,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Shell\ProjectItems\VS2017\CSharp\ORM.ico" />
+    <Content Include="Shell\ProjectItems\VS2017\CSharp\ORMModel.vstemplate" />
+    <Content Include="Shell\ProjectItems\VS2017\Modeling\ORM.ico" />
+    <Content Include="Shell\ProjectItems\VS2017\Modeling\ORMModel.vstemplate" />
+    <Content Include="Shell\ProjectItems\VS2017\VisualBasic\ORM.ico" />
+    <Content Include="Shell\ProjectItems\VS2017\VisualBasic\ORMModel.vstemplate" />
+    <Content Include="Shell\ProjectItems\VS2017\VisualC\ORM.ico" />
+    <Content Include="Shell\ProjectItems\VS2017\VisualC\ORMModel.vstemplate" />
+    <Content Include="Shell\ProjectItems\VS2017\Web\CSharp\ORM.ico" />
+    <Content Include="Shell\ProjectItems\VS2017\Web\CSharp\ORMModel.vstemplate" />
+    <Content Include="Shell\ProjectItems\VS2017\Web\VisualBasic\ORM.ico" />
+    <Content Include="Shell\ProjectItems\VS2017\Web\VisualBasic\ORMModel.vstemplate" />
     <None Include="ObjectModel\VerbalizationGenerator.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -662,6 +665,12 @@
     <None Include="Shell\ProjectItems\NewFileItems\ORMModel.orm" />
     <None Include="Shell\ProjectItems\VisualBasic.zip" />
     <None Include="Shell\ProjectItems\VisualC.zip" />
+    <None Include="Shell\ProjectItems\VS2017\CSharp\ORMModel.orm" />
+    <None Include="Shell\ProjectItems\VS2017\Modeling\ORMModel.orm" />
+    <None Include="Shell\ProjectItems\VS2017\VisualBasic\ORMModel.orm" />
+    <None Include="Shell\ProjectItems\VS2017\VisualC\ORMModel.orm" />
+    <None Include="Shell\ProjectItems\VS2017\Web\CSharp\ORMModel.orm" />
+    <None Include="Shell\ProjectItems\VS2017\Web\VisualBasic\ORMModel.orm" />
     <None Include="Shell\ProjectItems\Web\CSharp.zip" />
     <None Include="Shell\ProjectItems\Web\JSharp.zip" />
     <None Include="Shell\ProjectItems\Web\VisualBasic.zip" />
@@ -978,6 +987,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Neumont\Neumont.Build.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Neumont\VisualStudio\Neumont.Build.VisualStudio.targets" />
