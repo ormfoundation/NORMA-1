@@ -101,6 +101,25 @@ namespace ORMSolutions.ORMArchitect.Views.BarkerERView
 			base.InitializeResources(classStyleSet);
 		}
 
+        /// <summary>
+		/// The default implementation of CollapsedSize requires the
+		/// header text field, which is initially null, so return zero if it is null else the base.
+		/// </summary>
+		protected override SizeD CollapsedSize
+		{
+			get
+			{
+                if (this.HeaderTextField == null)
+                {
+                    return new SizeD(0d, 0d);
+                }
+                else
+                {
+                    return base.CollapsedSize;
+                }
+			}
+		}
+
 		/// <summary>
 		/// Gets the drawing information for a particular element in the compartment.
 		/// </summary>
@@ -202,7 +221,7 @@ namespace ORMSolutions.ORMArchitect.Views.BarkerERView
 		}
 		private void UpdateSize(SizeD newSize)
 		{
-			Size = newSize;
+            Size = newSize;
 			BarkerEntityShape parent = (BarkerEntityShape)ParentShape;
 			parent.Size = new SizeD(newSize.Width, parent.Size.Height + newSize.Height);
 		}
