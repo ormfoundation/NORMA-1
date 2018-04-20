@@ -1,8 +1,12 @@
 All files in this distribution that do not contain a copyright notice are
-considered to be copyright Neumont University and licensed under the Common
-Public License 1.0.
+considered to be copyright by:
 
-For more information, see the adjacent CPL.txt file or
+	Neumont University
+	The ORM Foundataion
+	
+and licensed under the Common Public License 1.0.
+
+For more information, see the adjacent CPL.txt file (located in the install directory) or
 http://opensource.org/licenses/cpl.
 
 You must not remove this notice, or any other, from this software.

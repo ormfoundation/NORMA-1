@@ -63,6 +63,8 @@
 					<Component Id="LicenseFilesComponent" Guid="8D623CBC-D6BC-40DA-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
 						<File Id="CPL.txt" Name="CPL.txt" Source="..\CPL.txt"
 							DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+            <File Id="LICENSE.txt" Name="LICENSE.txt" Source="..\LICENSE.txt"
+							DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
 					</Component>
 
 					<Directory Id="DOCUMENTATION" ShortName="Docs" Name="Documentation">
