@@ -1,8 +1,9 @@
 All files in this distribution that do not contain a copyright notice are
 considered to be copyright by:
 
-	Neumont University
-	The ORM Foundataion
+	Copyright © Neumont University. All rights reserved.
+	Copyright © ORM Solutions, LLC. All rights reserved.
+	Copyright © The ORM Foundation All rights reserved.
 	
 and licensed under the Common Public License 1.0.
 
