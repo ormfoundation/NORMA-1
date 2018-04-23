@@ -63,6 +63,12 @@
           <FileSearch Id="VSVersionSelectorPathFileSearch" Name="VSLauncher.exe"></FileSearch>
         </DirectorySearch>
       </Property>
+      <Property Id="VSWHEREPATH">
+        <DirectorySearch Id="VSWherePathDirectorySearch" Path="[ProgramFilesFolder]\Microsoft Visual Studio\Installer">
+          <FileSearch Id="VSWherePathFileSearch" Name="vswhere.exe"></FileSearch>
+        </DirectorySearch>
+      </Property>
+      <Condition Message="!(loc.VSWhereRequired)">VSWHEREPATH OR Installed</Condition>
     <?else?>
       <Property Id="VSPRODUCTDIR">
         <RegistrySearch Id="VSProductDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="ProductDir" Type="directory" Win64="$(var.Win64)"/>
