@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("DIL Support Functions Data Generator for Database Intermediate Language")]
 [assembly: AssemblyCompany("Neumont University")]
 [assembly: AssemblyProduct("Database Intermediate Language")]
-[assembly: AssemblyCopyright("Copyright © Neumont University and The ORM Foundation. All rights reserved.")]
+[assembly: AssemblyCopyright(@"Copyright © Neumont University. All rights reserved.
+Copyright © The ORM Foundation. All rights reserved.")]
 [assembly: AssemblyVersion("1.0.0.0")]
 

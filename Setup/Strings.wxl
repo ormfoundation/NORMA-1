@@ -2,7 +2,8 @@
 <!--
 	Natural Object-Role Modeling Architect for Visual Studio
 
-	Copyright © Neumont University and The ORM Foundation. All rights reserved.
+	Copyright © Neumont University. All rights reserved.
+	Copyright © The ORM Foundation. All rights reserved.
 	Copyright © ORM Solutions, LLC. All rights reserved.
 
 	The use and distribution terms for this software are covered by the
@@ -56,6 +57,7 @@
 	<String Id="VisualStudio2013Required">This setup requires Microsoft Visual Studio 2013. Please install Microsoft Visual Studio 2013 and run this setup again.</String>
 	<String Id="VisualStudio2015Required">This setup requires Microsoft Visual Studio 2015. Please install Microsoft Visual Studio 2015 and run this setup again.</String>
   <String Id="VisualStudio2017Required">This setup requires Microsoft Visual Studio 2017. Please install Microsoft Visual Studio 2017 and run this setup again.</String>
+  <String Id="VSWhereRequired">This setup requires Microsoft VSWhere. Please update Microsoft Visual Studio 2017 or install VSWhere from https://github.com/Microsoft/vswhere/wiki/Installing (to %ProgramFiles(x86)%\Microsoft Visual Studio\Installer) and run this setup again.</String>
 	<String Id="DSLToolsRequired">This setup requires Microsoft Domain Specific Language Tools. Please install Microsoft Domain Specific Language Tools and run this setup again.</String>
 	<String Id="PLiXRequired">This setup requires Programming Language in XML for Visual Studio. Please install Programming Language in XML for Visual Studio (available from https://sourceforge.net/projects/plix) and run this setup again.</String>
 	<String Id="ExistingVersionInstalled">Unable to install because an existing version of this product is already installed. You must uninstall this version before installing the product.</String>

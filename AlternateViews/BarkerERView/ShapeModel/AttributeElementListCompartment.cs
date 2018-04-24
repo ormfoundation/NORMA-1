@@ -2,7 +2,8 @@
 /**************************************************************************\
 * Natural Object-Role Modeling Architect for Visual Studio                 *
 *                                                                          *
-* Copyright © Neumont University and The ORM Foundation. All rights reserved.                     *
+* Copyright © Neumont University. All rights reserved.                     *
+* Copyright © The ORM Foundation. All rights reserved.                     *
 *                                                                          *
 * The use and distribution terms for this software are covered by the      *
 * Common Public License 1.0 (http://opensource.org/licenses/cpl) which     *
@@ -99,6 +100,25 @@ namespace ORMSolutions.ORMArchitect.Views.BarkerERView
 		protected override void InitializeResources(StyleSet classStyleSet)
 		{
 			base.InitializeResources(classStyleSet);
+		}
+
+        /// <summary>
+		/// The default implementation of CollapsedSize requires the
+		/// header text field, which is initially null, so return zero if it is null else the base.
+		/// </summary>
+		protected override SizeD CollapsedSize
+		{
+			get
+			{
+                if (this.HeaderTextField == null)
+                {
+                    return new SizeD(0d, 0d);
+                }
+                else
+                {
+                    return base.CollapsedSize;
+                }
+			}
 		}
 
 		/// <summary>
@@ -202,7 +222,7 @@ namespace ORMSolutions.ORMArchitect.Views.BarkerERView
 		}
 		private void UpdateSize(SizeD newSize)
 		{
-			Size = newSize;
+            Size = newSize;
 			BarkerEntityShape parent = (BarkerEntityShape)ParentShape;
 			parent.Size = new SizeD(newSize.Width, parent.Size.Height + newSize.Height);
 		}

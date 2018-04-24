@@ -2,7 +2,8 @@
 <!--
 	Natural Object-Role Modeling Architect for Visual Studio
 
-	Copyright © Neumont University and The ORM Foundation. All rights reserved.
+	Copyright © Neumont University. All rights reserved.
+	Copyright © The ORM Foundation. All rights reserved.
 	Copyright © ORM Solutions, LLC. All rights reserved.
 
 	The use and distribution terms for this software are covered by the
@@ -63,6 +64,8 @@
 					<Component Id="LicenseFilesComponent" Guid="8D623CBC-D6BC-40DA-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
 						<File Id="CPL.txt" Name="CPL.txt" Source="..\CPL.txt"
 							DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+            <File Id="LICENSE.txt" Name="LICENSE.txt" Source="..\LICENSE.txt"
+							DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
 					</Component>
 
 					<Directory Id="DOCUMENTATION" ShortName="Docs" Name="Documentation">
@@ -96,7 +99,7 @@
 							<ProgId Id="ormfile" Description="!(loc.ORMFileDescription)" Icon="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll" IconIndex="0">
 								<Extension Id="orm" ContentType="application/orm+xml">
 									<MIME ContentType="application/orm+xml" Default="yes"/>
-									<Verb Id="Open" Command="!(loc.ORMFileOpenCommand)" TargetProperty="[VSVERSIONSELECTORPATH]" Argument="$(var.RootSuffixCmd)/dde"/>
+									<Verb Id="Open" Command="!(loc.ORMFileOpenCommand)" TargetProperty="VSVERSIONSELECTORPATH" Argument="&quot;%1&quot; $(var.RootSuffixCmd)/dde"/>
 								</Extension>
 							</ProgId>
 							<RegistryKey Root="HKCR" Key="ormfile\shell\open\ddeexec">
@@ -957,41 +960,59 @@
                         DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                     </Component>
                     <Directory Id="NORMAVSIXDirTemplates_Community" Name="ItemTemplates">
+                      <Component Id="NORMAVSItemTemplateManifest_Community" Guid="8A612D29-F36B-48AA-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                        <Condition>VSPRODUCTDIREXISTS_Community</Condition>
+                        <File Id="ItemTemplateManifest.vstman_Community" Name="ItemTemplateManifest.vstman" Source="..\VSIXInstall\$(var.VSShortName)\ItemTemplateManifest.vstman"
+                          DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      </Component>
                       <Directory Id="NORMAVSIXDirTemplates_General_Community" Name="General">
-                        <?ifdef NewORMFileViaGeneralZip?>
-                          <Component Id="NORMAVSProjectItemsGeneralComponent_Community" Guid="26D96FE1-69F2-46ED-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
-                            <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                            <File Id="General.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\General.zip"
-				                      DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
-                          </Component>
-                        <?endif?>
-                        <Component Id="NORMADBImportProjectItemsGeneralComponent_Community" Guid="1890A3E6-8C17-478C-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                         <Component Id="NORMADBImportProjectItemsGeneralComponent_Community" Guid="1890A3E6-8C17-478C-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                          <File Id="DBImportGeneral.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpGen.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General.zip"
+                          <File Id="DBImportGeneral.ico_Community" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General\ORMDatabaseImport.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportGeneral.orm_Community" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General\ORMDatabaseImport.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportGeneral.vstemplate_Community" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General\ORMDatabaseImport.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                         </Component>
                       </Directory>
                       <Directory Id="NORMAVSIXDirTemplates_VisualBasic_Community" ShortName="VBasic" Name="VisualBasic">
                         <Component Id="NORMAVSProjectItemsVBasicComponent_Community" Guid="5D140A94-9C4A-4B60-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                          <File Id="VisualBasic.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\VisualBasic.zip"
+                          <File Id="VisualBasic.ico_Community" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualBasic\ORM.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="VisualBasic.orm_Community" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualBasic\ORMModel.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="VisualBasic.vstemplate_Community" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualBasic\ORMModel.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                         </Component>
                         <Component Id="NORMADBImportProjectItemsVBasicComponent_Community" Guid="8C45B394-60D1-433C-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                          <File Id="DBImportVisualBasic.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpVB.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic.zip"
+                          <File Id="DBImportVisualBasic.ico_Community" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic\ORMDatabaseImport.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportVisualBasic.orm_Community" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic\ORMDatabaseImport.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportVisualBasic.vstemplate_Community" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic\ORMDatabaseImport.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                         </Component>
                       </Directory>
                       <Directory Id="NORMAVSIXDirTemplates_CSharp_Community" Name="CSharp">
                         <Component Id="NORMAVSProjectItemsVCSharpComponent_Community" Guid="C1AAAF79-FA94-45C0-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                          <File Id="CSharp.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\CSharp.zip"
+                          <File Id="CSharp.ico_Community" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\CSharp\ORM.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="CSharp.orm_Community" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\CSharp\ORMModel.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="CSharp.vstemplate_Community" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\CSharp\ORMModel.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                         </Component>
                         <Component Id="NORMADBImportProjectItemsVCSharpComponent_Community" Guid="08F0D621-59B8-46D1-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                          <File Id="DBImportCSharp.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpCS.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp.zip"
+                          <File Id="DBImportCSharp.ico_Community" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp\ORMDatabaseImport.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportCSharp.orm_Community" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp\ORMDatabaseImport.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportCSharp.vstemplate_Community" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp\ORMDatabaseImport.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                         </Component>
                       </Directory>
@@ -999,12 +1020,20 @@
                         <Directory Id="NORMAVSIXDirTemplates_Modeling_Community" Name="Modeling">
                           <Component Id="NORMAVSProjectItemsModelingComponent_Community" Guid="D74F0161-7C3D-4981-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                            <File Id="Modeling.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Modeling.zip"
+                            <File Id="Modeling.ico_Community" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Modeling\ORM.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="Modeling.orm_Community" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Modeling\ORMModel.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="Modeling.vstemplate_Community" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Modeling\ORMModel.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                           </Component>
                           <Component Id="NORMADBImportProjectItemsModelingComponent_Community" Guid="960D82F8-25D0-4F2B-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                            <File Id="DBImportModeling.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpMod.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling.zip"
+                            <File Id="DBImportModeling.ico_Community" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling\ORMDatabaseImport.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportModeling.orm_Community" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling\ORMDatabaseImport.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportModeling.vstemplate_Community" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling\ORMDatabaseImport.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                           </Component>
                         </Directory>
@@ -1012,12 +1041,20 @@
                       <Directory Id="NORMAVSIXDirTemplates_VisualC_Community" Name="VisualC">
                         <Component Id="NORMAVSProjectItemsVCPlusPlusComponent_Community" Guid="16B28893-FE72-4BBF-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                          <File Id="VisualC.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\VisualC.zip"
+                          <File Id="VisualC.ico_Community" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualC\ORM.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="VisualC.orm_Community" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualC\ORMModel.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="VisualC.vstemplate_Community" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualC\ORMModel.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                         </Component>
                         <Component Id="NORMADBImportProjectItemsVCPlusPlusComponent_Community" Guid="5BC18298-68CE-46F2-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                          <File Id="DBImportVisualC.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpVC.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC.zip"
+                          <File Id="DBImportVisualC.ico_Community" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC\ORMDatabaseImport.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportVisualC.orm_Community" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC\ORMDatabaseImport.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportVisualC.vstemplate_Community" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC\ORMDatabaseImport.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                         </Component>
                       </Directory>
@@ -1025,24 +1062,40 @@
                         <Directory Id="NORMAVSIXDirTemplates_WebVisualBasic_Community" ShortName="VBasic" Name="VisualBasic">
                           <Component Id="NORMAVSProjectItemsVWebDevVBasicComponent_Community" Guid="4EC6EE56-3F04-4F0F-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                            <File Id="WebVisualBasic.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Web\VisualBasic.zip"
+                            <File Id="WebVisualBasic.ico_Community" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORM.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="WebVisualBasic.orm_Community" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMModel.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="WebVisualBasic.vstemplate_Community" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMModel.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                           </Component>
                           <Component Id="NORMADBImportProjectItemsVWebDevVBasicComponent_Community" Guid="34C69005-11CA-4F9E-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                            <File Id="DBImportWebVisualBasic.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpWVB.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic.zip"
+                            <File Id="DBImportWebVisualBasic.ico_Community" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMDatabaseImport.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportWebVisualBasic.orm_Community" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMDatabaseImport.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportWebVisualBasic.vstemplate_Community" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMDatabaseImport.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                           </Component>
                         </Directory>
                         <Directory Id="NORMAVSIXDirTemplates_WebCSharp_Community" Name="CSharp">
                           <Component Id="NORMAVSProjectItemsVWebDevCSharpComponent_Community" Guid="7E4BA3AB-3831-4520-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                            <File Id="WebCSharp.zip_Community" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Web\CSharp.zip"
+                            <File Id="WebCSharp.ico_Community" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\CSharp\ORM.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="WebCSharp.orm_Community" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMModel.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="WebCSharp.vstemplate_Community" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMModel.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                           </Component>
                           <Component Id="NORMADBImportProjectItemsVWebDevCSharpComponent_Community" Guid="46832808-DF7F-43B1-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                            <File Id="DBImportWebCSharp.zip_Community" Name="ORMModelFromDatabase.zip" ShortName="DBImpWCS.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp.zip"
+                            <File Id="DBImportWebCSharp.ico_Community" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMDatabaseImport.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportWebCSharp.orm_Community" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMDatabaseImport.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportWebCSharp.vstemplate_Community" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMDatabaseImport.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                           </Component>
                         </Directory>
@@ -1055,11 +1108,6 @@
           <?endif?>
         </Directory>
       </Directory>
-      <!--<?ifndef VSIXInstall?>
-        <Directory Id="VSTEMPLATEITEMDIR_Community" Name="ItemTemplates">
-          <?include NORMAItemTemplatesV15+.wxi?>
-        </Directory>
-		  <?endif?>-->
 		</Directory>
     <Directory Id="VSPRODUCTDIR_Professional">
       <Directory Id="VSXMLDIR_Professional" Name="Xml">
@@ -1114,41 +1162,59 @@
                         DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                     </Component>
                     <Directory Id="NORMAVSIXDirTemplates_Professional" Name="ItemTemplates">
+                      <Component Id="NORMAVSItemTemplateManifest_Professional" Guid="F18BA66E-3ED3-4910-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                        <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
+                        <File Id="ItemTemplateManifest.vstman_Professional" Name="ItemTemplateManifest.vstman" Source="..\VSIXInstall\$(var.VSShortName)\ItemTemplateManifest.vstman"
+                          DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      </Component>
                       <Directory Id="NORMAVSIXDirTemplates_General_Professional" Name="General">
-                        <?ifdef NewORMFileViaGeneralZip?>
-                          <Component Id="NORMAVSProjectItemsGeneralComponent_Professional" Guid="6AFDCAB5-0342-4BB5-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
-                            <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                            <File Id="General.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\General.zip"
-				                      DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
-                          </Component>
-                        <?endif?>
                         <Component Id="NORMADBImportProjectItemsGeneralComponent_Professional" Guid="99C22D6A-A0F2-4F1C-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                          <File Id="DBImportGeneral.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpGen.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General.zip"
+                          <File Id="DBImportGeneral.ico_Professional" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General\ORMDatabaseImport.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportGeneral.orm_Professional" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General\ORMDatabaseImport.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportGeneral.vstemplate_Professional" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General\ORMDatabaseImport.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                         </Component>
                       </Directory>
                       <Directory Id="NORMAVSIXDirTemplates_VisualBasic_Professional" ShortName="VBasic" Name="VisualBasic">
                         <Component Id="NORMAVSProjectItemsVBasicComponent_Professional" Guid="08EBE571-2078-41D0-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                          <File Id="VisualBasic.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\VisualBasic.zip"
+                          <File Id="VisualBasic.ico_Professional" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualBasic\ORM.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="VisualBasic.orm_Professional" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualBasic\ORMModel.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="VisualBasic.vstemplate_Professional" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualBasic\ORMModel.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                         </Component>
                         <Component Id="NORMADBImportProjectItemsVBasicComponent_Professional" Guid="AE8BEC17-32C5-4FF8-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                          <File Id="DBImportVisualBasic.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpVB.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic.zip"
+                          <File Id="DBImportVisualBasic.ico_Professional" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic\ORMDatabaseImport.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportVisualBasic.orm_Professional" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic\ORMDatabaseImport.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportVisualBasic.vstemplate_Professional" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic\ORMDatabaseImport.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                         </Component>
                       </Directory>
                       <Directory Id="NORMAVSIXDirTemplates_CSharp_Professional" Name="CSharp">
                         <Component Id="NORMAVSProjectItemsVCSharpComponent_Professional" Guid="A1DCB0EC-7E5D-47B3-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                          <File Id="CSharp.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\CSharp.zip"
+                          <File Id="CSharp.ico_Professional" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\CSharp\ORM.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="CSharp.orm_Professional" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\CSharp\ORMModel.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="CSharp.vstemplate_Professional" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\CSharp\ORMModel.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                         </Component>
                         <Component Id="NORMADBImportProjectItemsVCSharpComponent_Professional" Guid="70B9D1A6-D94A-4C31-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                          <File Id="DBImportCSharp.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpCS.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp.zip"
+                          <File Id="DBImportCSharp.ico_Professional" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp\ORMDatabaseImport.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportCSharp.orm_Professional" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp\ORMDatabaseImport.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportCSharp.vstemplate_Professional" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp\ORMDatabaseImport.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                         </Component>
                       </Directory>
@@ -1156,12 +1222,20 @@
                         <Directory Id="NORMAVSIXDirTemplates_Modeling_Professional" Name="Modeling">
                           <Component Id="NORMAVSProjectItemsModelingComponent_Professional" Guid="31E52665-0489-4458-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                            <File Id="Modeling.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Modeling.zip"
+                            <File Id="Modeling.ico_Professional" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Modeling\ORM.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="Modeling.orm_Professional" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Modeling\ORMModel.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="Modeling.vstemplate_Professional" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Modeling\ORMModel.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                           </Component>
                           <Component Id="NORMADBImportProjectItemsModelingComponent_Professional" Guid="7F3E1190-57AF-4F42-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                            <File Id="DBImportModeling.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpMod.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling.zip"
+                            <File Id="DBImportModeling.ico_Professional" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling\ORMDatabaseImport.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportModeling.orm_Professional" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling\ORMDatabaseImport.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportModeling.vstemplate_Professional" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling\ORMDatabaseImport.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                           </Component>
                         </Directory>
@@ -1169,12 +1243,20 @@
                       <Directory Id="NORMAVSIXDirTemplates_VisualC_Professional" Name="VisualC">
                         <Component Id="NORMAVSProjectItemsVCPlusPlusComponent_Professional" Guid="5EC60A3B-3A6D-4917-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                          <File Id="VisualC.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\VisualC.zip"
+                          <File Id="VisualC.ico_Professional" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualC\ORM.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="VisualC.orm_Professional" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualC\ORMModel.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="VisualC.vstemplate_Professional" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualC\ORMModel.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                         </Component>
                         <Component Id="NORMADBImportProjectItemsVCPlusPlusComponent_Professional" Guid="70648EBE-BB0F-4663-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                          <File Id="DBImportVisualC.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpVC.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC.zip"
+                          <File Id="DBImportVisualC.ico_Professional" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC\ORMDatabaseImport.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportVisualC.orm_Professional" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC\ORMDatabaseImport.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportVisualC.vstemplate_Professional" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC\ORMDatabaseImport.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                         </Component>
                       </Directory>
@@ -1182,24 +1264,40 @@
                         <Directory Id="NORMAVSIXDirTemplates_WebVisualBasic_Professional" ShortName="VBasic" Name="VisualBasic">
                           <Component Id="NORMAVSProjectItemsVWebDevVBasicComponent_Professional" Guid="DF1C7979-29EE-4F5F-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                            <File Id="WebVisualBasic.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Web\VisualBasic.zip"
+                            <File Id="WebVisualBasic.ico_Professional" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORM.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="WebVisualBasic.orm_Professional" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMModel.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="WebVisualBasic.vstemplate_Professional" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMModel.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                           </Component>
                           <Component Id="NORMADBImportProjectItemsVWebDevVBasicComponent_Professional" Guid="2EB5E369-DD71-4AE2-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                            <File Id="DBImportWebVisualBasic.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpWVB.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic.zip"
+                            <File Id="DBImportWebVisualBasic.ico_Professional" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMDatabaseImport.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportWebVisualBasic.orm_Professional" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMDatabaseImport.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportWebVisualBasic.vstemplate_Professional" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMDatabaseImport.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                           </Component>
                         </Directory>
                         <Directory Id="NORMAVSIXDirTemplates_WebCSharp_Professional" Name="CSharp">
                           <Component Id="NORMAVSProjectItemsVWebDevCSharpComponent_Professional" Guid="C5B22CE9-B0A2-43C6-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                            <File Id="WebCSharp.zip_Professional" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Web\CSharp.zip"
+                            <File Id="WebCSharp.ico_Professional" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\CSharp\ORM.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="WebCSharp.orm_Professional" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMModel.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="WebCSharp.vstemplate_Professional" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMModel.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                           </Component>
                           <Component Id="NORMADBImportProjectItemsVWebDevCSharpComponent_Professional" Guid="B0490B13-8EB5-4D45-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                            <File Id="DBImportWebCSharp.zip_Professional" Name="ORMModelFromDatabase.zip" ShortName="DBImpWCS.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp.zip"
+                            <File Id="DBImportWebCSharp.ico_Professional" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMDatabaseImport.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportWebCSharp.orm_Professional" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMDatabaseImport.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportWebCSharp.vstemplate_Professional" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMDatabaseImport.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                           </Component>
                         </Directory>
@@ -1212,11 +1310,6 @@
           <?endif?>
         </Directory>
       </Directory>
-      <!--<?ifndef VSIXInstall?>
-        <Directory Id="VSTEMPLATEITEMDIR_Professional" Name="ItemTemplates">
-          <?include NORMAItemTemplatesV15+.wxi?>
-        </Directory>
-		  <?endif?>-->
     </Directory>
     <Directory Id="VSPRODUCTDIR_Enterprise">
       <Directory Id="VSXMLDIR_Enterprise" Name="Xml">
@@ -1271,41 +1364,59 @@
                         DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                     </Component>
                     <Directory Id="NORMAVSIXDirTemplates_Enterprise" Name="ItemTemplates">
+                      <Component Id="NORMAVSItemTemplateManifest_Enterprise" Guid="8D00A509-EF82-48B4-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
+                        <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
+                        <File Id="ItemTemplateManifest.vstman_Enterprise" Name="ItemTemplateManifest.vstman" Source="..\VSIXInstall\$(var.VSShortName)\ItemTemplateManifest.vstman"
+                          DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                      </Component>
                       <Directory Id="NORMAVSIXDirTemplates_General_Enterprise" Name="General">
-                        <?ifdef NewORMFileViaGeneralZip?>
-                          <Component Id="NORMAVSProjectItemsGeneralComponent_Enterprise" Guid="4064ED86-6940-435F-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
-                            <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                            <File Id="General.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\General.zip"
-				                      DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
-                          </Component>
-                        <?endif?>
                         <Component Id="NORMADBImportProjectItemsGeneralComponent_Enterprise" Guid="FC4A7683-48F0-4B08-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                          <File Id="DBImportGeneral.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpGen.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General.zip"
+                          <File Id="DBImportGeneral.ico_Enterprise" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General\ORMDatabaseImport.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportGeneral.orm_Enterprise" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General\ORMDatabaseImport.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportGeneral.vstemplate_Enterprise" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\General\ORMDatabaseImport.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                         </Component>
                       </Directory>
                       <Directory Id="NORMAVSIXDirTemplates_VisualBasic_Enterprise" ShortName="VBasic" Name="VisualBasic">
                         <Component Id="NORMAVSProjectItemsVBasicComponent_Enterprise" Guid="52C1D247-0110-4871-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                          <File Id="VisualBasic.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\VisualBasic.zip"
+                          <File Id="VisualBasic.ico_Enterprise" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualBasic\ORM.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="VisualBasic.orm_Enterprise" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualBasic\ORMModel.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="VisualBasic.vstemplate_Enterprise" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualBasic\ORMModel.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                         </Component>
                         <Component Id="NORMADBImportProjectItemsVBasicComponent_Enterprise" Guid="59B9118E-7A93-4869-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                          <File Id="DBImportVisualBasic.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpVB.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic.zip"
+                          <File Id="DBImportVisualBasic.ico_Enterprise" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic\ORMDatabaseImport.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportVisualBasic.orm_Enterprise" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic\ORMDatabaseImport.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportVisualBasic.vstemplate_Enterprise" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualBasic\ORMDatabaseImport.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                         </Component>
                       </Directory>
                       <Directory Id="NORMAVSIXDirTemplates_CSharp_Enterprise" Name="CSharp">
                         <Component Id="NORMAVSProjectItemsVCSharpComponent_Enterprise" Guid="D4BF73C9-45E4-4B00-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                          <File Id="CSharp.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\CSharp.zip"
+                          <File Id="CSharp.ico_Enterprise" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\CSharp\ORM.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="CSharp.orm_Enterprise" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\CSharp\ORMModel.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="CSharp.vstemplate_Enterprise" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\CSharp\ORMModel.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                         </Component>
                         <Component Id="NORMADBImportProjectItemsVCSharpComponent_Enterprise" Guid="5851D074-3FFB-49CF-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                          <File Id="DBImportCSharp.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpCS.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp.zip"
+                          <File Id="DBImportCSharp.ico_Enterprise" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp\ORMDatabaseImport.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportCSharp.orm_Enterprise" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp\ORMDatabaseImport.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportCSharp.vstemplate_Enterprise" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\CSharp\ORMDatabaseImport.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                         </Component>
                       </Directory>
@@ -1313,12 +1424,20 @@
                         <Directory Id="NORMAVSIXDirTemplates_Modeling_Enterprise" Name="Modeling">
                           <Component Id="NORMAVSProjectItemsModelingComponent_Enterprise" Guid="B3512C5D-27E3-47AE-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                            <File Id="Modeling.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Modeling.zip"
+                            <File Id="Modeling.ico_Enterprise" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Modeling\ORM.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="Modeling.orm_Enterprise" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Modeling\ORMModel.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="Modeling.vstemplate_Enterprise" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Modeling\ORMModel.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                           </Component>
                           <Component Id="NORMADBImportProjectItemsModelingComponent_Enterprise" Guid="A33D4764-71EB-4A8F-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                            <File Id="DBImportModeling.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpMod.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling.zip"
+                            <File Id="DBImportModeling.ico_Enterprise" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling\ORMDatabaseImport.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportModeling.orm_Enterprise" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling\ORMDatabaseImport.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportModeling.vstemplate_Enterprise" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Modeling\ORMDatabaseImport.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                           </Component>
                         </Directory>
@@ -1326,12 +1445,20 @@
                       <Directory Id="NORMAVSIXDirTemplates_VisualC_Enterprise" Name="VisualC">
                         <Component Id="NORMAVSProjectItemsVCPlusPlusComponent_Enterprise" Guid="B0FBA40E-DD69-4014-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                          <File Id="VisualC.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\VisualC.zip"
+                          <File Id="VisualC.ico_Enterprise" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualC\ORM.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="VisualC.orm_Enterprise" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualC\ORMModel.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                          <File Id="VisualC.vstemplate_Enterprise" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\VisualC\ORMModel.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                         </Component>
                         <Component Id="NORMADBImportProjectItemsVCPlusPlusComponent_Enterprise" Guid="2B4653D5-D8C9-4273-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                           <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                          <File Id="DBImportVisualC.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpVC.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC.zip"
+                          <File Id="DBImportVisualC.ico_Enterprise" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC\ORMDatabaseImport.ico"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportVisualC.orm_Enterprise" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC\ORMDatabaseImport.orm"
+                            DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                          <File Id="DBImportVisualC.vstemplate_Enterprise" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\VisualC\ORMDatabaseImport.vstemplate"
                             DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                         </Component>
                       </Directory>
@@ -1339,24 +1466,40 @@
                         <Directory Id="NORMAVSIXDirTemplates_WebVisualBasic_Enterprise" ShortName="VBasic" Name="VisualBasic">
                           <Component Id="NORMAVSProjectItemsVWebDevVBasicComponent_Enterprise" Guid="EC7FDCA3-92A9-4481-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                            <File Id="WebVisualBasic.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Web\VisualBasic.zip"
+                            <File Id="WebVisualBasic.ico_Enterprise" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORM.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="WebVisualBasic.orm_Enterprise" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMModel.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="WebVisualBasic.vstemplate_Enterprise" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMModel.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                           </Component>
                           <Component Id="NORMADBImportProjectItemsVWebDevVBasicComponent_Enterprise" Guid="E888054A-53AC-48B8-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                            <File Id="DBImportWebVisualBasic.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpWVB.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic.zip"
+                            <File Id="DBImportWebVisualBasic.ico_Enterprise" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMDatabaseImport.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportWebVisualBasic.orm_Enterprise" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMDatabaseImport.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportWebVisualBasic.vstemplate_Enterprise" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\VisualBasic\ORMDatabaseImport.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                           </Component>
                         </Directory>
                         <Directory Id="NORMAVSIXDirTemplates_WebCSharp_Enterprise" Name="CSharp">
                           <Component Id="NORMAVSProjectItemsVWebDevCSharpComponent_Enterprise" Guid="6DA8549F-B790-4E6C-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                            <File Id="WebCSharp.zip_Enterprise" Name="ORMModel.zip" Source="..\ORMModel\Shell\ProjectItems\Web\CSharp.zip"
+                            <File Id="WebCSharp.ico_Enterprise" Name="ORM.ico" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\CSharp\ORM.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="WebCSharp.orm_Enterprise" Name="ORMModel.orm" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMModel.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
+                            <File Id="WebCSharp.vstemplate_Enterprise" Name="ORMModel.vstemplate" Source="..\ORMModel\Shell\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMModel.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.Core$(var.VSExt).dll"/>
                           </Component>
                           <Component Id="NORMADBImportProjectItemsVWebDevCSharpComponent_Enterprise" Guid="AC34E602-FA8A-4508-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)" KeyPath="yes">
                             <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                            <File Id="DBImportWebCSharp.zip_Enterprise" Name="ORMModelFromDatabase.zip" ShortName="DBImpWCS.zip" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp.zip"
+                            <File Id="DBImportWebCSharp.ico_Enterprise" Name="ORMDatabaseImport.ico" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMDatabaseImport.ico"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportWebCSharp.orm_Enterprise" Name="ORMDatabaseImport.orm" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMDatabaseImport.orm"
+                              DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
+                            <File Id="DBImportWebCSharp.vstemplate_Enterprise" Name="ORMDatabaseImport.vstemplate" Source="..\Tools\DatabaseImport\ProjectItems\$(var.VSShortName)\Web\CSharp\ORMDatabaseImport.vstemplate"
                               DefaultLanguage="0" CompanionFile="ORMSolutions.ORMArchitect.DatabaseImport$(var.VSExt).dll"/>
                           </Component>
                         </Directory>
@@ -1370,10 +1513,5 @@
         </Directory>
       </Directory>
     </Directory>
-    <!--<?ifndef VSIXInstall?>
-      <Directory Id="VSTEMPLATEITEMDIR_Enterprise" Name="ItemTemplates">
-        <?include NORMAItemTemplatesV15+.wxi?>
-      </Directory>
-		<?endif?>-->
 	</Directory>
 </Include>

@@ -2,7 +2,8 @@
 <!--
 	Natural Object-Role Modeling Architect for Visual Studio
 
-	Copyright © Neumont University and The ORM Foundation. All rights reserved.
+	Copyright © Neumont University. All rights reserved.
+	Copyright © The ORM Foundation. All rights reserved.
 	Copyright © ORM Solutions, LLC. All rights reserved.
 
 	The use and distribution terms for this software are covered by the
@@ -58,10 +59,16 @@
       <SetProperty Id="VSDEVENVPATH_Enterprise" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Enterprise]\Common7\IDE\devenv.exe">VSPRODUCTDIR_Enterprise</SetProperty>
       <!-- Get the location of the vslauncher C:\Program Files (x86)\Common Files\Microsoft Shared\MSEnv\VSLauncher.exe -->
       <Property Id="VSVERSIONSELECTORPATH">
-        <DirectorySearch Id="VSVersionSelectorPathDirectorySearch" Path="$(var.ProgramFilesFolder)\Common Files\Microsoft Shared\MSEnv">
+        <DirectorySearch Id="VSVersionSelectorPathDirectorySearch" Path="[ProgramFilesFolder]\Common Files\Microsoft Shared\MSEnv">
           <FileSearch Id="VSVersionSelectorPathFileSearch" Name="VSLauncher.exe"></FileSearch>
         </DirectorySearch>
       </Property>
+      <Property Id="VSWHEREPATH">
+        <DirectorySearch Id="VSWherePathDirectorySearch" Path="[ProgramFilesFolder]\Microsoft Visual Studio\Installer">
+          <FileSearch Id="VSWherePathFileSearch" Name="vswhere.exe"></FileSearch>
+        </DirectorySearch>
+      </Property>
+      <Condition Message="!(loc.VSWhereRequired)">VSWHEREPATH OR Installed</Condition>
     <?else?>
       <Property Id="VSPRODUCTDIR">
         <RegistrySearch Id="VSProductDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="ProductDir" Type="directory" Win64="$(var.Win64)"/>
@@ -87,7 +94,7 @@
 		<!-- Make sure Visual Studio 2005 is installed. Since VS requires .NET, we don't need to check for it separately. -->
 		<!-- Technically, since DSL Tools requires VS, we don't even need to do this check, but since we have to get the properties anyway, we might as well. It gives the user a more appropriate error message, anyway. -->
     <?if $(var.VSVer) = v15.0?>
-      <Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">((VSPRODUCTDIREXISTS_Community OR VSPRODUCTDIREXISTS_Professional OR VSPRODUCTDIREXISTS_Enterprise) AND DefaultIdeLocation) OR Installed</Condition>
+      <Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">VSPRODUCTDIREXISTS_Community OR VSPRODUCTDIREXISTS_Professional OR VSPRODUCTDIREXISTS_Enterprise OR Installed</Condition>
     <?else?>
 		  <?ifdef VSIXInstall?>
 			  <Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">(VSPRODUCTDIR AND VSENVIRONMENTPATH) OR Installed</Condition>

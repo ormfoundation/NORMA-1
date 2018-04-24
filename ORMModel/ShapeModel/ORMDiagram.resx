@@ -4,7 +4,8 @@
 		<value>
 			Natural Object-Role Modeling Architect for Visual Studio
 
-			Copyright © Neumont University and The ORM Foundation. All rights reserved.
+			Copyright © Neumont University. All rights reserved.
+			Copyright © The ORM Foundation. All rights reserved.
 			Copyright © ORM Solutions, LLC. All rights reserved.
 
 			The use and distribution terms for this software are covered by the
@@ -1014,7 +1015,7 @@ If a subtype is constrained use single-click to add and double-click to commit.<
     <comment xml:space="preserve">The official name of the package used in the About dialog</comment>
   </data>
   <data name="Package.ProductDetails">
-    <value xml:space="preserve">Natural Object-Role Modeling Architect (NORMA)&#xd;&#xa;ORM Solutions, LLC&#xd;&#xa;Portions copyright Neumont University and The ORM Foundation</value>
+    <value xml:space="preserve">Natural Object-Role Modeling Architect (NORMA)&#xd;&#xa;ORM Solutions, LLC&#xd;&#xa;Portions copyright Neumont University &#xd;&#xa;Portions copyright The ORM Foundation</value>
     <comment xml:space="preserve">The extra information that appears in the about box of Visual Studio</comment>
   </data>
   <data name="ReadingShape.AttachedRoleDisplay">

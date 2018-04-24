@@ -6,8 +6,12 @@ CALL "%RootDir%\..\..\SetupEnvironment.bat" %*
 
 IF NOT "%ItemTemplatesInstallDir%"=="" (
 	CALL:_MakeDir "%ItemTemplatesInstallDir%"
-	FOR %%A IN ("%RootDir%\ProjectItems\%TargetVisualStudioShortProductName%\*.zip") DO ECHO F | XCOPY /Y /D /V /Q "%%~fA" "%ItemTemplatesInstallDir%\%%~nA\ORMModelFromDatabase.zip"
-	FOR %%A IN ("%RootDir%\ProjectItems\%TargetVisualStudioShortProductName%\Web\*.zip") DO ECHO F | XCOPY /Y /D /V /Q "%%~fA" "%ItemTemplatesInstallDir%\Web\%%~nA\ORMModelFromDatabase.zip"
+	IF "%TargetVisualStudioVersion%"=="v15.0" (
+		XCOPY /Y /D /V /Q /S "%RootDir%\ProjectItems\%TargetVisualStudioShortProductName%" "%ItemTemplatesInstallDir%"
+	) ELSE (
+		FOR %%A IN ("%RootDir%\ProjectItems\%TargetVisualStudioShortProductName%\*.zip") DO ECHO F | XCOPY /Y /D /V /Q "%%~fA" "%ItemTemplatesInstallDir%\%%~nA\ORMModelFromDatabase.zip"
+		FOR %%A IN ("%RootDir%\ProjectItems\%TargetVisualStudioShortProductName%\Web\*.zip") DO ECHO F | XCOPY /Y /D /V /Q "%%~fA" "%ItemTemplatesInstallDir%\Web\%%~nA\ORMModelFromDatabase.zip"
+	)
 )
 
 GOTO:EOF

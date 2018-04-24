@@ -9,7 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Custom Actions needed for setup.")]
 [assembly: AssemblyCompany("ORM Solutions, LLC")]
 [assembly: AssemblyProduct("Setup.CustomActions")]
-[assembly: AssemblyCopyright("Copyright © ORM Solutions, LLC. Portions Copyright © Neumont University and The ORM Foundation. All rights reserved.")]
+[assembly: AssemblyCopyright(@"Copyright © ORM Solutions, LLC. Portions Copyright © Neumont University. All rights reserved.
+Copyright © The ORM Foundation. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
