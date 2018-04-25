@@ -185,7 +185,8 @@ namespace ORMSolutions.ORMArchitect.Framework.Shell
 						}
 						else
 						{
-							view.ScrollTo(new PointD(link.CenterPoint.X - view.ViewBounds.Width / 2, link.CenterPoint.Y - view.ViewBounds.Height / 2));
+                            // No longer auto scroll to the center on opening a diagram, this was causing a problem when a diagram was created on a high resolution monitor and sent to a lower resolution monitor.
+                            //view.ScrollTo(new PointD(link.CenterPoint.X - view.ViewBounds.Width / 2, link.CenterPoint.Y - view.ViewBounds.Height / 2));
 						}
 					}
 				}
