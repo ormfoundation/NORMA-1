@@ -120,15 +120,15 @@
 	</xsl:template>
 
 	<xsl:template match="@type[.='CHARACTER']" mode="ForDataType">
-		<xsl:text>NCHAR</xsl:text>
+		<xsl:text>CHAR</xsl:text>
 	</xsl:template>
 	
 	<xsl:template match="@type[.='CHARACTER VARYING']" mode="ForDataType">
-		<xsl:text>NVARCHAR2</xsl:text>
+		<xsl:text>VARCHAR2</xsl:text>
 	</xsl:template>
 
 	<xsl:template match="@type[.='CHARACTER LARGE OBJECT']" mode="ForDataType">
-		<xsl:text>NCLOB</xsl:text>
+		<xsl:text>CLOB</xsl:text>
 	</xsl:template>
 
 	<xsl:template match="@type[.='BINARY' or .='BINARY VARYING']" mode="ForDataType">
@@ -140,7 +140,7 @@
 	</xsl:template>
 	
 	<xsl:template match="@type[.='BOOLEAN']" mode="ForDataType">
-		<xsl:text>NCHAR(1)</xsl:text>
+		<xsl:text>VARCHAR2(1)</xsl:text>
 		<!-- UNDONE: Add constraints to restrict BOOLEAN to the appropriate values. -->
 	</xsl:template>
 
@@ -158,11 +158,7 @@
 		</xsl:choose>
 	</xsl:template>
 
-	<xsl:template match="ddt:characterStringLiteral">
-		<xsl:text>N</xsl:text>
-		<xsl:apply-imports/>
-	</xsl:template>
-
+	
 	<xsl:template match="@schema" mode="ForSchemaQualifiedName">
 		<!-- We also absorb references to the schema name, because the schema name must be the Oracle Database username. -->
 	</xsl:template>
