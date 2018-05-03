@@ -1,9 +1,3 @@
-Install Testing - 
-	msiexec /i "C:\Test\Natural ORM Architect for Visual Studio 2017.msi" /l*v C:\Test\Log.txt
-	msiexec /x "C:\Test\Natural ORM Architect for Visual Studio 2017.msi" /l*v C:\Test\Log.txt
-	msiexec /i "C:\Test\PLiX for Visual Studio.msi" /l*v C:\Test\Log.txt
-	msiexec /x "C:\Test\PLiX for Visual Studio.msi" /l*v C:\Test\Log.txt
-
 Approach - go through bat files to determine the order of building which should be the order of solutions/projects to upgrade
 	VS2015.bat
 	FirstTimeBuild.bat
