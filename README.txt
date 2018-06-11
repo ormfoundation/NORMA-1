@@ -1,10 +1,13 @@
-Neumont Object-Role Modeling Architect
+Natural Object-Role Modeling Architect (Formerly: Neumont Object-Role Modeling Architect)
 Copyright © Neumont University. All rights reserved.
 Copyright © ORM Solutions, LLC. All rights reserved.
-Copyright © The ORM Foundation All rights reserved.
-Homepage: http://orm.sourceforge.net
+Copyright © The ORM Foundation. All rights reserved.
+Homepages: 
+original: http://orm.sourceforge.net (deprecated)
+ormsolutions: http://github.com/ormsolutions/NORMA
+ORM Foundation: https://github.com/ormfoundation/NORMA-plus (this project)
 
-For licensing terms, see the adjacent LICENSE.txt file.
+For licensing terms, see the LICENSE.txt file.
 
 
 Several third-party components are required to build or compile the main
@@ -12,7 +15,9 @@ portion of this software. These components, and the locations from which
 they can be obtained, are as follows:
 
 PLiX - Programming Language in XML
-	Homepage: https://sourceforge.net/projects/plix
+The VS2017 NORMA-plus project uses the following git repository for PLiX.
+https://github.com/ormfoundation/PLiX
+
 
 Microsoft Visual Studio SDK
 	Homepage: http://www.microsoft.com/extendvs
@@ -22,6 +27,7 @@ Microsoft Visual Studio SDK
 	Download (Visual Studio 2012): http://www.microsoft.com/en-us/download/details.aspx?id=30668
 	Download (Visual Studio 2013): http://www.microsoft.com/en-us/download/details.aspx?id=40758
 	Visual Studio 2015 installs the SDK with the normal VS setup. Choose a custom setup and select 'Visual Studio Extensibility'
+	Visual Studio 2017 installs the SDK with the normal VS setup. Make sure to include 'Visual Studio Extensibility' in the install, or install it later via Tools -> Get Tools and Features...
 IMPORTANT: You will need to establish the Visual Studio experimental hive before building NORMA by running Visual Studio once in this environment. Use the link provided by the VS SDK, or run 'devenv.exe /RootSuffix Exp' from a Visual Studio command prompt. For Visual Studio 2008, make sure you use either the provided shortcut or add /RANU (run as normal user) to the command line. After running FirstTimeBuildVS2008.bat you should use 'devenv /rootsuffix Exp' instead of 'devenv /rootsuffix Exp /RANU'.
 
 
@@ -34,8 +40,15 @@ Microsoft Visual Studio Modeling and Visualization Tools (DSL Tools SDK), instal
 
 Additional components used by other portions of this software include:
 
-Windows Installer XML (WiX) toolset (v3.10, tested successfully through v3.10.0.2026)
-	Homepage: http://wix.sourceforge.net
+Windows Installer XML (WiX) toolset (v3.11.1: Tested on 3 June 2018 with VS2017)
+	Homepage: http://wixtoolset.org/
+	4 June 2018 – Must update to latest version of Wix
+	Download/Install the WiX Toolset Build Tools  (wix311.exe)
+	https://marketplace.visualstudio.com/items?itemName=RobMensching.WiXToolset
+
+	Download/install WiX Toolset Visual Studio 2017 Extension
+	https://marketplace.visualstudio.com/items?itemName=RobMensching.WixToolsetVisualStudio2017Extension
+
 
 NUnit (v2.4.7 or later)
 	Homepage: http://www.nunit.org
@@ -73,8 +86,9 @@ SET TargetVisualStudioVersion=v10.0
 SET TargetVisualStudioVersion=v11.0
 SET TargetVisualStudioVersion=v12.0
 SET TargetVisualStudioVersion=v14.0
+SET TargetVisualStudioVersion=v15.0
 
-These values correspond to Visual Studio 20xx where v8.0=2005, v9.0=2008, v10.0=2010, v11.0=2012, v12.0=2013, v14.0=2015.
+These values correspond to Visual Studio 20xx where v8.0=2005, v9.0=2008, v10.0=2010, v11.0=2012, v12.0=2013, v14.0=2015, v15.0=2017.
 
 See the comments in SetupEnvironment.bat for additional details on how the options are used.
 
@@ -121,3 +135,4 @@ The installation process on VS2015 is not as easy as on VS2010, which simply req
 
 If NORMA is not functioning after the first dev build (the first clue will be in the file new dialog, which will simply say 'ORMModel' instead of 'Object-Role Modeling File') then you will need to reset the VSIX installation following the directions from the readme in the VSIXInstall/VS2015 directory. This should be required only after the first build, or in situations indicated in the readme.
 
+The VS2017 build is significantly different from previous builds. The procedure is documented on the NORMS-plus website.
