@@ -391,7 +391,9 @@ namespace ORMSolutions.ORMArchitect.Views.RelationalView
 		{
 			Size = newSize;
 			TableShape parent = (TableShape)ParentShape;
-			parent.Size = new SizeD(newSize.Width, parent.Size.Height + newSize.Height);
+
+            // When need to use this method to make sure the name textbox grows correctly
+			parent.UpdateSize(new SizeD(newSize.Width, parent.Size.Height + newSize.Height));
 		}
 		private SizeD CalculateSize()
 		{

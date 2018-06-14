@@ -91,6 +91,40 @@ namespace ORMSolutions.ORMArchitect.Views.RelationalView
 				return NodeSides.None;
 			}
 		}
+
+        /// <summary>
+        /// Updates the size of the <see cref="T:ORMSolutions.ORMArchitect.Views.RelationalView.TableShape"/> and makes sure the Name field is adjusted correctly
+        /// </summary>
+        /// <param name="newSize"></param>
+        public void UpdateSize(SizeD newSize)
+        {
+            this.Size = newSize;
+
+            // Set the minimum width of the text field to be just smallter than the table so that the maximum amount of the table name will be dislplayed
+            // Currently there is a bug in the autosize that will not show the full name of certain tables, example: SportPlay
+            TableTextField nameField = this.NameField;
+            if (nameField != null)
+            {
+                // The .05 adjustment here accounts for the .015 left and right margins applied in
+                // the CompartmentShape.AnchorAllCompartments and some padding
+                nameField.AnchoringBehavior.MinimumWidth = newSize.Width - 0.05;
+            }
+        }
+        /// <summary>
+        /// Returns the Name <see cref="T:ORMSolutions.ORMArchitect.Views.RelationalView.TableTextField"/> of the <see cref="T:ORMSolutions.ORMArchitect.Views.RelationalView.TableShape"/>
+        /// </summary>
+        private TableTextField NameField
+        {
+            get
+            {
+                foreach (ShapeField field in this.ShapeFields)
+                {
+                    if (field.Name == "TableNameDecorator") return field as TableTextField;
+                }
+
+                return null;
+            }
+        }
 		#endregion // Customize Appearance
 		#region Customize Column Order
 #if CUSTOMSORT
