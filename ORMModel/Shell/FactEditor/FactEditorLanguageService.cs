@@ -153,7 +153,62 @@ namespace ORMSolutions.ORMArchitect.Core.Shell
 						// Cache and clear FactType portions of activation context
 						// to avoid event interactions as the selected FactType is modified.
 						FactType activeFactType = activationContext.CurrentFactType;
-						ReadingOrder activeReadingOrder = activationContext.CurrentReadingOrder;
+                        ReadingOrder activeReadingOrder = activationContext.CurrentReadingOrder;
+
+                        // Check to see if the RolePlayers are different, if so ask the users if it's what they really want to do
+                        if (activeFactType != null)
+                        {
+                            bool rolePlayersDifferent = false;
+                            foreach (Role role in activeFactType.RoleCollection)
+                            {
+                                bool found = false;
+                                foreach (ParsedFactTypeRolePlayer parsedRolePlayer in parsedFactType.RolePlayers)
+                                {
+                                    if (string.Equals(role.RolePlayer.Name, parsedRolePlayer.Name))
+                                    {
+                                        found = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!found)
+                                {
+                                    rolePlayersDifferent = true;
+                                    break;
+                                }
+                            }
+
+                            // Role players are different so ask the user if they really want to proceed
+                            if (rolePlayersDifferent)
+                            {
+                                // Build the warning message
+                                StringBuilder checkText = new StringBuilder("Role Players are changing...\n");
+                                checkText.Append("From:\n");
+                                foreach (Role role in activeFactType.RoleCollection)
+                                {
+                                    checkText.Append("\t");
+                                    checkText.Append(role.RolePlayer.Name);
+                                    checkText.Append("\n");
+                                }
+                                checkText.Append("To:\n");
+                                foreach (ParsedFactTypeRolePlayer parsedRolePlayer in parsedFactType.RolePlayers)
+                                {
+                                    checkText.Append("\t");
+                                    checkText.Append(parsedRolePlayer.Name);
+                                    checkText.Append("\n");
+                                }
+                                // Remove the last ", "
+                                checkText.Append("\n");
+                                checkText.Append("Are you sure you want to continue?");
+
+                                DialogResult result = MessageBox.Show(checkText.ToString(), "Continue?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                                if (result != DialogResult.Yes)
+                                {
+                                    return base.HandlePreExec(ref guidCmdGroup, nCmdId, nCmdexecopt, pvaIn, pvaOut);
+                                }
+                            }
+                        }
+						
 						IList<RoleBase> activeRoleOrder = activationContext.CurrentSelectedRoleOrder;
 						activationContext.ClearFactTypeSelection();
 						ReadingOrder readingOrder = FactSaver.IntegrateParsedFactType(
