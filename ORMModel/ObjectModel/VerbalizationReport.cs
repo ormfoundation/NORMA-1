@@ -210,7 +210,19 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel.Verbalization
 			if (0 != (reportContent & VerbalizationReportContent.ObjectTypes))
 			{
 				alreadyVerbalized = new Dictionary<IVerbalize, IVerbalize>();
-				objectTypeList = model.ObjectTypeCollection.ToArray();
+
+                // NOR-98 - We need to remove the objectified object types from this list
+                List<ObjectType> tempObjectTypes = new List<ObjectType>();
+                foreach (ObjectType t in model.ObjectTypeCollection)
+                {
+                    // This is the same filtering found in ORMCoreDomainModel.GetSurveyNodes
+                    Objectification objectification = null;
+                    if (!t.IsImplicitBooleanValue && (null == (objectification = t.Objectification) || !objectification.IsImplied))
+                    {
+                        tempObjectTypes.Add(t);
+                    }
+                }
+				objectTypeList = tempObjectTypes.ToArray();
 
 				int objectTypeCount = objectTypeList.Length;
 				if (objectTypeCount != 0)
