@@ -5101,7 +5101,28 @@ namespace ORMSolutions.ORMArchitect.Core.Shell
 							}
 							else
 							{
-								text = instance.Name;
+                                //NOR96
+                                //text = instance.Name;
+                                EntityTypeInstance entityInstance = instance as EntityTypeInstance;
+                                int adjustedColumn = column - 1 + myUnaryColumn;
+
+                                if (entityInstance == null)
+                                {
+                                    text = instance.Name;
+                                }
+                                else
+                                {
+                                    string columnName = myFactType.OrderedRoleCollection[adjustedColumn].Role.RolePlayer.Name;
+                                    EntityTypeRoleInstance matchingRoleInstance = null;
+                                    foreach (EntityTypeRoleInstance roleInstance in entityInstance.RoleInstanceCollection)
+                                    {
+                                        if (roleInstance.Role.RolePlayer.Name == columnName)
+                                        {
+                                            matchingRoleInstance = roleInstance;
+                                        }
+                                    }
+                                    text = (matchingRoleInstance == null) ? instance.Name : matchingRoleInstance.ObjectTypeInstance.IdentifierName;
+                                }
 							}
 						}
 					}
