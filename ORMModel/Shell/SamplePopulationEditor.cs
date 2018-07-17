@@ -2,9 +2,9 @@
 /**************************************************************************\
 * Natural Object-Role Modeling Architect for Visual Studio                 *
 *                                                                          *
-* Copyright © Neumont University. All rights reserved.                     *
-* Copyright © The ORM Foundation. All rights reserved.                     *
-* Copyright © ORM Solutions, LLC. All rights reserved.                        *
+* Copyright Â© Neumont University. All rights reserved.                     *
+* Copyright Â© The ORM Foundation. All rights reserved.                     *
+* Copyright Â© ORM Solutions, LLC. All rights reserved.                        *
 *                                                                          *
 * The use and distribution terms for this software are covered by the      *
 * Common Public License 1.0 (http://opensource.org/licenses/cpl) which     *
@@ -5101,8 +5101,7 @@ namespace ORMSolutions.ORMArchitect.Core.Shell
 							}
 							else
 							{
-                                //NOR96
-                                //text = instance.Name;
+                                //NOR96 - change to show the instance of the column instead of the object
                                 EntityTypeInstance entityInstance = instance as EntityTypeInstance;
                                 int adjustedColumn = column - 1 + myUnaryColumn;
 
