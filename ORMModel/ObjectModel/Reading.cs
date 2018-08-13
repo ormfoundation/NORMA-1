@@ -569,7 +569,9 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 		/// </summary>
 		public static void UpdateReadingSignatures(FactType factType)
 		{
-			foreach (ReadingOrder order in factType.ReadingOrderCollection)
+            IDictionary<string, object> objectNameOptions = new Dictionary<string, object>(SignatureRenderingOptions);
+
+            foreach (ReadingOrder order in factType.ReadingOrderCollection)
 			{
 				LinkedElementCollection<RoleBase> roles = order.RoleCollection;
 				int roleCount = roles.Count;
@@ -581,8 +583,12 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 						{
 							if (replaceIndex < roleCount)
 							{
-								ObjectType rolePlayer = roles[replaceIndex].Role.RolePlayer;
-								return rolePlayer != null ? VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, SignatureRenderingOptions) : "";
+                                //objectNameOptions[CoreVerbalizationOption.Index] = FactType.DetermineImplicitFactTypeRoleNameIndex(factType, roles[replaceIndex]);
+
+
+
+                                ObjectType rolePlayer = roles[replaceIndex].Role.RolePlayer;
+								return rolePlayer != null ? VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, objectNameOptions) : "";
 							}
 							return "";
 						});
