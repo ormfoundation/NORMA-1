@@ -583,10 +583,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 						{
 							if (replaceIndex < roleCount)
 							{
-                                //objectNameOptions[CoreVerbalizationOption.Index] = FactType.DetermineImplicitFactTypeRoleNameIndex(factType, roles[replaceIndex]);
-
-
-
+                                objectNameOptions[CoreVerbalizationOption.Index] = FactType.DetermineImplicitFactTypeRoleNameIndex(factType, roles[replaceIndex]);
                                 ObjectType rolePlayer = roles[replaceIndex].Role.RolePlayer;
 								return rolePlayer != null ? VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, objectNameOptions) : "";
 							}

@@ -2825,6 +2825,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 			else
 			{
 				string[] basicRoleReplacements = new string[factArity];
+				bool generateSubscripts = (this.ImpliedByObjectification != null);
 				for (int i = 0; i < factArity; ++i)
 				{
 					Role factRole = factRoles[i + unaryRoleOffset].Role;
@@ -2832,7 +2833,35 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 					string basicReplacement;
 					if (rolePlayer != null)
 					{
-						basicReplacement = string.Format(writer.FormatProvider, snippets.GetSnippet(CoreVerbalizationSnippetType.ObjectType, isDeontic, isNegative), VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, verbalizationContext.VerbalizationOptions), rolePlayer.Id.ToString("D"));
+						int subscript = 0;
+						bool useSubscript = false;
+						if (generateSubscripts)
+						{
+							int j = 0;
+							for (; j < i; ++j)
+							{
+								if (rolePlayer == factRoles[j].Role.RolePlayer)
+								{
+									useSubscript = true;
+									++subscript;
+								}
+							}
+							for (j = i + 1; !useSubscript && j < factArity; ++j)
+							{
+								if (rolePlayer == factRoles[j].Role.RolePlayer)
+								{
+									useSubscript = true;
+								}
+							}
+						}
+						if (useSubscript)
+						{
+							basicReplacement = string.Format(writer.FormatProvider, snippets.GetSnippet(CoreVerbalizationSnippetType.ObjectTypeWithSubscript, isDeontic, isNegative), VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, verbalizationContext.VerbalizationOptions), rolePlayer.Id.ToString("D"), subscript + 1);
+						}
+						else
+						{
+							basicReplacement = string.Format(writer.FormatProvider, snippets.GetSnippet(CoreVerbalizationSnippetType.ObjectType, isDeontic, isNegative), VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, verbalizationContext.VerbalizationOptions), rolePlayer.Id.ToString("D"));
+						}
 					}
 					else
 					{

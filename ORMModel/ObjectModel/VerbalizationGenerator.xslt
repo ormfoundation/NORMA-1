@@ -890,7 +890,21 @@
 					</plx:callStatic>
 				</plx:branch>
 				<plx:fallbackBranch>
-					<xsl:call-template name="PopulateBasicRoleReplacements"/>
+          <xsl:variable name="subscriptConditions">
+            <plx:expression parens="true">
+              <plx:binaryOperator type="identityInequality">
+						    <plx:left>
+							    <plx:callThis name="ImpliedByObjectification" type="property"/>
+						    </plx:left>
+						    <plx:right>
+							    <plx:nullKeyword/>
+						    </plx:right>
+					    </plx:binaryOperator>
+            </plx:expression>
+          </xsl:variable>
+          <xsl:call-template name="PopulateBasicRoleReplacements">
+            <xsl:with-param name="SubscriptConditions" select="exsl:node-set($subscriptConditions)"/>
+          </xsl:call-template>
 					<xsl:variable name="factMockup">
 						<cvg:Fact/>
 					</xsl:variable>

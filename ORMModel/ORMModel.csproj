@@ -556,6 +556,7 @@
     <Compile Include="ObjectModel\VerbalizationGenerator.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>VerbalizationGenerator.xml</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="ObjectModel\Design\Editors\AliasManagerForm.cs">
       <SubType>Form</SubType>
@@ -693,7 +694,9 @@
       <Generator>NUPlixLoader</Generator>
       <LastGenOutput>VerbalizationGenerator.cs</LastGenOutput>
     </Content>
-    <Content Include="ObjectModel\VerbalizationGenerator.xslt" />
+    <Content Include="ObjectModel\VerbalizationGenerator.xslt">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Resources\Toolbox.ModelNote.Bitmap.Id.bmp" />
     <None Include="Resources\Toolbox.ModelNoteConnector.Bitmap.Id.bmp" />
     <Content Include="ObjectModel\VerbalizationReportGenerator.xslt" />
