@@ -2,19 +2,22 @@
 
 @ECHO OFF
 
-:: Add Nuget packages to GAC
+:: Add Nuget packages to GAC for NGEN
 ECHO "Checking GAC for Nuget Assemblies..."
+FOR /f "usebackq tokens=*" %%i IN (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
+	SET VSInstallDir=%%i
+)
 gacutil.exe /l "Microsoft.VisualStudio.TextTemplating.Interfaces.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
 IF NOT ERRORLEVEL 1 (
-    gacutil.exe /nologo /f /i "%~dp0%Nuget\Microsoft.VisualStudio.TextTemplating.Interfaces.10.0.10.0.30320\lib\net40\Microsoft.VisualStudio.TextTemplating.Interfaces.10.0.dll"
+    gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.TextTemplating.Interfaces.10.0.dll"
 )
 gacutil.exe /l "Microsoft.VisualStudio.TextTemplating.Interfaces.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
 IF NOT ERRORLEVEL 1 (
-    gacutil.exe /nologo /f /i "%~dp0%Nuget\Microsoft.VisualStudio.TextTemplating.Interfaces.11.0.11.0.50728\lib\net45\Microsoft.VisualStudio.TextTemplating.Interfaces.11.0.dll"
+    gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.TextTemplating.Interfaces.11.0.dll"
 )
 gacutil.exe /l "Microsoft.VisualStudio.TextTemplating.15.0, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
 IF NOT ERRORLEVEL 1 (
-    gacutil.exe /nologo /f /i "%~dp0%Nuget\Microsoft.VisualStudio.TextTemplating.15.0.15.6.27413\lib\net45\Microsoft.VisualStudio.TextTemplating.15.0.dll"
+    gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.TextTemplating.15.0.dll"
 )
 
 ::Add SDK tools to path if vsct cannot be found, fails to compile in VS2015 otherwise
