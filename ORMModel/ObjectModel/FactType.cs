@@ -1991,7 +1991,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 
             // If the roleplayer has multiple references in the objectification fact type then it will need indexes in the implied fact types
             int instanceCount = 0;
-            foreach (RoleBase nestedRole in impliedObjectification.NestedFactType.RoleCollection)
+            foreach (RoleBase nestedRole in impliedObjectification.NestedFactType.OrderedRoleCollection)
             {
                 if (nestedRole.Role.RolePlayer.Equals(role.Role.RolePlayer))
                 {

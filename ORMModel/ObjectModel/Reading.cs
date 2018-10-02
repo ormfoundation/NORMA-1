@@ -118,6 +118,14 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 						if (rolePlayer != null)
 						{
 							name = rolePlayer.Name;
+                            if (ReadingOrder.FactType != null)
+                            {
+                                string index = FactType.DetermineImplicitFactTypeRoleNameIndex(ReadingOrder.FactType, role);
+                                if (!string.IsNullOrWhiteSpace(index))
+                                {
+                                    name = string.Format(CultureInfo.InvariantCulture, ResourceStrings.ModelReferenceModePickerFormatString, name, index);
+                                }
+                            }
 						}
 					}
 					roleNames[i] = (name.Length != 0) ? name : ("{" + i.ToString(CultureInfo.InvariantCulture) + "}");
@@ -569,8 +577,6 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 		/// </summary>
 		public static void UpdateReadingSignatures(FactType factType)
 		{
-            IDictionary<string, object> objectNameOptions = new Dictionary<string, object>(SignatureRenderingOptions);
-
             foreach (ReadingOrder order in factType.ReadingOrderCollection)
 			{
 				LinkedElementCollection<RoleBase> roles = order.RoleCollection;
@@ -583,9 +589,18 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 						{
 							if (replaceIndex < roleCount)
 							{
-                                objectNameOptions[CoreVerbalizationOption.Index] = FactType.DetermineImplicitFactTypeRoleNameIndex(factType, roles[replaceIndex]);
                                 ObjectType rolePlayer = roles[replaceIndex].Role.RolePlayer;
-								return rolePlayer != null ? VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, objectNameOptions) : "";
+                                if (rolePlayer == null) return "";
+								
+                                string index = FactType.DetermineImplicitFactTypeRoleNameIndex(factType, roles[replaceIndex]);
+                                if (string.IsNullOrWhiteSpace(index))
+                                {
+                                    return VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, SignatureRenderingOptions);
+                                }
+                                else
+                                {
+                                    return string.Format(CultureInfo.InvariantCulture, ResourceStrings.ModelReferenceModePickerFormatString, VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, SignatureRenderingOptions), index);
+                                }
 							}
 							return "";
 						});
@@ -602,12 +617,18 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 		/// <returns>An expanded reading signature.</returns>
 		public static string GenerateReadingSignature(string readingText, IList<ObjectType> rolePlayers, bool reverseReading)
 		{
+            /*
+             * NOR-53 - I do not believe that we need to worry about indexes in this function since this is only called from the FactEditorSaver.cs file which is used when a fact is being changed.
+             * We are currently only indexing the role players if they are involved in an implied fact type.
+             */
+
 			int rolePlayerCount = rolePlayers.Count;
 			return Reading.ReplaceFields(
 				VerbalizationHyphenBinder.DehyphenateReadingText(readingText),
 				delegate(int replaceIndex)
 				{
 					ObjectType rolePlayer;
+
 					return (replaceIndex < rolePlayerCount && null != (rolePlayer = rolePlayers[reverseReading ? (rolePlayerCount - replaceIndex - 1) : replaceIndex])) ?
 						VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, SignatureRenderingOptions) :
 						"";
