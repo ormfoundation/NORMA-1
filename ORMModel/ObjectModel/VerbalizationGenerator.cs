@@ -2837,21 +2837,11 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 						bool useSubscript = false;
 						if (generateSubscripts)
 						{
-							int j = 0;
-							for (; j < i; ++j)
+							subscript = FactType.DetermineImplicitFactTypeRoleNameIndex(this, factRole).GetValueOrDefault(0);
+							if (subscript > 0)
 							{
-								if (rolePlayer == factRoles[j].Role.RolePlayer)
-								{
-									useSubscript = true;
-									++subscript;
-								}
-							}
-							for (j = i + 1; !useSubscript && j < factArity; ++j)
-							{
-								if (rolePlayer == factRoles[j].Role.RolePlayer)
-								{
-									useSubscript = true;
-								}
+								useSubscript = true;
+								subscript--;
 							}
 						}
 						if (useSubscript)

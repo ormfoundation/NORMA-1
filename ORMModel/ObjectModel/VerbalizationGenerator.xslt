@@ -890,7 +890,43 @@
 					</plx:callStatic>
 				</plx:branch>
 				<plx:fallbackBranch>
-          <xsl:call-template name="PopulateBasicRoleReplacements"/>
+          <xsl:variable name="subscriptConditions">
+            <plx:expression parens="true">
+              <plx:binaryOperator type="identityInequality">
+						    <plx:left>
+							    <plx:callThis name="ImpliedByObjectification" type="property"/>
+						    </plx:left>
+						    <plx:right>
+							    <plx:nullKeyword/>
+						    </plx:right>
+					    </plx:binaryOperator>
+            </plx:expression>
+          </xsl:variable>
+          <xsl:variable name="subscriptExpression">
+            <plx:expression parens="false">
+              <plx:callInstance name="GetValueOrDefault">
+                <plx:callObject>
+                  <plx:expression>
+                    <plx:callStatic dataTypeName="FactType" name="DetermineImplicitFactTypeRoleNameIndex">
+                      <plx:passParam>
+                        <plx:nameRef name="this"/>
+                      </plx:passParam>
+                      <plx:passParam>
+                        <plx:nameRef name="factRole"/>
+                      </plx:passParam>
+                    </plx:callStatic>
+                  </plx:expression>
+                </plx:callObject>
+                <plx:passParam>
+                  <plx:value type="i4" data="0"/>
+                </plx:passParam>
+              </plx:callInstance>
+            </plx:expression>
+          </xsl:variable>
+          <xsl:call-template name="PopulateBasicRoleReplacements">
+            <xsl:with-param name="SubscriptConditions" select="exsl:node-set($subscriptConditions)"/>
+            <xsl:with-param name="SubscriptExpression" select="exsl:node-set($subscriptExpression)"/>
+          </xsl:call-template>
 					<xsl:variable name="factMockup">
 						<cvg:Fact/>
 					</xsl:variable>
@@ -4207,6 +4243,7 @@
 		 and the fact arity in the factArity variable -->
 	<xsl:template name="PopulateBasicRoleReplacements">
 		<xsl:param name="SubscriptConditions"/>
+    <xsl:param name="SubscriptExpression"/> <!-- A plix expression that returns the integer subscript, anything less than one will result in no subscript -->
 		<xsl:param name="CustomSubscripts"/>
 		<xsl:param name="DynamicSubscripts"/>
 		<xsl:param name="DeclareBasicRoleReplacements" select="true()"/>
@@ -4503,6 +4540,40 @@
 											<plx:break/>
 										</plx:branch>
 									</plx:loop>
+								</xsl:when>
+                <xsl:when test="$SubscriptExpression">
+									<plx:assign>
+										<plx:left>
+											<plx:nameRef name="subscript"/>
+										</plx:left>
+										<plx:right>
+  									  <xsl:copy-of select="$SubscriptExpression"/>
+										</plx:right>
+									</plx:assign>
+                  <plx:branch>
+                    <plx:condition>
+                      <plx:binaryOperator type="greaterThan">
+						            <plx:left>
+							            <plx:nameRef name="subscript"/>
+						            </plx:left>
+						            <plx:right>
+							            <plx:value type="i4" data="0" />
+						            </plx:right>
+					            </plx:binaryOperator>                    
+                    </plx:condition>
+                    <plx:assign>
+										  <plx:left>
+											  <plx:nameRef name="useSubscript"/>
+										  </plx:left>
+										  <plx:right>
+											  <plx:trueKeyword />
+										  </plx:right>
+									  </plx:assign>
+                    <!-- We need to reduce the subscript by one as the replacement below automatically adds one to the subscript -->
+                    <plx:decrement type="post">
+                      <plx:nameRef name="subscript" />
+                    </plx:decrement>
+                  </plx:branch>
 								</xsl:when>
 								<xsl:otherwise>
 									<plx:local name="j" dataTypeName=".i4">

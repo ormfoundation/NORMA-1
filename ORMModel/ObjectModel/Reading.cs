@@ -120,8 +120,8 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 							name = rolePlayer.Name;
                             if (ReadingOrder.FactType != null)
                             {
-                                string index = FactType.DetermineImplicitFactTypeRoleNameIndex(ReadingOrder.FactType, role);
-                                if (!string.IsNullOrWhiteSpace(index))
+                                int? index = FactType.DetermineImplicitFactTypeRoleNameIndex(ReadingOrder.FactType, role);
+                                if (index.HasValue)
                                 {
                                     name = string.Format(CultureInfo.InvariantCulture, ResourceStrings.ModelReferenceModePickerFormatString, name, index);
                                 }
@@ -592,14 +592,14 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
                                 ObjectType rolePlayer = roles[replaceIndex].Role.RolePlayer;
                                 if (rolePlayer == null) return "";
 								
-                                string index = FactType.DetermineImplicitFactTypeRoleNameIndex(factType, roles[replaceIndex]);
-                                if (string.IsNullOrWhiteSpace(index))
+                                int? index = FactType.DetermineImplicitFactTypeRoleNameIndex(factType, roles[replaceIndex]);
+                                if (index.HasValue)
                                 {
-                                    return VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, SignatureRenderingOptions);
+                                    return string.Format(CultureInfo.InvariantCulture, ResourceStrings.ModelReferenceModePickerFormatString, VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, SignatureRenderingOptions), index);
                                 }
                                 else
                                 {
-                                    return string.Format(CultureInfo.InvariantCulture, ResourceStrings.ModelReferenceModePickerFormatString, VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, SignatureRenderingOptions), index);
+                                    return VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, SignatureRenderingOptions);
                                 }
 							}
 							return "";

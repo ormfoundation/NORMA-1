@@ -1975,12 +1975,12 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
         ///         Implied Fact Types
         ///             Server1 is involved in ServerHostsServer
         ///             Server2 is involved in ServerHostsServer
-        /// If the fact type is not implicit then null is returned.
+        /// If the fact type is not implicit or an index is not needed then null is returned.
         /// </summary>
         /// <param name="impliedFactType">The implied fact type to evaulate</param>
         /// <param name="role">The role in the implied fact type to evaluate</param>
         /// <returns></returns>
-        public static string DetermineImplicitFactTypeRoleNameIndex(FactType impliedFactType, RoleBase role)
+        public static int? DetermineImplicitFactTypeRoleNameIndex(FactType impliedFactType, RoleBase role)
         {
             if (impliedFactType == null) return null;
             if (role == null) return null;
@@ -2014,18 +2014,18 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
             }
 
             // Return the instanceCount if greater than zero
-            if (instanceCount > 0) return instanceCount.ToString();
+            if (instanceCount > 0) return instanceCount;
 
             // It is possible to subscript this but I'm not sure we want to do that
             // https://stackoverflow.com/questions/14819895/how-to-write-superscript-upper-index-in-visual-studio
 
             return null;
         }
-		/// <summary>
-		/// The auto-generated name for this fact type. Based on the
-		/// first reading in the first reading order.
-		/// </summary>
-		public string DefaultName
+        /// <summary>
+        /// The auto-generated name for this fact type. Based on the
+        /// first reading in the first reading order.
+        /// </summary>
+        public string DefaultName
 		{
 			get
 			{
