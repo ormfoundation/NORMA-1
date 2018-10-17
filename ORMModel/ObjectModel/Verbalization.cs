@@ -2089,10 +2089,6 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 		/// This option is not displayed to the user.
 		/// </summary>
 		public const string FixedCaseWordPrefix = "FixedCaseWordPrefix";
-        /// <summary>
-        /// Use for indexing the object name.
-        /// </summary>
-        public const string Index = "Index";
 	}
 	#endregion // CoreVerbalizationOption class
 	#region VerbalizationHelper class
@@ -2810,16 +2806,13 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 			}
 			bool spacePending = false;
 			bool makeLower = style == ObjectTypeNameVerbalizationStyle.CombineNamesLeadWithLower;
-            object index = null;
-            verbalizationOptions.TryGetValue(CoreVerbalizationOption.Index, out index);
             return NormalizeObjectTypeName(
 				objectType,
 				originalName,
 				style,
 				(removeSeparatedCharacters != null && removeSeparatedCharacters.Length == 0) ? null : removeSeparatedCharacters,
 				fixedCaseWordPrefix,
-                (index == null) ? null : index.ToString(),
-				null,
+                null,
 				ref spacePending,
 				ref makeLower);
 		}
@@ -2834,12 +2827,11 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 		/// <param name="removeSeparatedCharacters">A list of characters to remove from the generated name and treat as spaces. Used when separating combined names.</param>
 		/// <param name="fixedCasePrefix">A string prepended to a word when separating names to indicate that the casing
 		/// for the name is fixed. When combining words, this prefix is stripped and indicates that the casing will not be changed.</param>
-        /// <param name="index">An index to add to the end of the name of the object.</param>
-		/// <param name="builder">A string builder to append new names to. Can be null on first call, in which case a string is returned.</param>
+        /// <param name="builder">A string builder to append new names to. Can be null on first call, in which case a string is returned.</param>
 		/// <param name="spacePending">A space should be added before the next text part. Used with recursive calls when the style has spaces between the names. Initially false.</param>
 		/// <param name="makeLower">The initial text should be lower cased. Used with combined names with a lead lower case letter. Initially false.</param>
 		/// <returns>The name adjusted according to the current user settings, or null if a StringBuilder was specified.</returns>
-		private static string NormalizeObjectTypeName(ObjectType objectType, string originalName, ObjectTypeNameVerbalizationStyle style, string removeSeparatedCharacters, string fixedCasePrefix, string index, StringBuilder builder, ref bool spacePending, ref bool makeLower)
+		private static string NormalizeObjectTypeName(ObjectType objectType, string originalName, ObjectTypeNameVerbalizationStyle style, string removeSeparatedCharacters, string fixedCasePrefix, StringBuilder builder, ref bool spacePending, ref bool makeLower)
 		{
 			bool returnText;
 			if (originalName == null)
@@ -2867,7 +2859,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 								ReferenceModeType modeType = mode.Kind.ReferenceModeType;
 								if (modeType == ReferenceModeType.General)
 								{
-									return NormalizeObjectTypeName(null, originalName, style, removeSeparatedCharacters, fixedCasePrefix, index, builder, ref spacePending, ref makeLower);
+									return NormalizeObjectTypeName(null, originalName, style, removeSeparatedCharacters, fixedCasePrefix, builder, ref spacePending, ref makeLower);
 								}
 								else
 								{
@@ -2886,12 +2878,12 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 											string before = groups["Before"].Value;
 											if (before.Length != 0)
 											{
-												NormalizeObjectTypeName(null, before, style, removeSeparatedCharacters, fixedCasePrefix, null, builder, ref spacePending, ref makeLower);
+												NormalizeObjectTypeName(null, before, style, removeSeparatedCharacters, fixedCasePrefix, builder, ref spacePending, ref makeLower);
 											}
 											switch (int.Parse(groups["ReplaceIndex"].Value))
 											{
 												case 0:
-													NormalizeObjectTypeName(null, preferredFor.Name, style, removeSeparatedCharacters, fixedCasePrefix, null, builder, ref spacePending, ref makeLower);
+													NormalizeObjectTypeName(null, preferredFor.Name, style, removeSeparatedCharacters, fixedCasePrefix, builder, ref spacePending, ref makeLower);
 													break;
 												case 1:
 													string modeName = mode.Name;
@@ -2915,7 +2907,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 													}
 													else
 													{
-														NormalizeObjectTypeName(null, modeName, style, removeSeparatedCharacters, fixedCasePrefix, index, builder, ref spacePending, ref makeLower);
+														NormalizeObjectTypeName(null, modeName, style, removeSeparatedCharacters, fixedCasePrefix, builder, ref spacePending, ref makeLower);
 													}
 													break;
 											}
@@ -2924,13 +2916,8 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 										}
 										if (trailingTextIndex < modeFormatString.Length)
 										{
-											NormalizeObjectTypeName(null, modeFormatString.Substring(trailingTextIndex), style, removeSeparatedCharacters, fixedCasePrefix, index, builder, ref spacePending, ref makeLower);
+											NormalizeObjectTypeName(null, modeFormatString.Substring(trailingTextIndex), style, removeSeparatedCharacters, fixedCasePrefix, builder, ref spacePending, ref makeLower);
 										}
-                                        // Add the index to the name if supplied
-                                        if (index != null)
-                                        {
-                                            builder.Append(index);
-                                        }
 										return returnText ? builder.ToString() : null;
 									}
 								}
@@ -2952,7 +2939,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 						string[] individualNames = originalName.Split(StandardSplitChars, StringSplitOptions.RemoveEmptyEntries);
 						for (int i = 0; i < individualNames.Length; ++i)
 						{
-							NormalizeObjectTypeName(null, individualNames[i], style, removeSeparatedCharacters, fixedCasePrefix, null, builder, ref spacePending, ref makeLower);
+							NormalizeObjectTypeName(null, individualNames[i], style, removeSeparatedCharacters, fixedCasePrefix, builder, ref spacePending, ref makeLower);
 						}
 					}
 					else if (fixedCasePrefix != null &&
@@ -2993,11 +2980,6 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 							match = match.NextMatch();
 						}
 					}
-                    // Add the index to the name if supplied
-                    if (index != null)
-                    {
-                        builder.Append(index);
-                    }
                     return returnText ? builder.ToString() : null;
 				case ObjectTypeNameVerbalizationStyle.SeparateCombinedNames:
 					if (originalName.IndexOf(' ') != -1)
@@ -3009,13 +2991,8 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 						string[] individualNames = originalName.Split(StandardSplitChars, StringSplitOptions.RemoveEmptyEntries);
 						for (int i = 0; i < individualNames.Length; ++i)
 						{
-							NormalizeObjectTypeName(null, individualNames[i], style, removeSeparatedCharacters, fixedCasePrefix, null, builder, ref spacePending, ref makeLower);
+							NormalizeObjectTypeName(null, individualNames[i], style, removeSeparatedCharacters, fixedCasePrefix, builder, ref spacePending, ref makeLower);
 						}
-                        // Add the index to the name if supplied
-                        if (index != null)
-                        {
-                            builder.Append(index);
-                        }
                         return returnText ? builder.ToString() : null;
 					}
 					else if (Utility.IsMultiPartName(originalName))
@@ -3066,11 +3043,6 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 							}
 							match = match.NextMatch();
 						}
-                        // Add the index to the name if supplied
-                        if (index != null)
-                        {
-                            builder.Append(index);
-                        }
                         return returnText ? builder.ToString() : null;
 					}
 					else if (originalName.Length == 1 &&
@@ -3086,7 +3058,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 								builder.Append(originalName);
 								return null;
 							}
-							return originalName + (index ?? string.Empty);
+							return originalName;
 						}
 						if (spacePending)
 						{
@@ -3111,7 +3083,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 						return null;
 					}
 					spacePending = true;
-					return Utility.LowerCaseFirstLetter(originalName) + (index ?? string.Empty);
+					return Utility.LowerCaseFirstLetter(originalName);
 				//case ObjectTypeNameVerbalizationStyle.AsIs:
 				default:
 					if (builder != null)
@@ -3119,7 +3091,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 						builder.Append(originalName);
 						return null;
 					}
-					return originalName + (index ?? string.Empty);
+					return originalName;
 			}
 		}
 		#endregion // NormalizeObjectTypeName method

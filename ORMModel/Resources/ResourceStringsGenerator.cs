@@ -614,12 +614,28 @@ namespace ORMSolutions.ORMArchitect.Core
 				return ResourceStrings.GetString(ResourceManagers.Model, "ImpliedFactType.PredicateInverseReading");
 			}
 		}
+		/// <summary>The inverse reading for the predicate created implicitly via objectification. There is no attempt made to keep the predicate readings unique in ring situations.We allow the model error to populate instead of generating an articial unique reading.</summary>
+		public static string ImpliedFactTypePredicateInverseReadingIndexed
+		{
+			get
+			{
+				return ResourceStrings.GetString(ResourceManagers.Model, "ImpliedFactType.PredicateInverseReadingIndexed");
+			}
+		}
 		/// <summary>The reading for the predicate created implicitly via objectification.There is no attempt made to keep the predicate readings unique in ring situations.We allow the model error to populate instead of generating an articial unique reading.</summary>
 		public static string ImpliedFactTypePredicateReading
 		{
 			get
 			{
 				return ResourceStrings.GetString(ResourceManagers.Model, "ImpliedFactType.PredicateReading");
+			}
+		}
+		/// <summary>The reading for the predicate created implicitly via objectification.There is no attempt made to keep the predicate readings unique in ring situations.We allow the model error to populate instead of generating an articial unique reading.</summary>
+		public static string ImpliedFactTypePredicateReadingIndexed
+		{
+			get
+			{
+				return ResourceStrings.GetString(ResourceManagers.Model, "ImpliedFactType.PredicateReadingIndexed");
 			}
 		}
 		/// <summary>String for generating a component name for a subtype. The {0} replacement field is used for the subtype component name; {1} for the supertype.</summary>

@@ -4,8 +4,8 @@
 		<CopyrightLine>/**************************************************************************\</CopyrightLine>
 		<CopyrightLine>* Natural Object-Role Modeling Architect for Visual Studio                 *</CopyrightLine>
 		<CopyrightLine>*                                                                          *</CopyrightLine>
-		<CopyrightLine>* Copyright © Neumont University. All rights reserved.                     *
-* Copyright © The ORM Foundation. All rights reserved.                     *</CopyrightLine>
+		<CopyrightLine>* Copyright © Neumont University. All rights reserved.                     *</CopyrightLine>
+		<CopyrightLine>* Copyright © The ORM Foundation. All rights reserved.                     *</CopyrightLine>
 		<CopyrightLine>* Copyright © ORM Solutions, LLC. All rights reserved.                     *</CopyrightLine>
 		<CopyrightLine>*                                                                          *</CopyrightLine>
 		<CopyrightLine>* The use and distribution terms for this software are covered by the      *</CopyrightLine>
@@ -127,7 +127,9 @@
 	<ResourceString name="SubtypeFactPredicateInverseReading" model="Model" resourceName="SubtypeFact.PredicateInverseReading"/>
 	<ResourceString name="SubtypeFactPredicateReading" model="Model" resourceName="SubtypeFact.PredicateReading"/>
 	<ResourceString name="ImpliedFactTypePredicateInverseReading" model="Model" resourceName="ImpliedFactType.PredicateInverseReading"/>
+  <ResourceString name="ImpliedFactTypePredicateInverseReadingIndexed" model="Model" resourceName="ImpliedFactType.PredicateInverseReadingIndexed"/>
 	<ResourceString name="ImpliedFactTypePredicateReading" model="Model" resourceName="ImpliedFactType.PredicateReading"/>
+  <ResourceString name="ImpliedFactTypePredicateReadingIndexed" model="Model" resourceName="ImpliedFactType.PredicateReadingIndexed"/>
 	<ResourceString name="SubtypeFactComponentNameFormat" model="Model" resourceName="SubtypeFact.ComponentNameFormat"/>
 	<ResourceString name="AddInternalConstraintTransactionName" model="Diagram" resourceName="AddInternalUniquenessConstraint.TransactionName"/>
 	<ResourceString name="ObjectifyFactTypeTransactionName" model="Diagram" resourceName="ObjectifyFactType.TransactionName"/>

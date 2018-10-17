@@ -890,43 +890,7 @@
 					</plx:callStatic>
 				</plx:branch>
 				<plx:fallbackBranch>
-          <xsl:variable name="subscriptConditions">
-            <plx:expression parens="true">
-              <plx:binaryOperator type="identityInequality">
-						    <plx:left>
-							    <plx:callThis name="ImpliedByObjectification" type="property"/>
-						    </plx:left>
-						    <plx:right>
-							    <plx:nullKeyword/>
-						    </plx:right>
-					    </plx:binaryOperator>
-            </plx:expression>
-          </xsl:variable>
-          <xsl:variable name="subscriptExpression">
-            <plx:expression parens="false">
-              <plx:callInstance name="GetValueOrDefault">
-                <plx:callObject>
-                  <plx:expression>
-                    <plx:callStatic dataTypeName="FactType" name="DetermineImplicitFactTypeRoleNameIndex">
-                      <plx:passParam>
-                        <plx:nameRef name="this"/>
-                      </plx:passParam>
-                      <plx:passParam>
-                        <plx:nameRef name="factRole"/>
-                      </plx:passParam>
-                    </plx:callStatic>
-                  </plx:expression>
-                </plx:callObject>
-                <plx:passParam>
-                  <plx:value type="i4" data="0"/>
-                </plx:passParam>
-              </plx:callInstance>
-            </plx:expression>
-          </xsl:variable>
-          <xsl:call-template name="PopulateBasicRoleReplacements">
-            <xsl:with-param name="SubscriptConditions" select="exsl:node-set($subscriptConditions)"/>
-            <xsl:with-param name="SubscriptExpression" select="exsl:node-set($subscriptExpression)"/>
-          </xsl:call-template>
+          <xsl:call-template name="PopulateBasicRoleReplacements"/>
 					<xsl:variable name="factMockup">
 						<cvg:Fact/>
 					</xsl:variable>

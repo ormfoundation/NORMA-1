@@ -1534,8 +1534,11 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 				nearRoleRole.RolePlayer = nestedRole.RolePlayer;
 			}
 
-			// Add forward reading
-			LinkedElementCollection<ReadingOrder> readingOrders = impliedFactType.ReadingOrderCollection;
+            // Attach the objectification to the fact
+            impliedFactType.ImpliedByObjectification = objectification;
+
+            // Add forward reading
+            LinkedElementCollection<ReadingOrder> readingOrders = impliedFactType.ReadingOrderCollection;
 			ReadingOrder order = new ReadingOrder(partition);
 			LinkedElementCollection<RoleBase> orderRoles;
 			readingOrders.Add(order);
@@ -1544,7 +1547,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 			orderRoles.Add(farRole);
 			Reading reading = new Reading(partition);
 			reading.ReadingOrder = order;
-			reading.Text = ResourceStrings.ImpliedFactTypePredicateReading;
+			reading.Text = Reading.DetermineImplicitFactTypePredicateReading(impliedFactType, false);
 
 			// Add inverse reading
 			order = new ReadingOrder(partition);
@@ -1554,13 +1557,10 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 			orderRoles.Add(nearRole);
 			reading = new Reading(partition);
 			reading.ReadingOrder = order;
-			reading.Text = ResourceStrings.ImpliedFactTypePredicateInverseReading;
+			reading.Text = Reading.DetermineImplicitFactTypePredicateReading(impliedFactType, true);
 
-			// Attach the objectification to the fact
-			impliedFactType.ImpliedByObjectification = objectification;
-
-			// Attach the fact to the model or owner.
-			Dictionary<object, object> contextInfo = partition.Store.TransactionManager.CurrentTransaction.TopLevelTransaction.Context.ContextInfo;
+            // Attach the fact to the model or owner.
+            Dictionary<object, object> contextInfo = partition.Store.TransactionManager.CurrentTransaction.TopLevelTransaction.Context.ContextInfo;
 			object duplicateNamesKey = ORMModel.AllowDuplicateNamesKey;
 			bool removeDuplicateNamesKey = false;
 			object duplicateSignaturesKey = ORMModel.BlockDuplicateReadingSignaturesKey;
@@ -1920,9 +1920,9 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 			}
 			else
 			{
-				// Since the fact type does not need an implied objectification, we can just delete the existing objectification.
+                // Since the fact type does not need an implied objectification, we can just delete the existing objectification.
 				explicitObjectification.Delete();
-				if (!objectTypeMustSurvive)
+                if (!objectTypeMustSurvive)
 				{
 					// Since we determined the object type doesn't need to survive, we can just delete it as well.
 					objectType.Delete();
@@ -2255,8 +2255,8 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 						orderRoles.Add(farRole);
 						Reading reading = new Reading(partition);
 						reading.ReadingOrder = order;
-						reading.Text = ResourceStrings.ImpliedFactTypePredicateReading;
-						notifyAdded.ElementAdded(order, true);
+						reading.Text = Reading.DetermineImplicitFactTypePredicateReading(impliedFact, false);
+                        notifyAdded.ElementAdded(order, true);
 						notifyAdded.ElementAdded(reading, false);
 
 						// Add inverse reading
@@ -2267,8 +2267,8 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 						orderRoles.Add(nearRole);
 						reading = new Reading(partition);
 						reading.ReadingOrder = order;
-						reading.Text = ResourceStrings.ImpliedFactTypePredicateInverseReading;
-						notifyAdded.ElementAdded(order, true);
+						reading.Text = Reading.DetermineImplicitFactTypePredicateReading(impliedFact, true);
+                        notifyAdded.ElementAdded(order, true);
 						notifyAdded.ElementAdded(reading, false);
 					}
 					else if (unaryRole != null && unaryRole != factRole)

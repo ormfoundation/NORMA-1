@@ -118,14 +118,6 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 						if (rolePlayer != null)
 						{
 							name = rolePlayer.Name;
-                            if (ReadingOrder.FactType != null)
-                            {
-                                int? index = FactType.DetermineImplicitFactTypeRoleNameIndex(ReadingOrder.FactType, role);
-                                if (index.HasValue)
-                                {
-                                    name = string.Format(CultureInfo.InvariantCulture, ResourceStrings.ModelReferenceModePickerFormatString, name, index);
-                                }
-                            }
 						}
 					}
 					roleNames[i] = (name.Length != 0) ? name : ("{" + i.ToString(CultureInfo.InvariantCulture) + "}");
@@ -590,18 +582,8 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 							if (replaceIndex < roleCount)
 							{
                                 ObjectType rolePlayer = roles[replaceIndex].Role.RolePlayer;
-                                if (rolePlayer == null) return "";
-								
-                                int? index = FactType.DetermineImplicitFactTypeRoleNameIndex(factType, roles[replaceIndex]);
-                                if (index.HasValue)
-                                {
-                                    return string.Format(CultureInfo.InvariantCulture, ResourceStrings.ModelReferenceModePickerFormatString, VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, SignatureRenderingOptions), index);
-                                }
-                                else
-                                {
-                                    return VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, SignatureRenderingOptions);
-                                }
-							}
+                                return rolePlayer != null ? VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, SignatureRenderingOptions) : "";
+                            }
 							return "";
 						});
 				}
@@ -617,18 +599,12 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 		/// <returns>An expanded reading signature.</returns>
 		public static string GenerateReadingSignature(string readingText, IList<ObjectType> rolePlayers, bool reverseReading)
 		{
-            /*
-             * NOR-53 - I do not believe that we need to worry about indexes in this function since this is only called from the FactEditorSaver.cs file which is used when a fact is being changed.
-             * We are currently only indexing the role players if they are involved in an implied fact type.
-             */
-
 			int rolePlayerCount = rolePlayers.Count;
 			return Reading.ReplaceFields(
 				VerbalizationHyphenBinder.DehyphenateReadingText(readingText),
 				delegate(int replaceIndex)
 				{
 					ObjectType rolePlayer;
-
 					return (replaceIndex < rolePlayerCount && null != (rolePlayer = rolePlayers[reverseReading ? (rolePlayerCount - replaceIndex - 1) : replaceIndex])) ?
 						VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, SignatureRenderingOptions) :
 						"";
@@ -778,7 +754,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 					null != factType.ImpliedByObjectification)
 				{
 					RoleBase testRole = order.RoleCollection[0];
-					return Text == ((testRole is RoleProxy || testRole is ObjectifiedUnaryRole) ? ResourceStrings.ImpliedFactTypePredicateReading : ResourceStrings.ImpliedFactTypePredicateInverseReading);
+					return Text == ((testRole is RoleProxy || testRole is ObjectifiedUnaryRole) ? Reading.DetermineImplicitFactTypePredicateReading(factType, false) : Reading.DetermineImplicitFactTypePredicateReading(factType, true));
 				}
 				return false;
 			}
@@ -790,13 +766,85 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 				return IsDefault;
 			}
 		}
-		#endregion // IReading Implementation
-		#region Reading text utility fields and methods
-		/// <summary>
-		/// Named field for the <see cref="Match"/> passed to the <see cref="ReadingTextFieldReplaceWithMatch"/> delegate.
-		/// Represents the entire replacement field, including the curly braces.
-		/// </summary>
-		public const string ReplaceFieldsMatchFieldGroupName = "Field";
+        #endregion // IReading Implementation
+        #region Reading text utility fields and methods
+        /// <summary>
+        /// Determines whether or not an index is required for the predicate of the implicit fact type.
+        /// It is necessary to add an index to the predicate if the objectified fact type the fact type is associated with has the same Object Type for multiple roles.
+        /// Example:
+        ///     Objectified Fact Type - Server hosts Server
+        ///         Implied Fact Types
+        ///             Server1 is involved in ServerHostsServer
+        ///             Server2 is involved in ServerHostsServer
+        /// If the fact type is not implicit or an index is not needed then null is returned.
+        /// </summary>
+        /// <param name="impliedFactType">The implied fact type to evaulate</param>
+        /// <returns></returns>
+        public static int? DetermineImplicitFactTypePredicateIndex(FactType impliedFactType)
+        {
+            if (impliedFactType == null) return null;
+            if (impliedFactType.OrderedRoleCollection.Count < 1) return null;
+
+            // See if this is an implied fact type, if not then no index required
+            Objectification impliedObjectification = impliedFactType.ImpliedByObjectification;
+            if (impliedObjectification == null) return null;
+
+            // Get the first role of the implied fact type, this is the role we need to see if is repeated in the objectified fact type
+            RoleBase role = impliedFactType.OrderedRoleCollection[0];
+
+            // If the roleplayer has multiple references in the objectification fact type then it will need indexes in the implied fact types
+            int instanceCount = 0;
+            foreach (RoleBase nestedRole in impliedObjectification.NestedFactType.OrderedRoleCollection)
+            {
+                if (nestedRole.Role.RolePlayer.Equals(role.Role.RolePlayer))
+                {
+                    instanceCount++;
+                }
+            }
+            if (instanceCount < 2) return null;
+
+            // There are multiple instances so determine the index
+            // To do this we need to count the implied fact types this role is in until we get to this fact type in the list of implied fact types on the objectification
+            // For implied fact types we only need to worry about the near role
+            instanceCount = 1;
+            foreach (FactType implied in impliedObjectification.ImpliedFactTypeCollection)
+            {
+                if (implied.Equals(impliedFactType)) break;
+                if (implied.OrderedRoleCollection[0].Role.RolePlayer.Equals(role.Role.RolePlayer))
+                {
+                    instanceCount++;
+                }
+            }
+
+            // Return the instanceCount if greater than zero
+            if (instanceCount > 0) return instanceCount;
+
+            return null;
+        }
+        /// <summary>
+        /// Determines the correct reading to use for the implied fact type.
+        /// </summary>
+        /// <param name="impliedFactType">The fact type to get the reading for.</param>
+        /// <param name="isInverse">Whether or not the reading is inversed.</param>
+        /// <returns></returns>
+        public static string DetermineImplicitFactTypePredicateReading(FactType impliedFactType, bool isInverse)
+        {
+            int? index = Reading.DetermineImplicitFactTypePredicateIndex(impliedFactType);
+
+            if (index.HasValue)
+            {
+                return (isInverse ? ResourceStrings.ImpliedFactTypePredicateInverseReadingIndexed : ResourceStrings.ImpliedFactTypePredicateReadingIndexed).Replace("{index}", index.ToString());
+            }
+            else
+            {
+                return isInverse ? ResourceStrings.ImpliedFactTypePredicateInverseReading : ResourceStrings.ImpliedFactTypePredicateReading;
+            }
+        }
+        /// <summary>
+        /// Named field for the <see cref="Match"/> passed to the <see cref="ReadingTextFieldReplaceWithMatch"/> delegate.
+        /// Represents the entire replacement field, including the curly braces.
+        /// </summary>
+        public const string ReplaceFieldsMatchFieldGroupName = "Field";
 		/// <summary>
 		/// Named field for the <see cref="Match"/> passed to the <see cref="ReadingTextFieldReplaceWithMatch"/> delegate.
 		/// Represents the index portion of the  replacement field, not including the curly braces.

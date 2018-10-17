@@ -295,6 +295,7 @@
     <Compile Include="Resources\ResourceStringsGenerator.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>ResourceStringsGenerator.xml</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="ShapeModel\ORMBaseShapeSubField.cs" />
     <Compile Include="ShapeModel\ORMShape.SerializationExtensions.cs">
@@ -705,6 +706,7 @@
     <Content Include="Resources\ResourceStringsGenerator.xml">
       <Generator>NUPlixLoader</Generator>
       <LastGenOutput>ResourceStringsGenerator.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Shell\catalog.xml" />
     <EmbeddedResource Include="ShapeModel\ConnectModelNoteAllowed.cur" />

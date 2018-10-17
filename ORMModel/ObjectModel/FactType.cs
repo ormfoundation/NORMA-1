@@ -1930,8 +1930,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 
                             for (int k = 0; k < roleCount; ++k)
 							{
-                                objectNameOptions[CoreVerbalizationOption.Index] = FactType.DetermineImplicitFactTypeRoleNameIndex(this, roles[k]);
-								ObjectType rolePlayer = roles[k].Role.RolePlayer;
+                                ObjectType rolePlayer = roles[k].Role.RolePlayer;
 								replacements[k] = (rolePlayer != null) ?
 									VerbalizationHelper.NormalizeObjectTypeName(rolePlayer, objectNameOptions) :
 									ResourceStrings.ModelReadingEditorMissingRolePlayerText;
@@ -1967,60 +1966,6 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 			return retVal;
 		}
 		private string myGeneratedName = String.Empty;
-        /// <summary>
-        /// Determines wether or not an index is required when generating the role name for the implicit fact type.
-        /// It is necessary to add an index to a role if the objectified fact type the fact type is associated with has the same Object Type for multiple roles.
-        /// Example:
-        ///     Objectified Fact Type - Server hosts Server
-        ///         Implied Fact Types
-        ///             Server1 is involved in ServerHostsServer
-        ///             Server2 is involved in ServerHostsServer
-        /// If the fact type is not implicit or an index is not needed then null is returned.
-        /// </summary>
-        /// <param name="impliedFactType">The implied fact type to evaulate</param>
-        /// <param name="role">The role in the implied fact type to evaluate</param>
-        /// <returns></returns>
-        public static int? DetermineImplicitFactTypeRoleNameIndex(FactType impliedFactType, RoleBase role)
-        {
-            if (impliedFactType == null) return null;
-            if (role == null) return null;
-
-            // See if this is an implied fact type, if not then no index required
-            Objectification impliedObjectification = impliedFactType.ImpliedByObjectification;
-            if (impliedObjectification == null) return null;
-
-            // If the roleplayer has multiple references in the objectification fact type then it will need indexes in the implied fact types
-            int instanceCount = 0;
-            foreach (RoleBase nestedRole in impliedObjectification.NestedFactType.OrderedRoleCollection)
-            {
-                if (nestedRole.Role.RolePlayer.Equals(role.Role.RolePlayer))
-                {
-                    instanceCount++;
-                }
-            }
-            if (instanceCount < 2) return null;
-
-            // There are multiple instances so determine the index
-            // To do this we need to count the implied fact types this role is in until we get to this fact type in the list of implied fact types on the objectification
-            // For implied fact types we only need to worry about the near role
-            instanceCount = 1;
-            foreach (FactType implied in impliedObjectification.ImpliedFactTypeCollection)
-            {
-                if (implied.Equals(impliedFactType)) break;
-                if (implied.OrderedRoleCollection[0].Role.RolePlayer.Equals(role.Role.RolePlayer))
-                {
-                    instanceCount++;
-                }
-            }
-
-            // Return the instanceCount if greater than zero
-            if (instanceCount > 0) return instanceCount;
-
-            // It is possible to subscript this but I'm not sure we want to do that
-            // https://stackoverflow.com/questions/14819895/how-to-write-superscript-upper-index-in-visual-studio
-
-            return null;
-        }
         /// <summary>
         /// The auto-generated name for this fact type. Based on the
         /// first reading in the first reading order.

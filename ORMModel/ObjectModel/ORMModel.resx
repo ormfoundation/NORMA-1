@@ -244,8 +244,16 @@
     <value>{0} involves {1}</value>
     <comment>The inverse reading for the predicate created implicitly via objectification. There is no attempt made to keep the predicate readings unique in ring situations.We allow the model error to populate instead of generating an articial unique reading.</comment>
   </data>
+  <data name="ImpliedFactType.PredicateInverseReadingIndexed" xml:space="preserve">
+    <value>{0} involves{index} {1}</value>
+    <comment>The inverse reading for the predicate created implicitly via objectification. There is no attempt made to keep the predicate readings unique in ring situations.We allow the model error to populate instead of generating an articial unique reading.</comment>
+  </data>
   <data name="ImpliedFactType.PredicateReading" xml:space="preserve">
     <value>{0} is involved in {1}</value>
+    <comment>The reading for the predicate created implicitly via objectification.There is no attempt made to keep the predicate readings unique in ring situations.We allow the model error to populate instead of generating an articial unique reading.</comment>
+  </data>
+  <data name="ImpliedFactType.PredicateReadingIndexed" xml:space="preserve">
+    <value>{0} is involved in{index} {1}</value>
     <comment>The reading for the predicate created implicitly via objectification.There is no attempt made to keep the predicate readings unique in ring situations.We allow the model error to populate instead of generating an articial unique reading.</comment>
   </data>
   <data name="LoadException.IncompatibleAssembly" xml:space="preserve">
