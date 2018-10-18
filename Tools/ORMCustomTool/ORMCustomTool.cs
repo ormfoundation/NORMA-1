@@ -669,7 +669,7 @@ namespace ORMSolutions.ORMArchitect.ORMCustomTool
 				// UNDONE: Localize message.
 				report(
 					"No BuildItemGroup was found for this ORM file. Use the ORMGeneratorSettings dialog to add items to the group, or clear the CustomTool property.",
-					ReportType.Warning,
+					ReportType.Comment,
 					null);
 				return;
 			}
