@@ -69,6 +69,10 @@
         </DirectorySearch>
       </Property>
       <Condition Message="!(loc.VSWhereRequired)">VSWHEREPATH OR Installed</Condition>
+      <!-- Include the VS setup bootstrappers (https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio?view=vs-2017)-->
+      <Binary Id="VS_Setup_Bootstrapper_Community" SourceFile="VSSetupBootstrappers\vs_community.exe" />
+      <Binary Id="VS_Setup_Bootstrapper_Professional" SourceFile="VSSetupBootstrappers\vs_professional.exe" />
+      <Binary Id="VS_Setup_Bootstrapper_Enterprise" SourceFile="VSSetupBootstrappers\vs_enterprise.exe" />
     <?else?>
       <Property Id="VSPRODUCTDIR">
         <RegistrySearch Id="VSProductDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="ProductDir" Type="directory" Win64="$(var.Win64)"/>
@@ -171,6 +175,13 @@
     <CustomAction Id="ArpInstallLocationCustomAction" Property="ARPINSTALLLOCATION" Value="[$(var.DefaultShortProductDir)]"/>
 		<?ifdef VSIXInstall?>
       <?if $(var.VSVer) = v15.0?>
+        <!-- Make sure the VS installer is updated (we only need to do this once since the installer is shared -->
+        <CustomAction Id="VS_Installer_Update" BinaryKey="VS_Setup_Bootstrapper_Community" ExeCommand="--update --quiet --passive --wait" Return="ignore" Impersonate="no" Execute="commit"/>
+        <!-- Make sure the required workloads and components are installed -->
+        <CustomAction Id="VS_Component_Check_Community" BinaryKey="VS_Setup_Bootstrapper_Community" ExeCommand="modify --installPath &quot;[VSPRODUCTDIR_Community]&quot; --quiet --passive --wait --add Microsoft.VisualStudio.Component.DslTools" Return="ignore" Impersonate="no" Execute="commit"/>
+        <CustomAction Id="VS_Component_Check_Professional" BinaryKey="VS_Setup_Bootstrapper_Professional" ExeCommand="modify --installPath &quot;[VSPRODUCTDIR_Professional]&quot; --quiet --passive --wait --add Microsoft.VisualStudio.Component.DslTools" Return="ignore" Impersonate="no" Execute="commit"/>
+        <CustomAction Id="VS_Component_Check_Enterprise" BinaryKey="VS_Setup_Bootstrapper_Enterprise" ExeCommand="modify --installPath &quot;[VSPRODUCTDIR_Enterprise]&quot; --quiet --passive --wait --add Microsoft.VisualStudio.Component.DslTools" Return="ignore" Impersonate="no" Execute="commit"/>
+        <!-- Configure VS for new packages-->
         <CustomAction Id="DevEnvSetupCustomAction_Community" Property="VSDEVENVPATH_Community" ExeCommand="/setup" Return="ignore" Impersonate="no" Execute="commit"/>
         <CustomAction Id="DevEnvSetupCustomAction_Professional" Property="VSDEVENVPATH_Professional" ExeCommand="/setup" Return="ignore" Impersonate="no" Execute="commit"/>
         <CustomAction Id="DevEnvSetupCustomAction_Enterprise" Property="VSDEVENVPATH_Enterprise" ExeCommand="/setup" Return="ignore" Impersonate="no" Execute="commit"/>
@@ -188,9 +199,13 @@
 			<Custom Before="InstallInitialize" Action="ArpInstallLocationCustomAction"/>
 			<?ifdef DoDevenvSetup?>
         <?if $(var.VSVer) = v15.0?>
-          <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction_Community"/>
-          <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction_Professional"/>
-          <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction_Enterprise"/>
+          <Custom Before="InstallFinalize" Action="VS_Installer_Update">NOT Installed AND NOT PATCH</Custom>
+          <Custom After="VS_Installer_Update" Action="VS_Component_Check_Community">NOT Installed AND NOT PATCH AND VSPRODUCTDIREXISTS_Community</Custom>  
+          <Custom After="VS_Component_Check_Community" Action="DevEnvSetupCustomAction_Community">VSPRODUCTDIREXISTS_Community</Custom>
+          <Custom After="VS_Installer_Update" Action="VS_Component_Check_Professional">NOT Installed AND NOT PATCH AND VSPRODUCTDIREXISTS_Professional</Custom>
+          <Custom After="VS_Component_Check_Professional" Action="DevEnvSetupCustomAction_Professional">VSPRODUCTDIREXISTS_Professional</Custom>
+          <Custom After="VS_Installer_Update" Action="VS_Component_Check_Enterprise">NOT Installed AND NOT PATCH AND VSPRODUCTDIREXISTS_Enterprise</Custom>
+          <Custom After="VS_Component_Check_Enterprise" Action="DevEnvSetupCustomAction_Enterprise">VSPRODUCTDIREXISTS_Enterprise</Custom>
         <?else?>
           <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction"/>
         <?endif?>

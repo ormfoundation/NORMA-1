@@ -65,11 +65,11 @@
 
 	<!-- Custom UI Strings -->
 	<String Id="RollbackMustNotBeDisabled">This setup requires that installation rollback support not be disabled.</String>
-	<String Id="ProgressTextDevEnvSetupCustomAction">Running Visual Studio VS Package Setup command. This may take several minutes...</String>
+	<String Id="ProgressTextConfiguringVSCustomAction">Configuring Visual Studio, this may take several minutes...</String>
 	<!-- HACK: DevEnvSetupCustomAction runs as a commit custom action, which makes it hard to show UI for it. -->
 	<!-- Instead, we hijack the ProgressTextRollbackCleanup string, since it is the last string normally shown before the custom action executes. -->
-	<String Id="ProgressTextRollbackCleanup">Running Visual Studio VS Package Setup command. This may take several minutes...</String>
-	<String Id="ProgressTextRollbackCleanupVSIX">Running Visual Studio VS Package Setup command.</String>
+	<String Id="ProgressTextRollbackCleanup">Configuring Visual Studio, this may take several minutes...</String>
+	<String Id="ProgressTextRollbackCleanupVSIX">Configuring Visual Studio, this may take several minutes...</String>
 
 	<String Id="ProgressTextExportTempHxDs">MSHelp2: Exporting temporary HxDs</String>
 	<String Id="ProgressTextRollbackHelpTransaction">MSHelp2: Rolling back transaction</String>

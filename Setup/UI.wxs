@@ -25,7 +25,14 @@
 		</InstallUISequence>
 		
 		<UI Id="NORMAUI">
-			<ProgressText Action="DevEnvSetupCustomAction">!(loc.ProgressTextDevEnvSetupCustomAction)</ProgressText>
+      <ProgressText Action="VS_Installer_Update">!(loc.ProgressTextConfiguringVSCustomAction)</ProgressText>
+      <ProgressText Action="VS_Component_Check_Community">!(loc.ProgressTextConfiguringVSCustomAction)</ProgressText>
+      <ProgressText Action="VS_Component_Check_Professional">!(loc.ProgressTextConfiguringVSCustomAction)</ProgressText>
+      <ProgressText Action="VS_Component_Check_Enterprise">!(loc.ProgressTextConfiguringVSCustomAction)</ProgressText>
+      <ProgressText Action="DevEnvSetupCustomAction">!(loc.ProgressTextConfiguringVSCustomAction)</ProgressText>
+      <ProgressText Action="DevEnvSetupCustomAction_Community">!(loc.ProgressTextConfiguringVSCustomAction)</ProgressText>
+      <ProgressText Action="DevEnvSetupCustomAction_Professional">!(loc.ProgressTextConfiguringVSCustomAction)</ProgressText>
+      <ProgressText Action="DevEnvSetupCustomAction_Enterprise">!(loc.ProgressTextConfiguringVSCustomAction)</ProgressText>
 
 			<ProgressText Action="CA_ExportTempHxDs.3643236F_FC70_11D3_A536_0090278A1BB8">!(loc.ProgressTextExportTempHxDs)</ProgressText>
 			<ProgressText Action="CA_RollbackHelpTransaction.3643236F_FC70_11D3_A536_0090278A1BB8">!(loc.ProgressTextRollbackHelpTransaction)</ProgressText>
