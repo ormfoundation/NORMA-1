@@ -92,6 +92,7 @@ IF NOT DEFINED TargetDslToolsAssemblyVersion (SET TargetDslToolsAssemblyVersion=
 IF NOT DEFINED ProjectToolsVersion (SET ProjectToolsVersion=2.0)
 IF NOT DEFINED ProjectToolsAssemblyVersion (SET ProjectToolsAssemblyVersion=2.0.0.0)
 IF NOT DEFINED VSRegistryConfigHive (SET VSRegistryConfigHive=HKLM)
+IF NOT DEFINED UseGAC (SET UseGAC=TRUE)
 GOTO:EOF
 
 :_SetupVersionVars_v9.0
@@ -109,6 +110,7 @@ IF NOT DEFINED ProjectToolsVersion (SET ProjectToolsVersion=3.5)
 IF NOT DEFINED ProjectToolsAssemblySuffix (SET ProjectToolsAssemblySuffix=.v3.5)
 IF NOT DEFINED ProjectToolsAssemblyVersion (SET ProjectToolsAssemblyVersion=3.5.0.0)
 IF NOT DEFINED VSRegistryConfigHive (SET VSRegistryConfigHive=HKLM)
+IF NOT DEFINED UseGAC (SET UseGAC=TRUE)
 GOTO:EOF
 
 :_SetupVersionVars_v10.0
@@ -128,6 +130,7 @@ IF NOT DEFINED ProjectToolsAssemblyVersion (SET ProjectToolsAssemblyVersion=4.0.
 IF NOT DEFINED VSRegistryConfigDecorator (SET VSRegistryConfigDecorator=_Config)
 IF NOT DEFINED VSRegistryConfigHive (SET VSRegistryConfigHive=HKCU)
 IF NOT DEFINED VSIXExtensionDir (SET VSIXExtensionDir=Extensions\ORM Solutions\Natural ORM Architect\1.0)
+IF NOT DEFINED UseGAC (SET UseGAC=TRUE)
 GOTO:EOF
 
 :_SetupVersionVars_v11.0
@@ -147,6 +150,7 @@ IF NOT DEFINED ProjectToolsAssemblyVersion (SET ProjectToolsAssemblyVersion=4.0.
 IF NOT DEFINED VSRegistryConfigDecorator (SET VSRegistryConfigDecorator=_Config)
 IF NOT DEFINED VSRegistryConfigHive (SET VSRegistryConfigHive=HKCU)
 IF NOT DEFINED VSIXExtensionDir (SET VSIXExtensionDir=Extensions\ORM Solutions\Natural ORM Architect\1.0)
+IF NOT DEFINED UseGAC (SET UseGAC=TRUE)
 GOTO:EOF
 
 :_SetupVersionVars_v12.0
@@ -166,6 +170,7 @@ IF NOT DEFINED ProjectToolsAssemblyVersion (SET ProjectToolsAssemblyVersion=12.0
 IF NOT DEFINED VSRegistryConfigDecorator (SET VSRegistryConfigDecorator=_Config)
 IF NOT DEFINED VSRegistryConfigHive (SET VSRegistryConfigHive=HKCU)
 IF NOT DEFINED VSIXExtensionDir (SET VSIXExtensionDir=Extensions\ORM Solutions\Natural ORM Architect\1.0)
+IF NOT DEFINED UseGAC (SET UseGAC=TRUE)
 GOTO:EOF
 
 :_SetupVersionVars_v14.0
@@ -185,6 +190,7 @@ IF NOT DEFINED ProjectToolsAssemblyVersion (SET ProjectToolsAssemblyVersion=14.0
 IF NOT DEFINED VSRegistryConfigDecorator (SET VSRegistryConfigDecorator=_Config)
 IF NOT DEFINED VSRegistryConfigHive (SET VSRegistryConfigHive=HKCU)
 IF NOT DEFINED VSIXExtensionDir (SET VSIXExtensionDir=Extensions\ORM Solutions\Natural ORM Architect\1.0)
+IF NOT DEFINED UseGAC (SET UseGAC=TRUE)
 GOTO:EOF
 
 :_SetupVersionVars_v15.0

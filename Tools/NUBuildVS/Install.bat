@@ -12,20 +12,21 @@ IF /I "%TargetVisualStudioVersion%"=="v8.0" (
 IF NOT DEFINED VsSDKVsctDir CALL:SETVAR "VsSDKVsctDir" "%VSIPDir%\VisualStudioIntegration\Tools\Bin"
 
 :: GAC the VSCT compiler so that we can use it.
-gacutil.exe /nologo /f /i "%VsSDKVsctDir%\VSCTCompress.dll"
-gacutil.exe /nologo /f /i "%VsSDKVsctDir%\VSCTLibrary.dll"
-gacutil.exe /nologo /f /i "%VsSDKVsctDir%\VSCT.exe"
+if '%UseGAC%'=='TRUE' (
+	gacutil.exe /nologo /f /i "%VsSDKVsctDir%\VSCTCompress.dll"
+	gacutil.exe /nologo /f /i "%VsSDKVsctDir%\VSCTLibrary.dll"
+	gacutil.exe /nologo /f /i "%VsSDKVsctDir%\VSCT.exe"
 
-IF /I "%TargetVisualStudioVersion%"=="v8.0" (
-	CALL:VSCT_OLD
-) ELSE IF /I "%TargetVisualStudioVersion%"=="v9.0" (
-	CALL:VSCT_OLD
-) ELSE (
-	ngen.exe install "VSCTCompress, Version=%TargetVisualStudioAssemblyVersion%, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" /NoDependencies /nologo
-	ngen.exe install "VSCTLibrary, Version=%TargetVisualStudioAssemblyVersion%, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" /NoDependencies /nologo
-	ngen.exe install "VSCT, Version=%TargetVisualStudioAssemblyVersion%, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" /NoDependencies /nologo
+	IF /I "%TargetVisualStudioVersion%"=="v8.0" (
+		CALL:VSCT_OLD
+	) ELSE IF /I "%TargetVisualStudioVersion%"=="v9.0" (
+		CALL:VSCT_OLD
+	) ELSE (
+		ngen.exe install "VSCTCompress, Version=%TargetVisualStudioAssemblyVersion%, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" /NoDependencies /nologo
+		ngen.exe install "VSCTLibrary, Version=%TargetVisualStudioAssemblyVersion%, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" /NoDependencies /nologo
+		ngen.exe install "VSCT, Version=%TargetVisualStudioAssemblyVersion%, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" /NoDependencies /nologo
+	)
 )
-
 
 IF NOT EXIST "%MSBuildExtensionsPath%\Neumont\VisualStudio" (MKDIR "%MSBuildExtensionsPath%\Neumont\VisualStudio")
 

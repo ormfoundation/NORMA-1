@@ -2,35 +2,32 @@
 
 @ECHO OFF
 
-:: Add Nuget packages to GAC for NGEN
-ECHO "Checking GAC for Nuget Assemblies..."
+:: Update the path for dlls needed by the build, we don't want to add them to the GAC
 FOR /f "usebackq tokens=*" %%i IN (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
 	SET VSInstallDir=%%i
 )
-gacutil.exe /l "Microsoft.VisualStudio.TextTemplating.Interfaces.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
-IF NOT ERRORLEVEL 1 (
-    gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.TextTemplating.Interfaces.10.0.dll"
-)
-gacutil.exe /l "Microsoft.VisualStudio.TextTemplating.Interfaces.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
-IF NOT ERRORLEVEL 1 (
-    gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.TextTemplating.Interfaces.11.0.dll"
-)
-gacutil.exe /l "Microsoft.VisualStudio.TextTemplating.15.0, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
-IF NOT ERRORLEVEL 1 (
-    gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.TextTemplating.15.0.dll"
-)
+::Add SDK tools to path if vsct cannot be found, fails to compile in VS2015 otherwise
 
-::Add SDK tools to path if vsct cannot be found, fails to compile in VS2015 otherwise
-::This is still need due to VCSTCompress.dll lacking an assembly manifest so we can't add it to the GAC
-FOR /f "usebackq tokens=*" %%i IN (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
-	SET VSInstallDir=%%i
+for %%i in (Microsoft.VisualStudio.Shell.15.0.dll) do (set INPATH=%%~s$PATH:i)
+if '%INPATH%'=='' (
+	CALL:EXTENDPATH "%VSInstallDir%\Common7\IDE\PublicAssemblies"
 )
-::Add SDK tools to path if vsct cannot be found, fails to compile in VS2015 otherwise
-for %%i in (vsct.exe) do (set EXISTINGVSCT=%%~s$PATH:i)
-if '%EXISTINGVSCT%'=='' (
+SET INPATH=
+for %%i in (Microsoft.VisualStudio.Utilities.dll) do (set INPATH=%%~s$PATH:i)
+if '%INPATH%'=='' (
+	CALL:EXTENDPATH "%VSInstallDir%\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0"
+)
+SET INPATH=
+for %%i in (Microsoft.Build.Framework.dll) do (set INPATH=%%~s$PATH:i)
+if '%INPATH%'=='' (
+	CALL:EXTENDPATH "%VSInstallDir%\MSBuild\15.0\Bin"
+)
+SET INPATH=
+for %%i in (vsct.exe) do (set INPATH=%%~s$PATH:i)
+if '%INPATH%'=='' (
 	CALL:EXTENDPATH "%VSInstallDir%\VSSDK\VisualStudioIntegration\Tools\Bin"
 )
-SET EXISTINGVSCT=
+SET INPATH=
 goto:EOF
 
 :EXTENDPATH
