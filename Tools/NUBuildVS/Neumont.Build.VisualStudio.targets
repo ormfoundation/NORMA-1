@@ -66,7 +66,8 @@
 	</PropertyGroup>
 
 	<!-- Compiles .vsct files into .cto files. -->
-	<UsingTask TaskName="VSCTCompiler" AssemblyName="VSCT, Version=$(VsctAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+	<UsingTask Condition=" '$(UseGAC)' == 'TRUE' " TaskName="VSCTCompiler" AssemblyName="VSCT, Version=$(VsctAssemblyVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+  <UsingTask Condition=" '$(UseGAC)' != 'TRUE' " TaskName="VSCTCompiler" AssemblyFile="$(VsctPath)"/>
 	<ItemGroup>
 		<!-- Add the CompileVsct Item name to the AvailableItemName item, so that it shows up in the Build Action drop-down menu in the properties windows in Visual Studio (and the equivalent in other IDEs). -->
 		<AvailableItemName Include="CompileVsct"/>

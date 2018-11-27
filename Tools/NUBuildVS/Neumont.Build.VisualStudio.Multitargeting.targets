@@ -45,6 +45,7 @@
 				<GeneratedDslFileSuffix Condition=" '$GeneratedDslFileSuffix)' == '' "></GeneratedDslFileSuffix>
 				<ProjectToolsVersion Condition=" '$(ProjectToolsVersion)' == '' ">2.0</ProjectToolsVersion>
 				<ProjectToolsAssemblyVersion Condition=" '$(ProjectToolsAssemblyVersion)' == '' ">2.0.0.0</ProjectToolsAssemblyVersion>
+        <UseGAC Condition=" '$(UseGAC)' == ''">TRUE</UseGAC>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(TargetVisualStudioVersion)' == 'v9.0' ">
@@ -63,6 +64,7 @@
 				<ProjectToolsVersion Condition=" '$(ProjectToolsVersion)' == '' ">3.5</ProjectToolsVersion>
 				<ProjectToolsAssemblySuffix Condition=" '$(ProjectToolsAssemblySuffix)' == '' ">.v3.5</ProjectToolsAssemblySuffix>
 				<ProjectToolsAssemblyVersion Condition=" '$(ProjectToolsAssemblyVersion)' == '' ">3.5.0.0</ProjectToolsAssemblyVersion>
+        <UseGAC Condition=" '$(UseGAC)' == ''">TRUE</UseGAC>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(TargetVisualStudioVersion)' == 'v10.0' ">
@@ -83,6 +85,7 @@
 				<ProjectToolsAssemblyVersion Condition=" '$(ProjectToolsAssemblyVersion)' == '' ">4.0.0.0</ProjectToolsAssemblyVersion>
 				<GeneratedDslFileSuffix Condition=" '$(GeneratedDslFileSuffix)' == '' ">.VS2010</GeneratedDslFileSuffix>
 				<DefineConstants>$(DefineConstants);NO_SECURITYPERMISSIONATTRIBUTE</DefineConstants>
+        <UseGAC Condition=" '$(UseGAC)' == ''">TRUE</UseGAC>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(TargetVisualStudioVersion)' == 'v11.0' ">
@@ -103,6 +106,7 @@
 				<ProjectToolsAssemblyVersion Condition=" '$(ProjectToolsAssemblyVersion)' == '' ">4.0.0.0</ProjectToolsAssemblyVersion>
 				<GeneratedDslFileSuffix Condition=" '$(GeneratedDslFileSuffix)' == '' ">.VS2010</GeneratedDslFileSuffix>
 				<DefineConstants>$(DefineConstants);NO_SECURITYPERMISSIONATTRIBUTE</DefineConstants>
+        <UseGAC Condition=" '$(UseGAC)' == ''">TRUE</UseGAC>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(TargetVisualStudioVersion)' == 'v12.0' ">
@@ -123,6 +127,7 @@
 				<ProjectToolsAssemblyVersion Condition=" '$(ProjectToolsAssemblyVersion)' == '' ">12.0.0.0</ProjectToolsAssemblyVersion>
 				<GeneratedDslFileSuffix Condition=" '$(GeneratedDslFileSuffix)' == '' ">.VS2010</GeneratedDslFileSuffix>
 				<DefineConstants>$(DefineConstants);NO_SECURITYPERMISSIONATTRIBUTE</DefineConstants>
+        <UseGAC Condition=" '$(UseGAC)' == ''">TRUE</UseGAC>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(TargetVisualStudioVersion)' == 'v14.0' ">
@@ -143,6 +148,7 @@
 				<ProjectToolsAssemblyVersion Condition=" '$(ProjectToolsAssemblyVersion)' == '' ">14.0.0.0</ProjectToolsAssemblyVersion>
 				<GeneratedDslFileSuffix Condition=" '$(GeneratedDslFileSuffix)' == '' ">.VS2010</GeneratedDslFileSuffix>
 				<DefineConstants>$(DefineConstants);NO_SECURITYPERMISSIONATTRIBUTE</DefineConstants>
+        <UseGAC Condition=" '$(UseGAC)' == ''">TRUE</UseGAC>
 			</PropertyGroup>
 		</When>
     <When Condition=" '$(TargetVisualStudioVersion)' == 'v15.0' ">
@@ -163,6 +169,8 @@
         <ProjectToolsAssemblyVersion Condition=" '$(ProjectToolsAssemblyVersion)' == '' ">15.1.0.0</ProjectToolsAssemblyVersion>
         <GeneratedDslFileSuffix Condition=" '$(GeneratedDslFileSuffix)' == '' ">.VS2010</GeneratedDslFileSuffix>
         <DefineConstants>$(DefineConstants);NO_SECURITYPERMISSIONATTRIBUTE</DefineConstants>
+        <UseGAC Condition=" '$(UseGAC)' == ''">FALSE</UseGAC>
+        <VsctPath Condition=" '$(VsctPath)' == ''">$(MSBuildBinPath)\..\..\..\VSSDK\VisualStudioIntegration\Tools\Bin\vsct.exe</VsctPath>
       </PropertyGroup>
     </When>
 		<Otherwise>

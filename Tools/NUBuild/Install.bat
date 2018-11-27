@@ -37,6 +37,8 @@ if '%UseGAC%'=='TRUE' (
 ::Obviously, the utilities need to be on the path for this to work, which will happen automatically in
 ::a Visual Studio command prompt.
 gacutil.exe /nologo /f /i "%RootDir%\bin\Neumont.Build%ProjectToolsAssemblySuffix%.dll"
-ngen.exe install "Neumont.Build%ProjectToolsAssemblySuffix%, Version=%ProjectToolsAssemblyVersion%, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f" /NoDependencies /nologo /verbose
+if '%UseGAC%'=='TRUE' (
+	ngen.exe install "Neumont.Build%ProjectToolsAssemblySuffix%, Version=%ProjectToolsAssemblyVersion%, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f" /NoDependencies /nologo /verbose
+)
 
 GOTO:EOF

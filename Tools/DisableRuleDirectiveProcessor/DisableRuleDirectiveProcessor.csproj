@@ -14,7 +14,7 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\ORMPackage.snk</AssemblyOriginatorKeyFile>
     <InstallInGac>true</InstallInGac>
-    <GenerateNativeImage>true</GenerateNativeImage>
+    <GenerateNativeImage Condition=" '$(TargetVisualStudioVersion)' != 'v15.0'">true</GenerateNativeImage>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'DisableRuleDirectiveProcessor' ">
     <DebugType>full</DebugType>
