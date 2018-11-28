@@ -160,7 +160,10 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 		XCOPY /Y /D /V /Q "%RootDir%\VSIXInstall\ORMDesignerIcon.png" "%VSIXInstallDir%\"
 		XCOPY /Y /D /V /Q "%RootDir%\VSIXInstall\ORMDesignerPreview.png" "%VSIXInstallDir%\"
 		XCOPY /Y /D /V /Q "%RootDir%\LICENSE.txt" "%VSIXInstallDir%\"
-		REG ADD "%VSRegistryConfigHive%\%VSRegistryConfigRootBase%\%VSRegistryRootVersion%%VSRegistryRootSuffix%\ExtensionManager\EnabledExtensions" /v "efddc549-1646-4451-8a51-e5a5e94d647c,%ProductMajorVersion%.%ProductMinorVersion%" /d "%VSIXInstallDir%\\" /f 1>NUL
+
+		IF "%VSInformationSource%"=="Registry" (
+			REG ADD "%VSRegistryConfigHive%\%VSRegistryConfigRootBase%\%VSRegistryRootVersion%%VSRegistryRootSuffix%\ExtensionManager\EnabledExtensions" /v "efddc549-1646-4451-8a51-e5a5e94d647c,%ProductMajorVersion%.%ProductMinorVersion%" /d "%VSIXInstallDir%\\" /f 1>NUL
+		)
 	)
 
 	REG ADD "%DesignerRegistryRoot%\DesignerSettings\Core" /v "SettingsFile" /d "%NORMADir%\Xml\ORMDesignerSettings.xml" /f 1>NUL
@@ -181,6 +184,15 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
 
 	IF /I "%RunDevEnvSetup%"=="True" (ECHO Running 'devenv.exe /RootSuffix "%VSRegistryRootSuffix%" /Setup'... This may take a few minutes... && "%VSEnvironmentPath%" /RootSuffix "%VSRegistryRootSuffix%" /Setup)
+
+	IF "%VSInformationSource%"=="VSWhere" (
+		:: https://visualstudioextensions.vlasovstudio.com/2017/06/29/changing-visual-studio-2017-private-registry-settings/
+		for /d %%f in (%LOCALAPPDATA%\Microsoft\VisualStudio\15.0_*Exp) do (
+			reg load HKLM\_TMPVS_%%~nxf "%%f\privateregistry.bin"
+			REG ADD "HKLM\_TMPVS_%%~nxf\Software\Microsoft\VisualStudio\%%~nxf\ExtensionManager\EnabledExtensions" /v "efddc549-1646-4451-8a51-e5a5e94d647c,%ProductMajorVersion%.%ProductMinorVersion%" /d "%VSIXInstallDir%\\" /f 1>NUL
+			reg unload HKLM\_TMPVS_%%~nxf
+		)
+	)
 )
 
 GOTO:EOF
