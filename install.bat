@@ -182,16 +182,23 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 	REG ADD "HKCR\ormfile\shell\open\ddeexec\application" /ve /d "VisualStudio.%TargetVisualStudioMajorMinorVersion%" /f 1>NUL
 	REG ADD "HKCR\ormfile\shell\open\ddeexec\topic" /ve /d "system" /f 1>NUL
 
-
-	IF /I "%RunDevEnvSetup%"=="True" (ECHO Running 'devenv.exe /RootSuffix "%VSRegistryRootSuffix%" /Setup'... This may take a few minutes... && "%VSEnvironmentPath%" /RootSuffix "%VSRegistryRootSuffix%" /Setup)
-
 	IF "%VSInformationSource%"=="VSWhere" (
+		ECHO Running 'devenv.exe /RootSuffix "%VSRegistryRootSuffix%" /Setup'... This may take a few minutes...
+		CALL "%VSEnvironmentPath%" /RootSuffix "%VSRegistryRootSuffix%" /Setup
+
+		:: Make sure that the devenv process has let go of the rgistry file (the timeout command will not work correctly here due to the process not allowing input redirection... so we have to use the ping "hack")
+		ECHO Waiting to make sure devenv.exe has let go of the registry hive...
+		:: https://stackoverflow.com/questions/1672338/how-to-sleep-for-5-seconds-in-windowss-command-prompt-or-dos
+		ping 127.0.0.1 -n 30 > NUL
+
 		:: https://visualstudioextensions.vlasovstudio.com/2017/06/29/changing-visual-studio-2017-private-registry-settings/
 		for /d %%f in (%LOCALAPPDATA%\Microsoft\VisualStudio\15.0_*Exp) do (
-			reg load HKLM\_TMPVS_%%~nxf "%%f\privateregistry.bin"
+			reg load HKLM\_TMPVS_%%~nxf "%%f\privateregistry.bin" > NUL
 			REG ADD "HKLM\_TMPVS_%%~nxf\Software\Microsoft\VisualStudio\%%~nxf\ExtensionManager\EnabledExtensions" /v "efddc549-1646-4451-8a51-e5a5e94d647c,%ProductMajorVersion%.%ProductMinorVersion%" /d "%VSIXInstallDir%\\" /f 1>NUL
-			reg unload HKLM\_TMPVS_%%~nxf
+			reg unload HKLM\_TMPVS_%%~nxf > NUL
 		)
+	) ELSE (
+		IF /I "%RunDevEnvSetup%"=="True" (ECHO Running 'devenv.exe /RootSuffix "%VSRegistryRootSuffix%" /Setup'... This may take a few minutes... && "%VSEnvironmentPath%" /RootSuffix "%VSRegistryRootSuffix%" /Setup)
 	)
 )
 
