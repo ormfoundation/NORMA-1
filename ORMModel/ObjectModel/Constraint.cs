@@ -4690,7 +4690,6 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 					}
 				}
 
-
 				if (numOfViolatingConstraints >= minNumViolatingConstraints)
 				{
 					hasError = true;
@@ -4701,7 +4700,26 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 				}
 			}
 
-			if (hasError)
+            // NOR-91: If this is an exclusion then check the modality of the exlcusion constraint, Deontic is ok
+            if (hasError && isExclusion)
+            {
+                // Get the exclusion constraint
+                ExclusionConstraint checkConstraint = null;
+                foreach (SetComparisonConstraintRoleSequence sequence in sequences)
+                {
+                    checkConstraint = sequence.Constraint as ExclusionConstraint;
+                    if (checkConstraint != null) break;
+                }
+                if (checkConstraint != null)
+                {
+                    if (checkConstraint.Modality == ConstraintModality.Deontic)
+                    {
+                        hasError = false;
+                    }
+                }
+            }
+
+            if (hasError)
 			{
 				if (isExclusion)
 				{

@@ -183,6 +183,14 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 	REG ADD "HKCR\ormfile\shell\open\ddeexec\topic" /ve /d "system" /f 1>NUL
 
 	IF "%VSInformationSource%"=="VSWhere" (
+		:: https://visualstudioextensions.vlasovstudio.com/2017/06/29/changing-visual-studio-2017-private-registry-settings/
+		:: Register NORMA as an enabled extension so that devenv /setup will pull in the extension settions
+		for /d %%f in (%LOCALAPPDATA%\Microsoft\VisualStudio\15.0_*Exp) do (
+			reg load HKLM\_TMPVS_%%~nxf "%%f\privateregistry.bin" > NUL
+			REG ADD "HKLM\_TMPVS_%%~nxf\Software\Microsoft\VisualStudio\%%~nxf\ExtensionManager\EnabledExtensions" /v "efddc549-1646-4451-8a51-e5a5e94d647c,%ProductMajorVersion%.%ProductMinorVersion%" /d "%VSIXInstallDir%\\" /f 1>NUL
+			reg unload HKLM\_TMPVS_%%~nxf > NUL
+		)
+
 		ECHO Running 'devenv.exe /RootSuffix "%VSRegistryRootSuffix%" /Setup'... This may take a few minutes...
 		CALL "%VSEnvironmentPath%" /RootSuffix "%VSRegistryRootSuffix%" /Setup
 
@@ -192,6 +200,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 		ping 127.0.0.1 -n 30 > NUL
 
 		:: https://visualstudioextensions.vlasovstudio.com/2017/06/29/changing-visual-studio-2017-private-registry-settings/
+		:: Execute this a second time to make sure that devenv /setup does not disable the extension, sometimes it will due to NORMA depending on Modeling SDK
 		for /d %%f in (%LOCALAPPDATA%\Microsoft\VisualStudio\15.0_*Exp) do (
 			reg load HKLM\_TMPVS_%%~nxf "%%f\privateregistry.bin" > NUL
 			REG ADD "HKLM\_TMPVS_%%~nxf\Software\Microsoft\VisualStudio\%%~nxf\ExtensionManager\EnabledExtensions" /v "efddc549-1646-4451-8a51-e5a5e94d647c,%ProductMajorVersion%.%ProductMinorVersion%" /d "%VSIXInstallDir%\\" /f 1>NUL
