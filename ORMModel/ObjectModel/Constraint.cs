@@ -4676,7 +4676,53 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 							validationInfo.ConstraintTypesInPotentialConflict,
 							delegate(IConstraint matchConstraint)
 							{
-								if (constrFound == null)
+                                // NOR-92: We need to check to see if the manditory constraint's parent role is a sub-type of the exclusion constraint, if so it's not an error
+                                if (!(sequence.Constraint is ExclusionConstraint exclusionConstraint))
+                                {
+                                    exclusionConstraint = matchConstraint as ExclusionConstraint;
+                                }
+                                if (!(sequence.Constraint is MandatoryConstraint mandatoryConstraint))
+                                {
+                                    mandatoryConstraint = matchConstraint as MandatoryConstraint;
+                                }
+                                if ((exclusionConstraint != null) && (mandatoryConstraint != null))
+                                {
+                                    // Get the mandatory role player
+                                    ObjectType mandatoryBaseObject = null;
+                                    if (mandatoryConstraint.RoleCollection.Count == 1)
+                                    {
+                                        mandatoryBaseObject = mandatoryConstraint.RoleCollection[0].RolePlayer;
+                                    }
+                                    if ((mandatoryBaseObject != null) && mandatoryBaseObject.IsSubtype)
+                                    {
+                                        // Get the objects in the exclusion constraint minus the mandatory base object
+                                        List<ObjectType> exclusionObjects = new List<ObjectType>();
+                                        foreach (FactConstraint fc in exclusionConstraint.FactConstraintCollection)
+                                        {
+                                            foreach (ConstraintRoleSequenceHasRole r in fc.ConstrainedRoleCollection)
+                                            {
+                                                if ((r.Role.RolePlayer != null) && (r.Role.RolePlayer != mandatoryBaseObject))
+                                                {
+                                                    exclusionObjects.Add(r.Role.RolePlayer);
+                                                }
+                                            }
+                                        }
+
+                                        // There should only be one other object in the exclusion list now, if so see if the mandatory base object is a sub-type of the other exclusion object
+                                        if (exclusionObjects.Count == 1)
+                                        {
+                                            if (mandatoryBaseObject.SupertypeCollection != null)
+                                            {
+                                                foreach (ObjectType o in mandatoryBaseObject.SupertypeCollection)
+                                                {
+                                                    if (o == exclusionObjects[0]) return false;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (constrFound == null)
 								{
 									constrFound = new List<IConstraint>();
 								}
