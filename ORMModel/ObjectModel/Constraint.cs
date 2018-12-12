@@ -4676,7 +4676,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 							validationInfo.ConstraintTypesInPotentialConflict,
 							delegate(IConstraint matchConstraint)
 							{
-                                // NOR-92: We need to check to see if the manditory constraint's parent role is a sub-type of the exclusion constraint, if so it's not an error
+                                // NOR-92: We need to check to see if the mandatory constraint's parent role is a sub-type of the exclusion constraint, if so it's not an error
                                 if (!(sequence.Constraint is ExclusionConstraint exclusionConstraint))
                                 {
                                     exclusionConstraint = matchConstraint as ExclusionConstraint;
