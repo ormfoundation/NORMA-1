@@ -2138,4 +2138,8 @@ The remaining replacements are trimmed for leading/trailing whitespace
     <value>Browser Settings</value>
     <comment>Description for target VerbalizationBrowser customizations. Displays in the verbalization customizations dropdown in the options page.</comment>
   </data>
+  <data name="VSCommandSet.RenameImpliedFactTypeSignatures.TransactionName" xml:space="preserve">
+    <value>Rename Implied Fact Type Signatures</value>
+    <comment>The transaction used when renaming the implied fact type reading signatures that are in error.</comment>
+  </data>
 </root>

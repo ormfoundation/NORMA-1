@@ -275,6 +275,9 @@
 			<Group guid="guidORMDesignerCommandSet" id="groupIdFactEditorCommitCommands" priority="0x0010">
 				<Parent guid="guidORMDesignerCommandSet" id="menuIdFactEditorContextMenu"/>
 			</Group>
+    
+      <!--Visual Studio Groups-->
+      <Group guid="guidVSCommandSet" id="groupIdErrorList" />
 		</Groups>
 
 		<Buttons>
@@ -980,6 +983,14 @@
 				</Strings>
 			</Button>
 
+      <!--Visual Studio Buttons-->
+      <Button guid="guidVSCommandSet" id="cmdIdRenameImpliedFactTypeSignatures" type="Button">
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Rename Implied Fact Type Signatures</ButtonText>
+        </Strings>
+      </Button>
 		</Buttons>
 
 		<!--<Combos/>-->
@@ -999,6 +1010,17 @@
 		<CommandPlacement guid="CMDSETID_StandardCommandSet97" id="cmdidPropertiesWindow" priority="0x0010">
 			<Parent guid="guidORMDesignerCommandSet" id="groupIdProperties"/>
 		</CommandPlacement>
+    
+    <!-- Visual Studio Command Sets-->
+    <!-- See: "{{VS Install}}\VSSDK\VisualStudioIntegration\Common\Inc\ShellCmdPlace.vsct" -->
+    <!-- Groups into Menus-->
+    <CommandPlacement guid="guidVSCommandSet" id="groupIdErrorList" priority="0xFFFF">
+      <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ERRORLIST"/>
+    </CommandPlacement>
+    <!-- Buttons in Groups-->
+    <CommandPlacement guid="guidVSCommandSet" id="cmdIdRenameImpliedFactTypeSignatures" priority="0x0001" >
+      <Parent guid="guidVSCommandSet" id="groupIdErrorList"/>
+    </CommandPlacement>
 	</CommandPlacements>
 
 	<!--<VisibilityConstraints/>-->
@@ -1285,6 +1307,16 @@
 			<IDSymbol value="0x3300" name="cmdIdSelectInGroupList"/>
 			<!-- Reserve 33__ range for include in group list. -->
 		</GuidSymbol>
+    <!-- Keep in sync with VSCommandSet.cs-->
+    <GuidSymbol name="guidVSCommandSet" value="{C61E6D02-2B5F-475D-804E-60F4F155E5E0}">
+      <!-- Menus (0x01__) -->
+			
+			<!-- Groups (0x10__) -->
+			<IDSymbol value="0x1000" name="groupIdErrorList"/>
+			
+      <!-- Commands (0x2___) -->
+			<IDSymbol value="0x2000" name="cmdIdRenameImpliedFactTypeSignatures"/>
+    </GuidSymbol>
 		<GuidSymbol name="guidFactEditorFactory" value="{EE99A954-82C4-4098-A2BD-5C75E3D138A7}"/>
 		<GuidSymbol name="guidORMVerbalizationToolbarImages" value="{5743D786-F88A-45F9-8117-F915CA6A9433}">
 			<IDSymbol value="0x0001" name="bmpIdShowNegativeVerbalization"/>

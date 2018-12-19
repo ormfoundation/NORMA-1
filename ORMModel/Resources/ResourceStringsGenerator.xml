@@ -603,4 +603,5 @@
 	<ResourceString name="VerbalizationTargetHtmlReportDisplayName" model="Model" resourceName="VerbalizationTarget.HtmlReport.DisplayName"/>
 	<ResourceString name="VerbalizationTargetHtmlReportCommandName" model="Model" resourceName="VerbalizationTarget.HtmlReport.CommandName"/>
 	<ResourceString name="VerbalizationTargetVerbalizationBrowserDisplayName" model="Model" resourceName="VerbalizationTarget.VerbalizationBrowser.DisplayName"/>
+  <ResourceString name="RenameImpliedFactTypeSignaturesTransactionName" model="Model" resourceName="VSCommandSet.RenameImpliedFactTypeSignatures.TransactionName"/>
 </ResourceStrings>

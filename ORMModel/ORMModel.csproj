@@ -369,6 +369,7 @@
     <Compile Include="..\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
+    <Compile Include="Shell\VSCommandSet.cs" />
     <None Include="..\ORMPackage.snk">
       <Link>Properties\ORMPackage.snk</Link>
     </None>

@@ -145,6 +145,7 @@ namespace ORMSolutions.ORMArchitect.Core.Shell
 		/// The commands supported by this package
 		/// </summary>
 		private CommandSet myCommandSet;
+        private CommandSet vsCommandSet;
 		private ORMDesignerFontsAndColors myFontAndColorService;
 		private ORMDesignerSettings myDesignerSettings;
 		private string myVerbalizationDirectory;
@@ -327,6 +328,7 @@ namespace ORMSolutions.ORMArchitect.Core.Shell
 
 				// setup commands
 				(myCommandSet = ORMDesignerDocView.CreateCommandSet(this)).Initialize();
+                (vsCommandSet = ORMDesignerDocData.CreateVisualStudioCommandSet(this)).Initialize();
 
 				// Create managed tool windows
 				AddToolWindow(typeof(ORMModelBrowserToolWindow));
@@ -510,7 +512,6 @@ namespace ORMSolutions.ORMArchitect.Core.Shell
 				IServiceContainer service = (IServiceContainer)this;
 				service.RemoveService(typeof(ORMDesignerFontsAndColors), true);
 				service.RemoveService(typeof(FactEditorLanguageService), true);
-				// dispose of any private objects here
 			}
 			base.Dispose(disposing);
 		}

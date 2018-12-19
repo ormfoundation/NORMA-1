@@ -4419,6 +4419,14 @@ namespace ORMSolutions.ORMArchitect.Core
 				return ResourceStrings.GetString(ResourceManagers.Model, "VerbalizationTarget.VerbalizationBrowser.DisplayName");
 			}
 		}
+		/// <summary>The transaction used when renaming the implied fact type reading signatures that are in error.</summary>
+		public static string RenameImpliedFactTypeSignaturesTransactionName
+		{
+			get
+			{
+				return ResourceStrings.GetString(ResourceManagers.Model, "VSCommandSet.RenameImpliedFactTypeSignatures.TransactionName");
+			}
+		}
 	}
 	#endregion // ResourceStrings class
 }
