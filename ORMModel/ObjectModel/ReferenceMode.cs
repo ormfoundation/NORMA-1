@@ -303,9 +303,11 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 						duplicateReferenceModeTracker.Add(newMode.Name, 0);
 					};
 				}
-				newIntrinsicAction(CreateIntrinsicReferenceMode(store, model, popularKind, "Id", PortableDataType.NumericAutoCounter));
-				newIntrinsicAction(CreateIntrinsicReferenceMode(store, model, popularKind, "id", PortableDataType.NumericAutoCounter));
-				newIntrinsicAction(CreateIntrinsicReferenceMode(store, model, popularKind, "ID", PortableDataType.NumericAutoCounter));
+                // NOR-95: Change PortableDataType.NumericAutoCounter to PortableDataType.NumericSignedInteger
+				newIntrinsicAction(CreateIntrinsicReferenceMode(store, model, popularKind, "Id", PortableDataType.NumericSignedInteger));
+				newIntrinsicAction(CreateIntrinsicReferenceMode(store, model, popularKind, "id", PortableDataType.NumericSignedInteger));
+				newIntrinsicAction(CreateIntrinsicReferenceMode(store, model, popularKind, "ID", PortableDataType.NumericSignedInteger));
+                // End NOR-95
 				newIntrinsicAction(CreateIntrinsicReferenceMode(store, model, popularKind, "Name", PortableDataType.TextVariableLength));
 				newIntrinsicAction(CreateIntrinsicReferenceMode(store, model, popularKind, "name", PortableDataType.TextVariableLength));
 				newIntrinsicAction(CreateIntrinsicReferenceMode(store, model, popularKind, "Code", PortableDataType.TextFixedLength));
