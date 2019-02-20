@@ -1847,14 +1847,14 @@ namespace ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge
 				addNamePartCallback(customFormat.Substring(trailingTextIndex), null);
 			}
 		}
-		/// <summary>
-		/// Used to separate <see cref="ObjectType"/> names into constituent parts if the names are
-		/// generated, such as with an objectification or an ValueType associated with a <see cref="ReferenceMode"/>.
-		/// </summary>
-		/// <param name="objectType">The EntityType to test</param>
-		/// <param name="nameGenerator">The <see cref="NameGenerator"/>, used to retrieve abbreviations for <see cref="ObjectType"/> names</param>
-		/// <param name="addNamePartCallback">Used to add the names to the name collection</param>
-		public static void SeparateObjectTypeParts(ObjectType objectType, NameGenerator nameGenerator, AddNamePart addNamePartCallback)
+        /// <summary>
+        /// Used to separate <see cref="ObjectType"/> names into constituent parts if the names are
+        /// generated, such as with an objectification or an ValueType associated with a <see cref="ReferenceMode"/>.
+        /// </summary>
+        /// <param name="objectType">The EntityType to test</param>
+        /// <param name="nameGenerator">The <see cref="NameGenerator"/>, used to retrieve abbreviations for <see cref="ObjectType"/> names</param>
+        /// <param name="addNamePartCallback">Used to add the names to the name collection</param>
+        public static void SeparateObjectTypeParts(ObjectType objectType, NameGenerator nameGenerator, AddNamePart addNamePartCallback)
 		{
 			string abbreviatedName = objectType.GetAbbreviatedName(nameGenerator, false);
 			if (abbreviatedName != null)

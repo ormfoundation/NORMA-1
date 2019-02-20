@@ -190,8 +190,10 @@ namespace ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge
 					 null != (order = ((Reading)e.ModelElement).ReadingOrder) &&
 					 null != (factType = order.FactType))
 				 {
-					 FrameworkDomainModel.DelayValidateElement(factType, UpdateChildNamesForFactTypeDelayed);
-				 }
+                    // NOR-97 - The Fact Type's name may now be used for the concept type name, so we need to check to see if the concept type needs to be updated when the reading is updated
+                    FrameworkDomainModel.DelayValidateElement(factType, UpdateNameForFactTypeDelayed);
+                    FrameworkDomainModel.DelayValidateElement(factType, UpdateChildNamesForFactTypeDelayed);
+                }
 			 }
 			 /// <summary>
 			 /// DeleteRule: typeof(ORMSolutions.ORMArchitect.Core.ObjectModel.ReadingOrderHasReading)
@@ -609,7 +611,8 @@ namespace ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge
 			[DelayValidatePriority(DomainModelType = typeof(ORMCoreDomainModel), Order = DelayValidatePriorityOrder.AfterDomainModel)]
 			[DelayValidateReplaces("UpdateChildNamesForFactTypeDelayed")]
 			[DelayValidateReplaces("UpdateChildNamesForFactTypeDelayedWorker")]
-			private static void SignificantFactTypeChangeDelayed(ModelElement element)
+            [DelayValidateReplaces(nameof(UpdateNameForFactTypeDelayed))]
+            private static void SignificantFactTypeChangeDelayed(ModelElement element)
 			{
 				FactType factType;
 				ORMModel model;
@@ -639,7 +642,7 @@ namespace ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge
 					FrameworkDomainModel.DelayValidateElement(model, DelayValidateModel);
 				}
 			}
-			private static void SignificantObjectTypeChange(ObjectType objectType)
+            private static void SignificantObjectTypeChange(ObjectType objectType)
 			{
 				if (objectType != null &&
 					!objectType.IsDeleted &&
@@ -662,25 +665,28 @@ namespace ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge
 					FrameworkDomainModel.DelayValidateElement(model, DelayValidateModel);
 				}
 			}
-			[DelayValidatePriority(DomainModelType = typeof(ORMCoreDomainModel), Order = DelayValidatePriorityOrder.AfterDomainModel)]
+            [DelayValidatePriority(DomainModelType = typeof(ORMCoreDomainModel), Order = DelayValidatePriorityOrder.AfterDomainModel)]
 			private static void UpdateNamesForObjectTypeDelayed(ModelElement element)
 			{
 				if (!element.IsDeleted)
 				{
 					ObjectType objectType = (ObjectType)element;
-					string objectTypeName = objectType.Name;
 					ConceptType conceptType = ConceptTypeIsForObjectType.GetConceptType(objectType);
-					LinkedElementCollection<FactType> pathFactTypes;
+                    LinkedElementCollection<FactType> pathFactTypes;
 					int factTypeCount;
 					RoleBase towardsRole;
 					RoleBase oppositeRole;
 					if (null != conceptType)
 					{
+                        // NOR-97-Determine the correct name for the concept type
+                        AbstractionModelIsForORMModel oialModelIsForORMModel = AbstractionModelIsForORMModel.GetLinkToORMModel(conceptType.Model);
+                        string conceptTypeName = oialModelIsForORMModel.DetermineConceptTypeName(objectType);
+                        
 						// Precheck name to minimize downstream calls, the property change
 						// will check itself.
-						if (conceptType.Name != objectTypeName)
+						if (conceptType.Name != conceptTypeName)
 						{
-							conceptType.Name = objectTypeName;
+							conceptType.Name = conceptTypeName;
 							foreach (ConceptTypeReferencesConceptType reference in ConceptTypeReferencesConceptType.GetLinksToReferencingConceptTypeCollection(conceptType))
 							{
 								pathFactTypes = ConceptTypeChildHasPathFactType.GetPathFactTypeCollection(reference);
@@ -705,7 +711,8 @@ namespace ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge
 					InformationTypeFormat informationTypeFormat = InformationTypeFormatIsForValueType.GetInformationTypeFormat(objectType);
 					if (null != informationTypeFormat)
 					{
-						if (informationTypeFormat.Name != objectTypeName)
+                        string objectTypeName = objectType.Name;
+                        if (informationTypeFormat.Name != objectTypeName)
 						{
 							informationTypeFormat.Name = objectTypeName;
 							foreach (InformationType informationType in InformationType.GetLinksToConceptTypeCollection(informationTypeFormat))
@@ -722,7 +729,17 @@ namespace ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge
 					}
 				}
 			}
-			[DelayValidatePriority(DomainModelType = typeof(ORMCoreDomainModel), Order = DelayValidatePriorityOrder.AfterDomainModel)]
+            [DelayValidatePriority(DomainModelType = typeof(ORMCoreDomainModel), Order = DelayValidatePriorityOrder.AfterDomainModel)]
+            private static void UpdateNameForFactTypeDelayed(ModelElement element)
+            {
+                if (!element.IsDeleted)
+                {
+                    FactType factType = (FactType)element;
+                    AbstractionModelIsForORMModel oialModelIsForORMModel = AbstractionModelIsForORMModel.GetLinkToAbstractionModel(factType.Model);
+                    oialModelIsForORMModel.RenameRelevantConceptType(factType);
+                }
+            }
+            [DelayValidatePriority(DomainModelType = typeof(ORMCoreDomainModel), Order = DelayValidatePriorityOrder.AfterDomainModel)]
 			private static void UpdateChildNamesForFactTypeDelayed(ModelElement element)
 			{
 				if (!element.IsDeleted)

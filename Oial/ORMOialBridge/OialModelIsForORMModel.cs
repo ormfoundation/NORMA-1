@@ -37,7 +37,7 @@ namespace ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge
 		/// <summary>
 		/// The algorithm version written to the file
 		/// </summary>
-		public const string CurrentAlgorithmVersion = "1.009";
+		public const string CurrentAlgorithmVersion = "1.010";
 		#endregion // CurrentAlgorithmVersion constant
 		#region ValidationPriority enum
 		/// <summary>
@@ -958,8 +958,11 @@ namespace ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge
 				// If it should have a conctpt type...
 				if (ObjectTypeIsConceptType(objectType, factTypeMappings))
 				{
+                    // NOR-97 The name of the concept type/table now is determined by whether or not the object type is a value type and if it is independent
+                    string conceptTypeName = this.DetermineConceptTypeName(objectType, factTypeMappings);
+
 					// Create the ConceptType object.
-					PropertyAssignment name = new PropertyAssignment(ConceptType.NameDomainPropertyId, objectType.Name);
+					PropertyAssignment name = new PropertyAssignment(ConceptType.NameDomainPropertyId, conceptTypeName);
 					ConceptType conceptType = new ConceptType(Store, name);
 					ConceptTypeIsForObjectType conceptTypeIsForObjectType = new ConceptTypeIsForObjectType(conceptType, objectType);
 
@@ -975,13 +978,13 @@ namespace ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge
 						RoleAssignment informationTypeFormat = new RoleAssignment(InformationType.InformationTypeFormatDomainRoleId, valueTypeInformationTypeFormat);
 						RoleAssignment[] roleAssignments = { conceptTypeRole, informationTypeFormat };
 						PropertyAssignment isMandatory = new PropertyAssignment(InformationType.IsMandatoryDomainPropertyId, true);
-						PropertyAssignment informationTypeNameProperty = new PropertyAssignment(InformationType.NameDomainPropertyId, String.Concat(objectType.Name, "Value"));
+						PropertyAssignment informationTypeNameProperty = new PropertyAssignment(InformationType.NameDomainPropertyId, String.Concat(conceptTypeName, "Value"));
 						PropertyAssignment[] informationTypePropertyAssignments = { isMandatory, informationTypeNameProperty };
 
 						// ConceptType for conceptType gets an InformationType that references InformationTypeFormat for conceptType.
 						InformationType informationType = new InformationType(Store, roleAssignments, informationTypePropertyAssignments);
 
-						PropertyAssignment uniquenessNameProperty = new PropertyAssignment(Uniqueness.NameDomainPropertyId, String.Concat(objectType.Name, "Uniqueness"));
+						PropertyAssignment uniquenessNameProperty = new PropertyAssignment(Uniqueness.NameDomainPropertyId, String.Concat(conceptTypeName, "Uniqueness"));
 						PropertyAssignment isPreferred = new PropertyAssignment(Uniqueness.IsPreferredDomainPropertyId, true);
 						PropertyAssignment[] uniquenessPropertyAssignments = { uniquenessNameProperty, isPreferred };
 
@@ -1025,10 +1028,10 @@ namespace ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge
 					if (factTypeMappings.TryGetValue(playedFactType, out factTypeMapping) &&
 						factTypeMapping.TowardsRole == playedRole)
 					{
-						// The fact type has a mapping and that mapping is towards the role played by
-						// this concept type, so we need to generate concept type children for it.
-						GenerateConceptTypeChildrenForFactTypeMapping(factTypeMappings, conceptType, ref conceptTypeHasDeepMappingAway, factTypeMapping, factTypePath, true);
-					}
+                        // The fact type has a mapping and that mapping is towards the role played by
+                        // this concept type, so we need to generate concept type children for it.
+                        GenerateConceptTypeChildrenForFactTypeMapping(factTypeMappings, conceptType, ref conceptTypeHasDeepMappingAway, factTypeMapping, factTypePath, true);
+                    }
 				}
 			}
 		}
@@ -1152,22 +1155,41 @@ namespace ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge
 				}
 				else
 				{
-					Debug.Assert(factTypeMapping.MappingDepth == MappingDepth.Shallow,
+                    Debug.Assert(factTypeMapping.MappingDepth == MappingDepth.Shallow,
 						"Collapse mappings should not come from object types that have a concept type.");
-					
-					// Since this is a shallow mapping, we will create a concept type relation for it.
-					newConceptTypeChild = new ConceptTypeRelatesToConceptType(parentConceptType.Partition,
-						new RoleAssignment[]
-						{
-							new RoleAssignment(ConceptTypeRelatesToConceptType.RelatingConceptTypeDomainRoleId, parentConceptType),
-							new RoleAssignment(ConceptTypeRelatesToConceptType.RelatedConceptTypeDomainRoleId, fromConceptType)
-						},
-						new PropertyAssignment[]
-						{
-							isMandatoryPropertyAssignment,
-							namePropertyAssignment,
-							oppositeNamePropertyAssignment
-						});
+
+                    // NOR-97 - If the concept type is for an object type that is a non-Independent value type then the child needs to be an InformationType instead of a ConceptTypeRelatesToConceptType 
+                    if (factTypeMapping.FromObjectType.IsValueType && !factTypeMapping.FromObjectType.IsIndependent)
+                    {
+                        InformationTypeFormat fromInformationTypeFormat = InformationTypeFormatIsForValueType.GetInformationTypeFormat(factTypeMapping.FromObjectType);
+                        newConceptTypeChild = new InformationType(parentConceptType.Partition,
+                            new RoleAssignment[]
+                            {
+                                new RoleAssignment(InformationType.ConceptTypeDomainRoleId, parentConceptType),
+                                new RoleAssignment(InformationType.InformationTypeFormatDomainRoleId, fromInformationTypeFormat)
+                            },
+                            new PropertyAssignment[]
+                            {
+                                new PropertyAssignment(ConceptTypeChild.IsMandatoryDomainPropertyId, isMandatory),
+                                new PropertyAssignment(ConceptTypeChild.NameDomainPropertyId, name)
+                            });
+                    }
+                    else
+                    {
+                        // Since this is a shallow mapping, we will create a concept type relation for it.
+                        newConceptTypeChild = new ConceptTypeRelatesToConceptType(parentConceptType.Partition,
+                            new RoleAssignment[]
+                            {
+                            new RoleAssignment(ConceptTypeRelatesToConceptType.RelatingConceptTypeDomainRoleId, parentConceptType),
+                            new RoleAssignment(ConceptTypeRelatesToConceptType.RelatedConceptTypeDomainRoleId, fromConceptType)
+                            },
+                            new PropertyAssignment[]
+                            {
+                            isMandatoryPropertyAssignment,
+                            namePropertyAssignment,
+                            oppositeNamePropertyAssignment
+                            });
+                    }
 				}
 			}
 			else
@@ -1474,7 +1496,7 @@ namespace ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge
 		}
 		#endregion // Generation Algorithm Methods
 		#region Helper Methods
-		/// <summary>
+        /// <summary>
 		/// Resolve the name that will be used for a <see cref="ConceptTypeChild"/> given the <see cref="RoleBase"/>
 		/// for the role it results from.
 		/// </summary>
@@ -1631,7 +1653,113 @@ namespace ORMSolutions.ORMArchitect.ORMToORMAbstractionBridge
 
 			return false;
 		}
-		#endregion // Helper Methods
-		#endregion // ORM to OIAL Algorithm Methods
-	}
+        #endregion // Helper Methods
+        #endregion // ORM to OIAL Algorithm Methods
+
+        // NOR-97 - The Concept Type can not derive it's name from an object type or fact type
+        #region ConceptType Naming
+        /// <summary>
+        /// Determines the element to use in naming the <see cref="ConceptType"/>.
+        /// If the <see cref="ObjectType"/> is not a value type or it's independent the the naming element is the <see cref="ObjectType"/>.
+        /// If not then the naming element is first <see cref="FactType"/> that maps toward it.
+        /// </summary>
+        /// <remarks>
+        /// This method should only be called after the ORM to OAIL bridge has been created.
+        /// </remarks>
+        /// <param name="objectType">The <see cref="ObjectType"/> to determine the name for.</param>
+        /// <returns></returns>
+        internal string DetermineConceptTypeName(ObjectType objectType)
+        {
+            if (objectType == null) throw new ArgumentNullException(nameof(objectType));
+
+            // If the object type is not a value type or it is an Independent value type then return the object type's name
+            if (!objectType.IsValueType || objectType.IsIndependent) return objectType.Name;
+
+            // Find the first fact type that maps towards the object type, that is the naming element
+            foreach (Role role in ObjectTypePlaysRole.GetPlayedRoleCollection(objectType))
+            {
+                if (this.ShouldIgnoreFactType(role.BinarizedFactType)) continue;
+
+                FactType factType = FactTypeMapsTowardsRole.GetFactType(role);
+                if (factType != null) return factType.Name;
+            }
+
+            // If no fact type was found then return the name of the object type
+            return objectType.Name;
+        }
+        /// <summary>
+        /// Renames the relevant concept type based on the fact type change.
+        /// </summary>
+        /// <param name="factType">The fact type to evaluate</param>
+        internal void RenameRelevantConceptType(FactType factType)
+        {
+            if (factType == null) throw new ArgumentNullException(nameof(factType));
+
+            // Check to see if there is a mapping for the fact type
+            RoleBase roleBase = FactTypeMapsTowardsRole.GetTowardsRole(factType);
+            if (roleBase != null)
+            {
+                // Check to see if there is a concept type for the role
+                ConceptType conceptType = ConceptTypeIsForObjectType.GetConceptType(roleBase.Role.RolePlayer);
+                if (conceptType != null)
+                {
+                    // Get the name based off the object type, this fact type may or may not effect the name
+                    string conceptTypeName = this.DetermineConceptTypeName(roleBase.Role.RolePlayer);
+                    // Update the name if different
+                    if (conceptType.Name != conceptTypeName)
+                    {
+                        conceptType.Name = conceptTypeName;
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// Determines the name for the <see cref="ConceptType"/>.
+        /// If the <see cref="ObjectType"/> is not a value type or it's independent then use the name of the <see cref="ObjectType"/>.
+        /// If not then use the name of the first <see cref="FactType"/> that maps toward it.
+        /// </summary>
+        /// <param name="objectType">The <see cref="ObjectType"/> to determine the name for.</param>
+        /// <param name="factTypeMappings">The mappings of <see cref="FactType"/>s.</param>
+        /// <returns></returns>
+        private string DetermineConceptTypeName(ObjectType objectType, FactTypeMappingDictionary factTypeMappings)
+        {
+            if (objectType == null) throw new ArgumentNullException(nameof(objectType));
+
+            // If the object type is not a value type or it is an Independent value type then return the object type's name
+            if (!objectType.IsValueType || objectType.IsIndependent) return objectType.Name;
+
+            // The basics of the code below comes from the ObjectTypeIsConceptType method below
+            foreach (Role role in ObjectTypePlaysRole.GetPlayedRoleCollection(objectType))
+            {
+                FactType factType = role.BinarizedFactType;
+                if (this.ShouldIgnoreFactType(factType)) continue;
+
+                FactTypeMapping factTypeMapping = factTypeMappings[factType];
+
+                // If fact type mapping is toward objectType and is not part of the uniqueness key the it causes the objectType to create a conceptType
+                if (factTypeMapping.TowardsObjectType == objectType)
+                {
+                    bool isPartOfPreferredIdentifier = false;
+                    Role fromRole = factTypeMapping.FromRole;
+                    foreach (ConstraintRoleSequence constraintRoleSequence in fromRole.ConstraintRoleSequenceCollection)
+                    {
+                        if (constraintRoleSequence is UniquenessConstraint uniquenessConstraint && uniquenessConstraint.IsPreferred)
+                        {
+                            isPartOfPreferredIdentifier = true;
+                            break;
+                        }
+                    }
+                    if (!isPartOfPreferredIdentifier)
+                    {
+                        // This is the first fact type that causes the objectType to be a concept Type, so use it's name
+                        return factType.Name;
+                    }
+                }
+            }
+
+            // If no fact type was found then return the name of the object type
+            return objectType.Name;
+        }
+        #endregion // ConceptType Naming
+    }
 }

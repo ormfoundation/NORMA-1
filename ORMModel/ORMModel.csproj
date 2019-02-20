@@ -225,10 +225,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Diagram$(GeneratedDslFileSuffix).tt</DependentUpon>
     </Compile>
-    <Compile Include="ObjectModel\GeneratedCode\DomainClasses$(GeneratedDslFileSuffix).cs">
+    <Compile Include="ObjectModel\GeneratedCode\DomainClasses.VS2010.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DomainClasses$(GeneratedDslFileSuffix).tt</DependentUpon>
+      <DependentUpon>DomainClasses.VS2010.tt</DependentUpon>
     </Compile>
     <Compile Include="ObjectModel\GeneratedCode\DomainModel$(GeneratedDslFileSuffix).cs">
       <AutoGen>True</AutoGen>
