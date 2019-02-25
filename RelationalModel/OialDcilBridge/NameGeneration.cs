@@ -875,32 +875,21 @@ namespace ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge
 					{
 						return null;
 					}
-					
-					NameGenerator nameGenerator = TableNameGenerator;
+                    NamePart singleName = default(NamePart);
+                    List<NamePart> nameCollection = null;
+                    NameGenerator nameGenerator = TableNameGenerator;
 
-                    // NOR-97 If the object type is a non-independent value type then we need to use the concept type name instead
-                    ConceptType conceptType = TableIsPrimarilyForConceptType.GetConceptType(table);
-                    ObjectType objectType = ConceptTypeIsForObjectType.GetObjectType(conceptType);
+                    ReferenceModeNaming.SeparateObjectTypeParts(
+                        ConceptTypeIsForObjectType.GetObjectType(TableIsPrimarilyForConceptType.GetConceptType(table)),
+                        nameGenerator,
+                        delegate (NamePart newPart, int? insertIndex)
+                        {
+                            AddToNameCollection(ref singleName, ref nameCollection, newPart, insertIndex.HasValue ? insertIndex.Value : -1, true);
+                        });
 
-                    if (objectType.IsValueType && !objectType.IsIndependent)
-                    {
-                        return GetFinalName(conceptType.Name, null, nameGenerator);
-                    }
-                    else
-                    {
-                        NamePart singleName = default(NamePart);
-                        List<NamePart> nameCollection = null;
-                        ReferenceModeNaming.SeparateObjectTypeParts(
-                            objectType,
-                            nameGenerator,
-                            delegate (NamePart newPart, int? insertIndex)
-                            {
-                                AddToNameCollection(ref singleName, ref nameCollection, newPart, insertIndex.HasValue ? insertIndex.Value : -1, true);
-                            });
-                        string finalName = GetFinalName(singleName, nameCollection, nameGenerator);
-                        return string.IsNullOrEmpty(finalName) ? "TABLE" : finalName;
-                    }
-				}
+                    string finalName = GetFinalName(singleName, nameCollection, nameGenerator);
+                    return string.IsNullOrEmpty(finalName) ? "TABLE" : finalName;
+                }
 				private string GenerateColumnName(Column column, int phase)
 				{
 					if (phase > 1)
@@ -914,27 +903,8 @@ namespace ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge
 
 					if (currentNode == null)
 					{
-                        // NOR-97 - if the associated object type is not a value type and it is not independent then use it's name
-                        ObjectType objectType = column.AssociatedValueType;
-                        if ((objectType != null) && objectType.IsValueType && !objectType.IsIndependent)
-                        {
-                            NamePart valueTypeSingleName = default(NamePart);
-                            List<NamePart> valueTypeNameCollection = null;
-                            ReferenceModeNaming.SeparateObjectTypeParts(
-                                objectType,
-                                generator,
-                                delegate (NamePart newPart, int? insertIndex)
-                                {
-                                    AddToNameCollection(ref valueTypeSingleName, ref valueTypeNameCollection, newPart, insertIndex.HasValue ? insertIndex.Value : -1, true);
-                                });
-                            string valueTypeFinalName = GetFinalName(valueTypeSingleName, valueTypeNameCollection, generator);
-                            return string.IsNullOrEmpty(valueTypeFinalName) ? GetFinalName(ResourceStrings.NameGenerationValueTypeValueColumn, null, generator) : valueTypeFinalName;
-                        }
-                        else
-                        {
-                            return GetFinalName(ResourceStrings.NameGenerationValueTypeValueColumn, null, generator);
-                        }
-					}
+                        return GetFinalName(ResourceStrings.NameGenerationValueTypeValueColumn, null, generator);
+                    }
 
 					// Prepare for adding name parts. The single NamePart string is used when
 					// possible to avoid using the list for a single entry
