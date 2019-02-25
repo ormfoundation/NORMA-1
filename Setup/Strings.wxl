@@ -287,7 +287,11 @@
 
 	<String Id="WelcomeDlg_Title">[ProductName] Setup</String>
 	<String Id="WelcomeDlgBitmap">WixUI_Bmp_Dialog</String>
-	<String Id="WelcomeDlgDescription">The Setup Wizard will install [ProductName] on your computer. Click Next to continue or Cancel to exit the Setup Wizard.</String>
+	<String Id="WelcomeDlgDescription">The Setup Wizard will install [ProductName] on your computer.
+
+**The installation may take several minutes to complete.**
+
+Click Next to continue or Cancel to exit the Setup Wizard.</String>
 	<String Id="WelcomeDlgTitle">{\WixUI_Font_Bigger}Welcome to the [ProductName] Setup Wizard</String>
 
 	<String Id="WelcomeEulaDlg_Title">[ProductName] Setup</String>
