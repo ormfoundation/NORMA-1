@@ -882,7 +882,7 @@ namespace ORMSolutions.ORMArchitect.ORMAbstractionToConceptualDatabaseBridge
                     ReferenceModeNaming.SeparateObjectTypeParts(
                         ConceptTypeIsForObjectType.GetObjectType(TableIsPrimarilyForConceptType.GetConceptType(table)),
                         nameGenerator,
-                        delegate (NamePart newPart, int? insertIndex)
+                        delegate(NamePart newPart, int? insertIndex)
                         {
                             AddToNameCollection(ref singleName, ref nameCollection, newPart, insertIndex.HasValue ? insertIndex.Value : -1, true);
                         });
