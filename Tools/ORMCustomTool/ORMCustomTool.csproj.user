@@ -15,4 +15,7 @@
     <StartArguments>/RootSuffix "Exp"</StartArguments>
     <StartWorkingDirectory>$(SolutionDir)</StartWorkingDirectory>
   </PropertyGroup>
+  <PropertyGroup>
+    <ReferencePath>C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\PrivateAssemblies\;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\PublicAssemblies\</ReferencePath>
+  </PropertyGroup>
 </Project>

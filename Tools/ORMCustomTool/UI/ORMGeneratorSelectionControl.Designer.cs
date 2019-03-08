@@ -45,74 +45,86 @@ namespace ORMSolutions.ORMArchitect.ORMCustomTool
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ORMGeneratorSelectionControl));
-			this.label_GeneratedFilesFor = new System.Windows.Forms.Label();
-			this.virtualTreeControl = new Microsoft.VisualStudio.VirtualTreeGrid.VirtualTreeControl();
-			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-			this.textBox_ORMFileName = new System.Windows.Forms.TextBox();
-			this.button_Cancel = new System.Windows.Forms.Button();
-			this.button_SaveChanges = new System.Windows.Forms.Button();
-			this.SuspendLayout();
-			// 
-			// label_GeneratedFilesFor
-			// 
-			resources.ApplyResources(this.label_GeneratedFilesFor, "label_GeneratedFilesFor");
-			this.label_GeneratedFilesFor.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.label_GeneratedFilesFor.Name = "label_GeneratedFilesFor";
-			// 
-			// virtualTreeControl
-			// 
-			resources.ApplyResources(this.virtualTreeControl, "virtualTreeControl");
-			this.virtualTreeControl.ImageList = this.imageList1;
-			this.virtualTreeControl.Name = "virtualTreeControl";
-			this.virtualTreeControl.StandardCheckBoxes = true;
-			// 
-			// imageList1
-			// 
-			this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-			resources.ApplyResources(this.imageList1, "imageList1");
-			this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-			// 
-			// textBox_ORMFileName
-			// 
-			resources.ApplyResources(this.textBox_ORMFileName, "textBox_ORMFileName");
-			this.textBox_ORMFileName.Name = "textBox_ORMFileName";
-			this.textBox_ORMFileName.ReadOnly = true;
-			this.textBox_ORMFileName.TabStop = false;
-			// 
-			// button_Cancel
-			// 
-			resources.ApplyResources(this.button_Cancel, "button_Cancel");
-			this.button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.button_Cancel.Name = "button_Cancel";
-			this.button_Cancel.UseVisualStyleBackColor = true;
-			// 
-			// button_SaveChanges
-			// 
-			resources.ApplyResources(this.button_SaveChanges, "button_SaveChanges");
-			this.button_SaveChanges.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button_SaveChanges.Name = "button_SaveChanges";
-			this.button_SaveChanges.UseVisualStyleBackColor = true;
-			// 
-			// ORMGeneratorSelectionControl
-			// 
-			this.AcceptButton = this.button_SaveChanges;
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
-			this.BackColor = System.Drawing.SystemColors.Control;
-			this.CancelButton = this.button_Cancel;
-			resources.ApplyResources(this, "$this");
-			this.Controls.Add(this.button_SaveChanges);
-			this.Controls.Add(this.button_Cancel);
-			this.Controls.Add(this.textBox_ORMFileName);
-			this.Controls.Add(this.label_GeneratedFilesFor);
-			this.Controls.Add(this.virtualTreeControl);
-			this.DoubleBuffered = true;
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-			this.Name = "ORMGeneratorSelectionControl";
-			this.ShowIcon = false;
-			this.ResumeLayout(false);
-			this.PerformLayout();
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ORMGeneratorSelectionControl));
+            this.label_GeneratedFilesFor = new System.Windows.Forms.Label();
+            this.virtualTreeControl = new Microsoft.VisualStudio.VirtualTreeGrid.VirtualTreeControl();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.textBox_ORMFileName = new System.Windows.Forms.TextBox();
+            this.button_Cancel = new System.Windows.Forms.Button();
+            this.button_SaveChanges = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // label_GeneratedFilesFor
+            // 
+            resources.ApplyResources(this.label_GeneratedFilesFor, "label_GeneratedFilesFor");
+            this.label_GeneratedFilesFor.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.label_GeneratedFilesFor.Name = "label_GeneratedFilesFor";
+            // 
+            // virtualTreeControl
+            // 
+            resources.ApplyResources(this.virtualTreeControl, "virtualTreeControl");
+            this.virtualTreeControl.DisabledItemForeColor = System.Drawing.SystemColors.GrayText;
+            this.virtualTreeControl.EnableExplorerTheme = true;
+            this.virtualTreeControl.GridLinesColor = System.Drawing.SystemColors.ControlDark;
+            this.virtualTreeControl.HasLines = false;
+            this.virtualTreeControl.HasRootLines = false;
+            this.virtualTreeControl.ImageList = this.imageList1;
+            this.virtualTreeControl.InPlaceEditBackColor = System.Drawing.SystemColors.Window;
+            this.virtualTreeControl.InPlaceEditForeColor = System.Drawing.SystemColors.WindowText;
+            this.virtualTreeControl.Name = "virtualTreeControl";
+            this.virtualTreeControl.SelectedItemActiveBackColor = System.Drawing.SystemColors.Highlight;
+            this.virtualTreeControl.SelectedItemActiveForeColor = System.Drawing.SystemColors.HighlightText;
+            this.virtualTreeControl.SelectedItemInactiveBackColor = System.Drawing.SystemColors.Control;
+            this.virtualTreeControl.SelectedItemInactiveForeColor = System.Drawing.SystemColors.WindowText;
+            this.virtualTreeControl.StandardCheckBoxes = true;
+            this.virtualTreeControl.UseVSThemeForTreeExpander = true;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            resources.ApplyResources(this.imageList1, "imageList1");
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // textBox_ORMFileName
+            // 
+            resources.ApplyResources(this.textBox_ORMFileName, "textBox_ORMFileName");
+            this.textBox_ORMFileName.Name = "textBox_ORMFileName";
+            this.textBox_ORMFileName.ReadOnly = true;
+            this.textBox_ORMFileName.TabStop = false;
+            // 
+            // button_Cancel
+            // 
+            resources.ApplyResources(this.button_Cancel, "button_Cancel");
+            this.button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button_Cancel.Name = "button_Cancel";
+            this.button_Cancel.UseVisualStyleBackColor = true;
+            // 
+            // button_SaveChanges
+            // 
+            resources.ApplyResources(this.button_SaveChanges, "button_SaveChanges");
+            this.button_SaveChanges.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button_SaveChanges.Name = "button_SaveChanges";
+            this.button_SaveChanges.UseVisualStyleBackColor = true;
+            // 
+            // ORMGeneratorSelectionControl
+            // 
+            this.AcceptButton = this.button_SaveChanges;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.CancelButton = this.button_Cancel;
+            resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.button_SaveChanges);
+            this.Controls.Add(this.button_Cancel);
+            this.Controls.Add(this.textBox_ORMFileName);
+            this.Controls.Add(this.label_GeneratedFilesFor);
+            this.Controls.Add(this.virtualTreeControl);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.Name = "ORMGeneratorSelectionControl";
+            this.ShowIcon = false;
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 
@@ -123,8 +135,6 @@ namespace ORMSolutions.ORMArchitect.ORMCustomTool
 		private System.Windows.Forms.Button button_Cancel;
 		private System.Windows.Forms.Button button_SaveChanges;
 		private System.Windows.Forms.ImageList imageList1;
-		private System.Windows.Forms.Label label_GeneratedFilesFor;
-
-
-	}
+        private System.Windows.Forms.Label label_GeneratedFilesFor;
+    }
 }
