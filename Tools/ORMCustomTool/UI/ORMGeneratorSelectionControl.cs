@@ -62,10 +62,10 @@ namespace ORMSolutions.ORMArchitect.ORMCustomTool
 		private ORMGeneratorSelectionControl()
 		{
 			this.InitializeComponent();
-			textBox_ORMFileName.Left = label_GeneratedFilesFor.Right + textBox_ORMFileName.Margin.Left;
+            label_GeneratedFilesFor.SizeChanged += Label_GeneratedFilesFor_SizeChanged;
 		}
 
-		public ORMGeneratorSelectionControl(EnvDTE.ProjectItem projectItem, IServiceProvider serviceProvider)
+        public ORMGeneratorSelectionControl(EnvDTE.ProjectItem projectItem, IServiceProvider serviceProvider)
 			: this()
 		{
 			_projectItem = projectItem;
@@ -284,7 +284,32 @@ namespace ORMSolutions.ORMArchitect.ORMCustomTool
 			items[key] = key;
 		}
 
-		protected override void OnClosed(EventArgs e)
+        /// <summary> 
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (textBox_ORMFileName != null)
+                {
+                    label_GeneratedFilesFor.SizeChanged -= Label_GeneratedFilesFor_SizeChanged;
+                }
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        private void Label_GeneratedFilesFor_SizeChanged(object sender, EventArgs e)
+        {
+            textBox_ORMFileName.Left = label_GeneratedFilesFor.Right + textBox_ORMFileName.Margin.Left;
+        }
+
+        protected override void OnClosed(EventArgs e)
 		{
 			if (_savedChanges)
 			{
