@@ -179,7 +179,7 @@
         </odt:dateTime>
       </xsl:when>
 			<xsl:otherwise>
-				<odt:string id="{$formatName}" name="{$formatName}" maxLength="300" />
+				<odt:string id="{$formatName}" name="{$formatName}" maxLength="255" />
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
