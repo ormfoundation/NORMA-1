@@ -169,8 +169,17 @@
 			<xsl:when test="$dataType='BOOLEAN'">
 				<odt:boolean id="{$formatName}" name="{$formatName}"/>
 			</xsl:when>
+      <xsl:when test="$dataType='DATE TIME'">
+        <odt:dateTime id="{$formatName}" name="{$formatName}">
+          <xsl:if test="$maxLength">
+            <xsl:attribute name="precision">
+              <xsl:value-of select="$maxLength"/>
+            </xsl:attribute>
+          </xsl:if>
+        </odt:dateTime>
+      </xsl:when>
 			<xsl:otherwise>
-				<odt:string id="{$formatName}" name="{$formatName}" maxLength="255" />
+				<odt:string id="{$formatName}" name="{$formatName}" maxLength="300" />
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

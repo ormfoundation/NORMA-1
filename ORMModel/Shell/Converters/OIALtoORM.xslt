@@ -46,6 +46,9 @@
 				<xsl:if test="oil:informationTypeFormats/child::odt:boolean">
 					<orm:TrueOrFalseLogicalDataType id="TrueOrFalseLogicalDataType"/>
 				</xsl:if>
+				<xsl:if test="oil:informationTypeFormats/child::odt:dateTime">
+          <orm:DateAndTimeTemporalDataType id="DateAndTimeTemporalDataType"/>
+				</xsl:if>
 			</orm:DataTypes>
 			<orm:Objects>
 				<xsl:apply-templates select="$allConceptTypes" mode="GenerateObjectTypes">
@@ -317,6 +320,11 @@
 	<xsl:template match="odt:boolean" mode="GenerateDataTypeRef">
 		<xsl:attribute name="ref">
 			<xsl:text>TrueOrFalseLogicalDataType</xsl:text>
+		</xsl:attribute>
+	</xsl:template>
+	<xsl:template match="odt:dateTime" mode="GenerateDataTypeRef">
+		<xsl:attribute name="ref">
+			<xsl:text>DateAndTimeTemporalDataType</xsl:text>
 		</xsl:attribute>
 	</xsl:template>
 	<xsl:template match="odt:string" mode="GenerateDataTypeRef">

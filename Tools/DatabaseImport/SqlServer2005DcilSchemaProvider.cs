@@ -189,11 +189,12 @@ namespace ORMSolutions.ORMArchitect.DatabaseImport
             {
                 case "nvarchar":
                 case "varchar":
+                    return DcilDataType.DCILType.CharacterVarying;
                 case "ntext":
                 case "text":
-                    return DcilDataType.DCILType.CharacterVarying;
-                case "char":
+                    return DcilDataType.DCILType.CharacterLargeObject;
                 case "nchar":
+                case "char":
                     return DcilDataType.DCILType.Character;
                 case "int":
                     return DcilDataType.DCILType.Integer;
@@ -204,15 +205,19 @@ namespace ORMSolutions.ORMArchitect.DatabaseImport
                     return DcilDataType.DCILType.BigInt;
                 case "smalldatetime":
                 case "datetime":
-                    return DcilDataType.DCILType.Date;
+                case "datetime2":
+                    return DcilDataType.DCILType.DateTime;
+                case "datetimeoffset":
+                    return DcilDataType.DCILType.DateTimeOffset;
                 case "timestamp":
                     return DcilDataType.DCILType.Timestamp;
                 case "bit":
                     return DcilDataType.DCILType.Boolean;
                 case "decimal":
+                    return DcilDataType.DCILType.Decimal;
                 case "money":
                 case "smallmoney":
-                    return DcilDataType.DCILType.Decimal;
+                    return DcilDataType.DCILType.Money;
                 case "float":
                     return DcilDataType.DCILType.Float;
                 case "numeric":
@@ -225,6 +230,8 @@ namespace ORMSolutions.ORMArchitect.DatabaseImport
                     return DcilDataType.DCILType.BinaryLargeObject;
                 case "real":
                     return DcilDataType.DCILType.Real;
+                case "time":
+                    return DcilDataType.DCILType.Time;
                 default:
                     return DcilDataType.DCILType.CharacterVarying;
             }

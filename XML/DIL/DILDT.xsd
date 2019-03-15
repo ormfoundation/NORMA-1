@@ -205,6 +205,7 @@
 			<xs:element ref="ddt:datetimeLiteral"/>
 			<xs:element ref="ddt:timeLiteral"/>
 			<xs:element ref="ddt:timestampLiteral"/>
+      <xs:element ref="ddt:datetimeoffsetLiteral"/>
 		</xs:choice>
 	</xs:group>
 	<xs:element name="dateLiteral">
@@ -243,6 +244,15 @@
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
+  <xs:element name="datetimeoffsetLiteral">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="ddt:literal">
+          <xs:attribute name="value" use="required" type="xs:dateTime"/>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
 	<xs:group name="intervalLiteral">
 		<xs:choice>
 			<xs:element ref="ddt:yearMonthIntervalLiteral"/>
@@ -476,6 +486,20 @@
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>
+  <xs:element name="datetimeoffset" type="ddt:datetimeoffsetDescriptor" substitutionGroup="ddt:datetime"/>
+  <xs:complexType name="datetimeoffsetDescriptor">
+    <xs:complexContent>
+      <xs:restriction base="ddt:datetimeDescriptor">
+        <xs:attribute name="type" use="required" type="ddt:dateTypes"/>
+        <xs:attribute name="zone" use="required" type="ddt:zoneOptions"/>
+        <xs:attribute name="precision" use="optional" type="ddt:secondsPrecision">
+          <xs:annotation>
+            <xs:documentation>The number of decimal digits maintained following the decimal point in the seconds value.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
 	<xs:element name="date" type="ddt:dateDescriptor" substitutionGroup="ddt:datetime"/>
 	<xs:complexType name="dateDescriptor">
 		<xs:complexContent>
@@ -733,6 +757,11 @@
 					<xs:documentation></xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+      <xs:enumeration value="DATETIMEOFFSET">
+        <xs:annotation>
+          <xs:documentation></xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 
