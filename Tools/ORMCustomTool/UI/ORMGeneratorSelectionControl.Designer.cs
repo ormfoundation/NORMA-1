@@ -24,18 +24,18 @@ namespace ORMSolutions.ORMArchitect.ORMCustomTool
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		/// <summary> 
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+		///// <summary> 
+		///// Clean up any resources being used.
+		///// </summary>
+		///// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		//protected override void Dispose(bool disposing)
+		//{
+		//	if (disposing && (components != null))
+		//	{
+		//		components.Dispose();
+		//	}
+		//	base.Dispose(disposing);
+		//}
 
 		#region Component Designer generated code
 
@@ -111,9 +111,9 @@ namespace ORMSolutions.ORMArchitect.ORMCustomTool
             // 
             this.AcceptButton = this.button_SaveChanges;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
+            resources.ApplyResources(this, "$this");
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.button_Cancel;
-            resources.ApplyResources(this, "$this");
             this.Controls.Add(this.button_SaveChanges);
             this.Controls.Add(this.button_Cancel);
             this.Controls.Add(this.textBox_ORMFileName);

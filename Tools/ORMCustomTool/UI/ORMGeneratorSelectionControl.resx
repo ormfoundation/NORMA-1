@@ -126,7 +126,7 @@
     <value>5, 7</value>
   </data>
   <data name="label_GeneratedFilesFor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 17</value>
+    <value>195, 25</value>
   </data>
   <data name="label_GeneratedFilesFor.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -160,10 +160,10 @@
     <value>25, 25</value>
   </data>
   <data name="virtualTreeControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 32</value>
+    <value>0, 52</value>
   </data>
   <data name="virtualTreeControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>632, 371</value>
+    <value>725, 426</value>
   </data>
   <data name="virtualTreeControl.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -184,7 +184,7 @@
     <value>107, 4</value>
   </data>
   <data name="textBox_ORMFileName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>238, 22</value>
+    <value>238, 31</value>
   </data>
   <data name="textBox_ORMFileName.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -211,10 +211,10 @@
     <value>System</value>
   </data>
   <data name="button_Cancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>520, 409</value>
+    <value>613, 494</value>
   </data>
   <data name="button_Cancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 26</value>
+    <value>100, 34</value>
   </data>
   <data name="button_Cancel.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -244,10 +244,10 @@
     <value>System</value>
   </data>
   <data name="button_SaveChanges.Location" type="System.Drawing.Point, System.Drawing">
-    <value>391, 409</value>
+    <value>431, 494</value>
   </data>
   <data name="button_SaveChanges.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 26</value>
+    <value>167, 34</value>
   </data>
   <data name="button_SaveChanges.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -270,8 +270,11 @@
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>632, 446</value>
+    <value>725, 539</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
