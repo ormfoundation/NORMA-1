@@ -21,21 +21,16 @@ https://github.com/ormfoundation/PLiX
 
 Microsoft Visual Studio SDK
 	Homepage: http://www.microsoft.com/extendvs
-	Download (Visual Studio 2005): http://go.microsoft.com/fwlink/?LinkId=73702
 	Download (Visual Studio 2008): http://www.microsoft.com/en-us/download/details.aspx?id=508
 	Download (Visual Studio 2010): http://www.microsoft.com/en-us/download/details.aspx?id=2680
-	Download (Visual Studio 2012): http://www.microsoft.com/en-us/download/details.aspx?id=30668
-	Download (Visual Studio 2013): http://www.microsoft.com/en-us/download/details.aspx?id=40758
 	Visual Studio 2015 installs the SDK with the normal VS setup. Choose a custom setup and select 'Visual Studio Extensibility'
 	Visual Studio 2017 installs the SDK with the normal VS setup. Make sure to include 'Visual Studio Extensibility' in the install, or install it later via Tools -> Get Tools and Features...
 IMPORTANT: You will need to establish the Visual Studio experimental hive before building NORMA by running Visual Studio once in this environment. Use the link provided by the VS SDK, or run 'devenv.exe /RootSuffix Exp' from a Visual Studio command prompt. For Visual Studio 2008, make sure you use either the provided shortcut or add /RANU (run as normal user) to the command line. After running FirstTimeBuildVS2008.bat you should use 'devenv /rootsuffix Exp' instead of 'devenv /rootsuffix Exp /RANU'.
 
 
 Microsoft Visual Studio Modeling and Visualization Tools (DSL Tools SDK), installs after the primary SDK
-	Download (Visual Studio 2010): http://www.microsoft.com/en-us/download/details.aspx?id=23025
-	Download (Visual Studio 2012): http://www.microsoft.com/en-us/download/details.aspx?id=30680
-	Download (Visual Studio 2013): http://www.microsoft.com/en-us/download/details.aspx?id=40754
 	Download (Visual Studio 2015): http://www.microsoft.com/en-us/download/details.aspx?id=48148
+	The earlier tools are no longer available.
 
 
 Additional components used by other portions of this software include:
@@ -50,16 +45,15 @@ Windows Installer XML (WiX) toolset (v3.11.1: Tested on 3 June 2018 with VS2017)
 	https://marketplace.visualstudio.com/items?itemName=RobMensching.WixToolsetVisualStudio2017Extension
 
 
-NUnit (v2.4.7 or later)
+NUnit 
 	Homepage: http://www.nunit.org
-	Download: http://www.nunit.org/index.php?p=download
+	Download: http://nunit.org/download/
 
-Microsoft XML Diff and Patch 1.0
-	Homepage: http://apps.gotdotnet.com/xmltools/xmldiff
-	Download: http://download.microsoft.com/download/xml/patch/1.0/wxp/en-us/xmldiffpatch.exe
+Microsoft XML Diff
+	Download: https://www.microsoft.com/en-us/download/details.aspx?id=24313
 
 Microsoft FxCop
-	Homepage: http://gotdotnet.com/team/fxcop
+	Download: https://microsoft-fxcop.apponic.com/
 
 
 The build is divided into multiple components:
