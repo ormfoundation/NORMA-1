@@ -791,12 +791,13 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 
             // Get the first role of the implied fact type, this is the role we need to see if is repeated in the objectified fact type
             RoleBase role = impliedFactType.OrderedRoleCollection[0];
+            if (role.Role.RolePlayer == null) return null;
 
             // If the roleplayer has multiple references in the objectification fact type then it will need indexes in the implied fact types
             int instanceCount = 0;
             foreach (RoleBase nestedRole in impliedObjectification.NestedFactType.OrderedRoleCollection)
             {
-                if (nestedRole.Role.RolePlayer.Equals(role.Role.RolePlayer))
+                if (role.Role.RolePlayer.Equals(nestedRole.Role.RolePlayer))
                 {
                     instanceCount++;
                 }
