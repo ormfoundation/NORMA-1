@@ -1852,7 +1852,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 							{
 								error = new DuplicateReadingSignatureError(reading.Partition);
 								reading.DuplicateSignatureError = error;
-								error.Model = reading.ReadingOrder.FactType.Model;
+								error.Model = reading.ReadingOrder?.FactType?.Model;
 								error.GenerateErrorText();
 								if (notifyAdded != null)
 								{

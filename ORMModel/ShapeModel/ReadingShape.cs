@@ -1192,9 +1192,9 @@ namespace ORMSolutions.ORMArchitect.Core.ShapeModel
 		private static void ReadingTextChangedRule(ElementPropertyChangedEventArgs e)
 		{
 			Guid attributeId = e.DomainProperty.Id;
-			if (attributeId == Reading.TextDomainPropertyId)
+            Reading reading = e.ModelElement as Reading;
+            if (attributeId == Reading.TextDomainPropertyId)
 			{
-				Reading reading = e.ModelElement as Reading;
 				ReadingOrder readingOrder;
 				if (!reading.IsDeleted &&
 					null != (readingOrder = reading.ReadingOrder))
@@ -1202,14 +1202,26 @@ namespace ORMSolutions.ORMArchitect.Core.ShapeModel
 					InvalidateReadingShape(readingOrder.FactType);
 				}
 			}
-		}
-		#endregion // change rules
-		#region IModelErrorActivation Implementation
-		/// <summary>
-		/// Implements IModelErrorActivation.ActivateModelError. Forwards errors to
-		/// associated fact type
-		/// </summary>
-		protected bool ActivateModelError(ModelError error)
+            // See if the reading needs to be renamed (we need to rename if the reading belongs to an implied fact type)
+            else
+            {
+                if (reading?.ReadingOrder?.FactType?.ImpliedByObjectification != null)
+                {
+                    string newText = Reading.DetermineImplicitFactTypePredicateReading(reading.ReadingOrder.FactType, !reading.IsPrimaryForFactType);
+                    if (reading.Text != newText)
+                    {
+                        reading.Text = newText;
+                    }
+                }
+            }
+        }
+        #endregion // change rules
+        #region IModelErrorActivation Implementation
+        /// <summary>
+        /// Implements IModelErrorActivation.ActivateModelError. Forwards errors to
+        /// associated fact type
+        /// </summary>
+        protected bool ActivateModelError(ModelError error)
 		{
 			IModelErrorActivation parent = ParentShape as IModelErrorActivation;
 			if (parent != null)
