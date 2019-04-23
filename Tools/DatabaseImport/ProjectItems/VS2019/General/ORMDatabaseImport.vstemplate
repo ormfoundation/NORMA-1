@@ -1,0 +1,17 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>
+		<Name Package="{EFDDC549-1646-4451-8A51-E5A5E94D647C}" ID="112"/>
+		<Description Package="{EFDDC549-1646-4451-8A51-E5A5E94D647C}" ID="113"/>
+		<Icon>ORMDatabaseImport.ico</Icon>
+		<DefaultName>ORMModelFromDatabase.orm</DefaultName>
+		<ProjectType>General</ProjectType>
+  </TemplateData>
+  <TemplateContent>
+    <References />
+    <ProjectItem SubType="" TargetFileName="$fileinputname$.orm" ReplaceParameters="true">ORMDatabaseImport.orm</ProjectItem>
+  </TemplateContent>
+	<WizardExtension>
+		<Assembly>ORMSolutions.ORMArchitect.DatabaseImport.VS2019, Version=1.0.0.0, Culture=neutral, PublicKeyToken=957d5b7d5e79e25f</Assembly>
+		<FullClassName>ORMSolutions.ORMArchitect.DatabaseImport.ORMDatabaseImportGeneralProjectWizard</FullClassName>
+	</WizardExtension>
+</VSTemplate>

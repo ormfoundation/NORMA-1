@@ -60,7 +60,9 @@ namespace ORMSolutions.ORMArchitect.ORMCustomTool
 		private const string DEFAULT_EXTENSION_DECORATOR = "._ORMCustomToolReport."; // Add the _ here to put it above other generators
 		private const string EXTENSION_ORM = ".orm";
 		private const string EXTENSION_XML = ".xml";
-#if VISUALSTUDIO_15_0
+#if VISUALSTUDIO_16_0
+		private const string GENERATORS_REGISTRYROOT = @"Software\ORM Solutions\Natural ORM Architect for Visual Studio 2019\Generators";
+#elif VISUALSTUDIO_15_0
 		private const string GENERATORS_REGISTRYROOT = @"Software\ORM Solutions\Natural ORM Architect for Visual Studio 2017\Generators";
 #elif VISUALSTUDIO_14_0
 		private const string GENERATORS_REGISTRYROOT = @"Software\ORM Solutions\Natural ORM Architect for Visual Studio 2015\Generators";

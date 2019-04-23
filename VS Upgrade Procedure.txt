@@ -65,51 +65,45 @@ Current Upgrade 2017 -> 2019
 		- Created DisableRuleDirectiveProcessor.VS2019.sln
 		- Switched DisableRuleDirectiveProcessor.csproj to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
 	) New File BuildDevToolsVS2019.bat (Copy from BuildDevToolsVS2017.bat and update)
-		
-	
-	) Setup ORMPackage for 2017
-		- Open the ORMPackage.VS2015.sln and save it as ORMPackage.VS2017.sln
-		- Update ORMModel\ORMModel.csproj file for version 15.0
-		- Update ORMModel\Shell\ORMPackage.cs for 2017
-			- Added registry settings for registry settings line 117
-		- Add reference to Microsoft.VisualStudio.Shell.Framework if v15
-		- Add reference to Microsoft.VisualStudio.Shell.Interop.15.3.DesignTime if v15, to fix compile error - https://developercommunity.visualstudio.com/content/problem/75434/cannot-find-the-interop-type-that-matches-the-embe.html
-	) Setup ExtensionExample for 2017
-		- Open the ExtensionExample.VS2015.sln and save it as ExtensionExample.VS2017.sln
-	) Setup OIALModel for 2017
-		- Open the OIALModel.VS2015.sln and save it as OIALModel.VS2017.sln
-	) Setup Oial for 2017
-		- Open the Oial.VS2015.sln and save it as Oial.VS2017.sln
-	) Setup RelationalModel (Dil.sln) for 2017
-		- Open the Dil.VS2015.sln and save it as Dil.VS2017.sln
-	) Setup RelationalView for 2017 (AlternateViews\RelationalView)
-		- Open the RelationalView.VS2015.sln and save it as RelationalView.VS2017.sln
-	) Setup CustomProperties for 2017
-		- Open the CustomProperties.VS2015.sln and save it as CustomProperties.VS2017.sln
-	) Setup EntityRelationship for 2017
-		- Open the EntityRelationship.VS2015.sln and save it as EntityRelationship.VS2017.sln
-	) Setup BarkerERView for 2017 (AlternateViews\BarkerERView)
-		- Open the BarkerERView.VS2015.sln and save it as BarkerERView.VS2017.sln
-		- Update ShapeModel\AttributeElementListCompartment - overrode the CollapsedSize to check for a null HeaderTextField
-			- The field is initially null when the property is called against the Compartment object which causes a null reference exception
-	) Setup ORMCustomTool for 2017 (Tools\ORMCustomTool)
-		- Open the ORMCustomTool.VS2015.sln and save it as ORMCustomTool.VS2017.sln
-		- Update ORMCustomTool.csproj for version 15.0
-		- Update ORMCustomTool.cs  for 2017
-			- Added registry settings for registry settings line 62
-		- Update UI\ORMCustomToolUITypeEditor.cs for 2017
+	) Setup ORMPackage for 2017	
+		- Created ORMPackage.VS2019.sln
+		- Switched ORMModel\ORMModel.csproj to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
+		- Update ORMModel\Shell\ORMPackage.cs for 2019
+			- Added registry settings for registry settings line 120
+		- Create new templates under Shell\ProjectItems VS2017 -> VS2019
+	) Setup ExtensionExample for 2019
+		- Created ExtensionExample.VS2019.sln
+	) Setup OIALModel for 2019
+		- Created OIALModel.VS2019.sln
+	) Setup Oial for 2019
+		- Created Oial.VS2019.sln
+	) Setup RelationalModel (Dil.sln) for 2019
+		- Created Dil.VS2019.sln
+	) Setup RelationalView for 2019 (AlternateViews\RelationalView)
+		- Created RelationalView.VS2019.sln
+	) Setup CustomProperties for 2019
+		- Created CustomProperties.VS2019.sln
+	) Setup EntityRelationship for 2019
+		- Created EntityRelationship.VS2019.sln
+	) Setup BarkerERView for 2019 (AlternateViews\BarkerERView)
+		- Created BarkerERView.VS2019.sln
+	) Setup ORMCustomTool for 2019 (Tools\ORMCustomTool)
+		- Created ORMCustomTool.VS2019.sln
+		- Switched ORMCustomTool.csproj to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
+		- Update ORMCustomTool.cs  for 2019
+			- Added registry settings for registry settings line 63
+		- Update UI\ORMCustomToolUITypeEditor.cs for 2019
 			- Added moniker line 69
-	) Setup DatabaseImport for 2017 (Tools\DatabaseImport)
-		- Open the DatabaseImport.VS2015.sln and save it as DatabaseImport.VS2017.sln
-		- Update DatabaseImport.csproj for version 15.0
-		- Create new templates under ProjectItems VS2015 -> VS2017
-	) Create VSIXInstall VS2017 files (Copy from VSIXInstall\VS2015)
-		- extension.vsixmanifest updated to version 3
-	) Update .\install.bat to copy over the LICENSE.txt file so that it can be included in the VSIX package
-	) New File BuildVS2017.bat (Copy from BuildVS2015.bat)
-		- Added section for degrading tools for v14.0 and defaulting to v15.0
-		- Added ReferencePath for MSBuild to the VS Private Assemblies folder (%VSInstallDir%\Common7\IDE\PrivateAssemblies); this is needed for the virtual tree grid
-		- Running this .bat will build Main.proj
+	) Setup DatabaseImport for 2019 (Tools\DatabaseImport)
+		- Created DatabaseImport.VS2019.sln
+		- Switched DatabaseImport.csproj to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
+		- Create new templates under ProjectItems VS2017 -> VS2019
+	) Create VSIXInstall VS2019 files (Copy from VSIXInstall\VS2017)
+		- Update versions in extension.vsixmanifest
+		- Update versions in ORMDesigner.pkgdef for the dll references
+	) Update .\install.bat use TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
+	) New File BuildVS2019.bat (Copy from BuildVS2017.bat and update)
+		
 	) Setup Setup for 2017
 		- Open the Setup.VS2015.sln and save it as Setup.VS2017.sln
 		- Create new NORMASchemaCatalog.VS2017.xml (from the VS2015 version)

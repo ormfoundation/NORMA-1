@@ -1,0 +1,12 @@
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+	<TemplateData>
+		<Name Package="{EFDDC549-1646-4451-8A51-E5A5E94D647C}" ID="102"/>
+		<Description Package="{EFDDC549-1646-4451-8A51-E5A5E94D647C}" ID="103"/>
+		<Icon>ORM.ico</Icon>
+		<DefaultName>ORMModel.orm</DefaultName>
+		<ProjectType>VisualBasic</ProjectType>
+	</TemplateData>
+	<TemplateContent>
+		<ProjectItem ReplaceParameters="true" TargetFileName="$fileinputname$.$fileinputextension$">ORMModel.orm</ProjectItem>
+	</TemplateContent>
+</VSTemplate>

@@ -47,9 +47,9 @@ CALL:_CleanupFile "%OldNORMADir%\bin\1033\Neumont.Tools.ORMUI.dll"
 
 IF NOT "%ItemTemplatesInstallDir%"=="" (
 	CALL:_MakeDir "%ItemTemplatesInstallDir%"
-	IF "%TargetVisualStudioVersion%"=="v15.0" (
+	IF %TargetVisualStudioMajorMinorVersion% GEQ 15.0 (
 		XCOPY /Y /D /V /Q /S "%RootDir%\ORMModel\Shell\ProjectItems\%TargetVisualStudioShortProductName%" "%ItemTemplatesInstallDir%"
-		XCOPY /Y /D /V /Q "%RootDir%\VSIXInstall\VS2017\ItemTemplateManifest.vstman" "%ItemTemplatesInstallDir%"
+		XCOPY /Y /D /V /Q "%RootDir%\VSIXInstall\%TargetVisualStudioShortProductName%\ItemTemplateManifest.vstman" "%ItemTemplatesInstallDir%"
 	) ELSE (
 		FOR %%A IN ("%RootDir%\ORMModel\Shell\ProjectItems\*.zip") DO ECHO F | XCOPY /Y /D /V /Q "%%~fA" "%ItemTemplatesInstallDir%\%%~nA\ORMModel.zip"
 		FOR %%A IN ("%RootDir%\ORMModel\Shell\ProjectItems\Web\*.zip") DO ECHO F | XCOPY /Y /D /V /Q "%%~fA" "%ItemTemplatesInstallDir%\Web\%%~nA\ORMModel.zip"

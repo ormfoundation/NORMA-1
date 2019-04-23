@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="efddc549-1646-4451-8a51-e5a5e94d647c" Version="1.0.0" Language="en-US" Publisher="The ORM Foundation" />
+    <DisplayName>Natural ORM Architect</DisplayName>
+    <Description>Object-Role Modeling Designer</Description>
+    <MoreInfo>http://www.ormfoundation.org</MoreInfo>
+    <License>LICENSE.txt</License>
+    <Icon>ORMDesignerIcon.png</Icon>
+    <PreviewImage>ORMDesignerPreview.png</PreviewImage>
+  </Metadata>
+  <Installation InstalledByMsi="true" SystemComponent="false">
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0,17.0)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[16.0,17.0)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[16.0,17.0)" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.7.2,)" />
+    <Dependency Id="Microsoft.VisualStudio.Component.DslTools" DisplayName="Modeling SDK" d:Source="Installed" Version="[16.0]" />
+  </Dependencies>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[16.0,)" DisplayName="Visual Studio core editor" />
+    <Prerequisite Id="Microsoft.VisualStudio.Component.DslTools" DisplayName="Modeling SDK" Version="[16.0]" />
+  </Prerequisites>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" Path="ORMDesigner.pkgdef" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" Path="ItemTemplates" />
+  </Assets>
+</PackageManifest>
