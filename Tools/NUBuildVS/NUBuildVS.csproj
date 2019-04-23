@@ -16,7 +16,7 @@
     <BaseAddress>1414397952</BaseAddress>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
     <InstallInGac>true</InstallInGac>
-    <GenerateNativeImage Condition=" '$(TargetVisualStudioVersion)' != 'v15.0'">true</GenerateNativeImage>
+    <GenerateNativeImage Condition=" '$(TargetVisualStudioMajorMinorVersion)' &lt; '15.0'">true</GenerateNativeImage>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'NUBuildVS|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

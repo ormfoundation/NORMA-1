@@ -30,6 +30,7 @@ IF ERRORLEVEL 1 (
 	@PAUSE
 	GOTO:EOF
 )
+
 REG COPY "HKLM\Software%WOWRegistryAdjust%\Microsoft\MSBuild\ToolsVersions\%UseToolsVersion%" "HKLM\Software%WOWRegistryAdjust%\Microsoft\MSBuild\ToolsVersions\%HackToolsVersion%" /s /f 1>NUL 2>&1
 ::VS Doesn't like the empty state on the default value, which is how this ends up. Delete the default value.
 REG DELETE "HKLM\Software%WOWRegistryAdjust%\Microsoft\MSBuild\ToolsVersions\%HackToolsVersion%" /ve /f 1>NUL 2>&1
@@ -61,6 +62,7 @@ GOTO:EOF
 :_VER_v8.0
 :_VER_8
 CALL:SETVAR "TargetVisualStudioVersion" "v8.0"
+CALL:SETVAR "TargetVisualStudioMajorMinorVersion" "8.0"
 GOTO:EOF
 
 :_VER_2008
@@ -68,6 +70,7 @@ GOTO:EOF
 :_VER_v9.0
 :_VER_9
 CALL:SETVAR "TargetVisualStudioVersion" "v9.0"
+CALL:SETVAR "TargetVisualStudioMajorMinorVersion" "9.0"
 GOTO:EOF
 
 :_VER_2010
@@ -75,6 +78,7 @@ GOTO:EOF
 :_VER_v10.0
 :_VER_10
 CALL:SETVAR "TargetVisualStudioVersion" "v10.0"
+CALL:SETVAR "TargetVisualStudioMajorMinorVersion" "10.0"
 GOTO:EOF
 
 :_VER_2012
@@ -82,6 +86,7 @@ GOTO:EOF
 :_VER_v11.0
 :_VER_11
 CALL:SETVAR "TargetVisualStudioVersion" "v11.0"
+CALL:SETVAR "TargetVisualStudioMajorMinorVersion" "11.0"
 GOTO:EOF
 
 :_VER_2013
@@ -89,6 +94,7 @@ GOTO:EOF
 :_VER_v12.0
 :_VER_12
 CALL:SETVAR "TargetVisualStudioVersion" "v12.0"
+CALL:SETVAR "TargetVisualStudioMajorMinorVersion" "12.0"
 GOTO:EOF
 
 :_VER_2015
@@ -96,6 +102,7 @@ GOTO:EOF
 :_VER_v14.0
 :_VER_14
 CALL:SETVAR "TargetVisualStudioVersion" "v14.0"
+CALL:SETVAR "TargetVisualStudioMajorMinorVersion" "14.0"
 GOTO:EOF
 
 :_VER_2017
@@ -103,6 +110,15 @@ GOTO:EOF
 :_VER_v15.0
 :_VER_15
 CALL:SETVAR "TargetVisualStudioVersion" "v15.0"
+CALL:SETVAR "TargetVisualStudioMajorMinorVersion" "15.0"
+GOTO:EOF
+
+:_VER_2019
+:_VER_16.0
+:_VER_v16.0
+:_VER_16
+CALL:SETVAR "TargetVisualStudioVersion" "v16.0"
+CALL:SETVAR "TargetVisualStudioMajorMinorVersion" "16.0"
 GOTO:EOF
 
 :_TOOLS_v8.0
@@ -128,4 +144,8 @@ GOTO:EOF
 
 :_TOOLS_v15.0
 CALL:SETVAR "UseToolsVersion" "15.0"
+GOTO:EOF
+
+:_TOOLS_v16.0
+CALL:SETVAR "UseToolsVersion" "Current"
 GOTO:EOF

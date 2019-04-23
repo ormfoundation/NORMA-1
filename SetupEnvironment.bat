@@ -18,6 +18,7 @@ IF "%ProgramFiles(X86)%"=="" (
 ::  v12.0 = Visual Studio 2013
 ::  v14.0 = Visual Studio 2015
 ::  v15.0 = Visual Studio 2017
+::  v16.0 = Visual Studio 2019
 IF NOT DEFINED TargetVisualStudioVersion (SET TargetVisualStudioVersion=v8.0)
 
 :: Remove the value "Exp" on the next line if you want installations to be performed
@@ -206,6 +207,29 @@ IF NOT DEFINED TargetVisualStudioShortProductName (SET TargetVisualStudioShortPr
 IF NOT DEFINED TargetVisualStudioLongProductName (SET TargetVisualStudioLongProductName=Visual Studio 2017)
 IF NOT DEFINED TargetDslToolsAssemblyVersion (SET TargetDslToolsAssemblyVersion=15.0.0.0)
 IF NOT DEFINED ProjectToolsVersion (SET ProjectToolsVersion=15.0)
+IF NOT DEFINED ProjectToolsAssemblySuffix (SET ProjectToolsAssemblySuffix=.Core)
+IF NOT DEFINED ProjectToolsAssemblyVersion (SET ProjectToolsAssemblyVersion=15.1.0.0)
+IF NOT DEFINED VSRegistryConfigDecorator (SET VSRegistryConfigDecorator=_Config)
+IF NOT DEFINED VSRegistryConfigHive (SET VSRegistryConfigHive=HKCU)
+IF NOT DEFINED VSIXExtensionDir (SET VSIXExtensionDir=Extensions\ORM Solutions\Natural ORM Architect\1.0)
+GOTO:EOF
+
+:_SetupVersionVars_v16.0
+IF NOT DEFINED VSInformationSource (SET VSInformationSource=VSWhere)
+IF NOT DEFINED VSWhereLocation SET VSWhereLocation=%ResolvedProgramFiles%\Microsoft Visual Studio\Installer\vswhere.exe
+IF NOT DEFINED TargetFrameworkVersion (SET TargetFrameworkVersion=v4.7.2)
+IF NOT DEFINED TargetVisualStudioMajorMinorVersion (SET TargetVisualStudioMajorMinorVersion=16.0)
+IF NOT DEFINED TargetVisualStudioAssemblyVersion (SET TargetVisualStudioAssemblyVersion=16.0.0.0)
+IF NOT DEFINED TargetVisualStudioFrameworkAssemblyVersion (SET TargetVisualStudioFrameworkAssemblyVersion=4.7.2.0)
+IF NOT DEFINED TargetVisualStudioLongProductYear (SET TargetVisualStudioLongProductYear=2019)
+IF NOT DEFINED TargetVisualStudioShortProductYear (SET TargetVisualStudioShortProductYear=19)
+IF NOT DEFINED TargetVisualStudioShortProductName (SET TargetVisualStudioShortProductName=VS2019)
+IF NOT DEFINED TargetVisualStudioLongProductName (SET TargetVisualStudioLongProductName=Visual Studio 2019)
+IF NOT DEFINED TargetDslToolsAssemblyVersion (SET TargetDslToolsAssemblyVersion=16.0.0.0)
+
+:: See https://docs.microsoft.com/en-us/visualstudio/msbuild/standard-and-custom-toolset-configurations?view=vs-2019
+IF NOT DEFINED ProjectToolsVersion (SET ProjectToolsVersion=Current)
+
 IF NOT DEFINED ProjectToolsAssemblySuffix (SET ProjectToolsAssemblySuffix=.Core)
 IF NOT DEFINED ProjectToolsAssemblyVersion (SET ProjectToolsAssemblyVersion=15.1.0.0)
 IF NOT DEFINED VSRegistryConfigDecorator (SET VSRegistryConfigDecorator=_Config)

@@ -37,8 +37,155 @@ Project Build Order
 			TestSample\TestSample.csproj
 			AutomationTestSample\AutomationTestSample.csproj
 			RelationalTests\RelationalTests.csproj
+
+Current Upgrade 2017 -> 2019	
+	** TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
+
+	) New File VS2019.bat (Copy from VS2017.bat)
+	) Update VSVer.bat to account for new 2019 version
+		- Added section for 2019
+		- Set the environment variable TargetVisualStudioMajorMinorVersion, so it can be used in the csproj files
+	) New File FirstTimeBuildVS2019.bat (Copy from FirstTimeBuildVS2017.bat and update)
+	) Update SetupEnvironment.bat
+		- Add section for 2019
+	) Edit Tools\NUBuildVS\Neumont.Build.VisualStudio.Multitargeting.targets
+		- Add sections for 2019
+	) Edit Tools\NUBuildVS\Neumont.Build.VisualStudio.targets
+		- Add section for 2019
+	) Setup NUBuild for 2019 (Tools\NUBuild)
+		- Created NUBuild.VS2019.sln
+		- No change to AssemblyInfo, we're still on version 15.1.0.0 of MSBuild
+		- No change to NGen.cs - it's already setup for 4.7
+		- No change to Intall.bat - we are not using GAC
+	) Setup NUBuildVS for 2017 (Tools\NUBuildVS)
+		- Created NUBuildVS.VS2019.sln
+		- No change to AssemblyInfo, we're still on version 15.1.0.0 of MSBuild
+		- Switched NUBuildVS.csproj to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
+	) Setup DisableRuleDirectiveProcessor for 2017 (Tools\DisableRuleDirectiveProcessor)	
+		- Created DisableRuleDirectiveProcessor.VS2019.sln
+		- Switched DisableRuleDirectiveProcessor.csproj to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
+	) New File BuildDevToolsVS2019.bat (Copy from BuildDevToolsVS2017.bat and update)
+		
 	
-Current Upgrade 2015 -> 2017
+	) Setup ORMPackage for 2017
+		- Open the ORMPackage.VS2015.sln and save it as ORMPackage.VS2017.sln
+		- Update ORMModel\ORMModel.csproj file for version 15.0
+		- Update ORMModel\Shell\ORMPackage.cs for 2017
+			- Added registry settings for registry settings line 117
+		- Add reference to Microsoft.VisualStudio.Shell.Framework if v15
+		- Add reference to Microsoft.VisualStudio.Shell.Interop.15.3.DesignTime if v15, to fix compile error - https://developercommunity.visualstudio.com/content/problem/75434/cannot-find-the-interop-type-that-matches-the-embe.html
+	) Setup ExtensionExample for 2017
+		- Open the ExtensionExample.VS2015.sln and save it as ExtensionExample.VS2017.sln
+	) Setup OIALModel for 2017
+		- Open the OIALModel.VS2015.sln and save it as OIALModel.VS2017.sln
+	) Setup Oial for 2017
+		- Open the Oial.VS2015.sln and save it as Oial.VS2017.sln
+	) Setup RelationalModel (Dil.sln) for 2017
+		- Open the Dil.VS2015.sln and save it as Dil.VS2017.sln
+	) Setup RelationalView for 2017 (AlternateViews\RelationalView)
+		- Open the RelationalView.VS2015.sln and save it as RelationalView.VS2017.sln
+	) Setup CustomProperties for 2017
+		- Open the CustomProperties.VS2015.sln and save it as CustomProperties.VS2017.sln
+	) Setup EntityRelationship for 2017
+		- Open the EntityRelationship.VS2015.sln and save it as EntityRelationship.VS2017.sln
+	) Setup BarkerERView for 2017 (AlternateViews\BarkerERView)
+		- Open the BarkerERView.VS2015.sln and save it as BarkerERView.VS2017.sln
+		- Update ShapeModel\AttributeElementListCompartment - overrode the CollapsedSize to check for a null HeaderTextField
+			- The field is initially null when the property is called against the Compartment object which causes a null reference exception
+	) Setup ORMCustomTool for 2017 (Tools\ORMCustomTool)
+		- Open the ORMCustomTool.VS2015.sln and save it as ORMCustomTool.VS2017.sln
+		- Update ORMCustomTool.csproj for version 15.0
+		- Update ORMCustomTool.cs  for 2017
+			- Added registry settings for registry settings line 62
+		- Update UI\ORMCustomToolUITypeEditor.cs for 2017
+			- Added moniker line 69
+	) Setup DatabaseImport for 2017 (Tools\DatabaseImport)
+		- Open the DatabaseImport.VS2015.sln and save it as DatabaseImport.VS2017.sln
+		- Update DatabaseImport.csproj for version 15.0
+		- Create new templates under ProjectItems VS2015 -> VS2017
+	) Create VSIXInstall VS2017 files (Copy from VSIXInstall\VS2015)
+		- extension.vsixmanifest updated to version 3
+	) Update .\install.bat to copy over the LICENSE.txt file so that it can be included in the VSIX package
+	) New File BuildVS2017.bat (Copy from BuildVS2015.bat)
+		- Added section for degrading tools for v14.0 and defaulting to v15.0
+		- Added ReferencePath for MSBuild to the VS Private Assemblies folder (%VSInstallDir%\Common7\IDE\PrivateAssemblies); this is needed for the virtual tree grid
+		- Running this .bat will build Main.proj
+	) Setup Setup for 2017
+		- Open the Setup.VS2015.sln and save it as Setup.VS2017.sln
+		- Create new NORMASchemaCatalog.VS2017.xml (from the VS2015 version)
+		- Added the LICENSE.txt to the Components.wxs file so that the VSIX manifest can find it
+	) Update BuildSetup.bat
+		- Changed to not call BuildHelp if VS2017 (HelpStudio Lite is no longer installed with VS SDK)
+		- Updated to if we used VSWhere to find info then we also need to pass in the private assembly location
+	) Update Setup Project
+		- ComponentGroups.wxs - separated into two separate files since the 2017 install is very different
+			ComponentGroupsPreV15.wxi
+			ComponentGroupsV15+.wxi
+		- Components.wxs - separated into two separate files since the 2017 install is very different
+			ComponentsPreV15.wxi
+			ComponentsV15+.wxi
+		- NORMAItemTemplates.wxi - separated into two separate files since the 2017 install is very different
+			NORMAItemTemplatesPreV15.wxi
+			NORMAItemTemplatesV15+.wxi
+		- Config.wxi - setup for VS2017
+		- Features.wxs - comment out help section
+		- Strings.wxl - setup for VS2017
+		- UI.wxs - setup for VS2017 (added custom actions to UI Sequence)
+		- Product.wxs
+			- Changed how to find the information about VS for 2017
+			- Ignore Visual Studio registry calls since none of this is in the registry anymore (moved to the pkgdef file)
+	) Added a new project Setup.CustomActions
+		- This project is used to determine the install locations of VS
+	) Updated the Setup.proj file to include the Setup.CustomActions project if VS Version 15.0
+	) New File BuildSetupVS2017.bat (Copy from BuildSetupVS2015.bat)
+		- Added section for degrading tools for v14.0 and defaulting to v15.0
+		- Added ReferencePath for MSBuild to the VS Private Assemblies folder (%VSInstallDir%\Common7\IDE\PrivateAssemblies); this is needed for the virtual tree grid
+		- Running this .bat will build Main.proj and Setup.prog
+	) Update "ORM2CommandLineTest\TestDriverEngine.csproj"
+		- Updated the references for VS2017 and xmldiffpatch
+	) Update "ORM2CommandLineTest\ReportViewer.csproj"
+		- Updated the references for VS2017 and xmldiffpatch
+	) Update "ORM2CommandLineTest\TestDriverApp.csproj"
+		- Updated the references for VS2017 and xmldiffpatch
+	) Update "TestSuites\TestSample\TestSample.csproj"
+		- Updated the references for VS2017
+	) Update TestSuites\AutomationTestSample\AutomationTestSample.csproj
+		- Updated the references for VS2017
+	) Update "TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.csproj"
+		- Updated the references for VS2017
+	) Update "TestSuites\RelationalTests\RelationalTests.csproj"
+		- Updated the references for VS2017
+	) New File BuildTestsVS2017.bat (Copy from BuildTestVS2008.bat)
+		- Added section for degrading tools for v14.0 and defaulting to v15.0
+	) New File BuildAllVS2017.bat (Copy from BuildAllVS2015.bat)
+		- Added section for degrading tools for v14.0 and defaulting to v15.0
+	
+	* New File VersionGenerator.VS2017.sln copied from VersionGenerator.VS2015.sln
+	
+	
+	IF "%TargetVisualStudioVersion%"=="v8.0" (
+	SET DegradeToolsVersion=/toolsversion:2.0
+) ELSE IF "%TargetVisualStudioVersion%"=="v9.0" (
+	SET DegradeToolsVersion=/toolsversion:3.5
+) ELSE IF "%TargetVisualStudioVersion%"=="v10.0" (
+	SET DegradeToolsVersion=/toolsversion:4.0
+) ELSE IF "%TargetVisualStudioVersion%"=="v11.0" (
+	SET DegradeToolsVersion=/toolsversion:4.0
+) ELSE IF "%TargetVisualStudioVersion%"=="v12.0" (
+	SET DegradeToolsVersion=/toolsversion:12.0
+) ELSE IF "%TargetVisualStudioVersion%"=="v14.0" (
+	SET DegradeToolsVersion=/toolsversion:14.0
+) ELSE IF "%TargetVisualStudioVersion%"=="v15.0" (
+	SET DegradeToolsVersion=/toolsversion:15.0
+) ELSE (
+	SET TargetVisualStudioVersion=v16.0
+	SET TargetVisualStudioMajorMinorVersion=16.0
+	SET DegradeToolsVersion=/toolsversion:Current
+)
+	
+	
+			
+Upgrade 2015 -> 2017
 	1) New File VS2017.bat (Copy from VS2015.bat)
 		- Replaced environment variable for call out to VSVer.bat
 		- Add  {VS Install Dir}\Common7\IDE\PrivateAssemblies to the path so that Microsoft.VisualStudio.VirtualTreeGrid could be found
