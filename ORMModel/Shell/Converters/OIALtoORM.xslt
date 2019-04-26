@@ -337,11 +337,21 @@
     <xsl:attribute name="ref">
       <xsl:text>TimeTemporalDataType</xsl:text>
     </xsl:attribute>
+    <xsl:if test="@precision">
+      <xsl:attribute name="Length">
+        <xsl:value-of select="@precision"/>
+      </xsl:attribute>
+    </xsl:if>
   </xsl:template>
   <xsl:template match="odt:dateTime" mode="GenerateDataTypeRef">
     <xsl:attribute name="ref">
       <xsl:text>DateAndTimeTemporalDataType</xsl:text>
     </xsl:attribute>
+    <xsl:if test="@precision">
+      <xsl:attribute name="Length">
+        <xsl:value-of select="@precision"/>
+      </xsl:attribute>
+    </xsl:if>
   </xsl:template>
 	<xsl:template match="odt:string" mode="GenerateDataTypeRef">
 		<xsl:attribute name="ref">
