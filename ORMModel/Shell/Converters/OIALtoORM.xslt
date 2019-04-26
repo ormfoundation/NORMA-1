@@ -46,9 +46,15 @@
 				<xsl:if test="oil:informationTypeFormats/child::odt:boolean">
 					<orm:TrueOrFalseLogicalDataType id="TrueOrFalseLogicalDataType"/>
 				</xsl:if>
-				<xsl:if test="oil:informationTypeFormats/child::odt:dateTime">
-          <orm:DateAndTimeTemporalDataType id="DateAndTimeTemporalDataType"/>
+				<xsl:if test="oil:informationTypeFormats/child::odt:date">
+          <orm:DateTemporalDataType id="DateTemporalDataType"/>
 				</xsl:if>
+        <xsl:if test="oil:informationTypeFormats/child::odt:time">
+          <orm:TimeTemporalDataType id="TimeTemporalDataType"/>
+        </xsl:if>
+        <xsl:if test="oil:informationTypeFormats/child::odt:dateTime">
+          <orm:DateAndTimeTemporalDataType id="DateAndTimeTemporalDataType"/>
+        </xsl:if>
 			</orm:DataTypes>
 			<orm:Objects>
 				<xsl:apply-templates select="$allConceptTypes" mode="GenerateObjectTypes">
@@ -322,11 +328,21 @@
 			<xsl:text>TrueOrFalseLogicalDataType</xsl:text>
 		</xsl:attribute>
 	</xsl:template>
-	<xsl:template match="odt:dateTime" mode="GenerateDataTypeRef">
+	<xsl:template match="odt:date" mode="GenerateDataTypeRef">
 		<xsl:attribute name="ref">
-			<xsl:text>DateAndTimeTemporalDataType</xsl:text>
+			<xsl:text>DateTemporalDataType</xsl:text>
 		</xsl:attribute>
 	</xsl:template>
+  <xsl:template match="odt:time" mode="GenerateDataTypeRef">
+    <xsl:attribute name="ref">
+      <xsl:text>TimeTemporalDataType</xsl:text>
+    </xsl:attribute>
+  </xsl:template>
+  <xsl:template match="odt:dateTime" mode="GenerateDataTypeRef">
+    <xsl:attribute name="ref">
+      <xsl:text>DateAndTimeTemporalDataType</xsl:text>
+    </xsl:attribute>
+  </xsl:template>
 	<xsl:template match="odt:string" mode="GenerateDataTypeRef">
 		<xsl:attribute name="ref">
 			<xsl:text>VariableLengthTextDataType</xsl:text>

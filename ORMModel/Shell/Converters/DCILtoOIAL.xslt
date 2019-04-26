@@ -178,6 +178,18 @@
           </xsl:if>
         </odt:dateTime>
       </xsl:when>
+      <xsl:when test="$dataType='DATE'">
+        <odt:date id="{$formatName}" name="{$formatName}" />
+      </xsl:when>
+      <xsl:when test="$dataType='TIME'">
+        <odt:time id="{$formatName}" name="{$formatName}">
+          <xsl:if test="$maxLength">
+            <xsl:attribute name="precision">
+              <xsl:value-of select="$maxLength"/>
+            </xsl:attribute>
+          </xsl:if>
+        </odt:time>
+      </xsl:when>
 			<xsl:otherwise>
 				<odt:string id="{$formatName}" name="{$formatName}" maxLength="255" />
 			</xsl:otherwise>
