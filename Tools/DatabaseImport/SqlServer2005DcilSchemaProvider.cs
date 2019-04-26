@@ -232,6 +232,8 @@ namespace ORMSolutions.ORMArchitect.DatabaseImport
                     return DcilDataType.DCILType.Real;
                 case "time":
                     return DcilDataType.DCILType.Time;
+                case "date":
+                    return DcilDataType.DCILType.Date;
                 default:
                     return DcilDataType.DCILType.CharacterVarying;
             }
