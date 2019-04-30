@@ -39,8 +39,6 @@ Project Build Order
 			RelationalTests\RelationalTests.csproj
 
 Current Upgrade 2017 -> 2019	
-	** TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
-
 	* New File VS2019.bat (Copy from VS2017.bat)
 	* Update VSVer.bat to account for new 2019 version
 		- Added section for 2019
@@ -116,52 +114,15 @@ Current Upgrade 2017 -> 2019
 		- Changed Product.wxs to look at VSVerInt instead of VSVer and updated for VS 2019
 		- Changed Setup.wixproj to use MSBuildExtensionsPath instead of MSBuildExtensionsPath32 and import Wix.targets like the PliX setup project does
 	* Update BuildSetup.bat to check for Less than version 15 instead of not equal to version 15
-	* New File BuildSetupVS2019.bat (Copy from BuildSetupVS2017.bat)
-	
-	) Update "ORM2CommandLineTest\TestDriverEngine.csproj"
-		- Updated the references for VS2017 and xmldiffpatch
-	) Update "ORM2CommandLineTest\ReportViewer.csproj"
-		- Updated the references for VS2017 and xmldiffpatch
-	) Update "ORM2CommandLineTest\TestDriverApp.csproj"
-		- Updated the references for VS2017 and xmldiffpatch
-	) Update "TestSuites\TestSample\TestSample.csproj"
-		- Updated the references for VS2017
-	) Update TestSuites\AutomationTestSample\AutomationTestSample.csproj
-		- Updated the references for VS2017
-	) Update "TestSuites\RegressionTests\ORMRegressionTestAddin\ORMRegressionTestAddin.csproj"
-		- Updated the references for VS2017
-	) Update "TestSuites\RelationalTests\RelationalTests.csproj"
-		- Updated the references for VS2017
-	) New File BuildTestsVS2017.bat (Copy from BuildTestVS2008.bat)
-		- Added section for degrading tools for v14.0 and defaulting to v15.0
-	) New File BuildAllVS2017.bat (Copy from BuildAllVS2015.bat)
-		- Added section for degrading tools for v14.0 and defaulting to v15.0
-	
-	* New File VersionGenerator.VS2017.sln copied from VersionGenerator.VS2015.sln
-	
-	
-	IF "%TargetVisualStudioVersion%"=="v8.0" (
-	SET DegradeToolsVersion=/toolsversion:2.0
-) ELSE IF "%TargetVisualStudioVersion%"=="v9.0" (
-	SET DegradeToolsVersion=/toolsversion:3.5
-) ELSE IF "%TargetVisualStudioVersion%"=="v10.0" (
-	SET DegradeToolsVersion=/toolsversion:4.0
-) ELSE IF "%TargetVisualStudioVersion%"=="v11.0" (
-	SET DegradeToolsVersion=/toolsversion:4.0
-) ELSE IF "%TargetVisualStudioVersion%"=="v12.0" (
-	SET DegradeToolsVersion=/toolsversion:12.0
-) ELSE IF "%TargetVisualStudioVersion%"=="v14.0" (
-	SET DegradeToolsVersion=/toolsversion:14.0
-) ELSE IF "%TargetVisualStudioVersion%"=="v15.0" (
-	SET DegradeToolsVersion=/toolsversion:15.0
-) ELSE (
-	SET TargetVisualStudioVersion=v16.0
-	SET TargetVisualStudioMajorMinorVersion=16.0
-	SET DegradeToolsVersion=/toolsversion:Current
-)
-	
-	
-			
+	* New File BuildSetupVS2019.bat (Copy from BuildSetupVS2017.bat)	
+	* Switched "ORM2CommandLineTest\TestDriverEngine.csproj" to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
+	* Switched "ORM2CommandLineTest\ReportViewer.csproj" to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
+	* Switched "ORM2CommandLineTest\TestDriverApp.csproj" to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
+	* Switched TestSuites\AutomationTestSample\AutomationTestSample.csproj  to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
+	* New File BuildTestsVS2019.bat (Copy from BuildTestVS2017.bat)
+	* New File BuildAllVS2019.bat (Copy from BuildAllVS2017.bat)	
+	* Created VersionGenerator.VS2019.sln
+
 Upgrade 2015 -> 2017
 	1) New File VS2017.bat (Copy from VS2015.bat)
 		- Replaced environment variable for call out to VSVer.bat
