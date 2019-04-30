@@ -16,7 +16,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<?include Config.wxi?>
 	<Fragment>
-    <?if $(var.VSVer) = v15.0?>
+    <?if $(var.VSVerInt) >= 15?>
     <?include ComponentGroupsV15+.wxi?>
     <?else?>
     <?include ComponentGroupsPreV15.wxi?>

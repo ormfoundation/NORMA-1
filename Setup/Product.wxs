@@ -45,7 +45,7 @@
 
 		<Condition Message="!(loc.Windows2000OrHigherRequired)">VersionNT >= 500</Condition>
 
-    <?if $(var.VSVer) = v15.0?>
+    <?if $(var.VSVerInt) >= 15?>
       <!-- We need to use custom actions to get this now since it's no longer in the registry-->
       <Binary Id="Setup.CustomActions.dll" SourceFile="Setup.CustomActions\bin\$(var.BuildConfiguration)\Setup.CustomActions.CA.dll" />
       <CustomAction Id="DetermineVsInstallPaths" Execute="immediate" Return="ignore" BinaryKey="Setup.CustomActions.dll" DllEntry="DetermineVisualStudioInstalls" />      
@@ -69,10 +69,10 @@
         </DirectorySearch>
       </Property>
       <Condition Message="!(loc.VSWhereRequired)">VSWHEREPATH OR Installed</Condition>
-      <!-- Include the VS setup bootstrappers (https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio?view=vs-2017)-->
-      <Binary Id="VS_Setup_Bootstrapper_Community" SourceFile="VSSetupBootstrappers\vs_community.exe" />
-      <Binary Id="VS_Setup_Bootstrapper_Professional" SourceFile="VSSetupBootstrappers\vs_professional.exe" />
-      <Binary Id="VS_Setup_Bootstrapper_Enterprise" SourceFile="VSSetupBootstrappers\vs_enterprise.exe" />
+      <!-- Include the VS setup bootstrappers (https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio?view=vs-2019)-->
+      <Binary Id="VS_Setup_Bootstrapper_Community" SourceFile="VSSetupBootstrappers$(var.VSLongProductYear)\vs_community.exe" />
+      <Binary Id="VS_Setup_Bootstrapper_Professional" SourceFile="VSSetupBootstrappers$(var.VSLongProductYear)\vs_professional.exe" />
+      <Binary Id="VS_Setup_Bootstrapper_Enterprise" SourceFile="VSSetupBootstrappers$(var.VSLongProductYear)\vs_enterprise.exe" />
     <?else?>
       <Property Id="VSPRODUCTDIR">
         <RegistrySearch Id="VSProductDirRegistrySearch" Root="HKLM" Key="$(var.VSRegRoot)\Setup\VS" Name="ProductDir" Type="directory" Win64="$(var.Win64)"/>
@@ -97,7 +97,7 @@
     <?endif?>
 		<!-- Make sure Visual Studio 2005 is installed. Since VS requires .NET, we don't need to check for it separately. -->
 		<!-- Technically, since DSL Tools requires VS, we don't even need to do this check, but since we have to get the properties anyway, we might as well. It gives the user a more appropriate error message, anyway. -->
-    <?if $(var.VSVer) = v15.0?>
+    <?if $(var.VSVerInt) >= 15?>
       <Condition Message="!(loc.VisualStudio$(var.VSLongProductYear)Required)">VSPRODUCTDIREXISTS_Community OR VSPRODUCTDIREXISTS_Professional OR VSPRODUCTDIREXISTS_Enterprise OR Installed</Condition>
     <?else?>
 		  <?ifdef VSIXInstall?>
@@ -121,8 +121,8 @@
 		<Condition Message="!(loc.PLiXRequired)">(PLIXSCHEMAVERSION >= $(var.PLiXMinimumSchemaVersion)) OR Installed</Condition>
 		
 		<!-- Get the package GUIDs for the various VS packages. -->
-    <?if $(var.VSVer) != v15.0?>
-      <!-- Moved to the vsix package def for 2017+ -->
+    <?if $(var.VSVerInt) < 15?>
+      <!-- Moved to the vsix package def for 15+ -->
 		  <?ifdef FixedCSharpPackageGuid?>
 			  <Property Id="VCSHARPPACKAGEGUID" Value="$(var.FixedCSharpPackageGuid)"/>
 		  <?else?>
@@ -174,7 +174,7 @@
 
     <CustomAction Id="ArpInstallLocationCustomAction" Property="ARPINSTALLLOCATION" Value="[$(var.DefaultShortProductDir)]"/>
 		<?ifdef VSIXInstall?>
-      <?if $(var.VSVer) = v15.0?>
+      <?if $(var.VSVerInt) >= 15?>
         <!-- Make sure the VS installer is updated (we only need to do this once since the installer is shared -->
         <CustomAction Id="VS_Installer_Update" BinaryKey="VS_Setup_Bootstrapper_Community" ExeCommand="--update --quiet --passive --wait" Return="ignore" Impersonate="no" Execute="commit"/>
         <!-- Make sure the required workloads and components are installed -->
@@ -192,13 +192,13 @@
 		  <CustomAction Id="DevEnvSetupCustomAction" Property="VSENVIRONMENTPATH" ExeCommand="$(var.RootSuffixCmd)/Setup" Return="ignore" Impersonate="no" Execute="commit"/>
 		<?endif?>
 		<InstallExecuteSequence>
-      <?if $(var.VSVer) = v15.0?>
+      <?if $(var.VSVerInt) >= 15?>
 			  <Custom Before="LaunchConditions" Action="DetermineVsInstallPaths"/>
 			<?endif?>
 			<RemoveExistingProducts Before="ArpInstallLocationCustomAction"/>
 			<Custom Before="InstallInitialize" Action="ArpInstallLocationCustomAction"/>
 			<?ifdef DoDevenvSetup?>
-        <?if $(var.VSVer) = v15.0?>
+        <?if $(var.VSVerInt) >= 15?>
           <Custom Before="InstallFinalize" Action="VS_Installer_Update">NOT Installed AND NOT PATCH</Custom>
           <Custom After="VS_Installer_Update" Action="VS_Component_Check_Community">NOT Installed AND NOT PATCH AND VSPRODUCTDIREXISTS_Community</Custom>  
           <Custom After="VS_Component_Check_Community" Action="DevEnvSetupCustomAction_Community">VSPRODUCTDIREXISTS_Community</Custom>

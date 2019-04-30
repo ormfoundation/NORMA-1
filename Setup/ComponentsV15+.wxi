@@ -104,7 +104,7 @@
 							</ProgId>
 							<RegistryKey Root="HKCR" Key="ormfile\shell\open\ddeexec">
 								<RegistryValue Type="string" Value="Open(&quot;%1&quot;)"/>
-								<RegistryValue Key="application" Type="string" Value="VisualStudio.15.0"/>
+								<RegistryValue Key="application" Type="string" Value="VisualStudio.$(var.VSVerInt).0"/>
 								<RegistryValue Key="topic" Type="string" Value="system"/>
 							</RegistryKey>
 							<RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\NORMAVS">

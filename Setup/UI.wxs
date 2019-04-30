@@ -14,11 +14,13 @@
 	You must not remove this notice, or any other, from this software.
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include Config.wxi?>
+  
 	<Fragment>
 
 		<CustomAction Id="WixUIInstallModeCustomAction" Property="WixUI_InstallMode" Value="InstallTypical" />
 		<InstallUISequence>
-      <?if $(var.VSVer) = v15.0?>
+      <?if $(var.VSVerInt) >= 15?>
         <Custom Before="LaunchConditions" Action="DetermineVsInstallPaths"/>
       <?endif?>
 			<Custom Before="WelcomeDlg" Action="WixUIInstallModeCustomAction">NOT Installed</Custom>

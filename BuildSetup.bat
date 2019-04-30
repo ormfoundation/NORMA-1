@@ -4,7 +4,7 @@ SET RootDir=%~dp0.
 CALL "%RootDir%\SetupEnvironment.bat" %*
 
 :: HelpStudio Lite is not installed anymore with VS SDK
-IF NOT "%TargetVisualStudioMajorMinorVersion%"=="15.0" (
+IF %TargetVisualStudioMajorMinorVersion% LSS 15.0 (
 	CALL "%RootDir%\BuildHelp.bat" %*
 )
 :: If VSWhere was used then we need to pass in the private asssembly location - this is the newer VS

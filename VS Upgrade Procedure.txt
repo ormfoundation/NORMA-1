@@ -41,100 +41,83 @@ Project Build Order
 Current Upgrade 2017 -> 2019	
 	** TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
 
-	) New File VS2019.bat (Copy from VS2017.bat)
-	) Update VSVer.bat to account for new 2019 version
+	* New File VS2019.bat (Copy from VS2017.bat)
+	* Update VSVer.bat to account for new 2019 version
 		- Added section for 2019
 		- Set the environment variable TargetVisualStudioMajorMinorVersion, so it can be used in the csproj files
-	) New File FirstTimeBuildVS2019.bat (Copy from FirstTimeBuildVS2017.bat and update)
-	) Update SetupEnvironment.bat
+	* New File FirstTimeBuildVS2019.bat (Copy from FirstTimeBuildVS2017.bat and update)
+	* Update SetupEnvironment.bat
 		- Add section for 2019
-	) Edit Tools\NUBuildVS\Neumont.Build.VisualStudio.Multitargeting.targets
+	* Edit Tools\NUBuildVS\Neumont.Build.VisualStudio.Multitargeting.targets
 		- Add sections for 2019
-	) Edit Tools\NUBuildVS\Neumont.Build.VisualStudio.targets
+	* Edit Tools\NUBuildVS\Neumont.Build.VisualStudio.targets
 		- Add section for 2019
-	) Setup NUBuild for 2019 (Tools\NUBuild)
+	* Setup NUBuild for 2019 (Tools\NUBuild)
 		- Created NUBuild.VS2019.sln
 		- No change to AssemblyInfo, we're still on version 15.1.0.0 of MSBuild
 		- No change to NGen.cs - it's already setup for 4.7
 		- No change to Intall.bat - we are not using GAC
-	) Setup NUBuildVS for 2017 (Tools\NUBuildVS)
+	* Setup NUBuildVS for 2017 (Tools\NUBuildVS)
 		- Created NUBuildVS.VS2019.sln
 		- No change to AssemblyInfo, we're still on version 15.1.0.0 of MSBuild
 		- Switched NUBuildVS.csproj to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
-	) Setup DisableRuleDirectiveProcessor for 2017 (Tools\DisableRuleDirectiveProcessor)	
+	* Setup DisableRuleDirectiveProcessor for 2017 (Tools\DisableRuleDirectiveProcessor)	
 		- Created DisableRuleDirectiveProcessor.VS2019.sln
 		- Switched DisableRuleDirectiveProcessor.csproj to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
-	) New File BuildDevToolsVS2019.bat (Copy from BuildDevToolsVS2017.bat and update)
-	) Setup ORMPackage for 2017	
+	* New File BuildDevToolsVS2019.bat (Copy from BuildDevToolsVS2017.bat and update)
+	* Setup ORMPackage for 2017	
 		- Created ORMPackage.VS2019.sln
 		- Switched ORMModel\ORMModel.csproj to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
 		- Update ORMModel\Shell\ORMPackage.cs for 2019
 			- Added registry settings for registry settings line 120
 		- Create new templates under Shell\ProjectItems VS2017 -> VS2019
-	) Setup ExtensionExample for 2019
+	* Setup ExtensionExample for 2019
 		- Created ExtensionExample.VS2019.sln
-	) Setup OIALModel for 2019
+	* Setup OIALModel for 2019
 		- Created OIALModel.VS2019.sln
-	) Setup Oial for 2019
+	* Setup Oial for 2019
 		- Created Oial.VS2019.sln
-	) Setup RelationalModel (Dil.sln) for 2019
+	* Setup RelationalModel (Dil.sln) for 2019
 		- Created Dil.VS2019.sln
-	) Setup RelationalView for 2019 (AlternateViews\RelationalView)
+	* Setup RelationalView for 2019 (AlternateViews\RelationalView)
 		- Created RelationalView.VS2019.sln
-	) Setup CustomProperties for 2019
+	* Setup CustomProperties for 2019
 		- Created CustomProperties.VS2019.sln
-	) Setup EntityRelationship for 2019
+	* Setup EntityRelationship for 2019
 		- Created EntityRelationship.VS2019.sln
-	) Setup BarkerERView for 2019 (AlternateViews\BarkerERView)
+	* Setup BarkerERView for 2019 (AlternateViews\BarkerERView)
 		- Created BarkerERView.VS2019.sln
-	) Setup ORMCustomTool for 2019 (Tools\ORMCustomTool)
+	* Setup ORMCustomTool for 2019 (Tools\ORMCustomTool)
 		- Created ORMCustomTool.VS2019.sln
 		- Switched ORMCustomTool.csproj to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
 		- Update ORMCustomTool.cs  for 2019
 			- Added registry settings for registry settings line 63
 		- Update UI\ORMCustomToolUITypeEditor.cs for 2019
 			- Added moniker line 69
-	) Setup DatabaseImport for 2019 (Tools\DatabaseImport)
+	* Setup DatabaseImport for 2019 (Tools\DatabaseImport)
 		- Created DatabaseImport.VS2019.sln
 		- Switched DatabaseImport.csproj to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
 		- Create new templates under ProjectItems VS2017 -> VS2019
-	) Create VSIXInstall VS2019 files (Copy from VSIXInstall\VS2017)
+	* Create VSIXInstall VS2019 files (Copy from VSIXInstall\VS2017)
 		- Update versions in extension.vsixmanifest
 		- Update versions in ORMDesigner.pkgdef for the dll references
-	) Update .\install.bat use TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
-	) New File BuildVS2019.bat (Copy from BuildVS2017.bat and update)
-		
-	) Setup Setup for 2017
-		- Open the Setup.VS2015.sln and save it as Setup.VS2017.sln
-		- Create new NORMASchemaCatalog.VS2017.xml (from the VS2015 version)
-		- Added the LICENSE.txt to the Components.wxs file so that the VSIX manifest can find it
-	) Update BuildSetup.bat
-		- Changed to not call BuildHelp if VS2017 (HelpStudio Lite is no longer installed with VS SDK)
-		- Updated to if we used VSWhere to find info then we also need to pass in the private assembly location
-	) Update Setup Project
-		- ComponentGroups.wxs - separated into two separate files since the 2017 install is very different
-			ComponentGroupsPreV15.wxi
-			ComponentGroupsV15+.wxi
-		- Components.wxs - separated into two separate files since the 2017 install is very different
-			ComponentsPreV15.wxi
-			ComponentsV15+.wxi
-		- NORMAItemTemplates.wxi - separated into two separate files since the 2017 install is very different
-			NORMAItemTemplatesPreV15.wxi
-			NORMAItemTemplatesV15+.wxi
-		- Config.wxi - setup for VS2017
-		- Features.wxs - comment out help section
-		- Strings.wxl - setup for VS2017
-		- UI.wxs - setup for VS2017 (added custom actions to UI Sequence)
-		- Product.wxs
-			- Changed how to find the information about VS for 2017
-			- Ignore Visual Studio registry calls since none of this is in the registry anymore (moved to the pkgdef file)
-	) Added a new project Setup.CustomActions
-		- This project is used to determine the install locations of VS
-	) Updated the Setup.proj file to include the Setup.CustomActions project if VS Version 15.0
-	) New File BuildSetupVS2017.bat (Copy from BuildSetupVS2015.bat)
-		- Added section for degrading tools for v14.0 and defaulting to v15.0
-		- Added ReferencePath for MSBuild to the VS Private Assemblies folder (%VSInstallDir%\Common7\IDE\PrivateAssemblies); this is needed for the virtual tree grid
-		- Running this .bat will build Main.proj and Setup.prog
+	* Update .\install.bat use TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
+	* New File BuildVS2019.bat (Copy from BuildVS2017.bat and update)
+	* Setup Setup for 2019
+		- Switched Setup.proj to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion
+		- Created Setup.VS2019.sln
+		- Create new NORMASchemaCatalog.VS2019.xml (from the VS2017 version)
+		- Update Config.wxi
+		- Changed ComponentGroups.wxs to look at VSVerInt instead of VSVer
+		- Changed Components.wxs to look at VSVerInt instead of VSVer
+		- Updated ComponentsV15+.wxi to use var.VSVerInt for VS Version
+		- Update Strings.wxl
+		- Changed UI.wxs to look at VSVerInt instead of VSVer
+		- Changed Product.wxs to look at VSVerInt instead of VSVer and updated for VS 2019
+		- Changed Setup.wixproj to use MSBuildExtensionsPath instead of MSBuildExtensionsPath32 and import Wix.targets like the PliX setup project does
+	* Update BuildSetup.bat to check for Less than version 15 instead of not equal to version 15
+	* New File BuildSetupVS2019.bat (Copy from BuildSetupVS2017.bat)
+	
 	) Update "ORM2CommandLineTest\TestDriverEngine.csproj"
 		- Updated the references for VS2017 and xmldiffpatch
 	) Update "ORM2CommandLineTest\ReportViewer.csproj"

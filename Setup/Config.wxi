@@ -51,6 +51,7 @@
 		<?define NewORMFileViaGeneralZip?>
 		<?define DoDevenvSetup?>
     <?define PLiXRegRoot="$(var.NeumontRegRoot)\PLiX for Visual Studio"?>
+    <?define VSVerInt=8 ?>
 	<?elseif $(var.VSVer) = v9.0?>
 		<?define PackageGuidStart="24D571AB-0000-4FA4"?>
 		<?define RootSuffixVersion="9.0"?>
@@ -60,6 +61,7 @@
 		<?define NewORMFileViaGeneralZip?>
 		<?define DoDevenvSetup?>
     <?define PLiXRegRoot="$(var.NeumontRegRoot)\PLiX for Visual Studio"?>
+    <?define VSVerInt=9 ?>
 	<?elseif $(var.VSVer) = v10.0?>
 		<?define PackageGuidStart="BB66440D-0000-4413"?>
 		<?define RootSuffixVersion="10.0"?>
@@ -70,6 +72,7 @@
 		<?define NewORMFileViaNewFileItems?>
 		<?define ModelingProjectSupport=1 ?>
     <?define PLiXRegRoot="$(var.NeumontRegRoot)\PLiX for Visual Studio"?>
+    <?define VSVerInt=10 ?>
 	<?elseif $(var.VSVer) = v11.0?>
 		<?define PackageGuidStart="E94E7B30-0000-4AEC"?>
 		<?define RootSuffixVersion="11.0"?>
@@ -83,6 +86,7 @@
 		<?define FixedCSharpPackageGuid="{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}"?>
 		<?define ModelingProjectSupport=1 ?>
     <?define PLiXRegRoot="$(var.NeumontRegRoot)\PLiX for Visual Studio"?>
+    <?define VSVerInt=11 ?>
 	<?elseif $(var.VSVer) = v12.0?>
 		<?define PackageGuidStart="5689E25D-0000-46FA"?>
 		<?define RootSuffixVersion="12.0"?>
@@ -96,6 +100,7 @@
 		<?define FixedCSharpPackageGuid="{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}"?>
 		<?define ModelingProjectSupport=1 ?>
     <?define PLiXRegRoot="$(var.NeumontRegRoot)\PLiX for Visual Studio"?>
+    <?define VSVerInt=12 ?>
 	<?elseif $(var.VSVer) = v14.0?>
 		<?define PackageGuidStart="B7105D09-0000-4448"?>
 		<?define RootSuffixVersion="14.0"?>
@@ -109,6 +114,7 @@
 		<?define FixedCSharpPackageGuid="{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}"?>
 		<?define ModelingProjectSupport=1 ?>
     <?define PLiXRegRoot="$(var.NeumontRegRoot)\PLiX for Visual Studio"?>
+    <?define VSVerInt=14 ?>
   <?elseif $(var.VSVer) = v15.0?>
     <?define PackageGuidStart="89B8324B-0000-4088"?>
     <?define RootSuffixVersion="15.0"?>
@@ -122,6 +128,19 @@
     <?define FixedCSharpPackageGuid="{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}"?>
     <?define ModelingProjectSupport=1 ?>
     <?define PLiXRegRoot="$(var.NeumontRegRoot)\PLiX for Visual Studio 2017"?>
+    <?define VSVerInt=15 ?>
+  <?elseif $(var.VSVer) = v16.0?>
+    <?define PackageGuidStart="A7A4D117-0000-41F6"?>
+    <?define RootSuffixVersion="16.0"?>
+    <?define LinqSupport=1 ?>
+    <?define VSIXInstall?>
+    <?define VSRegistryPackageOnly?>
+    <?define NewORMFileViaNewFileItems?>
+    <?define DoDevenvSetup?>
+    <?define FixedCSharpPackageGuid="{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}"?>
+    <?define ModelingProjectSupport=1 ?>
+    <?define PLiXRegRoot="$(var.NeumontRegRoot)\PLiX for Visual Studio 2019"?>
+    <?define VSVerInt=16 ?>
   <?endif?>
 	<?define PackageCode="$(var.PackageGuidStart)-$(var.VersionGuidSuffix)"?>
 	<!-- ProductCode should be changed for each MAJOR version. Specifically, the first and second hexits of the last section of the GUID should match the two digits of the major version.-->
