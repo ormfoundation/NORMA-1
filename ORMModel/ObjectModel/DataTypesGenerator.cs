@@ -2067,7 +2067,16 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 			System.DateTime.TryParse(invariantValue2, CultureInfo.InvariantCulture, DateTimeStyles.None, out typedValue2);
 			return ((IComparable<System.DateTime>)typedValue1).CompareTo(typedValue2);
 		}
-	}
+
+        /// <summary>Show the Length property for this DataType based on the 'DataTypePrecision' resource string.</summary>
+		public override string LengthName
+        {
+            get
+            {
+                return ResourceStrings.DataTypePrecision;
+            }
+        }
+    }
 	/// <summary>A date temporal data type</summary>
 	public partial class DateTemporalDataType
 	{
@@ -2117,7 +2126,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 			System.DateTime.TryParse(invariantValue2, CultureInfo.InvariantCulture, DateTimeStyles.None, out typedValue2);
 			return ((IComparable<System.DateTime>)typedValue1).CompareTo(typedValue2);
 		}
-	}
+    }
 	/// <summary>A date and time temporal data type</summary>
 	public partial class DateAndTimeTemporalDataType
 	{
@@ -2167,7 +2176,16 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 			System.DateTime.TryParse(invariantValue2, CultureInfo.InvariantCulture, DateTimeStyles.None, out typedValue2);
 			return ((IComparable<System.DateTime>)typedValue1).CompareTo(typedValue2);
 		}
-	}
+
+        /// <summary>Show the Length property for this DataType based on the 'DataTypePrecision' resource string.</summary>
+		public override string LengthName
+        {
+            get
+            {
+                return ResourceStrings.DataTypePrecision;
+            }
+        }
+    }
 	/// <summary>A true or false logical data type</summary>
 	public partial class TrueOrFalseLogicalDataType
 	{
