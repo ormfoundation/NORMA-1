@@ -28,18 +28,18 @@ using DslModeling = global::Microsoft.VisualStudio.Modeling;
 using DslDesign = global::Microsoft.VisualStudio.Modeling.Design;
 namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 {
-	/// <summary>
-	/// DomainModel ORMCoreDomainModel
-	/// Description for ORMSolutions.ORMArchitect.Core.ObjectModel.ORMCore
-	/// </summary>
-	[DslDesign::DisplayNameResource("ORMSolutions.ORMArchitect.Core.ObjectModel.ORMCoreDomainModel.DisplayName", typeof(global::ORMSolutions.ORMArchitect.Core.ObjectModel.ORMCoreDomainModel), "ORMSolutions.ORMArchitect.Core.GeneratedCode.CoreDomainModelResx")]
-	[DslDesign::DescriptionResource("ORMSolutions.ORMArchitect.Core.ObjectModel.ORMCoreDomainModel.Description", typeof(global::ORMSolutions.ORMArchitect.Core.ObjectModel.ORMCoreDomainModel), "ORMSolutions.ORMArchitect.Core.GeneratedCode.CoreDomainModelResx")]
-	[global::System.CLSCompliant(true)]
-	[DslModeling::DependsOnDomainModel(typeof(global::Microsoft.VisualStudio.Modeling.CoreDomainModel))]
-	[DslModeling::DependsOnDomainModel(typeof(global::ORMSolutions.ORMArchitect.Framework.FrameworkDomainModel))]
-	[global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]
-	[DslModeling::DomainObjectId("3eae649f-e654-4d04-8289-c25d2c0322d8")]
-	public partial class ORMCoreDomainModel : DslModeling::DomainModel
+    /// <summary>
+    /// DomainModel ORMCoreDomainModel
+    /// Description for ORMSolutions.ORMArchitect.Core.ObjectModel.ORMCore
+    /// </summary>
+    [DslDesign::DisplayNameResource("ORMSolutions.ORMArchitect.Core.ObjectModel.ORMCoreDomainModel.DisplayName", typeof(global::ORMSolutions.ORMArchitect.Core.ObjectModel.ORMCoreDomainModel), "ORMSolutions.ORMArchitect.Core.GeneratedCode.CoreDomainModelResx")]
+    [DslDesign::DescriptionResource("ORMSolutions.ORMArchitect.Core.ObjectModel.ORMCoreDomainModel.Description", typeof(global::ORMSolutions.ORMArchitect.Core.ObjectModel.ORMCoreDomainModel), "ORMSolutions.ORMArchitect.Core.GeneratedCode.CoreDomainModelResx")]
+    [global::System.CLSCompliant(true)]
+    [DslModeling::DependsOnDomainModel(typeof(global::Microsoft.VisualStudio.Modeling.CoreDomainModel))]
+    [DslModeling::DependsOnDomainModel(typeof(global::ORMSolutions.ORMArchitect.Framework.FrameworkDomainModel))]
+    [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Generated code.")]
+    [DslModeling::DomainObjectId("3eae649f-e654-4d04-8289-c25d2c0322d8")]
+    public partial class ORMCoreDomainModel : DslModeling::DomainModel
 	{
 		#region Constructor, domain model Id
 	
@@ -229,6 +229,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 				typeof(TimeTemporalDataType),
 				typeof(DateTemporalDataType),
 				typeof(DateAndTimeTemporalDataType),
+				typeof(DateAndTimeOffsetTemporalDataType),
 				typeof(TemporalDataType),
 				typeof(TrueOrFalseLogicalDataType),
 				typeof(YesOrNoLogicalDataType),
@@ -1172,7 +1173,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 	
 			if (createElementMap == null)
 			{
-				createElementMap = new global::System.Collections.Generic.Dictionary<global::System.Type, int>(197);
+				createElementMap = new global::System.Collections.Generic.Dictionary<global::System.Type, int>(198);
 				createElementMap.Add(typeof(NameConsumer), 0);
 				createElementMap.Add(typeof(RecognizedPhrase), 1);
 				createElementMap.Add(typeof(NameGenerator), 2);
@@ -1288,49 +1289,50 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 				createElementMap.Add(typeof(TimeTemporalDataType), 112);
 				createElementMap.Add(typeof(DateTemporalDataType), 113);
 				createElementMap.Add(typeof(DateAndTimeTemporalDataType), 114);
-				createElementMap.Add(typeof(TrueOrFalseLogicalDataType), 115);
-				createElementMap.Add(typeof(YesOrNoLogicalDataType), 116);
-				createElementMap.Add(typeof(RowIdOtherDataType), 117);
-				createElementMap.Add(typeof(ObjectIdOtherDataType), 118);
-				createElementMap.Add(typeof(Reading), 119);
-				createElementMap.Add(typeof(ReadingOrder), 120);
-				createElementMap.Add(typeof(ObjectTypeCardinalityConstraint), 121);
-				createElementMap.Add(typeof(UnaryRoleCardinalityConstraint), 122);
-				createElementMap.Add(typeof(CardinalityRange), 123);
-				createElementMap.Add(typeof(ValueRange), 124);
-				createElementMap.Add(typeof(ValueTypeValueConstraint), 125);
-				createElementMap.Add(typeof(RoleValueConstraint), 126);
-				createElementMap.Add(typeof(PathConditionRoleValueConstraint), 127);
-				createElementMap.Add(typeof(PathConditionRootValueConstraint), 128);
-				createElementMap.Add(typeof(MinValueMismatchError), 129);
-				createElementMap.Add(typeof(MaxValueMismatchError), 130);
-				createElementMap.Add(typeof(ImpliedInternalUniquenessConstraintError), 131);
-				createElementMap.Add(typeof(FrequencyConstraintViolatedByUniquenessConstraintError), 132);
-				createElementMap.Add(typeof(RingConstraintTypeNotSpecifiedError), 133);
-				createElementMap.Add(typeof(ValueComparisonConstraintOperatorNotSpecifiedError), 134);
-				createElementMap.Add(typeof(ValueComparisonRolesNotComparableError), 135);
-				createElementMap.Add(typeof(SubtypeMetaRole), 136);
-				createElementMap.Add(typeof(SupertypeMetaRole), 137);
-				createElementMap.Add(typeof(Definition), 138);
-				createElementMap.Add(typeof(Note), 139);
-				createElementMap.Add(typeof(ModelNote), 140);
-				createElementMap.Add(typeof(CompatibleSupertypesError), 141);
-				createElementMap.Add(typeof(ImplicationError), 142);
-				createElementMap.Add(typeof(EqualityOrSubsetImpliedByMandatoryError), 143);
-				createElementMap.Add(typeof(PreferredIdentifierRequiresMandatoryError), 144);
-				createElementMap.Add(typeof(ValueRangeOverlapError), 145);
-				createElementMap.Add(typeof(ValueConstraintValueTypeDetachedError), 146);
-				createElementMap.Add(typeof(CardinalityRangeOverlapError), 147);
-				createElementMap.Add(typeof(DerivationNote), 148);
-				createElementMap.Add(typeof(FactTypeDerivationExpression), 149);
-				createElementMap.Add(typeof(SubtypeDerivationExpression), 150);
-				createElementMap.Add(typeof(EntityTypeInstance), 151);
-				createElementMap.Add(typeof(EntityTypeSubtypeInstance), 152);
-				createElementMap.Add(typeof(ValueTypeInstance), 153);
-				createElementMap.Add(typeof(FactTypeInstance), 154);
-				createElementMap.Add(typeof(TooFewEntityTypeRoleInstancesError), 155);
-				createElementMap.Add(typeof(TooFewFactTypeRoleInstancesError), 156);
-				createElementMap.Add(typeof(CompatibleValueTypeInstanceValueError), 157);
+				createElementMap.Add(typeof(DateAndTimeOffsetTemporalDataType), 115);
+				createElementMap.Add(typeof(TrueOrFalseLogicalDataType), 116);
+				createElementMap.Add(typeof(YesOrNoLogicalDataType), 117);
+				createElementMap.Add(typeof(RowIdOtherDataType), 118);
+				createElementMap.Add(typeof(ObjectIdOtherDataType), 119);
+				createElementMap.Add(typeof(Reading), 120);
+				createElementMap.Add(typeof(ReadingOrder), 121);
+				createElementMap.Add(typeof(ObjectTypeCardinalityConstraint), 122);
+				createElementMap.Add(typeof(UnaryRoleCardinalityConstraint), 123);
+				createElementMap.Add(typeof(CardinalityRange), 124);
+				createElementMap.Add(typeof(ValueRange), 125);
+				createElementMap.Add(typeof(ValueTypeValueConstraint), 126);
+				createElementMap.Add(typeof(RoleValueConstraint), 127);
+				createElementMap.Add(typeof(PathConditionRoleValueConstraint), 128);
+				createElementMap.Add(typeof(PathConditionRootValueConstraint), 129);
+				createElementMap.Add(typeof(MinValueMismatchError), 130);
+				createElementMap.Add(typeof(MaxValueMismatchError), 131);
+				createElementMap.Add(typeof(ImpliedInternalUniquenessConstraintError), 132);
+				createElementMap.Add(typeof(FrequencyConstraintViolatedByUniquenessConstraintError), 133);
+				createElementMap.Add(typeof(RingConstraintTypeNotSpecifiedError), 134);
+				createElementMap.Add(typeof(ValueComparisonConstraintOperatorNotSpecifiedError), 135);
+				createElementMap.Add(typeof(ValueComparisonRolesNotComparableError), 136);
+				createElementMap.Add(typeof(SubtypeMetaRole), 137);
+				createElementMap.Add(typeof(SupertypeMetaRole), 138);
+				createElementMap.Add(typeof(Definition), 139);
+				createElementMap.Add(typeof(Note), 140);
+				createElementMap.Add(typeof(ModelNote), 141);
+				createElementMap.Add(typeof(CompatibleSupertypesError), 142);
+				createElementMap.Add(typeof(ImplicationError), 143);
+				createElementMap.Add(typeof(EqualityOrSubsetImpliedByMandatoryError), 144);
+				createElementMap.Add(typeof(PreferredIdentifierRequiresMandatoryError), 145);
+				createElementMap.Add(typeof(ValueRangeOverlapError), 146);
+				createElementMap.Add(typeof(ValueConstraintValueTypeDetachedError), 147);
+				createElementMap.Add(typeof(CardinalityRangeOverlapError), 148);
+				createElementMap.Add(typeof(DerivationNote), 149);
+				createElementMap.Add(typeof(FactTypeDerivationExpression), 150);
+				createElementMap.Add(typeof(SubtypeDerivationExpression), 151);
+				createElementMap.Add(typeof(EntityTypeInstance), 152);
+				createElementMap.Add(typeof(EntityTypeSubtypeInstance), 153);
+				createElementMap.Add(typeof(ValueTypeInstance), 154);
+				createElementMap.Add(typeof(FactTypeInstance), 155);
+				createElementMap.Add(typeof(TooFewEntityTypeRoleInstancesError), 156);
+				createElementMap.Add(typeof(TooFewFactTypeRoleInstancesError), 157);
+				createElementMap.Add(typeof(CompatibleValueTypeInstanceValueError), 158);
 			}
 			int index;
 			if (!createElementMap.TryGetValue(elementType, out index))
@@ -1459,49 +1461,50 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 				case 112: return new TimeTemporalDataType(partition, propertyAssignments);
 				case 113: return new DateTemporalDataType(partition, propertyAssignments);
 				case 114: return new DateAndTimeTemporalDataType(partition, propertyAssignments);
-				case 115: return new TrueOrFalseLogicalDataType(partition, propertyAssignments);
-				case 116: return new YesOrNoLogicalDataType(partition, propertyAssignments);
-				case 117: return new RowIdOtherDataType(partition, propertyAssignments);
-				case 118: return new ObjectIdOtherDataType(partition, propertyAssignments);
-				case 119: return new Reading(partition, propertyAssignments);
-				case 120: return new ReadingOrder(partition, propertyAssignments);
-				case 121: return new ObjectTypeCardinalityConstraint(partition, propertyAssignments);
-				case 122: return new UnaryRoleCardinalityConstraint(partition, propertyAssignments);
-				case 123: return new CardinalityRange(partition, propertyAssignments);
-				case 124: return new ValueRange(partition, propertyAssignments);
-				case 125: return new ValueTypeValueConstraint(partition, propertyAssignments);
-				case 126: return new RoleValueConstraint(partition, propertyAssignments);
-				case 127: return new PathConditionRoleValueConstraint(partition, propertyAssignments);
-				case 128: return new PathConditionRootValueConstraint(partition, propertyAssignments);
-				case 129: return new MinValueMismatchError(partition, propertyAssignments);
-				case 130: return new MaxValueMismatchError(partition, propertyAssignments);
-				case 131: return new ImpliedInternalUniquenessConstraintError(partition, propertyAssignments);
-				case 132: return new FrequencyConstraintViolatedByUniquenessConstraintError(partition, propertyAssignments);
-				case 133: return new RingConstraintTypeNotSpecifiedError(partition, propertyAssignments);
-				case 134: return new ValueComparisonConstraintOperatorNotSpecifiedError(partition, propertyAssignments);
-				case 135: return new ValueComparisonRolesNotComparableError(partition, propertyAssignments);
-				case 136: return new SubtypeMetaRole(partition, propertyAssignments);
-				case 137: return new SupertypeMetaRole(partition, propertyAssignments);
-				case 138: return new Definition(partition, propertyAssignments);
-				case 139: return new Note(partition, propertyAssignments);
-				case 140: return new ModelNote(partition, propertyAssignments);
-				case 141: return new CompatibleSupertypesError(partition, propertyAssignments);
-				case 142: return new ImplicationError(partition, propertyAssignments);
-				case 143: return new EqualityOrSubsetImpliedByMandatoryError(partition, propertyAssignments);
-				case 144: return new PreferredIdentifierRequiresMandatoryError(partition, propertyAssignments);
-				case 145: return new ValueRangeOverlapError(partition, propertyAssignments);
-				case 146: return new ValueConstraintValueTypeDetachedError(partition, propertyAssignments);
-				case 147: return new CardinalityRangeOverlapError(partition, propertyAssignments);
-				case 148: return new DerivationNote(partition, propertyAssignments);
-				case 149: return new FactTypeDerivationExpression(partition, propertyAssignments);
-				case 150: return new SubtypeDerivationExpression(partition, propertyAssignments);
-				case 151: return new EntityTypeInstance(partition, propertyAssignments);
-				case 152: return new EntityTypeSubtypeInstance(partition, propertyAssignments);
-				case 153: return new ValueTypeInstance(partition, propertyAssignments);
-				case 154: return new FactTypeInstance(partition, propertyAssignments);
-				case 155: return new TooFewEntityTypeRoleInstancesError(partition, propertyAssignments);
-				case 156: return new TooFewFactTypeRoleInstancesError(partition, propertyAssignments);
-				case 157: return new CompatibleValueTypeInstanceValueError(partition, propertyAssignments);
+				case 115: return new DateAndTimeOffsetTemporalDataType(partition, propertyAssignments);
+				case 116: return new TrueOrFalseLogicalDataType(partition, propertyAssignments);
+				case 117: return new YesOrNoLogicalDataType(partition, propertyAssignments);
+				case 118: return new RowIdOtherDataType(partition, propertyAssignments);
+				case 119: return new ObjectIdOtherDataType(partition, propertyAssignments);
+				case 120: return new Reading(partition, propertyAssignments);
+				case 121: return new ReadingOrder(partition, propertyAssignments);
+				case 122: return new ObjectTypeCardinalityConstraint(partition, propertyAssignments);
+				case 123: return new UnaryRoleCardinalityConstraint(partition, propertyAssignments);
+				case 124: return new CardinalityRange(partition, propertyAssignments);
+				case 125: return new ValueRange(partition, propertyAssignments);
+				case 126: return new ValueTypeValueConstraint(partition, propertyAssignments);
+				case 127: return new RoleValueConstraint(partition, propertyAssignments);
+				case 128: return new PathConditionRoleValueConstraint(partition, propertyAssignments);
+				case 129: return new PathConditionRootValueConstraint(partition, propertyAssignments);
+				case 130: return new MinValueMismatchError(partition, propertyAssignments);
+				case 131: return new MaxValueMismatchError(partition, propertyAssignments);
+				case 132: return new ImpliedInternalUniquenessConstraintError(partition, propertyAssignments);
+				case 133: return new FrequencyConstraintViolatedByUniquenessConstraintError(partition, propertyAssignments);
+				case 134: return new RingConstraintTypeNotSpecifiedError(partition, propertyAssignments);
+				case 135: return new ValueComparisonConstraintOperatorNotSpecifiedError(partition, propertyAssignments);
+				case 136: return new ValueComparisonRolesNotComparableError(partition, propertyAssignments);
+				case 137: return new SubtypeMetaRole(partition, propertyAssignments);
+				case 138: return new SupertypeMetaRole(partition, propertyAssignments);
+				case 139: return new Definition(partition, propertyAssignments);
+				case 140: return new Note(partition, propertyAssignments);
+				case 141: return new ModelNote(partition, propertyAssignments);
+				case 142: return new CompatibleSupertypesError(partition, propertyAssignments);
+				case 143: return new ImplicationError(partition, propertyAssignments);
+				case 144: return new EqualityOrSubsetImpliedByMandatoryError(partition, propertyAssignments);
+				case 145: return new PreferredIdentifierRequiresMandatoryError(partition, propertyAssignments);
+				case 146: return new ValueRangeOverlapError(partition, propertyAssignments);
+				case 147: return new ValueConstraintValueTypeDetachedError(partition, propertyAssignments);
+				case 148: return new CardinalityRangeOverlapError(partition, propertyAssignments);
+				case 149: return new DerivationNote(partition, propertyAssignments);
+				case 150: return new FactTypeDerivationExpression(partition, propertyAssignments);
+				case 151: return new SubtypeDerivationExpression(partition, propertyAssignments);
+				case 152: return new EntityTypeInstance(partition, propertyAssignments);
+				case 153: return new EntityTypeSubtypeInstance(partition, propertyAssignments);
+				case 154: return new ValueTypeInstance(partition, propertyAssignments);
+				case 155: return new FactTypeInstance(partition, propertyAssignments);
+				case 156: return new TooFewEntityTypeRoleInstancesError(partition, propertyAssignments);
+				case 157: return new TooFewFactTypeRoleInstancesError(partition, propertyAssignments);
+				case 158: return new CompatibleValueTypeInstanceValueError(partition, propertyAssignments);
 				default: return null;
 			}
 		}

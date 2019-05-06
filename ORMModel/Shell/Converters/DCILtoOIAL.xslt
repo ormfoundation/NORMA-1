@@ -169,6 +169,15 @@
 			<xsl:when test="$dataType='BOOLEAN'">
 				<odt:boolean id="{$formatName}" name="{$formatName}"/>
 			</xsl:when>
+      <xsl:when test="$dataType='DATE TIME OFFSET'">
+        <odt:dateTimeOffset id="{$formatName}" name="{$formatName}">
+          <xsl:if test="$maxLength">
+            <xsl:attribute name="precision">
+              <xsl:value-of select="$maxLength"/>
+            </xsl:attribute>
+          </xsl:if>
+        </odt:dateTimeOffset>
+      </xsl:when>
       <xsl:when test="$dataType='DATE TIME'">
         <odt:dateTime id="{$formatName}" name="{$formatName}">
           <xsl:if test="$maxLength">

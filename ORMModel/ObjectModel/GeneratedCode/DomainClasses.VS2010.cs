@@ -21121,6 +21121,46 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 }
 namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 {
+    /// <summary>
+    /// DomainClass DateAndTimeOffsetTemporalDataType
+    /// </summary>
+    [DslDesign::DisplayNameResource("ORMSolutions.ORMArchitect.Core.ObjectModel.DateAndTimeOffsetTemporalDataType.DisplayName", typeof(global::ORMSolutions.ORMArchitect.Core.ObjectModel.ORMCoreDomainModel), "ORMSolutions.ORMArchitect.Core.GeneratedCode.CoreDomainModelResx")]
+    [DslDesign::DescriptionResource("ORMSolutions.ORMArchitect.Core.ObjectModel.DateAndTimeOffsetTemporalDataType.Description", typeof(global::ORMSolutions.ORMArchitect.Core.ObjectModel.ORMCoreDomainModel), "ORMSolutions.ORMArchitect.Core.GeneratedCode.CoreDomainModelResx")]
+    [DslModeling::DomainModelOwner(typeof(global::ORMSolutions.ORMArchitect.Core.ObjectModel.ORMCoreDomainModel))]
+    [global::System.CLSCompliant(true)]
+    [DslModeling::DomainObjectId("4eb84b2f-8844-4842-bac5-f28970655f21")]
+    public partial class DateAndTimeOffsetTemporalDataType : TemporalDataType
+    {
+        #region Constructors, domain class Id
+
+        /// <summary>
+        /// DateAndTimeOffsetTemporalDataType domain class Id.
+        /// </summary>
+        public static readonly new global::System.Guid DomainClassId = new global::System.Guid(0x4eb84b2f, 0x8844, 0x4842, 0xba, 0xc5, 0xf2, 0x89, 0x70, 0x65, 0x5f, 0x21);
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="store">Store where new element is to be created.</param>
+        /// <param name="propertyAssignments">List of domain property id/value pairs to set once the element is created.</param>
+        public DateAndTimeOffsetTemporalDataType(DslModeling::Store store, params DslModeling::PropertyAssignment[] propertyAssignments)
+            : this(store != null ? store.DefaultPartitionForClass(DomainClassId) : null, propertyAssignments)
+        {
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="partition">Partition where new element is to be created.</param>
+        /// <param name="propertyAssignments">List of domain property id/value pairs to set once the element is created.</param>
+        public DateAndTimeOffsetTemporalDataType(DslModeling::Partition partition, params DslModeling::PropertyAssignment[] propertyAssignments)
+            : base(partition, propertyAssignments)
+        {
+        }
+        #endregion
+    }
+}
+namespace ORMSolutions.ORMArchitect.Core.ObjectModel
+{
 	/// <summary>
 	/// DomainClass TemporalDataType
 	/// </summary>

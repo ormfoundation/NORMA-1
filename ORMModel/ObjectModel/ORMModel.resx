@@ -2142,4 +2142,8 @@ The remaining replacements are trimmed for leading/trailing whitespace
     <value>Rename Implied Fact Type Signatures</value>
     <comment>The transaction used when renaming the implied fact type reading signatures that are in error.</comment>
   </data>
+  <data name="ObjectModel.DataType.PortableDataType.Temporal.DateAndTimeOffset.Text" xml:space="preserve">
+    <value>Temporal: Date &amp; Time Offset</value>
+    <comment>A date and time offset temporal data type</comment>
+  </data>
 </root>

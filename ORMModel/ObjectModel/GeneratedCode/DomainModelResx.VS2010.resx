@@ -2110,6 +2110,14 @@
     <value>DateAndTimeTemporalDataType</value>
     <comment>DisplayName for DomainClass &apos;DateAndTimeTemporalDataType&apos;</comment>
   </data>
+  <data name="ORMSolutions.ORMArchitect.Core.ObjectModel.DateAndTimeOffsetTemporalDataType.Description" xml:space="preserve">
+    <value></value>
+    <comment>Description for DomainClass &apos;DateAndTimeOffsetTemporalDataType&apos;</comment>
+  </data>
+  <data name="ORMSolutions.ORMArchitect.Core.ObjectModel.DateAndTimeOffsetTemporalDataType.DisplayName" xml:space="preserve">
+    <value>DateAndTimeOffsetTemporalDataType</value>
+    <comment>DisplayName for DomainClass &apos;DateAndTimeOffsetTemporalDataType&apos;</comment>
+  </data>
   <data name="ORMSolutions.ORMArchitect.Core.ObjectModel.TemporalDataType.Description" xml:space="preserve">
     <value></value>
     <comment>Description for DomainClass &apos;TemporalDataType&apos;</comment>
