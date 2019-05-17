@@ -147,5 +147,5 @@ CALL:SETVAR "UseToolsVersion" "15.0"
 GOTO:EOF
 
 :_TOOLS_v16.0
-CALL:SETVAR "UseToolsVersion" "Current"
+CALL:SETVAR "UseToolsVersion" "%ProjectToolsVersion%"
 GOTO:EOF
