@@ -18,7 +18,7 @@ IF "%TargetVisualStudioVersion%"=="v8.0" (
 ) ELSE (
 	SET TargetVisualStudioVersion=v16.0
 	SET TargetVisualStudioMajorMinorVersion=16.0
-	SET DegradeToolsVersion=/toolsversion:Current
+	SET DegradeToolsVersion=/toolsversion:%ProjectToolsVersion%
 )
 
 FOR /f "usebackq tokens=*" %%i IN (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (

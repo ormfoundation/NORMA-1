@@ -228,7 +228,11 @@ IF NOT DEFINED TargetVisualStudioLongProductName (SET TargetVisualStudioLongProd
 IF NOT DEFINED TargetDslToolsAssemblyVersion (SET TargetDslToolsAssemblyVersion=16.0.0.0)
 
 :: See https://docs.microsoft.com/en-us/visualstudio/msbuild/standard-and-custom-toolset-configurations?view=vs-2019
-IF NOT DEFINED ProjectToolsVersion (SET ProjectToolsVersion=Current)
+IF NOT DEFINED ProjectToolsVersion (SET ProjectToolsVersion=%CurrentMSBuildToolsVersion%)
+IF NOT DEFINED ProjectToolsVersion (
+	ECHO "Could not determine the ToolsVersion for MSBuild."
+	EXIT /B 1
+)
 
 IF NOT DEFINED ProjectToolsAssemblySuffix (SET ProjectToolsAssemblySuffix=.Core)
 IF NOT DEFINED ProjectToolsAssemblyVersion (SET ProjectToolsAssemblyVersion=15.1.0.0)

@@ -164,7 +164,7 @@
         <TargetVisualStudioShortProductName Condition=" '$(TargetVisualStudioShortProductName)' == '' ">VS2017</TargetVisualStudioShortProductName>
         <TargetDslToolsAssemblyVersion Condition=" '$(TargetDslToolsAssemblyVersion)' == '' ">15.0.0.0</TargetDslToolsAssemblyVersion>
         <TargetDslToolsVersionSuffix Condition=" '$(TargetDslToolsVersionSuffix)' == '' ">.15.0</TargetDslToolsVersionSuffix>
-        <ProjectToolsVersion Condition=" '$(ProjectToolsVersion)' == '' ">15.0</ProjectToolsVersion>
+        <ProjectToolsVersion Condition=" '' == '' ">15.0</ProjectToolsVersion>
         <ProjectToolsAssemblySuffix Condition=" '$(ProjectToolsAssemblySuffix)' == '' ">.Core</ProjectToolsAssemblySuffix>
         <ProjectToolsAssemblyVersion Condition=" '$(ProjectToolsAssemblyVersion)' == '' ">15.1.0.0</ProjectToolsAssemblyVersion>
         <GeneratedDslFileSuffix Condition=" '$(GeneratedDslFileSuffix)' == '' ">.VS2010</GeneratedDslFileSuffix>
@@ -186,7 +186,7 @@
         <TargetVisualStudioShortProductName Condition=" '$(TargetVisualStudioShortProductName)' == '' ">VS2019</TargetVisualStudioShortProductName>
         <TargetDslToolsAssemblyVersion Condition=" '$(TargetDslToolsAssemblyVersion)' == '' ">16.0.0.0</TargetDslToolsAssemblyVersion>
         <TargetDslToolsVersionSuffix Condition=" '$(TargetDslToolsVersionSuffix)' == '' ">.15.0</TargetDslToolsVersionSuffix>
-        <ProjectToolsVersion Condition=" '$(ProjectToolsVersion)' == '' ">Current</ProjectToolsVersion>
+        <!--<ProjectToolsVersion Condition=" '$(ProjectToolsVersion)' == '' ">Current</ProjectToolsVersion>-->
         <ProjectToolsAssemblySuffix Condition=" '$(ProjectToolsAssemblySuffix)' == '' ">.Core</ProjectToolsAssemblySuffix>
         <ProjectToolsAssemblyVersion Condition=" '$(ProjectToolsAssemblyVersion)' == '' ">15.1.0.0</ProjectToolsAssemblyVersion>
         <GeneratedDslFileSuffix Condition=" '$(GeneratedDslFileSuffix)' == '' ">.VS2010</GeneratedDslFileSuffix>
@@ -315,10 +315,9 @@
         <DefineConstants>$(DefineConstants);TOOLS_15_0</DefineConstants>
       </PropertyGroup>
     </When>
-    <!-- Unfortunately there's no easy way to update the AssemblyInfo's for NUBuild and NUBuildVS which uses the TOOL_Version for the assembly's version... so we will have to keep updating this value until the AssemblyInfo can read and environment variable or some other exteral variable. -->
     <When Condition=" '$(ProjectToolsVersion)' == 'Current' ">
       <PropertyGroup>
-        <DefineConstants>$(DefineConstants);TOOLS_15_0</DefineConstants>
+        <DefineConstants>$(DefineConstants);TOOLS_CURRENT</DefineConstants>
       </PropertyGroup>
     </When>
   </Choose>

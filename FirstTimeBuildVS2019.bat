@@ -19,7 +19,7 @@ IF "%TargetVisualStudioVersion%"=="v8.0" (
 ) ELSE (
 	SET TargetVisualStudioVersion=v16.0
 	SET TargetVisualStudioMajorMinorVersion=16.0
-	SET DegradeToolsVersion=/toolsversion:Current
+	SET DegradeToolsVersion=/toolsversion:%ProjectToolsVersion%
 )
 
 CALL "%RootDir%\BuildDevTools.bat" %* /consoleloggerparameters:DisableMPLogging %DegradeToolsVersion%

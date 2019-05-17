@@ -6,11 +6,20 @@
 FOR /f "usebackq tokens=*" %%i IN (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
 	SET VSInstallDir=%%i
 )
+
+:: Determine the correct ToolsVersion for MSBuild
+FOR /f "usebackq tokens=*" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe`) do (
+	SET CurrentMSBuildPath=%%i
+)
+REM Remove the trailing "\Bin\MSBuild.exe"
+SET CurrentToolsVersionPath=%CurrentMSBuildPath:~0,-16%
+REM REmove the path up to the current version
+CALL SET CurrentMSBuildToolsVersion=%%CurrentToolsVersionPath:%VSInstallDir%\MSBuild\=%%
+
 CALL:EXTENDPATH "%VSInstallDir%\Common7\IDE\PublicAssemblies"
 CALL:EXTENDPATH "%VSInstallDir%\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0"
-CALL:EXTENDPATH "%VSInstallDir%\MSBuild\15.0\Bin"
 CALL:EXTENDPATH "%VSInstallDir%\VSSDK\VisualStudioIntegration\Tools\Bin"
-
+CALL:EXTENDPATH "%VSInstallDir%\MSBuild\%CurrentMSBuildToolsVersion%\Bin"
 SET VsctPath=%VSInstallDir%\VSSDK\VisualStudioIntegration\Tools\Bin\vsct.exe
 
 :: Set Machine Level Environment Variables so that individual projects can be opended via Visual Studio
@@ -27,7 +36,7 @@ SETX TargetVisualStudioShortProductName VS2019 /M > NUL
 SETX TargetVisualStudioMajorMinorVersion 16.0 /M > NUL
 SETX TargetDslToolsAssemblyVersion 16.0.0.0 /M > NUL
 SETX TargetDslToolsVersionSuffix .15.0 /M > NUL
-SETX ProjectToolsVersion Current /M > NUL
+SETX ProjectToolsVersion "%CurrentMSBuildToolsVersion%" /M > NUL
 SETX ProjectToolsAssemblySuffix .Core /M > NUL
 SETX ProjectToolsAssemblyVersion 15.1.0.0 /M > NUL
 SETX GeneratedDslFileSuffix .VS2010 /M > NUL
