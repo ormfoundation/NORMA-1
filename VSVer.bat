@@ -111,6 +111,7 @@ GOTO:EOF
 :_VER_15
 CALL:SETVAR "TargetVisualStudioVersion" "v15.0"
 CALL:SETVAR "TargetVisualStudioMajorMinorVersion" "15.0"
+CALL:SETVAR "TargetVisualStudioMajorMinorNextVersion" "16.0"
 GOTO:EOF
 
 :_VER_2019
@@ -119,6 +120,7 @@ GOTO:EOF
 :_VER_16
 CALL:SETVAR "TargetVisualStudioVersion" "v16.0"
 CALL:SETVAR "TargetVisualStudioMajorMinorVersion" "16.0"
+CALL:SETVAR "TargetVisualStudioMajorMinorNextVersion" "17.0"
 GOTO:EOF
 
 :_TOOLS_v8.0

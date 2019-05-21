@@ -114,7 +114,14 @@ namespace Neumont.Build.Tasks
                     }
                     else
                     {
-                        System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo(vsWherePath, "-property installationPath");
+#if VISUALSTUDIO_16_0
+            string versionParameter = "-version [16.0,17.0)";
+#elif VISUALSTUDIO_15_0
+            string versionParameter = "-version [15.0,16.0)";
+#else
+            string versionParameter = "-latest";
+#endif
+                        System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo(vsWherePath, versionParameter + " -property installationPath");
                         startInfo.RedirectStandardOutput = true;
                         startInfo.UseShellExecute = false;
                         startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
