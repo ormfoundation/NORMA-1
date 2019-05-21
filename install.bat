@@ -7,7 +7,6 @@ IF NOT EXIST "%RootDir%\Version.bat" (
 	CALL:_GenerateVersion
 )
 CALL "%RootDir%\Version.bat" %*
-
 IF "%VSIXInstallDir%"=="" (
 	IF EXIST "%OldNORMADir%\bin\Neumont.Tools.ORM.dll" (%RegPkg% /unregister "%NORMADir%\bin\Neumont.Tools.ORM.dll")
 	IF EXIST "%OldNORMADir%\bin\Neumont.Tools.ORM.%TargetVisualStudioShortProductName%.dll" (%RegPkg% /unregister "%OldNORMADir%\bin\Neumont.Tools.ORM.%TargetVisualStudioShortProductName%.dll")

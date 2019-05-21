@@ -199,6 +199,7 @@ IF NOT DEFINED VSInformationSource (SET VSInformationSource=VSWhere)
 IF NOT DEFINED VSWhereLocation SET VSWhereLocation=%ResolvedProgramFiles%\Microsoft Visual Studio\Installer\vswhere.exe
 IF NOT DEFINED TargetFrameworkVersion (SET TargetFrameworkVersion=v4.6)
 IF NOT DEFINED TargetVisualStudioMajorMinorVersion (SET TargetVisualStudioMajorMinorVersion=15.0)
+IF NOT DEFINED TargetVisualStudioMajorMinorNextVersion (SET TargetVisualStudioMajorMinorNextVersion=16.0)
 IF NOT DEFINED TargetVisualStudioAssemblyVersion (SET TargetVisualStudioAssemblyVersion=15.0.0.0)
 IF NOT DEFINED TargetVisualStudioFrameworkAssemblyVersion (SET TargetVisualStudioFrameworkAssemblyVersion=4.6.0.0)
 IF NOT DEFINED TargetVisualStudioLongProductYear (SET TargetVisualStudioLongProductYear=2017)
@@ -219,6 +220,7 @@ IF NOT DEFINED VSInformationSource (SET VSInformationSource=VSWhere)
 IF NOT DEFINED VSWhereLocation SET VSWhereLocation=%ResolvedProgramFiles%\Microsoft Visual Studio\Installer\vswhere.exe
 IF NOT DEFINED TargetFrameworkVersion (SET TargetFrameworkVersion=v4.7.2)
 IF NOT DEFINED TargetVisualStudioMajorMinorVersion (SET TargetVisualStudioMajorMinorVersion=16.0)
+IF NOT DEFINED TargetVisualStudioMajorMinorNextVersion (SET TargetVisualStudioMajorMinorNextVersion=17.0)
 IF NOT DEFINED TargetVisualStudioAssemblyVersion (SET TargetVisualStudioAssemblyVersion=16.0.0.0)
 IF NOT DEFINED TargetVisualStudioFrameworkAssemblyVersion (SET TargetVisualStudioFrameworkAssemblyVersion=4.7.2.0)
 IF NOT DEFINED TargetVisualStudioLongProductYear (SET TargetVisualStudioLongProductYear=2019)
@@ -265,15 +267,15 @@ GOTO:EOF
 
 :SetupFromVSWhere
 :: Find the VS Install Directory
-FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
+FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -version [%TargetVisualStudioMajorMinorVersion%^,%TargetVisualStudioMajorMinorNextVersion%^) -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
 	SET VSInstallDir=%%i
 )
 :: Find the VS IDE Path
-FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property productPath`) DO (
+FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -version [%TargetVisualStudioMajorMinorVersion%^,%TargetVisualStudioMajorMinorNextVersion%^) -products * -requires Microsoft.Component.MSBuild -property productPath`) DO (
 	SET VSDevenvPath=%%i
 )
 :: Find the VS Instance ID
-FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property instanceId`) DO (
+FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -version [%TargetVisualStudioMajorMinorVersion%^,%TargetVisualStudioMajorMinorNextVersion%^) -products * -requires Microsoft.Component.MSBuild -property instanceId`) DO (
 	SET VSInstanceId=%%i
 )
 

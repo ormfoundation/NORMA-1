@@ -12,11 +12,15 @@ IF "%TargetVisualStudioVersion%"=="v8.0" (
 ) ELSE IF "%TargetVisualStudioVersion%"=="v12.0" (
 	SET DegradeToolsVersion=/toolsversion:12.0
 ) ELSE IF "%TargetVisualStudioVersion%"=="v14.0" (
-	SET TargetVisualStudioVersion=v14.0
 	SET DegradeToolsVersion=/toolsversion:14.0
 ) ELSE (
 	SET TargetVisualStudioVersion=v15.0
-	SET DegradeToolsVersion=/toolsversion:15.0
+	SET TargetVisualStudioMajorMinorVersion=15.0
+	SET TargetVisualStudioMajorMinorNextVersion=16.0
+	SET DegradeToolsVersion=/toolsversion:%ProjectToolsVersion%
 )
 
-CALL "%~dp0BuildSetup.bat" %* /consoleloggerparameters:DisableMPLogging %DegradeToolsVersion%
+FOR /f "usebackq tokens=*" %%i IN (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -version [%TargetVisualStudioMajorMinorVersion%^,%TargetVisualStudioMajorMinorNextVersion%^) -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
+	SET VSInstallDir=%%i
+)
+CALL "%~dp0BuildSetup.bat" %* /p:"ReferencePath=%VSInstallDir%\Common7\IDE\PrivateAssemblies" /consoleloggerparameters:DisableMPLogging %DegradeToolsVersion%

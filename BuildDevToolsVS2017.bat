@@ -16,6 +16,8 @@ IF "%TargetVisualStudioVersion%"=="v8.0" (
 	SET DegradeToolsVersion=/toolsversion:14.0
 ) ELSE (
 	SET TargetVisualStudioVersion=v15.0
+	SET TargetVisualStudioMajorMinorVersion=15.0
+	SET TargetVisualStudioMajorMinorNextVersion=16.0
 	SET DegradeToolsVersion=/toolsversion:15.0
 )
 

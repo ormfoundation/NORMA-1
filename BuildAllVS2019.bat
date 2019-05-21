@@ -18,7 +18,12 @@ IF "%TargetVisualStudioVersion%"=="v8.0" (
 ) ELSE (
 	SET TargetVisualStudioVersion=v16.0
 	SET TargetVisualStudioMajorMinorVersion=16.0
+	SET TargetVisualStudioMajorMinorNextVersion=17.0
 	SET DegradeToolsVersion=/toolsversion:%ProjectToolsVersion%
 )
 
-CALL "%~dp0BuildAll.bat" %* /consoleloggerparameters:DisableMPLogging %DegradeToolsVersion%
+FOR /f "usebackq tokens=*" %%i IN (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -version [%TargetVisualStudioMajorMinorVersion%^,%TargetVisualStudioMajorMinorNextVersion%^) -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
+	SET VSInstallDir=%%i
+)
+
+CALL "%~dp0BuildAll.bat" %* /p:"ReferencePath=%VSInstallDir%\Common7\IDE\PrivateAssemblies;%VSInstallDir%\Common7\IDE\PublicAssemblies;%VSInstallDir%\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0;%VSInstallDir%\MSBuild\15.0\Bin;%VSInstallDir%\VSSDK\VisualStudioIntegration\Tools\Bin" /consoleloggerparameters:DisableMPLogging %DegradeToolsVersion%

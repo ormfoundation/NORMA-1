@@ -94,7 +94,14 @@ namespace Setup.CustomActions
                 }
             }
 
-            ProcessStartInfo startInfo = new ProcessStartInfo(path, $"-products {product} -property {property}")
+#if VISUALSTUDIO_16_0
+            string versionParameter = "-version [16.0,17.0)";
+#elif VISUALSTUDIO_15_0
+            string versionParameter = "-version [15.0,16.0)";
+#else
+            string versionParameter = "-latest";
+#endif
+            ProcessStartInfo startInfo = new ProcessStartInfo(path, $"{versionParameter} -products {product} -property {property}")
             {
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,
