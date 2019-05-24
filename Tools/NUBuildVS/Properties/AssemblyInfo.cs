@@ -10,8 +10,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: AssemblyInformationalVersion("1.0.0.0")]
 [assembly: AssemblyVersion(
-#if NET_4_7  // We can't use the Tools Version for MSBuild 16.0 because the Tools Version for this is now 4.0 and there is a sub version
-"16.0.0.0"
+#if VISUALSTUDIO_16_0  // We can't use the Tools Version for MSBuild 16.0 because the Tools Version for this is now 4.0 and there is a sub version
+"15.1.0.0"
 #elif TOOLS_2_0
 "2.0.0.0"
 #elif TOOLS_3_5
