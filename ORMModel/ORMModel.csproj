@@ -16,7 +16,7 @@
     <AssemblyOriginatorKeyFile>..\ORMPackage.snk</AssemblyOriginatorKeyFile>
     <ApplicationIcon>Resources\ORM.ico</ApplicationIcon>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
-    <ForceInstallInGac>true</ForceInstallInGac>
+    <InstallInGac>true</InstallInGac>
     <TrunkDir Condition=" '$(TrunkDir)' == '' ">$(MSBuildProjectDirectory)\..</TrunkDir>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
