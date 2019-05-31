@@ -92,8 +92,8 @@ namespace ORMSolutions.ORMArchitect.Core.Shell
 
 				myPanel = new System.Windows.Forms.ContainerControl();
 				myPanel.SuspendLayout();
-				Control pnlOption = new System.Windows.Forms.ContainerControl();
-				Label lblGenerations = new System.Windows.Forms.Label();
+				FlowLayoutPanel pnlOption = new System.Windows.Forms.FlowLayoutPanel();
+                Label lblGenerations = new System.Windows.Forms.Label();
 				DiagramView viewControl = myDiagramView;
 				if (viewControl == null)
 				{
@@ -103,40 +103,47 @@ namespace ORMSolutions.ORMArchitect.Core.Shell
 				// 
 				// pnlOption
 				// 
-				pnlOption.Controls.Add(myUpDownGenerations);
 				pnlOption.Controls.Add(lblGenerations);
-				//pnlOption.Dock = System.Windows.Forms.DockStyle.Top;
-				pnlOption.Location = new System.Drawing.Point(0, 0);
+				pnlOption.Controls.Add(myUpDownGenerations);
+                pnlOption.AutoSize = true;
+				pnlOption.Dock = System.Windows.Forms.DockStyle.Top;
+                pnlOption.FlowDirection = FlowDirection.LeftToRight;
+				//pnlOption.Location = new System.Drawing.Point(0, 0);
 				pnlOption.Name = "Options";
-				pnlOption.Size = new System.Drawing.Size(316, 24);
-				pnlOption.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-				//pnlOption.TabIndex = 0;
-				// 
-				// lblGenerations
-				// 
-				lblGenerations.AutoSize = true;
-				lblGenerations.Location = new System.Drawing.Point(4, 4);
-				lblGenerations.Name = "lblGenerations";
+                //pnlOption.Size = new System.Drawing.Size(316, 24);
+                //pnlOption.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+                //pnlOption.TabIndex = 0;
+                // 
+                // lblGenerations
+                // 
+                lblGenerations.AutoSize = true;
+                lblGenerations.Dock = DockStyle.Fill;
+                lblGenerations.TextAlign = ContentAlignment.MiddleCenter;
+                //lblGenerations.Location = new System.Drawing.Point(4, 4);
+                lblGenerations.Name = "lblGenerations";
 				lblGenerations.Size = new System.Drawing.Size(64, 13);
 				lblGenerations.TabIndex = 0;
 				lblGenerations.Text = "Generations";
-				// 
-				// myUpDownGenerations
-				// 
-				myUpDownGenerations.Location = new System.Drawing.Point(73, 1);
-				myUpDownGenerations.Name = "numericUpDown1";
+                // 
+                // myUpDownGenerations
+                // 
+                myUpDownGenerations.AutoSize = true;
+                myUpDownGenerations.Dock = DockStyle.Fill;
+                //myUpDownGenerations.Location = new System.Drawing.Point(73, 1);
+                myUpDownGenerations.Name = "numericUpDown1";
 				myUpDownGenerations.Size = new System.Drawing.Size(50, 20);
 				myUpDownGenerations.TabIndex = 1;
 				myUpDownGenerations.Minimum = 0;
 				myUpDownGenerations.Maximum = 3;
 				myUpDownGenerations.ValueChanged += new EventHandler(upDownGenerations_ValueChanged);
 				myUpDownGenerations.Value = myGenerations;
-				// 
-				// viewControl
-				// 
-				viewControl.Size = new Size(myPanel.ClientSize.Width, myPanel.ClientSize.Height - 24);
-				viewControl.Location = new Point(0, 24);
-				viewControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left;
+                // 
+                // viewControl
+                // 
+                viewControl.Dock = DockStyle.Fill;
+                //viewControl.Size = new Size(myPanel.ClientSize.Width, myPanel.ClientSize.Height - 24);
+				//viewControl.Location = new Point(0, 24);
+				//viewControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left;
 				//
 				// myPanel
 				//
