@@ -1,0 +1,29 @@
+version: '1.0.{build}'
+
+environment:
+  matrix:
+# TODO: re-enable this when AppVeyor updates the image
+#  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017 Preview
+#    VISUAL_STUDIO_VERSION: 2017
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+    VISUAL_STUDIO_VERSION: 2019
+
+# fetch repository as zip archive
+shallow_clone: true                 # default is "false"
+
+#platform:
+#  - Any CPU
+
+#configuration:
+#  - Debug
+
+install:
+  # the VS2019 image is missing this dependency
+  - cmd: choco install wixtoolset
+
+build_script:
+  - cmd: CIBuild.bat
+
+artifacts:
+  - path: '**\*.msi'
+    name: installer
