@@ -126,7 +126,7 @@
     <value>5, 7</value>
   </data>
   <data name="label_GeneratedFilesFor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 25</value>
+    <value>130, 17</value>
   </data>
   <data name="label_GeneratedFilesFor.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -157,7 +157,7 @@
     <value>17, 17</value>
   </metadata>
   <data name="imageList1.ImageSize" type="System.Drawing.Size, System.Drawing">
-    <value>25, 25</value>
+    <value>31, 31</value>
   </data>
   <data name="virtualTreeControl.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 52</value>
@@ -172,7 +172,7 @@
     <value>virtualTreeControl</value>
   </data>
   <data name="&gt;&gt;virtualTreeControl.Type" xml:space="preserve">
-    <value>Microsoft.VisualStudio.VirtualTreeGrid.VirtualTreeControl, Microsoft.VisualStudio.VirtualTreeGrid, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>Microsoft.VisualStudio.VirtualTreeGrid.VirtualTreeControl, Microsoft.VisualStudio.VirtualTreeGrid, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="&gt;&gt;virtualTreeControl.Parent" xml:space="preserve">
     <value>$this</value>
@@ -184,7 +184,7 @@
     <value>107, 4</value>
   </data>
   <data name="textBox_ORMFileName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>238, 31</value>
+    <value>238, 22</value>
   </data>
   <data name="textBox_ORMFileName.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -244,10 +244,10 @@
     <value>System</value>
   </data>
   <data name="button_SaveChanges.Location" type="System.Drawing.Point, System.Drawing">
-    <value>431, 494</value>
+    <value>453, 494</value>
   </data>
   <data name="button_SaveChanges.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 34</value>
+    <value>145, 34</value>
   </data>
   <data name="button_SaveChanges.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -270,6 +270,9 @@
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 16</value>
+  </data>
   <data name="$this.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
