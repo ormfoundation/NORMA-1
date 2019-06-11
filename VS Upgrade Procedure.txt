@@ -115,6 +115,8 @@ Current Upgrade 2017 -> 2019
 		- Changed UI.wxs to look at VSVerInt instead of VSVer
 		- Changed Product.wxs to look at VSVerInt instead of VSVer and updated for VS 2019
 		- Changed Setup.wixproj to use MSBuildExtensionsPath instead of MSBuildExtensionsPath32 and import Wix.targets like the PliX setup project does
+		- Update Readme.htm for 2019
+		- Created Setup.2019.bat
 	* Update BuildSetup.bat to check for Less than version 15 instead of not equal to version 15
 	* New File BuildSetupVS2019.bat (Copy from BuildSetupVS2017.bat)	
 	* Switched "ORM2CommandLineTest\TestDriverEngine.csproj" to checking TargetVisualStudioMajorMinorVersion instead of TargetVisualStudioVersion

@@ -2,43 +2,58 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
-<title>NORMA May 2018 CTP Readme</title>
-<style type="text/css">
-	.new {font-size:x-small; background-color:Gold; color:Blue; }
-	.toggle{font-size:larger;cursor:pointer;font-family: monospace; color:rgb(97, 133, 160); display:inline; padding-right:.15em;}
-	li {padding-bottom: 3px;}
-</style>
-<script type="text/javascript">
-function setText(element, text) {
-	// Apply to any element except textarea
-	if (element['textContent'] !== undefined) {
-		element['textContent'] = text;
-	} else {
-		element['innerText'] = text;
-	}
-}
-function toggleDisp(sign,bodyId) {
-	var body, style, signText;
-	if (body=document.getElementById(bodyId)) {
-		if ((style = body.style).display=='none') {
-			style.display = 'block';
-			setText(sign,'-');
-		} else {
-			style.display = 'none';
-			setText(sign, '+');
-		}
-	}
-}
-</script>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <title>NORMA VS 2019 CTP Readme</title>
+    <style type="text/css">
+        .new {
+            font-size: x-small;
+            background-color: Gold;
+            color: Blue;
+        }
+
+        .toggle {
+            font-size: larger;
+            cursor: pointer;
+            font-family: monospace;
+            color: rgb(97, 133, 160);
+            display: inline;
+            padding-right: .15em;
+        }
+
+        li {
+            padding-bottom: 3px;
+        }
+    </style>
+    <script type="text/javascript">
+        function setText(element, text) {
+            // Apply to any element except textarea
+            if (element['textContent'] !== undefined) {
+                element['textContent'] = text;
+            } else {
+                element['innerText'] = text;
+            }
+        }
+        function toggleDisp(sign, bodyId) {
+            var body, style, signText;
+            if (body = document.getElementById(bodyId)) {
+                if ((style = body.style).display == 'none') {
+                    style.display = 'block';
+                    setText(sign, '-');
+                } else {
+                    style.display = 'none';
+                    setText(sign, '+');
+                }
+            }
+        }
+    </script>
 </head>
 
 <body>
 
-    <p><b><a id="The Top" style="font-family:Verdana;font-size:medium">NORMA May 2018 CTP Readme</a>&nbsp;</b></p>
+    <p><b><a id="The Top" style="font-family:Verdana;font-size:medium">NORMA VS 2019 CTP Readme</a>&nbsp;</b></p>
     <p>
         This file supersedes the previous readme.txt and older readme.htm files. This readme has parallel indexing mechanisms: by topic, and by release date (starting with the October 2008 (2008-10) release). The file will be extended for future product releases.<br /><br />
-        The May 2018 release adds support for Visual Studio 2017. See detailed change notes below for specifics.<br /><br />
+        The May 2019 release adds support for Visual Studio 2019. See detailed change notes below for specifics.<br /><br />
     </p>
     <h2><span class="toggle" onclick="toggleDisp(this,'contents')">-</span>Contents</h2>
     <div id="contents">
@@ -62,22 +77,14 @@ function toggleDisp(sign,bodyId) {
         </ul>
     </div>
     <hr />
-    <h2><span class="toggle" onclick="toggleDisp(this,'may2018')">-</span>May 2018 CTP Changes</h2>
-    <div id="may2018">
-        <div>The May 2018 CTP release source can be found at the <a href="https://github.com/ormfoundation/NORMA-plus">GitHub repository</a>.</div>
+    <h2><span class="toggle" onclick="toggleDisp(this,'may2019')">-</span>May 2019 CTP Changes</h2>
+    <div id="may2019">
+        <div>The May 2019 CTP release source can be found at the <a href="https://github.com/ormfoundation/NORMA-plus">GitHub repository</a>.</div>
         <ul>
             <li>
                 Feature Changes:
                 <ol>
-                    <li>Added support for Visual Studio 2017.</li>
-                    <li>Diagrams no longer scroll to the center automatically when opened.</li>
-                </ol>
-            </li>
-            <li>
-                Bug Fixes:
-                <ol>
-                    <li>Fixed the Barker ER View (<a href="https://ormfoundation.atlassian.net/browse/NOR-3">NOR-3</a>).</li>
-                    <li>Updated the ORACLE DDL Generator (<a href="https://ormfoundation.atlassian.net/browse/NOR-4">NOR-4</a>).</li>
+                    <li>Added support for Visual Studio 2019.</li>
                 </ol>
             </li>
         </ul>
@@ -85,6 +92,27 @@ function toggleDisp(sign,bodyId) {
     </div>
     <h2><span class="toggle" onclick="toggleDisp(this,'oldChanges')">+</span>Previous Releases</h2>
     <div style="display:none;" id="oldChanges">
+        <h3><span class="toggle" onclick="toggleDisp(this,'may2018')">+</span>May 2018 CTP Changes</h3>
+        <div style="display:none" id="may2018">
+            <div>The May 2018 CTP release source can be found at the <a href="https://github.com/ormfoundation/NORMA-plus">GitHub repository</a>.</div>
+            <ul>
+                <li>
+                    Feature Changes:
+                    <ol>
+                        <li>Added support for Visual Studio 2017.</li>
+                        <li>Diagrams no longer scroll to the center automatically when opened.</li>
+                    </ol>
+                </li>
+                <li>
+                    Bug Fixes:
+                    <ol>
+                        <li>Fixed the Barker ER View (<a href="https://ormfoundation.atlassian.net/browse/NOR-3">NOR-3</a>).</li>
+                        <li>Updated the ORACLE DDL Generator (<a href="https://ormfoundation.atlassian.net/browse/NOR-4">NOR-4</a>).</li>
+                    </ol>
+                </li>
+            </ul>
+            <hr />
+        </div>
         <h3><span class="toggle" onclick="toggleDisp(this,'sep2015')">+</span>September 2015 CTP Changes</h3>
         <div style="display:none" id="sep2015">
             <div>The September 2015 CTP release includes all modifications through changeset 1563. Full changeset descriptions can be found at the <a href="http://orm.svn.sourceforge.net/viewvc/orm/trunk/?view=log">sourceforge code repository</a>.</div>
@@ -418,7 +446,7 @@ function toggleDisp(sign,bodyId) {
                     Bug Fixes:
                     <ol>
                         <li>The <em>Is Mandatory</em> menu was incorrectly enabled for a unary role.</li>
-                        <li>Value constraints on remote identifying roles—where an entity type is (possibly recursively) identified by another entity type—were not correctly revalidated on a preferred identifier change.</li>
+                        <li>Value constraints on remote identifying roles?where an entity type is (possibly recursively) identified by another entity type?were not correctly revalidated on a preferred identifier change.</li>
                         <li>Style specifications used in the core verbalization were not included in the generated report styles. All report styles have now been brought up to date.</li>
                         <li>Set comparison constraint verbalization across compatible types was not choosing a shared column supertype for the initial object type list, resulting in verbalizations with different meanings when the constraint sequence order was changed.</li>
                     </ol>
@@ -648,7 +676,7 @@ function toggleDisp(sign,bodyId) {
     <hr />
     <h3><a id="Setup">Installing NORMA</a></h3>
     <ol>
-        <li>Updating NORMA to the latest version requires Setup.bat to be run from the downloaded .zip file, which should be chosen based on your Visual Studio version (2017, 2015, 2013, 2012, 2010, 2008, 2005). NORMA does not share installation files between versions, so you must choose your target when you download the installation package.</li>
+        <li>Updating NORMA to the latest version requires Setup.bat to be run from the downloaded .zip file, which should be chosen based on your Visual Studio version (2019. 2017, 2015, 2013, 2012, 2010, 2008, 2005). NORMA does not share installation files between versions, so you must choose your target when you download the installation package.</li>
         <li>Any previous NORMA versions for the selected Visual Studio target will be automatically uninstalled and reinstalled by the Setup.bat file. Make sure Visual Studio is not running during the installation pocess. Please be patient with the uninstall, which takes roughly the same amount of time as the install. Killing installation processes (the setup command prompt, msiexec, devenv) can leave you with a system that requires manual intervention to restore.</li>
         <li>Full Visual Studio studio configuration on version 2010 and higher will not be completed until after Visual Studio has restarted. Some slowdown should be expected on Visual Studio launch, the first time the 'File/New' dialog is opened, and the first time an .orm file is opened.</li>
         <li>First extract the files from the .zip file first unless you open them with the standard 'Compressed (zipped) Folders' viewer, in which case you can usually run Setup.bat without pre-expanding the zip file. Vista is likely to recommend expansion even with the standard viewer.</li>
@@ -737,7 +765,7 @@ function toggleDisp(sign,bodyId) {
             ORM theory states that all readings with the role player names inserted should be unique within a model. The reading text itself does not have to be unique. For example, <em>Person drives Car</em> and <em>Cowboy drives CattleHerd</em> can coexist in the same model without conflict. NORMA takes this one step further and normalizes the readings by expanding combined object types names, normalizing spaces, and removing any hyphen-binding markup. This is done so that different representations of the same name (CattleHerd, cattleHerd, Cattle Herd, cattle herd) used in different implementations and verbalizations of the model are always unique across the model. For example, the signature for the reading <em>Cowboy drives CattleHerd</em> is <em>cowboy drives cattle herd</em>, and placing the reading <em>Cowboy drives cattle- Herd</em> in the same model will create a duplicate reading signature validation error because the signature is already in use, even though the role players are different (Herd instead of CattleHerd).<br /><br />
             One unexpected place you will see this error is with an objectified fact type that has the same object type in multiple roles. NORMA always creates link fact types for asserted objectified fact types, so an objectification of <em>Person likes Person</em> will automatically add a link fact type for each role. The readings for each of these fact types will be <em>Person is involved in PersonLikesPerson</em> and <em>PersonLikesPerson involves Person</em>. You will always get two duplicate signature errors in this situation because these initial forward and reverse link fact type readings are the same. Activating the error (via the <em>Validation Errors</em> submenu on the diagram context menu, error hyperlinks in the Verbalization Browser, or the Error List tool window) will select the role corresponding to the first of the duplicate link fact types, expand the <em>Implied Fact Type Readings</em> branch, and activate the editor for the given reading. Changing the reading (to something like <em>first- Person is involved in PersonLikesPerson</em>) will remove the first error, and editing the reverse reading will remove the other. Although there will be no errors at this point, we recommend at this point that you select the other role in the objectified fact type as well and create a corresponding reading for the other link fact type.<br /><br />
             Note that link fact types are also created for implicitly objectifications (binary fact types with a spanning uniqueness constraint or any n-ary fact type). You will not see an error for these implied link fact types, but these readings can affect names in physical implementations of the model. You can edit these link fact types yourself using the same role-selection technique and the Reading Editor.<br /><br />
-            There are numerous designer operations—ranging from role player changes to object type name changes to objectifying a fact type—that can introduce duplicate reading signatures in the model. The designer will only throw an exception to block the addition of a duplicate reading signature if the user is making a direct edit to the fact type reading using either the Reading Editor or Fact Editor tool windows. Any other edit that introduces a duplicate reading signature will just add the duplicate signature error to the set of validation errors.<br /><br />
+            There are numerous designer operations?ranging from role player changes to object type name changes to objectifying a fact type?that can introduce duplicate reading signatures in the model. The designer will only throw an exception to block the addition of a duplicate reading signature if the user is making a direct edit to the fact type reading using either the Reading Editor or Fact Editor tool windows. Any other edit that introduces a duplicate reading signature will just add the duplicate signature error to the set of validation errors.<br /><br />
             The Fact Editor also checks for a single existing fact type with a matching signature before committing a new fact type. If a matching fact type is found, then the editor adds a new shape for that fact type, not a new conflicting fact type. If the forward and reverse readings entered in the fact editor match different fact types then you will see a duplicate reading signature exception when the fact editor line is committed.
         </li>
     </ol>
@@ -942,7 +970,7 @@ function toggleDisp(sign,bodyId) {
     <ol>
         <li>The displayed reference mode notation corresponds to notational changes introduced in <em>Information Modeling and Relational Databases</em> (Second Edition by Terry Halpin and Tony Morgan, March 2008). A . (period) is prepended to popular reference modes and a : is appended to unit-based reference modes. We will eventually expand the : notation to formally recognized units of comparable dimension (length, for example). Entering either of these notations will automatically introduce a new recognized reference mode pattern to the model. You can see the reference modes you've added in the 'ORM Reference Mode Editor' tool window.</li>
         <li>A solid subtyping line indicates that the subtyping relationship leads to the preferred identifier directly or indirectly (over other supertypes). The old notation marked a primary supertype even if the subtype had an explicit preferred identifier. If multiple paths lead to the preferred identifier then all paths will be solid. The old 'IsPrimary' notion will be updated when the .orm file is loaded. Loading a modified file on a previous NORMA version will give schema validation errors on load, but the file should load successfully if the Shift key is held down during load (follow the directions in the schema validation error dialog).</li>
-        <li>There is an option called <em>Binary FactType Multiplicity Display</em> in the <em>Entity Relationship Learning Mode</em> category on the 'ORM Designer' tab of the Tools/Options diagram. Enabling this options overlays common Entity Relationship (ER) multiplicity notations on binary FactTypes on the ORM diagram. You can choose CrowsFoot only (displays many), Barker notation (crowsfoot plus dotted line on mandatory roles), or Information Engineering (line symbols correspond to the UML-ish derived Multiplicity property in the Properties Window when a Role is selected). The display changes impact binary role player links only—the multiplicity concept breaks down badly when applied to non-binary facts. Thanks to Dr. Gordon Everest for the suggestion. The Barker option only applies to multiplicity settings; it does not add the tick on the line indicating a part of the identification scheme. The 'Mandatory Dot Placement' option is ignored when ER learning mode is enabled, so mandatory dots will always be displayed on the Role end of the relationship.</li>
+        <li>There is an option called <em>Binary FactType Multiplicity Display</em> in the <em>Entity Relationship Learning Mode</em> category on the 'ORM Designer' tab of the Tools/Options diagram. Enabling this options overlays common Entity Relationship (ER) multiplicity notations on binary FactTypes on the ORM diagram. You can choose CrowsFoot only (displays many), Barker notation (crowsfoot plus dotted line on mandatory roles), or Information Engineering (line symbols correspond to the UML-ish derived Multiplicity property in the Properties Window when a Role is selected). The display changes impact binary role player links only?the multiplicity concept breaks down badly when applied to non-binary facts. Thanks to Dr. Gordon Everest for the suggestion. The Barker option only applies to multiplicity settings; it does not add the tick on the line indicating a part of the identification scheme. The 'Mandatory Dot Placement' option is ignored when ER learning mode is enabled, so mandatory dots will always be displayed on the Role end of the relationship.</li>
         <li>
             <a id="Notation SubtypeDerivation 2008-10" class="new" title="October 2008 CTP: Subtype derivation rules">2008-10</a>&nbsp;
             Although derivation rules in NORMA are still informal, they are displayed in the right place. All derivation rules were originally displayed on the FactType and the SubtypeFact. This convention rapidly breaks down for SubtypeFact relationships because one subtype can have multiple supertypes, and because there is no good way to indicate the presence of a subtype derivation rule on the diagram.
@@ -1168,8 +1196,8 @@ function toggleDisp(sign,bodyId) {
                     <li>
                         Before attaching your process, make sure the <em>Attach to:</em> settings are correct. You need to attach to the right version of <em>Managed</em> code, which varies depending on the Visual Studio version you're using. If the automatic setting matches what you need you may use it, but we recommend explicitly choosing your debugger type.
                         <ul>
-                            <li>There are two kinds of managed code you can attach to—those before .NET 4.0 (versions 1.1, 2.0, 3.0, 3.5) and those after (currently 4.0 and 4.5). Visual studio 2005 and 2008 use the earlier managed code, and 2010 and higher use the latter.</li>
-                            <li>If you aren't sure you'll attach to the right kind of debugger code, then use the <em>Select…</em> dialog to lock in the correct kind of debugging. Attaching a native code debugger to Visual Studio will give you a much slower debugging process, so make sure that you do not have this selected. Just select the <em>Managed</em> version that corresponds to your Visual Studio version.</li>
+                            <li>There are two kinds of managed code you can attach to?those before .NET 4.0 (versions 1.1, 2.0, 3.0, 3.5) and those after (currently 4.0 and 4.5). Visual studio 2005 and 2008 use the earlier managed code, and 2010 and higher use the latter.</li>
+                            <li>If you aren't sure you'll attach to the right kind of debugger code, then use the <em>Select?</em> dialog to lock in the correct kind of debugging. Attaching a native code debugger to Visual Studio will give you a much slower debugging process, so make sure that you do not have this selected. Just select the <em>Managed</em> version that corresponds to your Visual Studio version.</li>
                         </ul>
                     </li>
                     <li>In the <em>Available Processes</em> list, choose to the 'devenv.exe' instance that is hosting the NORMA designer, then click the <em>Attach</em> button. You're attached to the NORMA Visual Studio process Visual Studio status bar stops flashing new messages and the title bar of Visual Studio includes the term <em>(Running)</em>.</li>
