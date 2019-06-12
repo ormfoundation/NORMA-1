@@ -13,7 +13,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DefineSolutionProperties>false</DefineSolutionProperties>
     <SuppressSpecificWarnings>1091</SuppressSpecificWarnings>
-    <SuppressIces>ICE03;ICE82</SuppressIces>
+    <SuppressIces>ICE03;ICE82;ICE30</SuppressIces>
     <!--<WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath)' != '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>-->
   </PropertyGroup>
@@ -90,9 +90,6 @@
   <Import Project="$(MSBuildExtensionsPath)\Neumont\VisualStudio\Neumont.Build.VisualStudio.targets" />
   <PropertyGroup>
     <CompileAndLinkDependsOn>LocateVisualStudioSDKRedistributablesDir;$(CompileAndLinkDependsOn)</CompileAndLinkDependsOn>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <SuppressIces>ICE03;ICE82;ICE30</SuppressIces>
   </PropertyGroup>
   <Target Name="LocateVisualStudioSDKRedistributablesDir" DependsOnTargets="LocateVisualStudioSDK">
     <CreateProperty Value="$(DefineConstants);VsSDKRedistributablesDir=$(VsSDKRedistributablesDir);VSExt=.$(TargetVisualStudioShortProductName);VSShortName=$(TargetVisualStudioShortProductName);VSLongName=$(TargetVisualStudioLongProductName);VSShortProductYear=$(TargetVisualStudioShortProductYear);VSLongProductYear=$(TargetVisualStudioLongProductYear);VSVer=$(TargetVisualStudioVersion)">
