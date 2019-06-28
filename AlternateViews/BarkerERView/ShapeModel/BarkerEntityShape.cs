@@ -27,6 +27,7 @@ using ORMSolutions.ORMArchitect.Framework;
 using ORMSolutions.ORMArchitect.Framework.Diagrams;
 using ORMSolutions.ORMArchitect.EntityRelationshipModels.Barker;
 using Barker = ORMSolutions.ORMArchitect.EntityRelationshipModels.Barker;
+using System.Drawing;
 
 namespace ORMSolutions.ORMArchitect.Views.BarkerERView
 {
@@ -71,7 +72,17 @@ namespace ORMSolutions.ORMArchitect.Views.BarkerERView
 			textField.DefaultAutoSize = true;
 			textField.AnchoringBehavior.MinimumHeightInLines = 1;
 			textField.AnchoringBehavior.MinimumWidthInCharacters = 1;
-			textField.DefaultFontId = new StyleSetResourceId(string.Empty, "ShapeTextBold10");
+
+            // NOR-144: Pulled this update from https://github.com/ormsolutions/NORMA/commit/ea2d9ddbf680708a54e37f09d95793c43b90cd14
+            // Header measure can be off by a small amount. This is harmless for display
+            // unless the text is modified (clipped, wrapped, ellipsis, etc.)
+            StringFormat headerFormat = new StringFormat(StringFormatFlags.NoClip | StringFormatFlags.NoWrap);
+            headerFormat.Alignment = StringAlignment.Center;
+            headerFormat.LineAlignment = StringAlignment.Center;
+            headerFormat.Trimming = StringTrimming.None;
+            textField.DefaultStringFormat = headerFormat;
+
+            textField.DefaultFontId = new StyleSetResourceId(string.Empty, "ShapeTextBold10");
 			shapeFields.Add(textField);
 		}
 
