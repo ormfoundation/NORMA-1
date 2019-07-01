@@ -15,25 +15,23 @@
 \**************************************************************************/
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.Security.Permissions;
 using Microsoft.VisualStudio.Modeling;
 using Microsoft.VisualStudio.Modeling.Design;
+using ORMSolutions.ORMArchitect.Framework;
 using ORMSolutions.ORMArchitect.Framework.Design;
-using ORMSolutions.ORMArchitect.Core.ObjectModel;
+using System;
+using System.ComponentModel;
+using System.Security.Permissions;
 
 namespace ORMSolutions.ORMArchitect.Core.ObjectModel.Design
 {
-	/// <summary>
-	/// <see cref="ElementTypeDescriptor"/> for <see cref="ORMModelElement"/>s of type <typeparamref name="TModelElement"/>.
-	/// </summary>
-	/// <typeparam name="TModelElement">
-	/// The type of the <see cref="ORMModelElement"/> that this <see cref="ORMModelElementTypeDescriptor{TModelElement}"/> is for.
-	/// </typeparam>
-	[HostProtection(SecurityAction.LinkDemand, SharedState = true)]
+    /// <summary>
+    /// <see cref="ElementTypeDescriptor"/> for <see cref="ORMModelElement"/>s of type <typeparamref name="TModelElement"/>.
+    /// </summary>
+    /// <typeparam name="TModelElement">
+    /// The type of the <see cref="ORMModelElement"/> that this <see cref="ORMModelElementTypeDescriptor{TModelElement}"/> is for.
+    /// </typeparam>
+    [HostProtection(SecurityAction.LinkDemand, SharedState = true)]
 	public class ORMModelElementTypeDescriptor<TModelElement> : BlockRelationshipPropertiesElementTypeDescriptor<TModelElement>
 		where TModelElement : ORMModelElement
 	{
@@ -54,8 +52,16 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel.Design
 		public override PropertyDescriptorCollection GetProperties(Attribute[] attributes)
 		{
 			PropertyDescriptorCollection properties = base.GetProperties(attributes);
-			ExtendableElementUtility.GetExtensionProperties(ModelElement, properties, typeof(TModelElement));
-			return properties;
+
+            // NOR-145: Incorporate Matt's changes to make sure the property window doesn't throw unnecessary exceptions
+            TModelElement element = ModelElement;
+            Store store = Utility.ValidateStore(element?.Store);
+            if (store != null)
+            {
+                ExtendableElementUtility.GetExtensionProperties(ModelElement, properties, typeof(TModelElement));
+            }
+
+            return properties;
 		}
 	}
 }
