@@ -938,7 +938,19 @@ namespace ORMSolutions.ORMArchitect.DatabaseImport
 			/// <summary>
 			/// Interval data
 			/// </summary>
-			Interval
+			Interval,
+            /// <summary>
+			/// Date and time data
+			/// </summary>
+			DateTime,
+            /// <summary>
+			/// Date and time data including timezone information
+			/// </summary>
+			DateTimeOffset,
+            /// <summary>
+			/// Money
+			/// </summary>
+			Money
 		}
 
 		private DCILType _type;

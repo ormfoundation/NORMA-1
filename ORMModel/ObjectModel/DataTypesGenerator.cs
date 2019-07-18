@@ -77,8 +77,10 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 		TemporalDate,
 		/// <summary>A date and time temporal data type</summary>
 		TemporalDateAndTime,
-		/// <summary>A true or false logical data type</summary>
-		LogicalTrueOrFalse,
+        /// <summary>A date and time offset temporal data type</summary>
+		TemporalDateAndTimeOffset,
+        /// <summary>A true or false logical data type</summary>
+        LogicalTrueOrFalse,
 		/// <summary>A yes or no logical data type</summary>
 		LogicalYesOrNo,
 		/// <summary>A row id data type (can not be classified in any of the groups above)</summary>
@@ -121,6 +123,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 				typeof(TimeTemporalDataType),
 				typeof(DateTemporalDataType),
 				typeof(DateAndTimeTemporalDataType),
+                typeof(DateAndTimeOffsetTemporalDataType),
 				typeof(TrueOrFalseLogicalDataType),
 				typeof(YesOrNoLogicalDataType),
 				typeof(RowIdOtherDataType),
@@ -2067,7 +2070,16 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 			System.DateTime.TryParse(invariantValue2, CultureInfo.InvariantCulture, DateTimeStyles.None, out typedValue2);
 			return ((IComparable<System.DateTime>)typedValue1).CompareTo(typedValue2);
 		}
-	}
+
+        /// <summary>Show the Length property for this DataType based on the 'DataTypePrecision' resource string.</summary>
+		public override string LengthName
+        {
+            get
+            {
+                return ResourceStrings.DataTypePrecision;
+            }
+        }
+    }
 	/// <summary>A date temporal data type</summary>
 	public partial class DateTemporalDataType
 	{
@@ -2117,7 +2129,7 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 			System.DateTime.TryParse(invariantValue2, CultureInfo.InvariantCulture, DateTimeStyles.None, out typedValue2);
 			return ((IComparable<System.DateTime>)typedValue1).CompareTo(typedValue2);
 		}
-	}
+    }
 	/// <summary>A date and time temporal data type</summary>
 	public partial class DateAndTimeTemporalDataType
 	{
@@ -2167,9 +2179,77 @@ namespace ORMSolutions.ORMArchitect.Core.ObjectModel
 			System.DateTime.TryParse(invariantValue2, CultureInfo.InvariantCulture, DateTimeStyles.None, out typedValue2);
 			return ((IComparable<System.DateTime>)typedValue1).CompareTo(typedValue2);
 		}
-	}
-	/// <summary>A true or false logical data type</summary>
-	public partial class TrueOrFalseLogicalDataType
+
+        /// <summary>Show the Length property for this DataType based on the 'DataTypePrecision' resource string.</summary>
+		public override string LengthName
+        {
+            get
+            {
+                return ResourceStrings.DataTypePrecision;
+            }
+        }
+    }
+    /// <summary>A date and time offset temporal data type</summary>
+	public partial class DateAndTimeOffsetTemporalDataType
+    {
+        /// <summary>PortableDataType enum value for this type</summary>
+        public override PortableDataType PortableDataType
+        {
+            get
+            {
+                return PortableDataType.TemporalDateAndTimeOffset;
+            }
+        }
+        /// <summary>Localized data type name</summary>
+        public override string ToString()
+        {
+            return ResourceStrings.PortableDataTypeTemporalDateAndTimeOffset;
+        }
+        /// <summary>The data type supports 'ContinuousEndPoints' ranges</summary>
+        public override DataTypeRangeSupport RangeSupport
+        {
+            get
+            {
+                return DataTypeRangeSupport.ContinuousEndPoints;
+            }
+        }
+        /// <summary>Returns true if the string value can be interpreted as this data type</summary>
+        public override bool CanParse(string value)
+        {
+            System.DateTime result;
+            return System.DateTime.TryParse(value, this.CurrentCulture, DateTimeStyles.None, out result);
+        }
+        /// <summary>Returns false, meaning that CanParse can fail for some values</summary>
+        public override bool CanParseAnyValue
+        {
+            get
+            {
+                return false;
+            }
+        }
+        /// <summary>Compare two values. Each value should be checked previously with CanParse</summary>
+        public override int Compare(string invariantValue1, string invariantValue2)
+        {
+            Debug.Assert(this.CanParseInvariant(invariantValue1), "Don't call Compare if CanParseInvariant(invariantValue1) returns false");
+            System.DateTime typedValue1;
+            System.DateTime.TryParse(invariantValue1, CultureInfo.InvariantCulture, DateTimeStyles.None, out typedValue1);
+            Debug.Assert(this.CanParseInvariant(invariantValue2), "Don't call Compare if CanParseInvariant(invariantValue2) returns false");
+            System.DateTime typedValue2;
+            System.DateTime.TryParse(invariantValue2, CultureInfo.InvariantCulture, DateTimeStyles.None, out typedValue2);
+            return ((IComparable<System.DateTime>)typedValue1).CompareTo(typedValue2);
+        }
+
+        /// <summary>Show the Length property for this DataType based on the 'DataTypePrecision' resource string.</summary>
+		public override string LengthName
+        {
+            get
+            {
+                return ResourceStrings.DataTypePrecision;
+            }
+        }
+    }
+    /// <summary>A true or false logical data type</summary>
+    public partial class TrueOrFalseLogicalDataType
 	{
 		/// <summary>PortableDataType enum value for this type</summary>
 		public override PortableDataType PortableDataType

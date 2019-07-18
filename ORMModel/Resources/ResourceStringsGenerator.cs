@@ -526,8 +526,16 @@ namespace ORMSolutions.ORMArchitect.Core
 				return ResourceStrings.GetString(ResourceManagers.Model, "ObjectModel.DataType.PortableDataType.Temporal.DateAndTime.Text");
 			}
 		}
-		/// <summary>A true or false logical data type</summary>
-		public static string PortableDataTypeLogicalTrueOrFalse
+        /// <summary>A date and time offset temporal data type</summary>
+        public static string PortableDataTypeTemporalDateAndTimeOffset
+        {
+            get
+            {
+                return ResourceStrings.GetString(ResourceManagers.Model, "ObjectModel.DataType.PortableDataType.Temporal.DateAndTimeOffset.Text");
+            }
+        }
+        /// <summary>A true or false logical data type</summary>
+        public static string PortableDataTypeLogicalTrueOrFalse
 		{
 			get
 			{

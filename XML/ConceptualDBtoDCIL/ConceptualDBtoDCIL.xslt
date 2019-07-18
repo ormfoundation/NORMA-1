@@ -286,6 +286,10 @@
 						$predefinedDataTypeName = 'DATETIME'">
 						<xsl:value-of select="'ddt:datetimeLiteral'"/>
 					</xsl:when>
+          <xsl:when test="
+						$predefinedDataTypeName = 'DATETIMEOFFSET'">
+            <xsl:value-of select="'ddt:datetimeoffsetLiteral'"/>
+          </xsl:when>
 					<xsl:when test="
 						$predefinedDataTypeName = 'TIMESTAMP'">
 						<xsl:value-of select="'ddt:timestampLiteral'"/>

@@ -1861,6 +1861,12 @@
 				<DomainClassMoniker Name="TemporalDataType"/>
 			</BaseClass>
 		</DomainClass>
+    
+    <DomainClass Name="DateAndTimeOffsetTemporalDataType" Namespace="ORMSolutions.ORMArchitect.Core.ObjectModel" Id="4EB84B2F-8844-4842-BAC5-F28970655F21" DisplayName="DateAndTimeOffsetTemporalDataType" Description="">
+			<BaseClass>
+				<DomainClassMoniker Name="TemporalDataType"/>
+			</BaseClass>
+		</DomainClass>
 
 		<DomainClass Name="TemporalDataType" Namespace="ORMSolutions.ORMArchitect.Core.ObjectModel" Id="BFBEF833-DD04-4DB3-A167-D1314273B2C6" DisplayName="TemporalDataType" InheritanceModifier="Abstract" Description="">
 			<BaseClass>

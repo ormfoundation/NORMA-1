@@ -539,6 +539,7 @@
 			<xs:element name="TimeTemporalDataType" type="TimeTemporalDataTypeType"/>
 			<xs:element name="DateTemporalDataType" type="DateTemporalDataTypeType"/>
 			<xs:element name="DateAndTimeTemporalDataType" type="DateAndTimeTemporalDataTypeType"/>
+            <xs:element name="DateAndTimeOffsetTemporalDataType" type="DateAndTimeOffsetTemporalDataTypeType"/>
 			<xs:element name="TrueOrFalseLogicalDataType" type="TrueOrFalseLogicalDataTypeType"/>
 			<xs:element name="YesOrNoLogicalDataType" type="YesOrNoLogicalDataTypeType"/>
 			<xs:element name="RowIdOtherDataType" type="RowIdOtherDataTypeType"/>
@@ -762,6 +763,14 @@
 			<xs:extension base="DataType"/>
 		</xs:complexContent>
 	</xs:complexType>
+    <xs:complexType name="DateAndTimeOffsetTemporalDataTypeType">
+      <xs:annotation>
+        <xs:documentation>Values represent date and time with offset information.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+        <xs:extension base="DataType"/>
+      </xs:complexContent>
+    </xs:complexType>
 	<xs:complexType name="TrueOrFalseLogicalDataTypeType">
 		<xs:annotation>
 			<xs:documentation>Values are either true or false.</xs:documentation>
