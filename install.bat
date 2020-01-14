@@ -182,29 +182,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 	REG ADD "HKCR\ormfile\shell\open\ddeexec\topic" /ve /d "system" /f 1>NUL
 
 	IF "%VSInformationSource%"=="VSWhere" (
-		REM :: See https://visualstudioextensions.vlasovstudio.com/2017/06/29/changing-visual-studio-2017-private-registry-settings/
-		:: Register NORMA as an enabled extension so that devenv /setup will pull in the extension settings
-		for /d %%f in (%LOCALAPPDATA%\Microsoft\VisualStudio\%TargetVisualStudioMajorMinorVersion%_*Exp) do (
-			reg load HKLM\_TMPVS_%%~nxf "%%f\privateregistry.bin" > NUL
-			REG ADD "HKLM\_TMPVS_%%~nxf\Software\Microsoft\VisualStudio\%%~nxf\ExtensionManager\EnabledExtensions" /v "efddc549-1646-4451-8a51-e5a5e94d647c,%ProductMajorVersion%.%ProductMinorVersion%" /d "%VSIXInstallDir%\\" /f 1>NUL
-			reg unload HKLM\_TMPVS_%%~nxf > NUL
-		)
-
 		ECHO Running 'devenv.exe /RootSuffix "%VSRegistryRootSuffix%" /Setup'... This may take a few minutes...
 		CALL "%VSEnvironmentPath%" /RootSuffix "%VSRegistryRootSuffix%" /Setup
-
-		:: Make sure that the devenv process has let go of the registry file (the timeout command will not work correctly here due to the process not allowing input redirection... so we have to use the ping "hack")
-		ECHO Waiting to make sure devenv.exe has let go of the registry hive...
-		REM :: See https://stackoverflow.com/questions/1672338/how-to-sleep-for-5-seconds-in-windowss-command-prompt-or-dos
-		ping 127.0.0.1 -n 30 > NUL
-
-		REM :: See https://visualstudioextensions.vlasovstudio.com/2017/06/29/changing-visual-studio-2017-private-registry-settings/
-		:: Execute this a second time to make sure that devenv /setup does not disable the extension, sometimes it will due to NORMA depending on Modeling SDK
-		for /d %%f in (%LOCALAPPDATA%\Microsoft\VisualStudio\%TargetVisualStudioMajorMinorVersion%_*Exp) do (
-			reg load HKLM\_TMPVS_%%~nxf "%%f\privateregistry.bin" > NUL
-			REG ADD "HKLM\_TMPVS_%%~nxf\Software\Microsoft\VisualStudio\%%~nxf\ExtensionManager\EnabledExtensions" /v "efddc549-1646-4451-8a51-e5a5e94d647c,%ProductMajorVersion%.%ProductMinorVersion%" /d "%VSIXInstallDir%\\" /f 1>NUL
-			reg unload HKLM\_TMPVS_%%~nxf > NUL
-		)
 	) ELSE (
 		IF /I "%RunDevEnvSetup%"=="True" (ECHO Running 'devenv.exe /RootSuffix "%VSRegistryRootSuffix%" /Setup'... This may take a few minutes... && "%VSEnvironmentPath%" /RootSuffix "%VSRegistryRootSuffix%" /Setup)
 	)
